@@ -14,22 +14,19 @@ function GetServer() {
         console.log("WHY!")
       });
 
-      axios.get('http://localhost:8080/all')
-        .then(res => {
-          console.log(res);
-          setUserSss(res.data)
-        }).catch(err => {
-          console.log("myServer fail");
-          console.log(err)
+    const r2 = await axios.get('http://127.0.0.1:8080/all')
+    console.log(r2);
+    setUsers(r2.data)
+    
         })
   }, [] ) //The 2nd argument "[]" means 'only run after first render'
 
   return (
     <div>
-      <h1>Get Server, look at logs</h1>
+      <h1>Get host </h1>
       <ul>
-        { userSss.map((user) => (
-          <li className="myget" key={user.id} > ID: {user.id} Name: {user.name} </li>
+        { userSss.map((u) => (
+          <li key={u.id} className="myget"> ID: {u.id} Name: {u.name} </li>
           )) }
       </ul>
     </div>
