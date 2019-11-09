@@ -4,6 +4,10 @@ import About from './Pages/About';
 import Home from './Pages/Home';
 import Nav from './Pages/Nav';
 import GetServer from './Pages/GetServer';
+import PostDo from './Pages/PostDo';
+
+// get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
+// useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
 function App() {
   return (
     <Router>
@@ -12,6 +16,7 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/about" component={About} />
         <Route path="/getServer" component={GetServer} />
+        <Route path="/doPost" component={PostDo} />
       </Switch>
     </Router> 
   );
