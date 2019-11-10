@@ -10,6 +10,7 @@ class Nav extends React.Component {
           <li> <Link to='/about'> About </Link> </li>
           <li> <Link to='/getServer'> getHost </Link> </li>
           <li> <Link to='/doPost'> doPost </Link> </li>
+          <li> <Link to='/youtube'> youtube </Link> </li>
         </ul>
       </nav>
     );

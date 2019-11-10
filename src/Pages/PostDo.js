@@ -11,19 +11,10 @@ function PostDo() {
 
   const sentIt = (e) => {
     e.preventDefault();
-    axios.post('https://jsonplaceholder.typicode.com/posts', {
-      'username': newUser,
-      'idz': newId
-     }).then(res => {
-      logShit(res);
-    })
+    //axios.post('https://jsonplaceholder.typicode.com/posts', { 'username': newUser, 'id': newId }).then(res => { logShit(res) })
 
-    axios.post('http://localhost:8080/actualCreate', {
-        'username': newUser,
-        'idz': newId
-      }).then(res => {
-      logShit(res);
-    })
+    axios.post('http://localhost:8080/userDebug', { "username": newUser }).then(res => { logShit(res) })
+      .then(axios.post('http://localhost:8080/createUser', { "username": newUser }).then(res => { logShit(res) }))
   }
     
 
