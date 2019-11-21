@@ -22,7 +22,7 @@ import { SECRET_KEYS } from '../api-key';
 // Pagination: https://developers.google.com/youtube/v3/guides/implementation/pagination
 // next page token
 
-//https://developers.google.com/youtube/v3/guides/implementation/pagination
+//Scope https://developers.google.com/identity/protocols/googlescopes
 
 export function Youtube() {
 
@@ -40,6 +40,7 @@ export function Youtube() {
         apyKey: SECRET_KEYS.apiKey,
         //scope: "https://www.googleapis.com/auth/youtube.force-ssl",
         scope: "https://www.googleapis.com/auth/youtube.readonly",
+        //scope: "https://www.googleapis.com/auth/youtubepartner-channel-audit",
       });
       loadClient();
     }); 
@@ -76,9 +77,6 @@ export function Youtube() {
     var isAuthorized2 = user.hasGrantedScopes("https://www.googleapis.com/auth/youtube.force-ssl");
     var isSigned = GoogleAuth.isSignedIn.get()
 
-      //      getGrantedScopes
-    //    getEmail
-      //  getImageUrl
   }
 
   function authenticate() {
@@ -118,7 +116,35 @@ export function Youtube() {
       console.log(resp.code)
     })
   }
-  
+
+  function getUploads() {
+    return window.gapi.client.youtube.search.list({
+      "part": "snippet",
+      "channelId": "UCb--64Gl51jIEVE-GLDAVTg",
+      "maxResults": 50,
+      "order": "date",
+      "safeSearch": "none",
+      "type": "video"
+    })
+      .then(function (response) {
+        // Handle the results here (response.result has the parsed body).
+        console.log("Response", response.result);
+      },
+        function (err) { console.error("Execute error", err); });
+    
+  }
+
+  function auditMe() {
+    return window.gapi.client.youtube.channels.list({
+      "part": "snippet, contentDetails, status, localizations",
+      //"id": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
+      "id": "UCA-8h5uCH5RE-1r6gskkbTw, UC_x5XG1OV2P6uZZ5FSM9Ttw",
+    })
+      .then(function (response) {
+        console.log("Response", response.result);
+      },
+        function (err) { console.error("Execute error", err); });
+  }
 
   function execCrunksSubs() {
     return window.gapi.client.youtube.subscriptions.list({
@@ -137,7 +163,6 @@ export function Youtube() {
 
 
   function execListUserShit() {
-
     return window.gapi.client.youtube.channels.list({
       "part": "snippet,contentDetails,statistics",
       "mine": true,
@@ -219,7 +244,9 @@ export function Youtube() {
       <button onClick={execListUserShit} > List User Shit  (channels.list)</button>
       <div></div>
 
-      <button onClick={getAllSubs} > getAllSubs  </button>
+      <button onClick={getAllSubs}> getAllSubs  </button>
+      <button onClick={auditMe}> audit?  (channels.list) </button>
+      <button onClick={getUploads}> get Uploads   (channels.list) </button>
 
       <div></div>
       <button onClick={isHeSignedIn} > isHeSignedIn</button>
