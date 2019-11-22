@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { SECRET_KEYS } from '../api-key';
 import * as Common from './Common.js';
+
 // Github: JS Client https://github.com/google/google-api-javascript-client
 //
 //MAIN https://developers.google.com/youtube/v3/getting-started
@@ -30,8 +31,6 @@ export function Youtube() {
   script.type = "text/javascript";
   script.src = "https://apis.google.com/js/client.js";
   document.body.appendChild(script)
-  var GoogleAuth;
-  var isSigned;
   script.onload = () => {
     Common.initGoogleAPI()
   }
@@ -81,6 +80,7 @@ export function Youtube() {
     })
       .then(function (response) {
         fullResponse.push(response.result)
+        fullResponse[0].items.push("DMX")
         console.log("Response", response.result);
         console.log("fullResponse", fullResponse);
         console.log("next page " + response.result.nextPageToken)
@@ -94,24 +94,19 @@ export function Youtube() {
   return(
       <div>
         <h1>Youtube</h1>
-      <h3>{SECRET_KEYS.apiKey}</h3>
         <div>Note, the app must ALWAYS do loadClient before any API call</div>
         <div>App now auto loads Client</div>
-        <form >
-          <input type="text" name="username" />
-          <button>Submit</button>
-      </form>
-
-
+      
       <button onClick={Common.authenticate}>authorize </button>
       <button onClick={Common.signOut} > Log Out </button>
       <div></div>
+
       <button onClick={Common.getAuthCodeForServerSideShit} >Auth Code For Server</button>
       <div></div>
-      
+
       <button onClick={getAllSubs}> getAllSubs  </button>
       <button onClick={getUploads}> get Uploads   (channels.list) </button>
-      <button onClick={getActivities}> get Activities   (channels.list) </button>
+      <button onClick={getActivities}> get Activities   (activities.list) </button>
 
       <div></div>
       <button onClick={Common.isHeSignedIn}> isHeSignedIn</button>
@@ -120,120 +115,3 @@ export function Youtube() {
       </div>
     );
 }
-
-/*
-  function disconnect() {
-    if (GoogleAuth)
-    GoogleAuth.disconnect()
-  }
-
-
-  function getSubs() {
-    return window.gapi.client.youtube.subscriptions.list({
-      "part": "snippet",
-      "maxResults": 30,
-      "mine": true,
-      "pageToken": "",
-      "fields": "pageInfo, nextPageToken, items(snippet/title, snippet/publishedAt, snippet/resourceId/channelId, snippet/thumbnails/default/url )"
-    })
-      .then(function (response) {
-        console.log("Response", response.result);
-        console.log("next page")
-        console.log(response.result.nextPageToken)
-      },
-        function (err) { console.error("Execute error", err); });
-  }
- */
-
-
-/*
-  function execCaptionsForVolvo() {
-    return window.gapi.client.youtube.captions.list({
-      "part": "snippet",
-      "videoId": "M7FIvfx5J10"
-    })
-      .then(function (response) {
-        console.log("Response", response.body);
-      },
-        function (err) { console.error("Execute error", err); });
-  }
-*/
-
-/*
-function logShit(res) {
-  console.log('----------------------------------------')
-  console.log(`Status code: ${res.status}`);
-  console.log(`Status text: ${res.statusText}`)
-  console.log(`Request method: ${res.request.method}`)
-  console.log(`Path: ${res.request.path}`)
-
-  console.log(`Date: ${res.headers.date}`)
-  console.log(`Date: ${res.headers}`)
-  console.log(`Data: ${res.data}`)
-  console.log(`Config: ${res.config}`)
-
-  console.log(res.config);
-}
-*/
-
-//export default Youtube;
-
-
-
-
-
-
-
-/* <button onClick={execCaptionsForVolvo} > Captions for some commercial </button>]
-           <button onClick={getSubs} > getSubs (subscriptions.list) </button>
-           <button onClick={execListUserShit} > List User Shit  (channels.list)</button>
-      <button onClick={auditMe}> audit?  (channels.list) </button>
-      <button onClick={execCrunksSubs} > Crunk's subs </button>
-      <button onClick={disconnect}>Disconnect! </button>
-      */
-
-/*
-  function auditMe() {
-    return window.gapi.client.youtube.channels.list({
-      "part": "snippet, contentDetails, status, localizations",
-      //"id": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
-      "id": "UCA-8h5uCH5RE-1r6gskkbTw, UC_x5XG1OV2P6uZZ5FSM9Ttw",
-    })
-      .then(function (response) {
-        console.log("Response", response.result);
-      },
-        function (err) { console.error("Execute error", err); });
-  }
-
-  function execCrunksSubs() {
-    return window.gapi.client.youtube.subscriptions.list({
-      "part": "snippet,contentDetails",
-      "channelId": "UCA-8h5uCH5RE-1r6gskkbTw", //crunk id
-      "fields": "kind, nextPageToken, pageInfo, items(id,kind,snippet/title)",
-      "maxResults": 30,
-      "pageToken": "CB4QAA",
-
-    })
-      .then(function (response) {
-        console.log("Response", response.body);
-      },
-        function (err) { console.error("Execute error", err); });
-  }
-
-
-  function execListUserShit() {
-    return window.gapi.client.youtube.channels.list({
-      "part": "snippet,contentDetails,statistics",
-      "mine": true,
-      //"fields": "items(id,kind,snippet/title)"
-    })
-      .then(function (response) {
-        console.log("Response", response.body);
-      },
-        function (err) { console.error("Execute error", err); });
-  }
-
- 
- 
- 
- */
