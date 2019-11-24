@@ -1,6 +1,7 @@
 
 
 import { SECRET_KEYS } from '../api-key';
+import axios from 'axios';
 
 var GoogleAuth;
 var isSigned;
@@ -12,7 +13,6 @@ export function initGoogleAPI() {
       apyKey: SECRET_KEYS.apiKey,
       //scope: "https://www.googleapis.com/auth/youtube.force-ssl",
       scope: "https://www.googleapis.com/auth/youtube.readonly",
-      //scope: "https://www.googleapis.com/auth/youtubepartner-channel-audit",
     });
     //Without OAuth
     //window.gapi.load("client", function () { console.log("Not Load Script OAuth???"); });
@@ -85,16 +85,49 @@ export function printShit() {
 }
 
 
+export function testAuthcode2() {
+  var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+  var theUrl = "http://localhost:8080/user/authorize";
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4) {
+      console.log(xmlhttp.response);
+      console.log(xmlhttp.responseText);
+    }
+  }
+  xmlhttp.open("POST", theUrl);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.send(JSON.stringify({ "email": "hello@user.com", "response": { "name": "Tester" } }));
 
-export function getAuthCodeForServerSideShit(user) {
+
+}
+
+export function testAuthcode() {
+  var user = GoogleAuth.currentUser.get()
+  var someId = user.getId();
+  if (someId) {
+    //axios.post('http://localhost:8080/userDebug', { authcode: someId }).then(res => { (console.log(res)) })
+    axios.post('http://localhost:8080/user/authorize', { authcode: someId }).then(res => { (console.log(res)) })
+    console.log("SOME ID")
+    console.log(someId)
+  }
+}
+
+//https://developers.google.com/identity/sign-in/web/server-side-flow
+export function getAuthCodeForServerSideShit() {
   var user = GoogleAuth.currentUser.get()
   user.grantOfflineAccess({
     scope: "https://www.googleapis.com/auth/youtube.readonly"
   }).then(function (resp) {
     var authcode = resp.code;
-    console.log("RESPONSE AND CODE FROM AUTHCODE")
-    console.log(resp)
-    console.log("------------")
-    console.log(resp.code)
+    if (resp.code) {
+      axios.post('http://localhost:8080/userDebug', { authcode: resp.code } ) .then(res => { (console.log(res)) })
+      axios.post('http://localhost:8080/user/authorize', { authcode: resp.code } ) .then(res => { (console.log(res)) })
+      var authcode22 = resp.poopy;
+      console.log("RESPONSE AND CODE FROM AUTHCODE")
+      console.log(resp)
+      console.log("------------")
+      console.log(resp.code)
+    }
+    
   })
 }

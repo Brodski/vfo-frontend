@@ -102,6 +102,8 @@ export function Youtube() {
       <div></div>
 
       <button onClick={Common.getAuthCodeForServerSideShit} >Auth Code For Server</button>
+      <button onClick={Common.testAuthcode} > TEST </button>
+      <button onClick={Common.testAuthcode2} > TEST2 </button>
       <div></div>
 
       <button onClick={getAllSubs}> getAllSubs  </button>
