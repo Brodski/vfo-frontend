@@ -67,28 +67,20 @@ export function Youtube() {
 
   async function getAllSubs() {
     let pageToken = null;
-    let fullResponse = null;
-//    getAllSubs_rec(pageToken, fullResponse)
- //     .then(function (result) { console.log(result); doStuffWithSubz(result) })
-  //    .catch(function (err) { console.error("Execute error", err); });
 
-    var response = await getAllSubs_rec2(pageToken, fullResponse)
-    fullResponse = !fullResponse ? response.result.items : fullResponse.concat(response.result.items)
+    var response = await getSubsFromYoutube(pageToken)
+    let subscriberList = response.result.items
+
     while (response.result.nextPageToken) {
-    //for (let i = 0; i < 5; i++) {
-      console.log("GOING IN!")
-      response = await getAllSubs_rec2(response.result.nextPageToken, fullResponse)
-      console.log(response.result.nextPageToken)
-      console.log("WE DON WAITED")
-      fullResponse = !fullResponse ? response.result.items : fullResponse.concat(response.result.items)
+      response = await getSubsFromYoutube(response.result.nextPageToken)
+      subscriberList = !subscriberList ? response.result.items : subscriberList.concat(response.result.items)      
     }
-    console.log('fullResponse')
-    console.log(fullResponse)
+    console.log('subscriberList')
+    console.log(subscriberList)
     
     
   }
-  function getAllSubs_rec2(pageToken, fullResponse) {
-    console.log("======2222222222222222222======================================")
+  function getSubsFromYoutube(pageToken) {
     return window.gapi.client.youtube.subscriptions.list({
       "part": "snippet",
       "maxResults": 15,
@@ -102,35 +94,7 @@ export function Youtube() {
     console.log("allSubz")
     console.log(allSubz)
   }
-
-  function getAllSubs_rec(pageToken, fullResponse) {
-    console.log("============================================")
-    return window.gapi.client.youtube.subscriptions.list({
-      "part": "snippet",
-      "maxResults": 15,
-      "mine": true,
-      "pageToken": pageToken,
-      "fields": "pageInfo, nextPageToken, items(snippet/title, snippet/publishedAt, snippet/resourceId/channelId, snippet/thumbnails/default/url )"
-    })
-      .then(function (response) {
-        fullResponse = !fullResponse ? response.result.items : fullResponse.concat(response.result.items)
-        console.log("next page " + response.result.nextPageToken)
-        if (response.result.nextPageToken) {
-          console.log("fullResponse", fullResponse);
-          console.log("IN");
-          return getAllSubs_rec(response.result.nextPageToken, fullResponse)
-        }
-        else {
-          console.log("fullResponse", fullResponse);
-          console.log("OUT");
-        return fullResponse
-        }
-      })
-      .then(function (result) { console.log("SHIIIIIIIIIIIT");console.log(result); doStuffWithSubz(result) })
-      .catch(function (err) { console.error("Execute error", err); });
-      
-  }
-  
+    
   return(
       <div>
         <h1>Youtube</h1>
