@@ -66,9 +66,9 @@ export function Youtube() {
 
 
   async function getAllSubs() {
-    let pageToken = null;
-
-    var response = await getSubsFromYoutube(pageToken)
+    //let pageToken = null;
+    //var response = await getSubsFromYoutube(pageToken)
+    var response = await getSubsFromYoutube()
     let subscriberList = response.result.items
 
     while (response.result.nextPageToken) {
@@ -77,7 +77,7 @@ export function Youtube() {
     }
     console.log('subscriberList')
     console.log(subscriberList)
-    
+    return subscriberList
     
   }
   function getSubsFromYoutube(pageToken) {
@@ -90,11 +90,24 @@ export function Youtube() {
     })
   }
 
-  function doStuffWithSubz(allSubz) {
-    console.log("allSubz")
-    console.log(allSubz)
+async function doStuff() {
+  console.log("BEFORE")
+  let subscriberList = await getAllSubs()
+  let profile = await Common.getProfile()
+  console.log('ID: ' + profile.getId());profile.getId()
+  console.log('Image URL: ' + profile.getImageUrl());
+
+  console.log("AFTER")
+  console.log(subscriberList)
+  console.log(profile)
+  const doubleTrouble = await Promise.all([subscriberList, profile])
+  console.log(doubleTrouble)
+  //return Promise.all([subscriberList, profile])
+  //axios.post('http://localhost:8080/userDebug', { authcode: someId }).then(res => { (console.log(res)) })
+  //axios.post('http://localhost:8080/user/authorize', { authcode: someId }).then(res => { (console.log(res)) })
+
   }
-    
+  
   return(
       <div>
         <h1>Youtube</h1>
@@ -114,6 +127,8 @@ export function Youtube() {
       <button onClick={getUploads}> get Uploads   (channels.list) </button>
       <button onClick={getActivities}> get Activities   (activities.list) </button>
 
+      <div></div>
+      <button onClick={doStuff}> Do important stuff </button>
       <div></div>
       <button onClick={Common.isHeSignedIn}> isHeSignedIn</button>
       <button onClick={Common.printShit}> print shit</button>

@@ -101,6 +101,14 @@ export function testWithXML() {
 
 }
 
+export function getProfile() {
+  if (GoogleAuth) {
+    var user = GoogleAuth.currentUser.get()
+    var profile = user.getBasicProfile();
+    return profile
+    }
+}
+
 export function testAuthcode() {
   var user = GoogleAuth.currentUser.get()
   var profile = user.getBasicProfile();
