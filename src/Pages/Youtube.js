@@ -10,9 +10,9 @@ import * as Common from './Common.js';
 //       JS API https://github.com/google/google-api-javascript-client
 
 //ACTUAL JS DOCS. gapi objects & methods: https://github.com/google/google-api-javascript-client/blob/master/docs/reference.md
-// BIGGER DOCS: https://developers.google.com/identity/sign-in/web/reference
-// It is  generally a best practice to request scopes incrementally, at the time access is required, rather than up front. https://developers.google.com/identity/protocols/OAuth2
-//      
+// BIGGER DOCS:           https://developers.google.com/identity/sign-in/web/reference
+
+// Get profile info (id): https://developers.google.com/identity/sign-in/web/people
 
 //OAuth https://developers.google.com/youtube/v3/guides/authentication
 
@@ -24,6 +24,8 @@ import * as Common from './Common.js';
 // next page token
 
 //Scope https://developers.google.com/identity/protocols/googlescopes
+// Serverside Auth https://developers.google.com/identity/protocols/OAuth2WebServer
+// Serverside Auth https://developers.google.com/identity/sign-in/web/server-side-flow
 
 export function Youtube() {
 
@@ -63,31 +65,69 @@ export function Youtube() {
   }
 
 
-  function getAllSubs() {
+  async function getAllSubs() {
     let pageToken = null;
-    let fullResponse = [];
-    getAllSubs_rec(pageToken, fullResponse)
+    let fullResponse = null;
+//    getAllSubs_rec(pageToken, fullResponse)
+ //     .then(function (result) { console.log(result); doStuffWithSubz(result) })
+  //    .catch(function (err) { console.error("Execute error", err); });
+
+    var response = await getAllSubs_rec2(pageToken, fullResponse)
+    fullResponse = !fullResponse ? response.result.items : fullResponse.concat(response.result.items)
+    while (response.result.nextPageToken) {
+    //for (let i = 0; i < 5; i++) {
+      console.log("GOING IN!")
+      response = await getAllSubs_rec2(response.result.nextPageToken, fullResponse)
+      console.log(response.result.nextPageToken)
+      console.log("WE DON WAITED")
+      fullResponse = !fullResponse ? response.result.items : fullResponse.concat(response.result.items)
+    }
+    console.log('fullResponse')
+    console.log(fullResponse)
+    
+    
+  }
+  function getAllSubs_rec2(pageToken, fullResponse) {
+    console.log("======2222222222222222222======================================")
+    return window.gapi.client.youtube.subscriptions.list({
+      "part": "snippet",
+      "maxResults": 15,
+      "mine": true,
+      "pageToken": pageToken,
+      "fields": "pageInfo, nextPageToken, items(snippet/title, snippet/publishedAt, snippet/resourceId/channelId, snippet/thumbnails/default/url )"
+    })
+  }
+
+  function doStuffWithSubz(allSubz) {
+    console.log("allSubz")
+    console.log(allSubz)
   }
 
   function getAllSubs_rec(pageToken, fullResponse) {
     console.log("============================================")
     return window.gapi.client.youtube.subscriptions.list({
       "part": "snippet",
-      "maxResults": 30,
+      "maxResults": 15,
       "mine": true,
       "pageToken": pageToken,
       "fields": "pageInfo, nextPageToken, items(snippet/title, snippet/publishedAt, snippet/resourceId/channelId, snippet/thumbnails/default/url )"
     })
       .then(function (response) {
-        fullResponse.push(response.result)
-        fullResponse[0].items.push("DMX")
-        console.log("Response", response.result);
-        console.log("fullResponse", fullResponse);
+        fullResponse = !fullResponse ? response.result.items : fullResponse.concat(response.result.items)
         console.log("next page " + response.result.nextPageToken)
         if (response.result.nextPageToken) {
+          console.log("fullResponse", fullResponse);
+          console.log("IN");
           return getAllSubs_rec(response.result.nextPageToken, fullResponse)
-          }
-      }).catch (function (err) { console.error("Execute error", err); });
+        }
+        else {
+          console.log("fullResponse", fullResponse);
+          console.log("OUT");
+        return fullResponse
+        }
+      })
+      .then(function (result) { console.log("SHIIIIIIIIIIIT");console.log(result); doStuffWithSubz(result) })
+      .catch(function (err) { console.error("Execute error", err); });
       
   }
   
@@ -103,7 +143,7 @@ export function Youtube() {
 
       <button onClick={Common.getAuthCodeForServerSideShit} >Auth Code For Server</button>
       <button onClick={Common.testAuthcode} > TEST </button>
-      <button onClick={Common.testAuthcode2} > TEST2 </button>
+      <button onClick={Common.testWithXML} > TEST2 </button>
       <div></div>
 
       <button onClick={getAllSubs}> getAllSubs  </button>

@@ -85,7 +85,7 @@ export function printShit() {
 }
 
 
-export function testAuthcode2() {
+export function testWithXML() {
   var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
   var theUrl = "http://localhost:8080/user/authorize";
   xmlhttp.onreadystatechange = function () {
@@ -103,12 +103,22 @@ export function testAuthcode2() {
 
 export function testAuthcode() {
   var user = GoogleAuth.currentUser.get()
+  var profile = user.getBasicProfile();
   var someId = user.getId();
   if (someId) {
     //axios.post('http://localhost:8080/userDebug', { authcode: someId }).then(res => { (console.log(res)) })
     axios.post('http://localhost:8080/user/authorize', { authcode: someId }).then(res => { (console.log(res)) })
     console.log("SOME ID")
     console.log(someId)
+
+    console.log('ID: ' + profile.getId());
+    console.log('Full Name: ' + profile.getName());
+    console.log('Given Name: ' + profile.getGivenName());
+    console.log('Family Name: ' + profile.getFamilyName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail());
+
+    //var profile = auth2.currentUser.get().getBasicProfile();
   }
 }
 
