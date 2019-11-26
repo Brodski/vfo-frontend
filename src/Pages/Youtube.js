@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { SECRET_KEYS } from '../api-key';
 import * as Common from './Common.js';
+import { SubscriptionActivitys } from '../Classes/SubscriptionActivitys';
+
 
 // Github: JS Client https://github.com/google/google-api-javascript-client
 //
@@ -37,19 +39,6 @@ export function Youtube() {
     Common.initGoogleAPI()
   }
 
-  
-  function getActivities() {
-    return window.gapi.client.youtube.activities.list({
-      "part": "snippet,contentDetails",
-      "channelId": "UC5bcPvIBATOx_tZKSpQCOhQ",
-      "maxResults": 25
-    })
-      .then(function (response) {
-        console.log("Response", response.result);
-      }).catch(function (err) { console.error("Execute error", err); });
-  }
-  
-
   function getUploads() {
     return window.gapi.client.youtube.search.list({
       "part": "snippet",
@@ -64,23 +53,55 @@ export function Youtube() {
       }).catch(function (err) { console.error("Execute error", err); });
   }
 
+  
+  function getAChannelsActivities(channel = "UC5bcPvIBATOx_tZKSpQCOhQ", maxResults = 5) {
+    console.log("--- Getting activities for: " + channel)
+    return window.gapi.client.youtube.activities.list({
+      "part": "snippet,contentDetails",
+      "channelId": channel,
+      "maxResults": maxResults,
+      "fields": "nextPageToken, items(contentDetails/*, snippet/*)"
+    })
+  }
+  
 
+
+  async function getActivitesOfChannels() {
+    let subList = await getAllSubs()
+    let count = 0;
+    let subActivityList = []
+    for (let s of subList) {
+      console.log(count)
+      count++
+      let response = await getAChannelsActivities(s.snippet.resourceId.channelId)
+      let fewActs = response.result
+      let subActivity = new SubscriptionActivitys()      
+      subActivity.channelId = s.snippet.resourceId.channelId
+      subActivity.activityList = fewActs;
+      subActivityList.push(subActivity)
+
+      console.log(subActivity)
+    }
+    console.log("WERE OUT! subActivityList: ")
+    console.log(subActivityList)
+
+  }
   async function getAllSubs() {
     //let pageToken = null;
     //var response = await getSubsFromYoutube(pageToken)
-    var response = await getSubsFromYoutube()
-    let subscriberList = response.result.items
+    var response = await _getSubsFromYoutube()
+    let subscriptionList = response.result.items
 
     while (response.result.nextPageToken) {
-      response = await getSubsFromYoutube(response.result.nextPageToken)
-      subscriberList = !subscriberList ? response.result.items : subscriberList.concat(response.result.items)      
+      response = await _getSubsFromYoutube(response.result.nextPageToken)
+      subscriptionList = !subscriptionList ? response.result.items : subscriptionList.concat(response.result.items)      
     }
-    console.log('subscriberList')
-    console.log(subscriberList)
-    return subscriberList
+    console.log('getAllSubs(), returning subscriptionList: ')
+    console.log(subscriptionList)
+    return subscriptionList
     
   }
-  function getSubsFromYoutube(pageToken) {
+  function _getSubsFromYoutube(pageToken) {
     return window.gapi.client.youtube.subscriptions.list({
       "part": "snippet",
       "maxResults": 15,
@@ -90,21 +111,14 @@ export function Youtube() {
     })
   }
 
-async function doStuff() {
-  console.log("BEFORE")
-  let subscriberList = await getAllSubs()
-  let profile = await Common.getProfile()
-  console.log('ID: ' + profile.getId());profile.getId()
-  console.log('Image URL: ' + profile.getImageUrl());
+  async function doStuff() {
+  let subscriberList = getAllSubs()
+  let profile = Common.getProfile()
 
-  console.log("AFTER")
   console.log(subscriberList)
   console.log(profile)
   const doubleTrouble = await Promise.all([subscriberList, profile])
   console.log(doubleTrouble)
-  //return Promise.all([subscriberList, profile])
-  //axios.post('http://localhost:8080/userDebug', { authcode: someId }).then(res => { (console.log(res)) })
-  //axios.post('http://localhost:8080/user/authorize', { authcode: someId }).then(res => { (console.log(res)) })
 
   }
   
@@ -125,9 +139,10 @@ async function doStuff() {
 
       <button onClick={getAllSubs}> getAllSubs  </button>
       <button onClick={getUploads}> get Uploads   (channels.list) </button>
-      <button onClick={getActivities}> get Activities   (activities.list) </button>
+      <button onClick={() => getAChannelsActivities()}> get Activities   (activities.list) </button>
 
       <div></div>
+      <button onClick={getActivitesOfChannels}> get activites of subscriptions  </button>
       <button onClick={doStuff}> Do important stuff </button>
       <div></div>
       <button onClick={Common.isHeSignedIn}> isHeSignedIn</button>
