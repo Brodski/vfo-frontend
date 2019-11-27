@@ -2,6 +2,7 @@
 
 import { SECRET_KEYS } from '../api-key';
 import axios from 'axios';
+import { SubscriptionActivitys } from '../Classes/SubscriptionActivitys';
 
 var GoogleAuth;
 var isSigned;
@@ -26,7 +27,6 @@ export function loadClient() {
     .then(function () {
       console.log("GAPI client loaded for API");
       GoogleAuth = window.gapi.auth2.getAuthInstance();
-      console.log(GoogleAuth)
       isHeSignedIn()
     },
       function (err) { console.error("Error loading GAPI client for API", err); });
