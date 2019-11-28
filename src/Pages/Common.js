@@ -68,12 +68,7 @@ export function isHeSignedIn() {
 export function printShit() {
   var user = GoogleAuth.currentUser.get()
   console.log("---------------------------------")
-  console.log("isSigned:")
-  console.log(isSigned)
-  console.log("GoogleAuth")
-  console.log(GoogleAuth)
-  console.log("user")
-  console.log(user)
+  isHeSignedIn()
 
   console.log(user.getBasicProfile())
   console.log(user.getGrantedScopes())

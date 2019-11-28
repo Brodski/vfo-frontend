@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import { SECRET_KEYS } from '../api-key';
 import * as Common from './Common.js';
 import { SubscriptionActivitys } from '../Classes/SubscriptionActivitys';
-
+import * as videoJ from '../Scratch/api_video.json'
 
 // Github: JS Client https://github.com/google/google-api-javascript-client
 //
@@ -40,17 +41,16 @@ export function Youtube() {
     script.onload = () => {
       Common.initGoogleAPI()
     }
-    }, []) 
-/*  const script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = "https://apis.google.com/js/client.js";
-  document.body.appendChild(script)
-  script.onload = () => {
-    Common.initGoogleAPI()
-  }
-*/
+  }, [])
+  /*  const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://apis.google.com/js/client.js";
+    document.body.appendChild(script)
+    script.onload = () => {
+      Common.initGoogleAPI()
+    }
+  */
   function getAChannelsActivities(channel = "UC5bcPvIBATOx_tZKSpQCOhQ", maxResults = 5) {
-//    console.log("--- Getting activities for: " + channel)
     return window.gapi.client.youtube.activities.list({
       "part": "snippet,contentDetails",
       "channelId": channel,
@@ -58,9 +58,9 @@ export function Youtube() {
       "fields": "nextPageToken, items(contentDetails/*, snippet/*)"
     })
   }
-  
 
-  
+
+
   async function getActivitesOfChannels() {
     let subsOfUserList = await getAllSubs()
     let count = 0;
@@ -70,7 +70,7 @@ export function Youtube() {
       count++
       let response = await getAChannelsActivities(s.snippet.resourceId.channelId)
       let fewActs = response.result
-      let subActivity = new SubscriptionActivitys()      
+      let subActivity = new SubscriptionActivitys()
       subActivity.channelId = s.snippet.resourceId.channelId
       subActivity.activityList = fewActs.items;
       subActivity.nextPageToken = fewActs.nextPageToken
@@ -78,15 +78,21 @@ export function Youtube() {
       console.log(subActivity)
     }
     console.log("WERE OUT! subActivityList: ")
-    console.log(subActivityList)
 
-    for (const act of subActivityList[0].activityList) {
-      let mydateString = act.snippet.publishedAt
-      let mydate = new Date(mydateString)
+    console.log("==== ALL SUB ACTIVITIES!! ===")
+    console.log(subActivityList)
+    console.log(JSON.stringify(subActivityList, null, 2))
+
+    for (const act of subActivityList[1].activityList) {
+      //let mydateString = act.snippet.publishedAt
+      //let mydate = new Date(mydateString)
       //console.log(mydateString)
-      console.log(mydate.toString())
+      //console.log(mydate.toString())
+      console.log("==== An Activity ===")
+      console.log(JSON.stringify(act, null, 2))
     }
-    
+
+
   }
   async function getAllSubs() {
     var response = await _getSubsFromYoutube()
@@ -94,12 +100,12 @@ export function Youtube() {
 
     while (response.result.nextPageToken) {
       response = await _getSubsFromYoutube(response.result.nextPageToken)
-      subsOfUserList = !subsOfUserList ? response.result.items : subsOfUserList.concat(response.result.items)      
+      subsOfUserList = !subsOfUserList ? response.result.items : subsOfUserList.concat(response.result.items)
     }
     console.log('getAllSubs(), subsOfUserList: ')
     console.log(subsOfUserList)
     return subsOfUserList
-    
+
   }
   function _getSubsFromYoutube(pageToken) {
     return window.gapi.client.youtube.subscriptions.list({
@@ -119,9 +125,10 @@ export function Youtube() {
     console.log(doubleTrouble)
   }
 
+  //////////////////////////////////////////////////////
   const [channel, setChannel] = useState('')
 
-  function grabChannelInfo(e) {
+  function getChannelInfo(e) {
     e.preventDefault();
     console.log("CLICKEDDD! - channel: " + channel)
     let id = "UCPWXiRWZ29zrxPFIQT7eHSA, UCeMFHOzX9MDWbr-pu2WdmVw, UC3IngBBUGFUduHp-7haK1lw, UCA-8h5uCH5RE-1r6gskkbTw, UC0CeYMTh57zSsbUKhsyOPfw"
@@ -135,10 +142,55 @@ export function Youtube() {
         console.log("Response", response.result);  //console.log("Response", JSON.stringify(response.result, null, 2)); 
       })
   }
-  
+
   const updateChannel = (e) => {
     setChannel(e.target.value)
   }
+
+  //////////////////////////////////
+
+  const Video = ({ name, price }) => {
+    return (
+      <div>
+        <p> {name} : {price} </p>
+      </div>
+    );
+  }
+  console.log('///////////////////////////////////////////')
+  console.log(videoJ)
+  console.log(videoJ.items)
+  console.log(videoJ.items[0].id)
+
+  const Video2 = ({ thumbnail, title, publishedAt, id, viewCount, duration }) => {
+    let pubAt = new Date(publishedAt)
+    return (
+      <div>
+        <a href={"https://www.youtube.com/watch?v="+id} >
+          <img src={thumbnail} /> 
+        </a>
+
+        <p> {pubAt.toString()} </p>
+        <p> {title} </p>
+        <p> {viewCount} </p>
+        <p> {duration } </p>
+        <p> {id } </p>
+      </div>
+    );
+  }
+
+  
+  const Store = (info) => {
+      //const info = { name: "Luigi", price: "green"};
+    return( 
+        <div>
+          <h3>Tell me about this person</h3>
+          <Video man={info} />
+        </div>
+      );
+  }
+  
+  
+  /////////////////////////////////////////
 
   return(
       <div>
@@ -148,29 +200,41 @@ export function Youtube() {
       
       <button onClick={Common.authenticate}>authorize </button>
       <button onClick={Common.signOut} > Log Out </button>
-      <div></div>
-
       <button onClick={Common.getAuthCodeForServerSideShit} >Auth Code For Server</button>
-      <button onClick={Common.testAuthcode} > your logged in profile </button>
-      <button onClick={Common.testWithXML} > TEST with xml </button>
+
+      <div></div>      
+      <button onClick={Common.testAuthcode} > get your logged in profile </button>
+      <button onClick={Common.testWithXML} > "Ping" server with xml </button>
       <div></div>
 
-      <button onClick={getAllSubs}> getAllSubs  </button>
-      {/*<button onClick={getUploads}> get Uploads   (channels.list) </button>*/}
-      <button onClick={() => getAChannelsActivities()}> get Activities   (activities.list) </button>
+      <button onClick={getAllSubs}> Get All Subs  </button>
+      <div/>
+      <button onClick={getActivitesOfChannels}> Get All Subs, then get activites of 1 of your subs  </button>
+      {/*<button onClick={getUploads}> get Uploads   (channels.list) </button>
+       <button onClick={() => getAChannelsActivities()}> get Activities   (activities.list) </button>*/}
+      
 
       <div></div>
-      <button onClick={getActivitesOfChannels}> get activites of 1 of your subs  </button>
+      
       <button onClick={doPromiseAwaitStuff}> Do Promise await stuff </button>
       <div></div>
       <button onClick={Common.isHeSignedIn}> isHeSignedIn</button>
       <button onClick={Common.printShit}> print shit</button>
       <div></div> 
 
-      <form onSubmit={grabChannelInfo}>
+      <form onSubmit={getChannelInfo}>
         <input type='text' onChange={updateChannel} />
         <button>Channel get</button>
       </form>
+      <Video name={"DMX"} price={"$1,000"} />
+      <Video2 thumbnail={videoJ.items[0].snippet.thumbnails.medium.url}
+        id={videoJ.items[0].id}
+        title={videoJ.items[0].snippet.title}
+        publishedAt={videoJ.items[0].snippet.publishedAt}
+        views={videoJ.items[0].statistics.viewCount}
+        duration={videoJ.items[0].contentDetails.duration}
+      />
+
 
       </div>
     );
