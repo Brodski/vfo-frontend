@@ -5,6 +5,7 @@ import { SECRET_KEYS } from '../api-key';
 import * as Common from './Common.js';
 import { SubscriptionActivitys } from '../Classes/SubscriptionActivitys';
 import * as videoJ from '../Scratch/api_video.json'
+import * as moment from 'moment'
 
 // Github: JS Client https://github.com/google/google-api-javascript-client
 //
@@ -149,10 +150,99 @@ export function Youtube() {
 
   //////////////////////////////////
 
-  const Video = ({ name, price }) => {
+  const VideoLOL = ({ name, price }) => {
     return (
       <div>
         <p> {name} : {price} </p>
+      </div>
+    );
+  }
+  let userzzz = { name: "dmx", hobbies: "giving it to ya" }
+
+  const Video3 = (props) => {
+    return (
+      <div> video 3
+        <p> info.name:  {props.info.name}       </p>
+      </div>
+    );
+  }
+
+   
+  const Video = (props) => {
+    let thumbnail     = props.video.snippet.thumbnails.medium.url
+    let id            = props.video.id
+    let title         = props.video.snippet.title
+    let publishedAt   = props.video.snippet.publishedAt
+    let viewCount     = props.video.statistics.viewCount
+    let channelName   = props.video.snippet.channelTitle
+    let pubAt         = new Date(publishedAt)
+    let nowDate       = new Date()
+
+    let vidDuration   = props.video.contentDetails.duration
+    let vd_aux        = moment.duration(vidDuration) //Convert iso8601 string to object
+    vidDuration       = "" + vd_aux.minutes() + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"
+    
+    
+    let moPubAt         = new moment(publishedAt)
+    let moNowDate       = new moment()
+    let moDiff = moPubAt.fromNow()
+
+  //  console.log(pubAt)
+//    console.log(nowDate)
+    //let moDiff   =  moNowDate.diff(moPubAt, "days")
+    //let moDiff   =  moNowDate.diff(moNowDate, "days")
+    //let time = moment.duration("01:01:00");
+    //let date = moPubAt.add(time)
+    var tyGiving = moment([2019, 11, 28]);
+    var b = moment([2019, 11, 27, 1]);
+    var date = tyGiving.diff(b) // 1
+    //console.log("special date : " + date)
+//    console.log(date)
+    moment.updateLocale('en', {
+      relativeTime : {
+        future: "in %s",
+        past:   "%s ago",
+        s  : 'a few seconds',
+        ss : '%d seconds',
+        m:  "1 minute",
+        mm: "%d minutes",
+        h:  "a hour",
+        hh: "%d hours",
+        d:  "1 day",
+        dd: "%d days",
+        M:  "1 month",
+        MM: "%d months",
+        y:  "1 year",
+        yy: "%d years"
+
+      }
+    });
+
+    console.log(title)
+    console.log(moDiff)
+    
+  //  console.log("moment pub at : " + moPubAt)
+//    console.log("monowdat at : " + moNowDate)
+    console.log("moment diff : " + moDiff)
+
+//    console.log(typeof(nowDate))
+  //  console.log("nowDate - pubAt : " + (nowDate - pubAt)) 
+    //console.log(typeof((nowDate - pubAt)) )
+
+    return (
+      <div>
+        <h3> - built by a single video object - </h3>
+        <a href={"https://www.youtube.com/watch?v="+id} >
+          <img src={thumbnail} /> 
+        </a>
+
+        <div> {pubAt.toString()} </div>
+        <div> {title} </div>
+        <div> channel: {channelName} </div>
+        <div> relative: {moDiff} </div>
+        <div> Views: {viewCount} </div>
+        <div> duration: {vidDuration } </div>
+        <div> id: {id} </div>
       </div>
     );
   }
@@ -161,10 +251,30 @@ export function Youtube() {
   console.log(videoJ.items)
   console.log(videoJ.items[0].id)
 
+    
+  const VideoShelf = (props) => {
+    
+    console.log('999999999999999999999999999')
+    console.log(props)
+    
+    const myVidShelf = props.videoList.map((vid) =>
+      <Video key={vid.id} video={vid}/>
+    );
+//    return ({ someshit });
+    return (
+      <div> 
+        <h1> ======================================= </h1>
+        {myVidShelf}
+        <h1> ======================================= </h1>
+      </div>  
+      )
+  }
+
   const Video2 = ({ thumbnail, title, publishedAt, id, viewCount, duration }) => {
     let pubAt = new Date(publishedAt)
     return (
       <div>
+        <h3> - built by well defined arguements - </h3>
         <a href={"https://www.youtube.com/watch?v="+id} >
           <img src={thumbnail} /> 
         </a>
@@ -184,7 +294,7 @@ export function Youtube() {
     return( 
         <div>
           <h3>Tell me about this person</h3>
-          <Video man={info} />
+          <VideoLOL  man={info} />
         </div>
       );
   }
@@ -196,44 +306,35 @@ export function Youtube() {
       <div>
         <h1>Youtube</h1>
         <div>Note, the app must ALWAYS do loadClient before any API call</div>
-        <div>App now auto loads Client</div>
-      
+      <h3>Common</h3>
       <button onClick={Common.authenticate}>authorize </button>
       <button onClick={Common.signOut} > Log Out </button>
       <button onClick={Common.getAuthCodeForServerSideShit} >Auth Code For Server</button>
+      <div></div>
+      <button onClick={Common.isHeSignedIn}> isHeSignedIn</button>
+      <button onClick={Common.printShit}> print shit</button>
 
       <div></div>      
       <button onClick={Common.testAuthcode} > get your logged in profile </button>
       <button onClick={Common.testWithXML} > "Ping" server with xml </button>
       <div></div>
-
+      <h3> youtube api </h3>
       <button onClick={getAllSubs}> Get All Subs  </button>
       <div/>
       <button onClick={getActivitesOfChannels}> Get All Subs, then get activites of 1 of your subs  </button>
-      {/*<button onClick={getUploads}> get Uploads   (channels.list) </button>
-       <button onClick={() => getAChannelsActivities()}> get Activities   (activities.list) </button>*/}
-      
-
       <div></div>
       
       <button onClick={doPromiseAwaitStuff}> Do Promise await stuff </button>
-      <div></div>
-      <button onClick={Common.isHeSignedIn}> isHeSignedIn</button>
-      <button onClick={Common.printShit}> print shit</button>
       <div></div> 
 
       <form onSubmit={getChannelInfo}>
         <input type='text' onChange={updateChannel} />
         <button>Channel get</button>
       </form>
-      <Video name={"DMX"} price={"$1,000"} />
-      <Video2 thumbnail={videoJ.items[0].snippet.thumbnails.medium.url}
-        id={videoJ.items[0].id}
-        title={videoJ.items[0].snippet.title}
-        publishedAt={videoJ.items[0].snippet.publishedAt}
-        views={videoJ.items[0].statistics.viewCount}
-        duration={videoJ.items[0].contentDetails.duration}
-      />
+      
+      <VideoShelf videoList={videoJ.items}/>
+      <Video3 info={userzzz} />
+      <Video video={videoJ.items[0]} />
 
 
       </div>
@@ -241,6 +342,7 @@ export function Youtube() {
 }
 
 /*
+
   function getUploads() {
     return window.gapi.client.youtube.search.list({
       "part": "snippet",
