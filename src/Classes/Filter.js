@@ -2,9 +2,9 @@
 
 export class Filter {
   constructor() {
-    blacklist = [];
-    requireKeyword = [];
-    minDuration = 0;
-    maxDuration = Infinity;
+    this.blacklist = [];
+    this.requireKeyword = [];
+    this.minDuration = 0;
+    this.maxDuration = Infinity;
   }
 }

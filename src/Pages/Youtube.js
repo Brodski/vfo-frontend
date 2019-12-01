@@ -7,6 +7,9 @@ import { SubscriptionActivitys } from '../Classes/SubscriptionActivitys';
 import * as videoJ from '../Scratch/api_video.json';
 import * as moment from 'moment';
 import * as youtubeApi from "./youtubeApi";
+import { Shelf } from '../Classes/Shelf';
+import { Filter } from '../Classes/Filter';
+import { Subscription } from '../Classes/Subscription';
 
 // Github: JS Client https://github.com/google/google-api-javascript-client
 //
@@ -45,28 +48,18 @@ export function Youtube() {
     });
 
 
-  useEffect(() => {
+//  useEffect(() => {
     console.log("HELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!")
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://apis.google.com/js/client.js";
+    script.async = true
     document.body.appendChild(script)
     script.onload = () => {
       Common.initGoogleAPI()
     }
-  }, [])
+  //}, [])
 
-  /////////////////////  Rest - 1 channel's activities  ///////////////////////////
-  /*
-  function _getActivities(channel) {
-    return window.gapi.client.youtube.activities.list({
-      "part": "snippet,contentDetails",
-      "channelId": channel,
-      "maxResults": 35,
-      "fields": "nextPageToken, items(contentDetails/*, snippet/*)"
-    })
-  }
-  */
     async function XXXgetActivitesOfChannels_2() {
   
     console.time("Subs getting")
@@ -141,48 +134,13 @@ export function Youtube() {
     return allSubs
 
   }
-  /*
-  function _getThisUsersSubs(pageToken) {
-    return window.gapi.client.youtube.subscriptions.list({
-      "part": "snippet",
-      "maxResults": 50,
-      "mine": true,
-      "pageToken": pageToken,
-      "fields": "pageInfo, nextPageToken, items(snippet/title, snippet/publishedAt, snippet/resourceId/channelId, snippet/thumbnails/default/url )"
-    })
-  }
-  */
-
-
- // async function doPromiseAwaitStuff() {
-//    let subsOfUserList = getAllSubs()
-    //let profile = Common.getProfile()
-   // const doubleTrouble = await Promise.all([subsOfUserList, profile])
- ///   console.log(doubleTrouble)
-//  }
 
   //////////////////////////////////////////////////////
   const [channel, setChannel] = useState('')
   const updateChannel = (e) => {
     setChannel(e.target.value)
   }
-   
 
-  function getChannelInfo(e) {
-    e.preventDefault();
-    console.log("CLICKEDDD! - channel: " + channel)
-    let id = "UCPWXiRWZ29zrxPFIQT7eHSA, UCeMFHOzX9MDWbr-pu2WdmVw, UC3IngBBUGFUduHp-7haK1lw, UCA-8h5uCH5RE-1r6gskkbTw, UC0CeYMTh57zSsbUKhsyOPfw"
-    return window.gapi.client.youtube.channels.list({
-      "part": "snippet",
-      "id": id,
-      "maxResults": 50,
-      "fields": "items(id, snippet/title,snippet/thumbnails/default)",
-    })
-      .then(function (response) {
-        console.log("Response", response.result);  //console.log("Response", JSON.stringify(response.result, null, 2)); 
-      })
-  }
-  ///////////////////////////////////////////////////////
   const Video = (props) => {
     let thumbnail     = props.video.snippet.thumbnails.medium.url
     let id            = props.video.id
@@ -231,6 +189,105 @@ export function Youtube() {
       )
   }
   
+  const XxxVideoShelf2 = (props) => {
+    console.log("map vidShelf")
+    console.time("map vidShelf")
+    console.log(props)
+    console.log(props.shelfInfo.subscriptions)
+    const shelfActs_Promises = props.shelfInfo.subscriptions.map(sub => {
+      console.log(sub.channelId)
+      youtubeApi._getActivities(sub.channelId)
+    }) 
+    console.timeEnd("map vidShelf")
+
+    console.time("Acts getting")
+//    const allActivities_response = await Promise.all(shelfActs_Promises)
+    console.timeEnd("Acts getting")
+  //  console.log(shelfActs_Promises)
+  //  console.log(allActivities_response)
+    return(
+      <div>
+        <h2> props.shelfInfo.subscriptions[0].channelId </h2>
+      </div>
+    )
+  }
+  
+   
+   let sub1 = new Subscription()
+   sub1.channelName = "The Hill"
+   sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
+   
+   let sub2 = new Subscription()
+   sub2.channelName = "Crunkmastaflexx"
+   sub2.channelId = "UCA-8h5uCH5RE-1r6gskkbTw";
+
+   let sub3 = new Subscription()
+   sub3.channelName = "Deep Beat"
+   sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";   
+
+   let sub4 = new Subscription()
+   sub4.channelName = "Video Box"
+   sub4.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw";
+
+   let sub5 = new Subscription()
+   sub5.channelName = "mineralblue"
+   sub5.channelId = "UC3IngBBUGFUduHp-7haK1lw";
+
+   
+   //let profile = new Profile()
+
+   let shelf1 = new Shelf()
+   shelf1.title = "Politics"
+   shelf1.subscriptions.push(sub1)
+   shelf1.subscriptions.push(sub2)
+   shelf1.subscriptions.push(sub3)
+   console.log(shelf1)
+   let shelf2 = new Shelf();
+   shelf2.title = "Babes"
+   shelf2.subscriptions.push(sub4)
+   shelf2.subscriptions.push(sub5)
+   console.log(shelf2)
+  return(
+      <div>
+        <h1>Youtube</h1>
+        <div>Note, the app must ALWAYS do loadClient before any API call</div>
+      <h3>Common</h3>
+      <button onClick={Common.authenticate}>authorize </button>
+      <button onClick={Common.signOut} > Log Out </button>
+      <button onClick={Common.getAuthCodeForServerSideShit} >Auth Code For Server</button>
+      <div></div>
+      <button onClick={Common.isHeSignedIn}> isHeSignedIn</button>
+      <button onClick={Common.printShit}> print shit</button>
+
+      <div></div>      
+      <button onClick={Common.testAuthcode} > get your logged in profile </button>
+      <button onClick={Common.testWithXML} > "Ping" server with xml </button>
+      <div></div>
+      <h3> youtube api </h3>
+      <button onClick={getAllSubs}> Get All Subs  </button>
+      <div/>
+      <button onClick={getActivitesOfChannels}> Get All Subs, then get activites of 1 of your subs  </button>
+      <button onClick={XXXgetActivitesOfChannels_2}> 2.0: Get All Subs, then get activites of 1 of your subs  </button>
+      
+      <div></div>
+      <XxxVideoShelf2 shelfInfo={shelf1} />
+      
+      {/*<button onClick={doPromiseAwaitStuff}> Do Promise await stuff </button>*/}
+      <div></div> 
+
+      <form onSubmit={youtubeApi.getChannelInfo}>
+        <input type='text' onChange={updateChannel} />
+        <button>Channel get</button>
+      </form>
+      
+      <VideoShelf videoList={videoJ.items}/>
+      <Video video={videoJ.items[0]} />
+
+
+      </div>
+    );
+}
+
   /*
   let userzzz = { name: "dmx", hobbies: "giving it to ya" }
   const VideoLOL = ({ name, price }) => {
@@ -255,117 +312,5 @@ export function Youtube() {
           <VideoLOL  man={info} />
         </div>
       );
-  } */
-  
-
-  return(
-      <div>
-        <h1>Youtube</h1>
-        <div>Note, the app must ALWAYS do loadClient before any API call</div>
-      <h3>Common</h3>
-      <button onClick={Common.authenticate}>authorize </button>
-      <button onClick={Common.signOut} > Log Out </button>
-      <button onClick={Common.getAuthCodeForServerSideShit} >Auth Code For Server</button>
-      <div></div>
-      <button onClick={Common.isHeSignedIn}> isHeSignedIn</button>
-      <button onClick={Common.printShit}> print shit</button>
-
-      <div></div>      
-      <button onClick={Common.testAuthcode} > get your logged in profile </button>
-      <button onClick={Common.testWithXML} > "Ping" server with xml </button>
-      <div></div>
-      <h3> youtube api </h3>
-      <button onClick={getAllSubs}> Get All Subs  </button>
-      <div/>
-      <button onClick={getActivitesOfChannels}> Get All Subs, then get activites of 1 of your subs  </button>
-      <button onClick={XXXgetActivitesOfChannels_2}> 2.0: Get All Subs, then get activites of 1 of your subs  </button>
-      <div></div>
-      
-      {/*<button onClick={doPromiseAwaitStuff}> Do Promise await stuff </button>*/}
-      <div></div> 
-
-      <form onSubmit={getChannelInfo}>
-        <input type='text' onChange={updateChannel} />
-        <button>Channel get</button>
-      </form>
-      
-      <VideoShelf videoList={videoJ.items}/>
-      <Video video={videoJ.items[0]} />
-
-
-      </div>
-    );
-}
-
-/*
-
-  function getUploads() {
-    return window.gapi.client.youtube.search.list({
-      "part": "snippet",
-      "channelId": "UCb--64Gl51jIEVE-GLDAVTg",
-      "maxResults": 50,
-      "order": "date",
-      "safeSearch": "none",
-      "type": "video"
-    })
-      .then(function (response) {
-        console.log("Response", response.result);
-      }).catch(function (err) { console.error("Execute error", err); });
-  }
- 
-  function momentLearning() {
-    console.log("============================================================")
-    console.log(moment())
-    var sec = moment().subtract(1, 'days').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(1.5, 'days').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(2, 'days').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(.5, 'days').fromNow()
-    console.log(sec)
-
-    var sec = moment().subtract(1, 'seconds').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(5, 'seconds').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(25, 'seconds').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(60, 'seconds').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(105, 'seconds').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(119, 'seconds').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(120, 'seconds').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(121, 'seconds').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(149, 'seconds').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(150, 'seconds').fromNow()
-    console.log(sec)
-
-    var sec = moment().subtract(5, 'minutes').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(5, 'hours').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(1, 'years').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(5, 'years').fromNow()
-    console.log(sec)
-    var sec = moment().subtract(1.55, 'years').fromNow()
-    console.log(sec)
-    console.log("============================================================")
   } 
- 
- */
-
-  /*  const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://apis.google.com/js/client.js";
-    document.body.appendChild(script)
-    script.onload = () => {
-      Common.initGoogleAPI()
-    }
   */

@@ -2,7 +2,7 @@
 
 export class Shelf {
   constructor() {
-    let title = null;
-    let Subscriptions = []
+    this.title = null;
+    this.subscriptions = []
   }
 }

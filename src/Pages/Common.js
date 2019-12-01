@@ -2,7 +2,6 @@
 
 import { SECRET_KEYS } from '../api-key';
 import axios from 'axios';
-import { SubscriptionActivitys } from '../Classes/SubscriptionActivitys';
 
 var GoogleAuth;
 var isSigned;

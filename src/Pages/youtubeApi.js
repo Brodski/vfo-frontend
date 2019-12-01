@@ -37,3 +37,87 @@ export function getChannelInfo(e) {
       console.log("Response", response.result);  //console.log("Response", JSON.stringify(response.result, null, 2)); 
     })
   }
+
+/*
+ 
+
+  function getUploads() {
+    return window.gapi.client.youtube.search.list({
+      "part": "snippet",
+      "channelId": "UCb--64Gl51jIEVE-GLDAVTg",
+      "maxResults": 50,
+      "order": "date",
+      "safeSearch": "none",
+      "type": "video"
+    })
+      .then(function (response) {
+        console.log("Response", response.result);
+      }).catch(function (err) { console.error("Execute error", err); });
+  }
+
+*/
+
+
+
+
+
+
+
+/*
+ 
+  function momentLearning() {
+    console.log("============================================================")
+    console.log(moment())
+    var sec = moment().subtract(1, 'days').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(1.5, 'days').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(2, 'days').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(.5, 'days').fromNow()
+    console.log(sec)
+
+    var sec = moment().subtract(1, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(5, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(25, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(60, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(105, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(119, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(120, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(121, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(149, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(150, 'seconds').fromNow()
+    console.log(sec)
+
+    var sec = moment().subtract(5, 'minutes').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(5, 'hours').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(1, 'years').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(5, 'years').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(1.55, 'years').fromNow()
+    console.log(sec)
+    console.log("============================================================")
+  } 
+ 
+ */
+
+  /*  const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://apis.google.com/js/client.js";
+    document.body.appendChild(script)
+    script.onload = () => {
+      Common.initGoogleAPI()
+    }
+  */

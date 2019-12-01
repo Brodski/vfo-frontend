@@ -1,9 +1,9 @@
-import { Filter } from 'Filter.js'
+import { Filter } from './Filter'
 
 export class Subscription {
   constructor() {
-    channelId = null;
-    channelName = null;
-    filter = new Filter();
+    this.channelId = null;
+    this.channelName = null;
+    this.filter = new Filter();
   }
 }
