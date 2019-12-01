@@ -4,8 +4,9 @@ import axios from 'axios';
 import { SECRET_KEYS } from '../api-key';
 import * as Common from './Common.js';
 import { SubscriptionActivitys } from '../Classes/SubscriptionActivitys';
-import * as videoJ from '../Scratch/api_video.json'
-import * as moment from 'moment'
+import * as videoJ from '../Scratch/api_video.json';
+import * as moment from 'moment';
+import * as youtubeApi from "./youtubeApi";
 
 // Github: JS Client https://github.com/google/google-api-javascript-client
 //
@@ -33,6 +34,17 @@ import * as moment from 'moment'
 
 export function Youtube() {
 
+    moment.updateLocale('en', {
+      relativeTime : {
+        m:  "1 minute",
+        h:  "1 hour",
+        d:  "1 day",
+        M:  "1 month",
+        y:  "1 year",
+      }
+    });
+
+
   useEffect(() => {
     console.log("HELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!")
     const script = document.createElement("script");
@@ -43,24 +55,41 @@ export function Youtube() {
       Common.initGoogleAPI()
     }
   }, [])
-  /*  const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://apis.google.com/js/client.js";
-    document.body.appendChild(script)
-    script.onload = () => {
-      Common.initGoogleAPI()
-    }
-  */
-  function getAChannelsActivities(channel = "UC5bcPvIBATOx_tZKSpQCOhQ", maxResults = 5) {
+
+  /////////////////////  Rest - 1 channel's activities  ///////////////////////////
+  /*
+  function _getActivities(channel) {
     return window.gapi.client.youtube.activities.list({
       "part": "snippet,contentDetails",
       "channelId": channel,
-      "maxResults": maxResults,
+      "maxResults": 35,
       "fields": "nextPageToken, items(contentDetails/*, snippet/*)"
     })
   }
+  */
+    async function XXXgetActivitesOfChannels_2() {
+  
+    console.time("Subs getting")
+    let allSubs = await getAllSubs()
+    console.timeEnd("Subs getting")
+    
+    console.time("map")
+    const allSubs_Promises = allSubs.map( sub =>  youtubeApi._getActivities(sub.snippet.resourceId.channelId))
+    console.timeEnd("map")
 
+    console.time("Acts getting")
+    const allActivities_response = await Promise.all(allSubs_Promises)
+    console.timeEnd("Acts getting")
+    console.log(allSubs_Promises)
+    console.log(allActivities_response)
+    
+    console.log("allActivites:")
+      for (let act of allActivities_response) {
+        console.log("------------------------------------------------------------------------------")
+//      console.log(JSON.stringify(act.result, null, 2))
+      }    
 
+    }
 
   async function getActivitesOfChannels() {
     let subsOfUserList = await getAllSubs()
@@ -69,7 +98,7 @@ export function Youtube() {
     for (let s of subsOfUserList) {
       console.log(count)
       count++
-      let response = await getAChannelsActivities(s.snippet.resourceId.channelId)
+      let response = await youtubeApi._getActivities(s.snippet.resourceId.channelId)
       let fewActs = response.result
       let subActivity = new SubscriptionActivitys()
       subActivity.channelId = s.snippet.resourceId.channelId
@@ -95,39 +124,49 @@ export function Youtube() {
 
 
   }
+
+
   async function getAllSubs() {
-    var response = await _getSubsFromYoutube()
-    let subsOfUserList = response.result.items
+    var response = await youtubeApi._getThisUsersSubs()
+    let allSubs = response.result.items
 
     while (response.result.nextPageToken) {
-      response = await _getSubsFromYoutube(response.result.nextPageToken)
-      subsOfUserList = !subsOfUserList ? response.result.items : subsOfUserList.concat(response.result.items)
+      response = await youtubeApi._getThisUsersSubs(response.result.nextPageToken)
+      allSubs = !allSubs ? response.result.items : allSubs.concat(response.result.items)
     }
-    console.log('getAllSubs(), subsOfUserList: ')
-    console.log(subsOfUserList)
-    return subsOfUserList
+    console.log('allSubs : ')
+    console.log(allSubs)
+    console.log('leaving allSubs')
+
+    return allSubs
 
   }
-  function _getSubsFromYoutube(pageToken) {
+  /*
+  function _getThisUsersSubs(pageToken) {
     return window.gapi.client.youtube.subscriptions.list({
       "part": "snippet",
-      "maxResults": 15,
+      "maxResults": 50,
       "mine": true,
       "pageToken": pageToken,
       "fields": "pageInfo, nextPageToken, items(snippet/title, snippet/publishedAt, snippet/resourceId/channelId, snippet/thumbnails/default/url )"
     })
   }
+  */
 
 
-  async function doPromiseAwaitStuff() {
-    let subsOfUserList = getAllSubs()
-    let profile = Common.getProfile()
-    const doubleTrouble = await Promise.all([subsOfUserList, profile])
-    console.log(doubleTrouble)
-  }
+ // async function doPromiseAwaitStuff() {
+//    let subsOfUserList = getAllSubs()
+    //let profile = Common.getProfile()
+   // const doubleTrouble = await Promise.all([subsOfUserList, profile])
+ ///   console.log(doubleTrouble)
+//  }
 
   //////////////////////////////////////////////////////
   const [channel, setChannel] = useState('')
+  const updateChannel = (e) => {
+    setChannel(e.target.value)
+  }
+   
 
   function getChannelInfo(e) {
     e.preventDefault();
@@ -143,91 +182,19 @@ export function Youtube() {
         console.log("Response", response.result);  //console.log("Response", JSON.stringify(response.result, null, 2)); 
       })
   }
-
-  const updateChannel = (e) => {
-    setChannel(e.target.value)
-  }
-
-  //////////////////////////////////
-
-  const VideoLOL = ({ name, price }) => {
-    return (
-      <div>
-        <p> {name} : {price} </p>
-      </div>
-    );
-  }
-  let userzzz = { name: "dmx", hobbies: "giving it to ya" }
-
-  const Video3 = (props) => {
-    return (
-      <div> video 3
-        <p> info.name:  {props.info.name}       </p>
-      </div>
-    );
-  }
-
-   
+  ///////////////////////////////////////////////////////
   const Video = (props) => {
     let thumbnail     = props.video.snippet.thumbnails.medium.url
     let id            = props.video.id
     let title         = props.video.snippet.title
-    let publishedAt   = props.video.snippet.publishedAt
+    let pubAt         = new Date( props.video.snippet.publishedAt )
     let viewCount     = props.video.statistics.viewCount
     let channelName   = props.video.snippet.channelTitle
-    let pubAt         = new Date(publishedAt)
-    let nowDate       = new Date()
-
-    let vidDuration   = props.video.contentDetails.duration
-    let vd_aux        = moment.duration(vidDuration) //Convert iso8601 string to object
-    vidDuration       = "" + vd_aux.minutes() + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"
+    let fromNowDate   = new moment(props.video.snippet.publishedAt).fromNow()    
     
+    let vd_aux        = moment.duration( props.video.contentDetails.duration ) //Convert iso8601 string to object
+    let vidDuration       = vd_aux.minutes() + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"
     
-    let moPubAt         = new moment(publishedAt)
-    let moNowDate       = new moment()
-    let moDiff = moPubAt.fromNow()
-
-  //  console.log(pubAt)
-//    console.log(nowDate)
-    //let moDiff   =  moNowDate.diff(moPubAt, "days")
-    //let moDiff   =  moNowDate.diff(moNowDate, "days")
-    //let time = moment.duration("01:01:00");
-    //let date = moPubAt.add(time)
-    var tyGiving = moment([2019, 11, 28]);
-    var b = moment([2019, 11, 27, 1]);
-    var date = tyGiving.diff(b) // 1
-    //console.log("special date : " + date)
-//    console.log(date)
-    moment.updateLocale('en', {
-      relativeTime : {
-        future: "in %s",
-        past:   "%s ago",
-        s  : 'a few seconds',
-        ss : '%d seconds',
-        m:  "1 minute",
-        mm: "%d minutes",
-        h:  "a hour",
-        hh: "%d hours",
-        d:  "1 day",
-        dd: "%d days",
-        M:  "1 month",
-        MM: "%d months",
-        y:  "1 year",
-        yy: "%d years"
-
-      }
-    });
-
-    console.log(title)
-    console.log(moDiff)
-    
-  //  console.log("moment pub at : " + moPubAt)
-//    console.log("monowdat at : " + moNowDate)
-    console.log("moment diff : " + moDiff)
-
-//    console.log(typeof(nowDate))
-  //  console.log("nowDate - pubAt : " + (nowDate - pubAt)) 
-    //console.log(typeof((nowDate - pubAt)) )
 
     return (
       <div>
@@ -239,28 +206,22 @@ export function Youtube() {
         <div> {pubAt.toString()} </div>
         <div> {title} </div>
         <div> channel: {channelName} </div>
-        <div> relative: {moDiff} </div>
+        <div> relative: {fromNowDate} </div>
         <div> Views: {viewCount} </div>
         <div> duration: {vidDuration } </div>
         <div> id: {id} </div>
       </div>
     );
   }
-  console.log('///////////////////////////////////////////')
+  console.log('//////////video json /////////////////////////')
   console.log(videoJ)
-  console.log(videoJ.items)
-  console.log(videoJ.items[0].id)
 
     
   const VideoShelf = (props) => {
     
-    console.log('999999999999999999999999999')
-    console.log(props)
-    
     const myVidShelf = props.videoList.map((vid) =>
       <Video key={vid.id} video={vid}/>
     );
-//    return ({ someshit });
     return (
       <div> 
         <h1> ======================================= </h1>
@@ -269,26 +230,23 @@ export function Youtube() {
       </div>  
       )
   }
-
-  const Video2 = ({ thumbnail, title, publishedAt, id, viewCount, duration }) => {
-    let pubAt = new Date(publishedAt)
+  
+  /*
+  let userzzz = { name: "dmx", hobbies: "giving it to ya" }
+  const VideoLOL = ({ name, price }) => {
     return (
       <div>
-        <h3> - built by well defined arguements - </h3>
-        <a href={"https://www.youtube.com/watch?v="+id} >
-          <img src={thumbnail} /> 
-        </a>
-
-        <p> {pubAt.toString()} </p>
-        <p> {title} </p>
-        <p> {viewCount} </p>
-        <p> {duration } </p>
-        <p> {id } </p>
+        <p> {name} : {price} </p>
       </div>
     );
   }
-
-  
+  const Video3 = (props) => {
+    return (
+      <div> video 3
+        <p> info.name:  {props.info.name}       </p>
+      </div>
+    );
+  }
   const Store = (info) => {
       //const info = { name: "Luigi", price: "green"};
     return( 
@@ -297,10 +255,8 @@ export function Youtube() {
           <VideoLOL  man={info} />
         </div>
       );
-  }
+  } */
   
-  
-  /////////////////////////////////////////
 
   return(
       <div>
@@ -322,9 +278,10 @@ export function Youtube() {
       <button onClick={getAllSubs}> Get All Subs  </button>
       <div/>
       <button onClick={getActivitesOfChannels}> Get All Subs, then get activites of 1 of your subs  </button>
+      <button onClick={XXXgetActivitesOfChannels_2}> 2.0: Get All Subs, then get activites of 1 of your subs  </button>
       <div></div>
       
-      <button onClick={doPromiseAwaitStuff}> Do Promise await stuff </button>
+      {/*<button onClick={doPromiseAwaitStuff}> Do Promise await stuff </button>*/}
       <div></div> 
 
       <form onSubmit={getChannelInfo}>
@@ -333,7 +290,6 @@ export function Youtube() {
       </form>
       
       <VideoShelf videoList={videoJ.items}/>
-      <Video3 info={userzzz} />
       <Video video={videoJ.items[0]} />
 
 
@@ -356,4 +312,60 @@ export function Youtube() {
         console.log("Response", response.result);
       }).catch(function (err) { console.error("Execute error", err); });
   }
-*/
+ 
+  function momentLearning() {
+    console.log("============================================================")
+    console.log(moment())
+    var sec = moment().subtract(1, 'days').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(1.5, 'days').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(2, 'days').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(.5, 'days').fromNow()
+    console.log(sec)
+
+    var sec = moment().subtract(1, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(5, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(25, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(60, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(105, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(119, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(120, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(121, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(149, 'seconds').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(150, 'seconds').fromNow()
+    console.log(sec)
+
+    var sec = moment().subtract(5, 'minutes').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(5, 'hours').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(1, 'years').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(5, 'years').fromNow()
+    console.log(sec)
+    var sec = moment().subtract(1.55, 'years').fromNow()
+    console.log(sec)
+    console.log("============================================================")
+  } 
+ 
+ */
+
+  /*  const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://apis.google.com/js/client.js";
+    document.body.appendChild(script)
+    script.onload = () => {
+      Common.initGoogleAPI()
+    }
+  */

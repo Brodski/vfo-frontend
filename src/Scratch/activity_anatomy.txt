@@ -2,7 +2,7 @@ Activity
 {
 	"snippet": { {
 	"publishedAt": "2019-11-12T15:50:10.000Z",      <---- WHEN THE ACTITIVYT OCCURED!!!!!!!!!
-	"channelId": "UCeMFHOzX9MDWbr-pu2WdmVw",		<---- This is the channel that was subbed to, ie Video Box subbed to DRAGON PHARMA BRASIL (id: UCEMFO...)
+	"channelId": "UCeMFHOzX9MDWbr-pu2WdmVw",		  <--- CHANNEL!
 	"thumbnails": {
 		[...]
 		}
@@ -15,7 +15,7 @@ Activity
 	"subscription": {
 		"resourceId": {
 		"kind": "youtube#channel",
-		"channelId": "UCoBmCYq1tYsgNgTPjBK2s8A"
+		"channelId": "UCoBmCYq1tYsgNgTPjBK2s8A"  <---- This is the channel that was subbed to, ie Video Box subbed to DRAGON PHARMA BRASIL (id: UCEMFO...)
 		}
 	}
 	}
