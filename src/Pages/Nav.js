@@ -11,6 +11,7 @@ class Nav extends React.Component {
           <li> <Link to='/getServer'> getHost </Link> </li>
           <li> <Link to='/doPost'> doPost </Link> </li>
           <li> <Link to='/youtube'> youtube </Link> </li>
+          <li> <Link to='/youtube1'> youtube new</Link> </li>
         </ul>
       </nav>
     );

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { SECRET_KEYS } from '../api-key';
@@ -44,70 +42,100 @@ import { ChannelForm } from '../Components/ChannelForm';
 // that support defer but not async will fallback to defer.
 //https://flaviocopes.com/javascript-async-defer/
 //
-export function Youtube() {
+export class YoutubeNEW extends React.Component {
 
 ////////////////////////////////////////////////////
 
-   let sub1 = new Subscription()
-   sub1.channelName = "The Hill"
-   sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
-   
-   let sub2 = new Subscription()
-   sub2.channelName = "Crunkmastaflexx"
-   sub2.channelId = "UCA-8h5uCH5RE-1r6gskkbTw";
 
-   let sub3 = new Subscription()
-   sub3.channelName = "Deep Beat"
-   sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";   
+  constructor(props) {
+    super(props)
+  
+    moment.updateLocale('en', {
+      relativeTime: {
+        m: "1 minute",
+        h: "1 hour",
+        d: "1 day",
+        M: "1 month",
+        y: "1 year",
+      }
+    });
+    console.log('//////////video json /////////////////////////')
+    console.log(videoJ)
 
-   let sub4 = new Subscription()
-   sub4.channelName = "Video Box"
-   sub4.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw";
+    this.sub1 = new Subscription()
+    this.sub1.channelName = "The Hill"
+    this.sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
+    
+    this.sub2 = new Subscription()
+    this.sub2.channelName = "Crunkmastaflexx"
+    this.sub2.channelId = "UCA-8h5uCH5RE-1r6gskkbTw";
+    
 
-   let sub5 = new Subscription()
-   sub5.channelName = "mineralblue"
-   sub5.channelId = "UC3IngBBUGFUduHp-7haK1lw";
+    this.sub3 = new Subscription()
+    this.sub3.channelName = "Deep Beat"
+    this.sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";
+    
 
-   let shelf1 = new Shelf()
-   shelf1.title = "Politics"
-   shelf1.subscriptions.push(sub1)
-   shelf1.subscriptions.push(sub2)
-   shelf1.subscriptions.push(sub3)
+    this.sub4 = new Subscription()
+    this.sub4.channelName = "Video Box"
+    this.sub4.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw";
+    
+    this.sub5 = new Subscription()
+    this.sub5.channelName = "mineralblue"
+    this.sub5.channelId = "UC3IngBBUGFUduHp-7haK1lw";
+    
+    this.shelf1 = new Shelf()
+    this.shelf1.title = "Politics"
+    this.shelf1.subscriptions.push(this.sub1)
+    this.shelf1.subscriptions.push(this.sub2)
+    this.shelf1.subscriptions.push(this.sub3)
+    console.log('this.shelf1')
+    console.log(this.shelf1)
 
-   let shelf2 = new Shelf();
-   shelf2.title = "Babes"
-   shelf2.subscriptions.push(sub4)
-   shelf2.subscriptions.push(sub5)
-   
-///////////////////////////////////////////////
+    this.shelf2 = new Shelf();
+    this.shelf2.title = "Babes"
+    this.shelf2.subscriptions.push(this.sub4)
+    this.shelf2.subscriptions.push(this.sub5)
+    console.log('this.shelf2')
+    console.log(this.shelf2)
+    ///////////////////////////////////////////////
+    
+    
 
-//useEffect(() => {
-  console.log("HELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!")
-  const script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = "https://apis.google.com/js/client.js";
-  script.async = true
-  document.body.appendChild(script)
-  script.onload = () => {
-    Common.initGoogleAPI()
+    
   }
-//}, [])
 
-  moment.updateLocale('en', {
-    relativeTime : {
-      m:  "1 minute",
-      h:  "1 hour",
-      d:  "1 day",
-      M:  "1 month",
-      y:  "1 year",
+  //useEffect(() => {
+    componentDidMount() {
+    
+      console.log("HELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!")
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://apis.google.com/js/client.js";
+      script.async = true
+      document.body.appendChild(script)
+      script.onload = () => {
+        this.gApiShit()
+      }
     }
-  });
+
+  async gApiShit() {
+    var huh = await Common.initGoogleAPI2()
+    console.log("huh")
+    console.log(huh)
+    setTimeout(function () {
+      console.log("huh")
+      console.log(huh)
+    },
+      3000);
+  }
+    //}, [])
 
 
-  async function XXXgetActivitesOfChannels_2() {
+  async XXXgetActivitesOfChannels_2() {
   
     console.time("Subs getting")
-    let allSubs = await getAllSubs()
+    let allSubs = await this.getAllSubs()
     console.timeEnd("Subs getting")
     
     console.time("map")
@@ -127,8 +155,8 @@ export function Youtube() {
       }    
     }
 
-  async function getActivitesOfChannels() {
-    let subsOfUserList = await getAllSubs()
+  async getActivitesOfChannels() {
+    let subsOfUserList = await this.getAllSubs()
     let count = 0;
     let subActivityList = []
     for (let s of subsOfUserList) {
@@ -151,7 +179,8 @@ export function Youtube() {
     }
   }
 
-  async function getAllSubs() {
+
+  async getAllSubs() {
     var response = await youtubeApi._getThisUsersSubs()
     let allSubs = response.result.items
 
@@ -164,81 +193,10 @@ export function Youtube() {
     return allSubs
 
   }
-  
-  console.log('//////////video json /////////////////////////')
-  console.log(videoJ)
-
- const addShelf = (sh) => {
-    setShelfs(prevShelfs => [...prevShelfs, {subscription: sh.subscription, title: sh.title } ])
-  }
-
-  useEffect(() => {
-    fetchShelfs();
-    fetchActs_perShelf()
-  }, [])
-  
-  const [shelfs, setShelfs] = useState([
-    {
-      subscriptions: shelf1.subscriptions,
-      title: shelf1.title,
-    },
-    {
-      subscriptions: shelf2.subscriptions,
-      title: shelf2.title,
-    }
-  ] );
-  
-  const fetchShelfs = async () => {
-    //let data = await _getShelfsFromProfile(www.localhost.com)
-    // setShelfs(prevShelfs => [...prevShelfs, {subscription: sh.subscription, title: sh.title } ])
-    console.log('shelfs')
-    console.log(shelfs)
-    console.log(shelfs.subscriptions)
-//    const acts_Promises = shelfs.subscriptions.map(sub => console.log(sub)) //youtubeApi._getActivities(sub.channelId))
-    //const acts_Response =  Promise.all(acts_Promises)
-    //const shelfzz =
-  }
-
-  const fetchActs_perShelf = async () => {
-    
-    for (let sh of shelfs) {
-      console.log('sh')
-      console.log(sh)
-      //const acts_Promises = sh.subscriptions.map(sub => youtubeApi._getActivities(sub.channelId))
-      //const acts_Response = await Promise.all(acts_Promises)
-      console.log('acts_Promises')
-//      console.log(acts_Promises)
-      console.log('acts_Response')
-      //console.log(acts_Response)
-    }
-
-  }
-
-
-  function auxShit(shz) {
-  return(
-      <div>
-       {shelfs.map(sh => {
-        return (<li> {sh.title} </li>)
-      })}
-      </div>
-    )
-  }
 
   
-  function renderShit() {
-
-  console.log('shelfs')
-  console.log(shelfs)
-  //let shelfStuff = ( <XxxShelf shelfInfo={shelf1} /> )
-  //let someShit =  (<div> hi bitches </div> ) 
-  let shit = auxShit()
-
-  //ReactDOM.render(someShit, document.getElementById('doItHere'));
-  //ReactDOM.render(<XxxShelf shelfInfo={shelf1} />, document.getElementById('doItHere'));
-  ReactDOM.render( shit, document.getElementById('doItHere'));
-
-  }
+   
+  render() {
   
   const VideoShelf = (props) => {
     const myVidShelf = props.videoList.map((vid) =>
@@ -252,46 +210,44 @@ export function Youtube() {
       </div>  
       )
   }
-   
-  return(
-    <div>
-      <h1>Youtube</h1>
+
+    return (
+      <div>
+        <h1>Youtube</h1>
         <div>Note, the app must ALWAYS do loadClient before any API call</div>
-      <h3>Common</h3>
+        <h3>Common</h3>
         <button onClick={Common.authenticate}>authorize </button>
         <button onClick={Common.signOut} > Log Out </button>
         <button onClick={Common.getAuthCodeForServerSideShit} >Auth Code For Server</button>
 
-      <div></div>
+        <div></div>
         <button onClick={Common.isHeSignedIn}> isHeSignedIn</button>
         <button onClick={Common.printShit}> print shit</button>
 
-      <div></div>      
+        <div></div>
         <button onClick={Common.testAuthcode} > get your logged in profile </button>
         <button onClick={Common.testWithXML} > "Ping" server with xml </button>
-      
-      <h3> Youtube api </h3>
-      
-      <div/>
-        <button onClick={getAllSubs}> Get All Subs  </button> 
-      <div/>
-        <button onClick={getActivitesOfChannels}> Get All Subs, then get activites of 1 of your subs  </button>
-        <button onClick={XXXgetActivitesOfChannels_2}> 2.0: Get All Subs, then get activites of 1 of your subs  </button>
-      
-      <div></div>
-      {/*<XxxShelf shelfInfo={shelf1} />*/}
 
-        <button onClick={renderShit}> rendershit </button>
-        <div id='doItHere'> </div>
+        <h3> Youtube api </h3>
+
+        <div />
+        <button onClick={this.getAllSubs}> Get All Subs  </button>
+        <div />
+        <button onClick={this.getActivitesOfChannels}> Get All Subs, then get activites of 1 of your subs  </button>
+        <button onClick={this.XXXgetActivitesOfChannels_2}> 2.0: Get All Subs, then get activites of 1 of your subs  </button>
+
+        <div></div>
+        <XxxShelf shelfInfo={this.shelf1} />
         {/*<button onClick={doPromiseAwaitStuff}> Do Promise await stuff </button>*/}
-      <div></div> 
+        <div></div>
 
         <ChannelForm />
-        <VideoShelf videoList={videoJ.items}/>
+        <VideoShelf videoList={videoJ.items} />
         <Video video={videoJ.items[0]} />
 
-    </div>
+      </div>
     );
+  }
 }
 
   /*

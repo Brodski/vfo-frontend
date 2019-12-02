@@ -7,6 +7,7 @@ import GetServer from './Pages/GetServer';
 import PostDo from './Pages/PostDo';
 //import Youtube from './Pages/Youtube';
 import { Youtube } from './Pages/Youtube';
+import { YoutubeNEW } from './Pages/YoutubeNEW';
 
 // $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
@@ -23,6 +24,7 @@ function App() {
         <Route path="/getServer" component={GetServer} />
         <Route path="/doPost" component={PostDo} />
         <Route path="/youtube" component={Youtube} />
+        <Route path="/youtube1" component={YoutubeNEW} />
       </Switch>
     </Router> 
   );
