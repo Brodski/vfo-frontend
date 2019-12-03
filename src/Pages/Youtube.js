@@ -165,18 +165,13 @@ export function Youtube() {
 
   }
   
-  console.log('//////////video json /////////////////////////')
-  console.log(videoJ)
-
- const addShelf = (sh) => {
-    setShelfs(prevShelfs => [...prevShelfs, {subscription: sh.subscription, title: sh.title } ])
-  }
-
+ 
   useEffect(() => {
     fetchShelfs();
     fetchActs_perShelf()
   }, [])
   
+  const [processedShelfs, setprocessedShelfs] = useState([])
   const [shelfs, setShelfs] = useState([
     {
       subscriptions: shelf1.subscriptions,

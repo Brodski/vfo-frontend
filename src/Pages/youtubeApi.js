@@ -1,8 +1,24 @@
 
 
 
+export function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-export function _getActivities(channel) {
+async function check() {
+  while (!window.gapi.client.youtube) {
+      console.log("NOT EXISTS")
+      await sleep(10)
+    }
+  while (!window.gapi.auth2) {
+    console.log("------------DMX-------------auth2 not found");
+    await sleep(10); //sleep 10 ms
+  }
+  console.log("EXISTS")
+}
+
+export async function _getActivities(channel) {
+  await check()
   return window.gapi.client.youtube.activities.list({
     "part": "snippet,contentDetails",
     "channelId": channel,
@@ -12,7 +28,8 @@ export function _getActivities(channel) {
   }
 
 
-export function _getThisUsersSubs(pageToken) {
+export async function _getThisUsersSubs(pageToken) {
+await check()
   return window.gapi.client.youtube.subscriptions.list({
     "part": "snippet",
     "maxResults": 50,
@@ -23,7 +40,8 @@ export function _getThisUsersSubs(pageToken) {
   }
 
 
-export function getChannelInfo(e) {
+export async function getChannelInfo(e) {
+await check()
   e.preventDefault();
   //console.log("CLICKEDDD! - channel: " + channel)
   let id = "UCPWXiRWZ29zrxPFIQT7eHSA, UCeMFHOzX9MDWbr-pu2WdmVw, UC3IngBBUGFUduHp-7haK1lw, UCA-8h5uCH5RE-1r6gskkbTw, UC0CeYMTh57zSsbUKhsyOPfw"
