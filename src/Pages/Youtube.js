@@ -9,7 +9,7 @@ import { SubscriptionActivitys } from '../Classes/SubscriptionActivitys';
 import * as videoJ from '../Scratch/api_video.json';
 import * as moment from 'moment';
 import * as youtubeApi from "./youtubeApi";
-import { Shelf } from '../Classes/Shelf';
+import { UserShelf } from '../Classes/UserShelf';
 import { Filter } from '../Classes/Filter';
 import { Subscription } from '../Classes/Subscription';
 import { XxxShelf } from '../Components/Shelf';
@@ -68,13 +68,13 @@ export function Youtube() {
    sub5.channelName = "mineralblue"
    sub5.channelId = "UC3IngBBUGFUduHp-7haK1lw";
 
-   let shelf1 = new Shelf()
+   let shelf1 = new UserShelf()
    shelf1.title = "Politics"
    shelf1.subscriptions.push(sub1)
    shelf1.subscriptions.push(sub2)
    shelf1.subscriptions.push(sub3)
 
-   let shelf2 = new Shelf();
+   let shelf2 = new UserShelf();
    shelf2.title = "Babes"
    shelf2.subscriptions.push(sub4)
    shelf2.subscriptions.push(sub5)

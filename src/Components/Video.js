@@ -1,6 +1,10 @@
 import React from 'react';
 import moment from 'moment';
 
+
+//
+// Expect an activity object from youtube 
+//
 export const Video = (props) => {
   let thumbnail     = props.video.snippet.thumbnails.medium.url
   let id            = props.video.id

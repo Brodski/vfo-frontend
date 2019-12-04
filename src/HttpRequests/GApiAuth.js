@@ -14,27 +14,18 @@ export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
-export function _getActivities(channel) {
-  return window.gapi.client.youtube.activities.list({
-    "part": "snippet,contentDetails",
-    "channelId": channel,
-    "maxResults": 35,
-    "fields": "nextPageToken, items(contentDetails/*, snippet/*)"
-  })
-  }
-
 export async function initGoogleAPI() {
-  /*while (!window.gapi) {
-    console.log("------------------------- window.gapi not found");
+/*
+  while (!window.gapi) {
+    console.log("!-!-!-!-!-!-!-!-!-!-!-! window.gapi not found >:(");
     await sleep(10)
   } 
   if (window.gapi) {
-    console.log("!!!!!!!!!!!!!!!!!!!!!--- window.gapi found");
+    console.log("!-!-!-!-!-!-!-!-!-!-!-!- window.gapi found :)");
   } else {
-    console.log("WWWWWWWWWWWW HAT THE FLIP")
-    }
-    */
+    console.log("WWWWWWWWWWWWHAT THE FLIP")
+   }
+   */
 
   
   await window.gapi.load("client:auth2", _initClient) //initClientWithAuth

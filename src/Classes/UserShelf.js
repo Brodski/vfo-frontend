@@ -1,6 +1,6 @@
 //import { Subscription } from 'Subscriptions';
 
-export class Shelf {
+export class UserShelf {
   constructor() {
     this.title = null;
     this.subscriptions = []
