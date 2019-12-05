@@ -14,11 +14,15 @@ import { Filter } from '../Classes/Filter';
 import { Subscription } from '../Classes/Subscription';
 import { Shelf } from '../Components/Shelf';
 import { Video } from '../Components/Video';
+import { ShelfsMany } from '../Components/ShelfsMany';
 import { ChannelForm } from '../Components/ChannelForm';
+import { VideoShelf } from '../Components/VideoShelf';
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 
 import * as ytLogic from '../BusinessLogic/ytLogic.js'
 
+
+//UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 export function YoutubeNEW() {
 
   var GoogleAuth;
@@ -78,7 +82,26 @@ export function YoutubeNEW() {
 
   
   const [isSigned, setIsSigned] = useState(false)
-  const [filteredShelfs, setFilteredShelfs] = useState([])
+  // PageOfShelfs = filteredShefls = [ shelf, shelf, shelf ]
+  // shelf =[ vid, vid, vid, vid ]
+  // vid = { id, snippet: {}, contentDetails: {} }
+  const [filteredShelfs, setFilteredShelfs] = useState(
+    [
+      [{
+        contentDetails: {},
+        snippet: {
+          thumbnails: {
+            default: {},
+            medium: {},
+            high: {},
+            standard: {},
+            maxres: {},
+          }
+        },
+        statistics: {},
+       }]
+    ]
+  )
   const [shelfs, setShelfs] = useState([
     {
       subscriptions: shelf1.subscriptions,
@@ -97,7 +120,10 @@ export function YoutubeNEW() {
 
    let ass = 50
    let ass2 = 50+1*2
-   let ass3 = ["xyz", "098"]
+  let emptyVid = {
+    contentDetails: {},
+    snippet: {channelTitle: ""}
+                  }
 
 
   ///////////////////////////////////////////////
@@ -122,9 +148,6 @@ export function YoutubeNEW() {
     GoogleAuth = await promise
     console.log('apiHelper: GoogleAuth.isSignedIn.get() ' + GoogleAuth.isSignedIn.get())
     console.log('apiHelper: isSigned? ' + isSigned) 
-    setIsSigned(isSigned)
-    console.log('apiHelper: isSigned? ' + isSigned) 
-    console.log('-- APIHPER BOTTOM ---- APIHPER BOTTOM ---- APIHPER BOTTOM --')
   }
 
   async function hackHelper() {
@@ -140,7 +163,7 @@ export function YoutubeNEW() {
   useEffect( () => {
   
     setCount(ass2)
-    setFilteredShelfs(ass3)
+    //setFilteredShelfs([emptyVid])
     console.log('count count count count ')
     console.log(count)
     console.log('---------------useEffect1----------------------')
@@ -158,8 +181,6 @@ export function YoutubeNEW() {
     var idk2 = fetchActs_perShelf()
     console.log('idk2 idk2idk2 idk2idk2 idk2 v ')
 //    setFilteredShelfs(["abcc", '12344'])
-  //  console.log('***************************    filteredShelfs: ' + filteredShelfs)
-//    console.log(idk2)
     console.log('---------------useEffect2----------------------')
 
       //setTimeout( () => console.log(filteredShelfs),5000)
@@ -174,45 +195,78 @@ export function YoutubeNEW() {
     let allShelfs_Promises =[]
     
     for (let sh of shelfs) {
-  //    console.log('sh')
-//      console.log(sh)
       const sh_Promises = sh.subscriptions.map(sub => youtubeApi._getActivities(sub.channelId))
       allShelfs_Promises.push(sh_Promises)
-      //const acts_Response = await Promise.all(acts_Promises)
     }
-    let eachShelfsActs =  await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
-
+    let shelfsActs =  await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
+    //let shelfsActs
     
-    eachShelfsActs = await ytLogic.removeNonVideos(eachShelfsActs)
-    console.log('eachShelfsActs xxx')
-    console.log(eachShelfsActs)
-    let bigBoyShelf = await eachShelfsActs.map( shelf => ytLogic.flattenShelf(shelf))
-    console.log('bigBoyShelf')
-    console.log(bigBoyShelf)
-    bigBoyShelf = bigBoyShelf.map( shelf => ytLogic.sortByDate(shelf))
-    console.log('SORTED bigBoyShelf')
-    console.log(bigBoyShelf)
+    shelfsActs = await ytLogic.removeNonVideos(shelfsActs)
+    console.log('shelfsActs xxx')
+    console.log(shelfsActs)
+    let shelfsActs2 = await shelfsActs.map( shelf => ytLogic.flattenShelf(shelf))
+    console.log('shelfsActs2')
+    console.log(shelfsActs2)
+    shelfsActs2 = shelfsActs2.map( shelf => ytLogic.sortByDate(shelf))
+    
+    let shelfsVidIds = await ytLogic.extractIds(shelfsActs2)
+    console.log('vidIds')
+    console.log(shelfsVidIds.length)
+    console.log(shelfsVidIds)
+
+    const vidIdShelf_Promise = shelfsVidIds.map(sh => {
+      console.log('sh PROMISE')
+      console.log(sh)
+      return youtubeApi.getSomeVideos(sh.slice(0, 20))
+    })
+
+    let shelfVids = await Promise.all(vidIdShelf_Promise)
+    
+    console.time("are we wasting")
+    shelfVids = shelfVids.filter(sh => sh.statusText == "OK").map( sh => sh.result.items)       //remove all that didnt return "OK", get results
+    console.timeEnd("are we wasting")
+
+    console.log('AFTER shelfVids')
+    console.log(shelfVids)
+    shelfVids = shelfVids.map( shelf => ytLogic.sortByDate(shelf))
+
+
+    // get Videos for each act
+    //
+    //
 
     console.log("_____-------WE FINISHED THE FILTER!-------_______")
-    console.log('eachShelfsActs')
-    console.log(eachShelfsActs)
-    console.log(eachShelfsActs[0][0][0].contentDetails.upload.videoId)
+    console.log('shelfVids')
+    console.log(shelfVids)
+    //console.log(shelfsActs[0][0][0].contentDetails.upload.videoId)
     //setFilteredShelfs( eachShelfsActs[0][0][0].contentDetails.upload.videoId)
-    setFilteredShelfs(bigBoyShelf)
+    //setFilteredShelfs(shelfVids)
+    console.log("\n \n WE ARE SETTING \n \n")
+    for (let shelf of shelfVids) {
+      console.log("vid.snippet")
+      for (let vid of shelf) {
+
+        if (!vid.snippet) {
+          console.log('\n WHAT WHAT \n WHAT WHAT \n \n \n')
+        }
+      }
+    }
+    setFilteredShelfs(shelfVids)
+
     
-    return eachShelfsActs;
+    return shelfVids;
   }
 
 
 
-  const RenderShit = () => {
+ const RenderShit = () => {
   let idk = filteredShelfs.toString()
-  let idk2 = filteredShelfs.map(shelf => {
-      return (<Shelf shelf={shelf}/> )
-    })
+  //let idk2 = filteredShelfs.map(shelf => {
+  //    return (<Shelf shelf={shelf}/> )
+//    })
   let shit = (
       <div>12313122312312
-        <div> {idk2}  </div>
+        
         {shelfs.map(sh => {
         return (<li> {sh.title} </li>)
       })}
@@ -222,23 +276,18 @@ export function YoutubeNEW() {
     //ReactDOM.render( shit, document.getElementById('doItHere'));
   }
   
-  const VideoShelf = (props) => {
-    const myVidShelf = props.videoList.map((vid) =>
-      <Video key={vid.id} video={vid}/>
-    );
-    return (
-      <div> 
-        <h1> ======================================= </h1>
-        {myVidShelf}
-        <h1> ======================================= </h1>
-      </div>  
-      )
-  }
+
+  
+  //{filteredShelfs.map( shelf => {
+    //    return (<Shelf shelf={shelf}/> )
+      //})
+
   return(
   
 
     <div>
-    
+      <ShelfsMany shelfs={filteredShelfs} />
+      
       <div> count incremented {count} times </div>
       <button onClick={handleButtonClick}>
       click me 
@@ -266,8 +315,9 @@ export function YoutubeNEW() {
         <button onClick={ytLogic.XXXgetActivitesOfChannels_2}> 2.0: Get All Subs, then get activites of 1 of your subs  </button>
       
       <div></div>
-        <RenderShit />
-      {/*<XxxShelf shelfInfo={shelf1} />
+        
+      {/*<RenderShit />
+      <XxxShelf shelfInfo={shelf1} />
 
         <button onClick={renderShit}> rendershit </button>
         <div id='doItHere'> </div>
@@ -276,9 +326,10 @@ export function YoutubeNEW() {
       */}
 
         <ChannelForm />
+      
         <VideoShelf videoList={videoJ.items}/>
         <Video video={videoJ.items[0]} />
-
+        
 
     </div>
     );
@@ -294,5 +345,22 @@ export function YoutubeNEW() {
         console.log('data')
         console.log(data)
       })
+
+
+
+    let someCheeky = {
+      result:     { items: [123, "abc"] },
+      statusText: "poop"
+    }
+    console.log('someCheeky')    
+    console.log(someCheeky)    
+    
+    let trick = []
+    trick.push(someCheeky)
+    shelfVids.push( someCheeky )
+  //  console.log('trick')    
+//    console.log(trick)    
+
+
 
 */

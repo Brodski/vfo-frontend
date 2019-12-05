@@ -8,11 +8,11 @@ export function sleep(ms) {
 async function check() {
   while (!window.gapi.client.youtube) {
       console.log("NOT EXISTS")
-      await sleep(10)
+      await sleep(1000)
     }
   while (!window.gapi.auth2) {
     console.log("------------DMX-------------auth2 not found");
-    await sleep(10); //sleep 10 ms
+    await sleep(100); //sleep 10 ms
   }
   console.log("EXISTS")
 }
@@ -55,6 +55,18 @@ await check()
       console.log("Response", response.result);  //console.log("Response", JSON.stringify(response.result, null, 2)); 
     })
   }
+
+
+export async function getSomeVideos(vidIdList = [""]) {
+console.log(vidIdList.toString())
+  return window.gapi.client.youtube.videos.list({
+    "part": "snippet, contentDetails, statistics",
+    "id": vidIdList.toString(),
+    "fields": "items(id, kind, contentDetails/duration, snippet/publishedAt, snippet/channelId, snippet/title, snippet/description, snippet/thumbnails/*, snippet/channelTitle, statistics)",
+    
+  })
+}
+
 
 /*
  

@@ -25,7 +25,19 @@ ul {
 li {
 
   display: inline-block;
-  margin: 10px
+  margin: 10px;
+}
+
+li.video {
+  width: 450px;
+  overflow: hidden;
+}
+
+ul.shelf {
+  white-space: nowrap;
+  
+  overflow: auto;
+  overflow-y: hidden;
 }
 
 li.myget {

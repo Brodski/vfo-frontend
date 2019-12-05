@@ -146,6 +146,21 @@ export function removeNonVideos(eachShelfsActs) {
 
 }
 
+export function extractIds(shelfsActsFlat) {
+  // TODO: double map, improve performance.
+  let ids = []
+  for (let shelf of shelfsActsFlat) {
+  //  console.log('extract Ids: shelf')
+//    console.log(shelf)
+    let miniIds = shelf.map( act => act.contentDetails.upload.videoId)
+    ids.push(miniIds)
+  }
+//  console.log("were leaving the extractor!!!")
+  //console.log(ids)
+  //console.log('ids')
+  return ids
+}
+
 export function flattenShelf(shelf) {
 //  console.log("flattenShelf: shelf ")
   //console.log(shelf)

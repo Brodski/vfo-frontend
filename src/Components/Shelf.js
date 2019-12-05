@@ -1,17 +1,72 @@
 import React from 'react';
-import * as youtubeApi from "../Pages/youtubeApi";
-
+import * as youtubeApi from '../Pages/youtubeApi';
+import { Video } from './Video'
 //export async function XxxShelf(props) {
+
 export const Shelf = props => {
   console.log('++++++++++++++++ TOP +++++++++++++++++++++')
 
   console.log("PROPS")
   console.log(props)
   console.log(props.shelf)
+  //https://stackoverflow.com/questions/30142361/react-js-uncaught-typeerror-this-props-data-map-is-not-a-function
+  let data = Array.from(props.shelf)
+  console.log('data')
+  console.log(data)
 
-  //const acts_Promises = props.shelfInfo.subscriptions.map(sub => youtubeApi._getActivities(sub.channelId))     
-  //  const acts_Response =  Promise.all(acts_Promises)
 
+  console.log('+++++++++++++++++++ END +++++++++++++++++++++++')
+  
+    
+  return(
+    <div > SHELF
+      <ul className="shelf">
+        {props.shelf.map(vid => {
+          return (
+            <Video key={vid.id} video={vid} />
+          )
+        })}
+        {/*data.map(vid => {
+          return (
+            <Video video={vid} />
+          )
+        })*/}
+      </ul>
+    </div>
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//let shelf = Array.from(props.shelf)
+//  console.log(Object.keys(props.shelf));
 
   /*
    * {props.shelf.map(act => {
@@ -19,17 +74,4 @@ export const Shelf = props => {
             <div> {act.contentDetails} </div>
           )
         })
-   * 
    */
-  let shelf = Array.from(props.shelf)
-  console.log(Object.keys(props.shelf));
-
-  //shelf.map(element => console.log(element.snippet.channelTitle));
-  console.log('+++++++++++++++++++ END +++++++++++++++++++++++')
-  
-    
-  return(
-    <div> huh
-    </div>
-  )
-}
