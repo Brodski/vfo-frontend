@@ -1,5 +1,5 @@
 import React from 'react';
-import * as youtubeApi from '../Pages/youtubeApi';
+import * as youtubeApi from '../HttpRequests/youtubeApi';
 import { Video } from './Video'
 //export async function XxxShelf(props) {
 

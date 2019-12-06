@@ -1,4 +1,4 @@
-import * as Common from '../Pages/Common';
+import * as Common from '../BusinessLogic/Common';
 
 import { SECRET_KEYS } from '../api-key';
 import axios from 'axios';

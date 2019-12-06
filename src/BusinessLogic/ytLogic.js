@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { SECRET_KEYS } from '../api-key';
-import * as Common from '../Pages/Common.js';
+import * as Common from './Common.js';
 import * as videoJ from '../Scratch/api_video.json';
 import * as moment from 'moment';
-import * as youtubeApi from "../Pages/youtubeApi";
+import * as youtubeApi from "../HttpRequests/youtubeApi";
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 
 // Github: JS Client https://github.com/google/google-api-javascript-client
@@ -149,7 +149,7 @@ export function extractIds(shelf) {
   return ids
 }
 
-export async function getVideosShelf(shelfsVidIds) {
+export async function requestVideosShelf(shelfsVidIds) {
     const vidIdShelf_Promise = shelfsVidIds.map(sh => {
       return youtubeApi.getSomeVideos(sh.slice(0, 20))
     })

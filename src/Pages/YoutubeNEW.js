@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ReactDOM from 'react-dom';
 
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { SECRET_KEYS } from '../api-key';
-import * as Common from './Common.js';
-import { SubscriptionActivitys } from '../Classes/SubscriptionActivitys';
+import * as Common from '../BusinessLogic/Common.js';
 import * as videoJ from '../Scratch/api_video.json';
 import * as moment from 'moment';
-import * as youtubeApi from "./youtubeApi";
+import * as youtubeApi from "../HttpRequests/youtubeApi";
 import { UserShelf } from '../Classes/UserShelf';
 import { Filter } from '../Classes/Filter';
 import { Subscription } from '../Classes/Subscription';
@@ -21,11 +20,12 @@ import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 
 import * as ytLogic from '../BusinessLogic/ytLogic.js'
-
+import { UserContext } from '../Contexts/UserContext.js'
 
 //UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 export function YoutubeNEW() {
 
+  const { user, setUser } = useContext(UserContext);
   var GoogleAuth;
   
   ////////////////////////////////////////////////////
@@ -115,12 +115,6 @@ export function YoutubeNEW() {
     }
   ] );
   
-  const [count, setCount] = useState(0)
-  function handleButtonClick() {
-    setCount(count + 1 )
-  }
-   let ass2 = 50+1*2
-
 
   ///////////////////////////////////////////////
   /*
@@ -140,7 +134,6 @@ export function YoutubeNEW() {
 
   useEffect( () => {
   
-    setCount(ass2)
     console.log('---------------useEffect1----------------------')
     console.log("\n\n\n\nHELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!\n\n\n\n")
     const script = document.createElement("script");
@@ -174,9 +167,8 @@ export function YoutubeNEW() {
 
 
   async function initShit() {
-      var googleAuthPromise = await GApiAuth.initGoogleAPI()  // Usually 500ms
-
-      GoogleAuth = await googleAuthPromise // Usually 1ms
+    var googleAuthPromise = await GApiAuth.initGoogleAPI()  // Usually 500ms
+    GoogleAuth = await googleAuthPromise // Usually 1ms
   }
 
   const fetchActs_perShelf = async () => {
@@ -188,23 +180,36 @@ export function YoutubeNEW() {
     // Kinda like: shelf[x].subscription[y].activity[z] 
     shelfsActs = await ytLogic.getActivitiesShelfs(shelfs)
     
+//    console.log("1")
+ //   console.log(shelfsActs)
     // Returns only Uploads of the activities
     shelfsActs = await ytLogic.removeNonVideos(shelfsActs)
 
+//    console.log("2")
+    //console.log(shelfsActs)
     // Returns all the activies in a single array (shelf), instead array of activities in n different sub
     // Kinda like: shelf[x].Activity[z]
     shelfsActs = await shelfsActs.map( shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = await shelfsActs.map( shelf => ytLogic.sortByDate(shelf))
     
+  //  console.log("3")
+//    console.log(shelfsActs)
     // Returns an array of video's ID per shelf
     let shelfsVidIds = await shelfsActs.map( sh => ytLogic.extractIds(sh))
     
+ //   console.log("4")
+//    console.log(shelfsVidIds)
     // Returns an array of video objects(yt) per shelf
-    let shelfVids = await ytLogic.getVideosShelf(shelfsVidIds)
+    let shelfVids = await ytLogic.requestVideosShelf(shelfsVidIds)
         
+ //   console.log("5")
+//    console.log(shelfVids)
     //Returns only "OK" status and then http results
-    shelfVids = shelfVids.filter(sh => sh.statusText == "OK").map( sh => sh.result.items)       
+    shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map( sh => sh.result.items)       
     shelfVids = shelfVids.map( shelf => ytLogic.sortByDate(shelf))
+
+ //   console.log("6")
+//    console.log(shelfVids)
 
     console.log("\n \n WE ARE SETTING \n \n")
     console.log("_____-------WE FINISHED THE FILTER!-------_______")
@@ -221,12 +226,9 @@ export function YoutubeNEW() {
   
 
     <div>
+      <div> User message is: {user} </div>
       <ShelfsMany shelfs={finalShelfs} />
       
-      <div> count incremented {count} times </div>
-      <button onClick={handleButtonClick}>
-      click me 
-      </button>
       <h1>Youtube</h1>
         <div>Note, the app must ALWAYS do loadClient before any API call</div>
         <ButtonsAuthDebug />

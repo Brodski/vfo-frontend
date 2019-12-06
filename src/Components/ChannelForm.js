@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as youtubeApi from "../Pages/youtubeApi";
+import * as youtubeApi from "../HttpRequests/youtubeApi";
 
 export const ChannelForm = () => {
 

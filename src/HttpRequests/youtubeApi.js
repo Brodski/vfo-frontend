@@ -1,5 +1,5 @@
 
-import * as Common from './Common';
+import * as Common from '../BusinessLogic/Common';
 
 
 export async function check(gapiObj, gapiString) {
