@@ -17,6 +17,7 @@ import { Video } from '../Components/Video';
 import { ShelfsMany } from '../Components/ShelfsMany';
 import { ChannelForm } from '../Components/ChannelForm';
 import { VideoShelf } from '../Components/VideoShelf';
+import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 
 import * as ytLogic from '../BusinessLogic/ytLogic.js'
@@ -26,7 +27,6 @@ import * as ytLogic from '../BusinessLogic/ytLogic.js'
 export function YoutubeNEW() {
 
   var GoogleAuth;
-  var SuckIt =[]
   
   ////////////////////////////////////////////////////
   moment.updateLocale('en', {
@@ -82,10 +82,12 @@ export function YoutubeNEW() {
 
   
   const [isSigned, setIsSigned] = useState(false)
-  // PageOfShelfs = filteredShefls = [ shelf, shelf, shelf ]
+
+  // This is the finalShelf
+  // PageOfShelfs = finalShelfs = [ shelf, shelf, shelf ]
   // shelf =[ vid, vid, vid, vid ]
   // vid = { id, snippet: {}, contentDetails: {} }
-  const [filteredShelfs, setFilteredShelfs] = useState(
+  const [finalShelfs, setFinalShelfs] = useState(
     [
       [{
         contentDetails: {},
@@ -117,176 +119,109 @@ export function YoutubeNEW() {
   function handleButtonClick() {
     setCount(count + 1 )
   }
-
-   let ass = 50
    let ass2 = 50+1*2
-  let emptyVid = {
-    contentDetails: {},
-    snippet: {channelTitle: ""}
-                  }
 
 
   ///////////////////////////////////////////////
-
-    /*
-    console.log("HELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!")
+  /*
+    console.log('---------------useEffect1----------------------')
+    console.log("\n\n\n\nHELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!\n\n\n\n")
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://apis.google.com/js/client.js";
     script.async = true
     document.body.appendChild(script)
     script.onload = () => {
-      var googleAuthPromise = GApiAuth.initGoogleAPI() //apiHelper()
-      apiHelper(googleAuthPromise)
-      console.log('googleAuthPromise is : ' + googleAuthPromise)
-      //setTimeout(function () { console.log("TIMEOUT!!!!!!!!"); console.log(wtf) }, 1000)
-      }
-      */
+      initShit()
+    }
+    let shelfVids = fetchActs_perShelf()
+    console.log('---------------useEffect2----------------------')
+    */
 
-  async function apiHelper(promise) {
-    console.log('-- APIHPER TOP ---- APIHPER TOP ---- APIHPER TOP ---- APIHPER TOP --')
-    GoogleAuth = await promise
-    console.log('apiHelper: GoogleAuth.isSignedIn.get() ' + GoogleAuth.isSignedIn.get())
-    console.log('apiHelper: isSigned? ' + isSigned) 
-  }
-
+  useEffect( () => {
+  
+    setCount(ass2)
+    console.log('---------------useEffect1----------------------')
+    console.log("\n\n\n\nHELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!\n\n\n\n")
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://apis.google.com/js/client.js";
+    script.async = true
+    document.body.appendChild(script)
+    script.onload = () => {
+      initShit()
+    }
+    let shelfVids = fetchActs_perShelf()
+    console.log('---------------useEffect2----------------------')
+  }, [])
+  
   async function hackHelper() {
-  console.log('vvvvvvvvvvvvvvvvvvvvvvv')
+  console.log('vvvvvvv HACK HELPER  vvvvvvvv')
+  let count = 1
     while (!GoogleAuth) {
-      console.log("Hack Helper: GoogleAuth NOT exist")
-      await GApiAuth.sleep(100) //sleep 10 ms
+      console.log("Hack Helper: GoogleAuth NOT exist: " + count)
+      await Common.sleep(100*count) 
+      if (count > 40) {
+        count = count * 2
+        console.log("Hack Helper: We are initing again " + count)
+        initShit()
+      }
+      count = count + 1
     }
     console.log("Hack Helper: GoogleAuth !!! exist")
     console.log('^^^^^^^^^^^^^^^^^^^^^^^^^')
   }
 
-  useEffect( () => {
-  
-    setCount(ass2)
-    //setFilteredShelfs([emptyVid])
-    console.log('count count count count ')
-    console.log(count)
-    console.log('---------------useEffect1----------------------')
-    console.log("HELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!")
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://apis.google.com/js/client.js";
-    script.async = true
-    document.body.appendChild(script)
-    script.onload = () => {
-      var googleAuthPromise = GApiAuth.initGoogleAPI() //apiHelper()
-      apiHelper(googleAuthPromise)
-      console.log('googleAuthPromise is : ' + googleAuthPromise)
-    }
-    var idk2 = fetchActs_perShelf()
-    console.log('idk2 idk2idk2 idk2idk2 idk2 v ')
-//    setFilteredShelfs(["abcc", '12344'])
-    console.log('---------------useEffect2----------------------')
 
-      //setTimeout( () => console.log(filteredShelfs),5000)
-  }, [])
-  
+  async function initShit() {
+      var googleAuthPromise = await GApiAuth.initGoogleAPI()  // Usually 500ms
+
+      GoogleAuth = await googleAuthPromise // Usually 1ms
+  }
 
   const fetchActs_perShelf = async () => {
-    console.log("fetchActs_perShelfs")
-    console.log("Entering hack helper")
+    console.log(" xxxxXXXXxxxx fetchActs_perShelfs xxxxXXXXxxxx")
+    let shelfsActs = null;
     await hackHelper()
-    console.log("exiting hack helper")
-    let allShelfs_Promises =[]
     
-    for (let sh of shelfs) {
-      const sh_Promises = sh.subscriptions.map(sub => youtubeApi._getActivities(sub.channelId))
-      allShelfs_Promises.push(sh_Promises)
-    }
-    let shelfsActs =  await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
-    //let shelfsActs
+    // Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
+    // Kinda like: shelf[x].subscription[y].activity[z] 
+    shelfsActs = await ytLogic.getActivitiesShelfs(shelfs)
     
+    // Returns only Uploads of the activities
     shelfsActs = await ytLogic.removeNonVideos(shelfsActs)
-    console.log('shelfsActs xxx')
-    console.log(shelfsActs)
-    let shelfsActs2 = await shelfsActs.map( shelf => ytLogic.flattenShelf(shelf))
-    console.log('shelfsActs2')
-    console.log(shelfsActs2)
-    shelfsActs2 = shelfsActs2.map( shelf => ytLogic.sortByDate(shelf))
+
+    // Returns all the activies in a single array (shelf), instead array of activities in n different sub
+    // Kinda like: shelf[x].Activity[z]
+    shelfsActs = await shelfsActs.map( shelf => ytLogic.flattenShelf(shelf))
+    shelfsActs = await shelfsActs.map( shelf => ytLogic.sortByDate(shelf))
     
-    let shelfsVidIds = await ytLogic.extractIds(shelfsActs2)
-    console.log('vidIds')
-    console.log(shelfsVidIds.length)
-    console.log(shelfsVidIds)
-
-    const vidIdShelf_Promise = shelfsVidIds.map(sh => {
-      console.log('sh PROMISE')
-      console.log(sh)
-      return youtubeApi.getSomeVideos(sh.slice(0, 20))
-    })
-
-    let shelfVids = await Promise.all(vidIdShelf_Promise)
+    // Returns an array of video's ID per shelf
+    let shelfsVidIds = await shelfsActs.map( sh => ytLogic.extractIds(sh))
     
-    console.time("are we wasting")
-    shelfVids = shelfVids.filter(sh => sh.statusText == "OK").map( sh => sh.result.items)       //remove all that didnt return "OK", get results
-    console.timeEnd("are we wasting")
-
-    console.log('AFTER shelfVids')
-    console.log(shelfVids)
+    // Returns an array of video objects(yt) per shelf
+    let shelfVids = await ytLogic.getVideosShelf(shelfsVidIds)
+        
+    //Returns only "OK" status and then http results
+    shelfVids = shelfVids.filter(sh => sh.statusText == "OK").map( sh => sh.result.items)       
     shelfVids = shelfVids.map( shelf => ytLogic.sortByDate(shelf))
 
-
-    // get Videos for each act
-    //
-    //
-
+    console.log("\n \n WE ARE SETTING \n \n")
     console.log("_____-------WE FINISHED THE FILTER!-------_______")
     console.log('shelfVids')
     console.log(shelfVids)
-    //console.log(shelfsActs[0][0][0].contentDetails.upload.videoId)
-    //setFilteredShelfs( eachShelfsActs[0][0][0].contentDetails.upload.videoId)
-    //setFilteredShelfs(shelfVids)
-    console.log("\n \n WE ARE SETTING \n \n")
-    for (let shelf of shelfVids) {
-      console.log("vid.snippet")
-      for (let vid of shelf) {
 
-        if (!vid.snippet) {
-          console.log('\n WHAT WHAT \n WHAT WHAT \n \n \n')
-        }
-      }
-    }
-    setFilteredShelfs(shelfVids)
+    setFinalShelfs(shelfVids)
 
     
     return shelfVids;
   }
 
-
-
- const RenderShit = () => {
-  let idk = filteredShelfs.toString()
-  //let idk2 = filteredShelfs.map(shelf => {
-  //    return (<Shelf shelf={shelf}/> )
-//    })
-  let shit = (
-      <div>12313122312312
-        
-        {shelfs.map(sh => {
-        return (<li> {sh.title} </li>)
-      })}
-      </div>
-    )
-    return shit
-    //ReactDOM.render( shit, document.getElementById('doItHere'));
-  }
-  
-
-  
-  //{filteredShelfs.map( shelf => {
-    //    return (<Shelf shelf={shelf}/> )
-      //})
-
   return(
   
 
     <div>
-      <ShelfsMany shelfs={filteredShelfs} />
+      <ShelfsMany shelfs={finalShelfs} />
       
       <div> count incremented {count} times </div>
       <button onClick={handleButtonClick}>
@@ -294,18 +229,7 @@ export function YoutubeNEW() {
       </button>
       <h1>Youtube</h1>
         <div>Note, the app must ALWAYS do loadClient before any API call</div>
-      <h3>Common</h3>
-        <button onClick={Common.authenticate}>authorize </button>
-        <button onClick={Common.signOut} > Log Out </button>
-        <button onClick={Common.getAuthCodeForServerSideShit} >Auth Code For Server</button>
-
-      <div></div>
-        <button onClick={GApiAuth.isHeSignedIn}> isHeSignedIn</button>
-        <button onClick={Common.printShit}> print shit</button>
-
-      <div></div>      
-        <button onClick={Common.testAuthcode} > get your logged in profile </button>
-        <button onClick={Common.testWithXML} > "Ping" server with xml </button>
+        <ButtonsAuthDebug />
       
       <h3> Youtube api </h3>
       
@@ -315,20 +239,11 @@ export function YoutubeNEW() {
         <button onClick={ytLogic.XXXgetActivitesOfChannels_2}> 2.0: Get All Subs, then get activites of 1 of your subs  </button>
       
       <div></div>
-        
-      {/*<RenderShit />
-      <XxxShelf shelfInfo={shelf1} />
 
-        <button onClick={renderShit}> rendershit </button>
-        <div id='doItHere'> </div>
-        <button onClick={doPromiseAwaitStuff}> Do Promise await stuff </button>
-      <div></div> 
-      */}
-
-        <ChannelForm />
+      <ChannelForm />
       
-        <VideoShelf videoList={videoJ.items}/>
-        <Video video={videoJ.items[0]} />
+      <VideoShelf videoList={videoJ.items}/>
+      <Video video={videoJ.items[0]} />
         
 
     </div>
@@ -336,31 +251,3 @@ export function YoutubeNEW() {
 }
 
 
-
-/*
- * 
-    axios.get("https://jsonplaceholder.typicode.com/users")
-      .then(result => setData(result.data))
-      .then(() => {
-        console.log('data')
-        console.log(data)
-      })
-
-
-
-    let someCheeky = {
-      result:     { items: [123, "abc"] },
-      statusText: "poop"
-    }
-    console.log('someCheeky')    
-    console.log(someCheeky)    
-    
-    let trick = []
-    trick.push(someCheeky)
-    shelfVids.push( someCheeky )
-  //  console.log('trick')    
-//    console.log(trick)    
-
-
-
-*/

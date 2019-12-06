@@ -1,4 +1,4 @@
-
+import * as Common from '../Pages/Common';
 
 import { SECRET_KEYS } from '../api-key';
 import axios from 'axios';
@@ -6,35 +6,43 @@ import axios from 'axios';
 var GoogleAuth;
 var isSigned;
 
-function testshit() {
-  console.log("testshit")
-}
-
-export function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+export async function check(gapiObj, gapiString) {
+  let wait = 500;
+  while (!window.gapi.client.youtube) {
+    wait = wait * 2
+    console.log("Check: NOT EXISTS: gapi.client.youtube")
+    await Common.sleep(wait)
+  }
+  while (!window.gapi.auth2) {
+    wait = wait * 2
+    console.log("Check: NOT EXISTS: gapi.auth2 not found");
+    await Common.sleep(wait); //sleep 100 ms
+  }
+  while (!window.gapi) {
+    wait = wait * 2
+    console.log("Check: NOT EXISTS: window.gapi not found");
+    await Common.sleep(wait)
+  }
 }
 
 export async function initGoogleAPI() {
-/*
+  let wait = 100
   while (!window.gapi) {
-    console.log("!-!-!-!-!-!-!-!-!-!-!-! window.gapi not found >:(");
-    await sleep(10)
-  } 
-  if (window.gapi) {
-    console.log("!-!-!-!-!-!-!-!-!-!-!-!- window.gapi found :)");
-  } else {
-    console.log("WWWWWWWWWWWWHAT THE FLIP")
-   }
-   */
-
+    wait = wait * 2
+    console.log("NOT EXISTS: window.gapi not found");
+    await Common.sleep(wait)
+  }
+  
   
   await window.gapi.load("client:auth2", _initClient) //initClientWithAuth
-  
+
+  wait = 100
   while (!window.gapi.auth2) {
-    console.log("-------------------------auth2 not found");
-    await sleep(10); //sleep 10 ms
+    wait = wait * 2
+    console.log("NOT EXISTS: gapi.auth2 not found");
+    await Common.sleep(wait); //sleep 100 ms
   }
-  console.log("!!!!!!!!!!!!!!!!!!!!!!!! auth2 found");
+
   GoogleAuth = await window.gapi.auth2.getAuthInstance();
   return GoogleAuth
   }
@@ -53,7 +61,7 @@ async function _loadClient() {
    return window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
     .then(function (res2) {
       console.log("GAPI client loaded for API");
-      isHeSignedIn()
+//      isHeSignedIn()
     }).catch(
       function (err) { console.error("Error loading GAPI client for API", err); });
 }
@@ -83,8 +91,7 @@ export function signOut() {
 export function isHeSignedIn() {
   if (GoogleAuth) {
     var isSigned = GoogleAuth.isSignedIn.get()
-    console.log("isSigned???")
-    console.log(isSigned)
+    console.log("isSigned??? "+ isSigned)
   }
   else
     console.log("NOPE")

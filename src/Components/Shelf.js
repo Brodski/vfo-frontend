@@ -4,6 +4,8 @@ import { Video } from './Video'
 //export async function XxxShelf(props) {
 
 export const Shelf = props => {
+
+/*
   console.log('++++++++++++++++ TOP +++++++++++++++++++++')
 
   console.log("PROPS")
@@ -16,6 +18,7 @@ export const Shelf = props => {
 
 
   console.log('+++++++++++++++++++ END +++++++++++++++++++++++')
+  */
   
     
   return(

@@ -39,6 +39,20 @@ import  * as GApiAuth from '../HttpRequests/GApiAuth';
 //https://flaviocopes.com/javascript-async-defer/
 //
 
+
+// Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
+// Kinda like: shelf[x].subscription[y].activity[z] 
+export async function getActivitiesShelfs(shelfs) {
+
+  let allShelfs_Promises =[]
+  for (let sh of shelfs) {
+    const sh_Promises = sh.subscriptions.map(sub => youtubeApi._getActivities(sub.channelId))
+    allShelfs_Promises.push(sh_Promises)
+  }
+  return await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
+    
+}
+
 export async function XXXgetActivitesOfChannels_2() {
 
   console.time("Subs getting")
@@ -57,7 +71,7 @@ export async function XXXgetActivitesOfChannels_2() {
   console.log(allActivities_response)
     
     for (let act of allActivities_response) {
-      console.log("---------- Activity --------------------------------------------------------------------")
+      console.log("---------- Activity -----------------------------------------")
 //      console.log(JSON.stringify(act.result, null, 2))
     }    
   }
@@ -80,113 +94,93 @@ export async function getAllSubs() {
 
 
 /*
- * eachShelfsActs:
- * array of shelfs
- * [ 
- *   {shelf} 
- *   {shelf}
- *   {shelf}
- * ]
- *  shelf:
- *  array of subscriptions
- *  [
- *    {subscription}
- *    {subscription}
- *    {subscription}
- *    {subscription}
- *  
- *  ]
- *    subscription
-*     array of activities
-*     [
-*      {activity}
-*      {activity}
-*      {activity}
-*      {activity}
-*      {activity}
-*      ]   
+* eachShelfsActs:
+* array of shelfs
+* [ {shelf}, {shelf}, {shelf} ]
+* 
+* 
+*  shelf:
+*  is array of subscriptions
+*  [ {subscription}, {subscription}, {subscription}, {subscription} ]
+*  
+*    subscription:
+*     is array of activities
+*     [ {activity}, {activity}, {activity}, {activity}, {activity}, {activity} ]
+
 *        activity (from yt):
-*        {
+*        { 
 *         contentDetails.upload.videoId
 *         snippet.channelId
-*         snippet.channelName
-*         snippet.description
-*         snippet.publishedAt:
-*         snippet.thumbnails
-*         snippet.title
+*         snippet.channelName 
 *        }
- * 
  */
 export function removeNonVideos(eachShelfsActs) {
-// TODO
-// Remove the double loop, use map and filter
+// TODO Remove the double loop, use map and filter
 // const damnBaby = shelf.map( act => act.result.items.filter(function (item) { return item.contentDetails.upload } ))
+  console.time('removeNonVideos: TOP')
   let filteredShelfs = []
   for (let shelf of eachShelfsActs) {
     let fShelf = []
     for (let act of shelf) {
-      console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
       if (act.status < 200 || act.status > 299 ) {
           console.log("Not 200 for activity: " + act)
           continue
         }
-//      console.log('act.result')
-      //console.log(act.result.items.snippet.channelTitle)
-  //    console.log(act.result)
       const result = act.result.items.filter(function (item) { return item.contentDetails.upload } )
-      //console.log(result)
       fShelf.push(result)
 
     }
     filteredShelfs.push(fShelf)
   }
-  console.log('filteredShelfs')
+  console.time('removeNonVideos: filteredShelfs:')
   console.log(filteredShelfs)
+  console.timeEnd('removeNonVideos')
   return filteredShelfs
 
 }
 
-export function extractIds(shelfsActsFlat) {
-  // TODO: double map, improve performance.
+
+export function extractIds(shelf) {
+
   let ids = []
-  for (let shelf of shelfsActsFlat) {
-  //  console.log('extract Ids: shelf')
-//    console.log(shelf)
-    let miniIds = shelf.map( act => act.contentDetails.upload.videoId)
-    ids.push(miniIds)
-  }
-//  console.log("were leaving the extractor!!!")
-  //console.log(ids)
-  //console.log('ids')
+  shelf.map( act => ids.push(act.contentDetails.upload.videoId))
+  //console.log('miniIds')
+  //console.log(miniIds)
   return ids
 }
 
+export async function getVideosShelf(shelfsVidIds) {
+    const vidIdShelf_Promise = shelfsVidIds.map(sh => {
+      return youtubeApi.getSomeVideos(sh.slice(0, 20))
+    })
+    return await Promise.all(vidIdShelf_Promise)
+}
+
+// Returns all the activies in a single array (shelf), instead array of activities in n different sub
+// Kinda like: shelf[x].Activity[z]
 export function flattenShelf(shelf) {
-//  console.log("flattenShelf: shelf ")
-  //console.log(shelf)
   let bigsub = []
   shelf.map(sub => { bigsub = bigsub.concat(sub) })
-  //console.log('bigsub')
-//  console.log(bigsub)
   return bigsub
 }
 
 export function sortByDate(shelf) {
-  //console.log("~`~`~`~~`~`~`~ SORT BY `~`~``~`~``~``~``~`")
- // console.log("sort by date: shelf")
-//  console.log(shelf)
-  //for (let act of shelf) {
- //   console.log(act.snippet.publishedAt)
-//  }
   shelf.sort(function (a, b) {
     let dateA = new Date(a.snippet.publishedAt)
     let dateB = new Date(b.snippet.publishedAt)
     return dateB - dateA // Sort by most recent
   })
-  //for (let act of shelf) {
- //   console.log(act.snippet.publishedAt)
-//  }
   return shelf
 }
   
 
+// THIS IS OLD
+export function extractIdsOld(shelfsActsFlat) {
+  // TODO: double map, improve performance.
+  let ids = []
+  for (let shelf of shelfsActsFlat) {
+    let miniIds = shelf.map(act => act.contentDetails.upload.videoId)
+    ids.push(miniIds)
+  }
+  return ids
+}

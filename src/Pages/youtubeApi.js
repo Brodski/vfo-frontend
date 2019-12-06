@@ -1,21 +1,26 @@
 
+import * as Common from './Common';
 
 
-export function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function check() {
+export async function check(gapiObj, gapiString) {
+  let wait = 500;
   while (!window.gapi.client.youtube) {
-      console.log("NOT EXISTS")
-      await sleep(1000)
-    }
-  while (!window.gapi.auth2) {
-    console.log("------------DMX-------------auth2 not found");
-    await sleep(100); //sleep 10 ms
+    wait = wait * 2
+    console.log("NOT EXISTS: gapi.client.youtube")
+    await Common.sleep(wait)
   }
-  console.log("EXISTS")
+  while (!window.gapi.auth2) {
+    wait = wait * 2
+    console.log("NOT EXISTS: gapi.auth2 not found");
+    await Common.sleep(wait); //sleep 100 ms
+  }
+  while (!window.gapi) {
+    wait = wait * 2
+    console.log("NOT EXISTS: window.gapi not found");
+    await Common.sleep(wait)
+  }
 }
+
 
 export async function _getActivities(channel) {
   await check()
@@ -58,8 +63,9 @@ await check()
 
 
 export async function getSomeVideos(vidIdList = [""]) {
+await check()
 console.log(vidIdList.toString())
-  return window.gapi.client.youtube.videos.list({
+  return await window.gapi.client.youtube.videos.list({
     "part": "snippet, contentDetails, statistics",
     "id": vidIdList.toString(),
     "fields": "items(id, kind, contentDetails/duration, snippet/publishedAt, snippet/channelId, snippet/title, snippet/description, snippet/thumbnails/*, snippet/channelTitle, statistics)",

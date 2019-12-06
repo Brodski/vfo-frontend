@@ -6,10 +6,23 @@ import axios from 'axios';
 var GoogleAuth;
 var isSigned;
 
-function testshit() {
-  console.log("testshit")
+export function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+  /*if (gapiObj = null) {
+    console.log("Check(): this shit is null, fool get out")
+    return
+  }
+  while (!gapiObj) {
+    wait = wait * 2
+    console.log("NOT EXIST: " + gapiString )
+    await sleep(wait)
+  }
+  */
+  
+
+  /*
 export function initGoogleAPI() {
   //Without OAuth
   //window.gapi.load("client", function () { console.log("Not Load Script OAuth???"); });
@@ -27,8 +40,9 @@ export function initGoogleAPI() {
       })
   }); 
 }
+*/
 
-//https://www.youtube.com/channel/UCA-8h5uCH5RE-1r6gskkbTw
+/*
 export function loadClient() {
   return window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
     .then(function (res2) {
@@ -153,50 +167,4 @@ export function getAuthCodeForServerSideShit() {
   })
 }
 
-
-
-
-
-
-
-
-
-
-
-
-//https://www.youtube.com/channel/UCA-8h5uCH5RE-1r6gskkbTw
-export async function loadClient2() {
-  return window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-    .then(function (res2) {
-      console.log("GAPI client loaded for API");
-      console.log("res2 ", res2)
-      GoogleAuth = window.gapi.auth2.getAuthInstance();
-      isHeSignedIn()
-    },
-      function (err) { console.error("Error loading GAPI client for API", err); });
-}
-
-
-
-export async function initGoogleAPI2() {
-  //Without OAuth
-  //window.gapi.load("client", function () { console.log("Not Load Script OAuth???"); });
-  //With OAuth
-  let x = await window.gapi.load("client:auth2", 
-    function () { //loads the gapi.client libraries, need to do this b/c!
-      window.gapi.auth2.init({
-        client_id: SECRET_KEYS.clientId,
-        apyKey: SECRET_KEYS.apiKey,
-        scope: "https://www.googleapis.com/auth/youtube.readonly",
-        //returns gapi.auth2.GoogleAuth
-      }).then(function (gAuth) {
-        console.log('gAuth')
-        console.log(gAuth)
-        console.log('x')
-        console.log(x)
-        let y = loadClient2();
-        console.log('y')
-        console.log(y)
-      })
-  }); 
-}
+*/

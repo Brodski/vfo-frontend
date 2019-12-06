@@ -3,16 +3,10 @@ import { Video } from './Video'
 import { Shelf } from './Shelf'
 export const ShelfsMany = props => {
 
-  console.log('%%%%%%%%%%%%%%%%%% TOP %%%%%%%%%%%%%%%%%%')
-
-  console.log("PROPS")
-  console.log(props)
+  console.log('%%%%%%%%%%%%%%%%%% TOP ALL SHELFS %%%%%%%%%%%%%%%%%%')
+  console.log("PROPS.SHELFS")
   console.log(props.shelfs)
-
-  
-
-
-  console.log('%%%%%%%%%%%%%%%%%% END %%%%%%%%%%%%%%%%%%')
+  console.log('%%%%%%%%%%%%%%%%%% END ALL SHELFS %%%%%%%%%%%%%%%%%%')
 
 return (
     <div> fomr many shelfs 
