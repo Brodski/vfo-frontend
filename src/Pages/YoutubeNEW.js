@@ -81,8 +81,6 @@ export function YoutubeNEW() {
   shelf3.subscriptions.push(sub6)
 
   
-  const [isSigned, setIsSigned] = useState(false)
-
   // This is the finalShelf
   // PageOfShelfs = finalShelfs = [ shelf, shelf, shelf ]
   // shelf =[ vid, vid, vid, vid ]
@@ -118,20 +116,10 @@ export function YoutubeNEW() {
 
   ///////////////////////////////////////////////
   /*
-    console.log('---------------useEffect1----------------------')
-    console.log("\n\n\n\nHELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!\n\n\n\n")
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://apis.google.com/js/client.js";
-    script.async = true
-    document.body.appendChild(script)
-    script.onload = () => {
-      initShit()
-    }
-    let shelfVids = fetchActs_perShelf()
-    console.log('---------------useEffect2----------------------')
-    */
-
+    /*
+     * MOVED TO APP.JS
+     * 
+     * 
   useEffect( () => {
   
     console.log('---------------useEffect1----------------------')
@@ -144,20 +132,24 @@ export function YoutubeNEW() {
     script.onload = () => {
       initShit()
     }
-    let shelfVids = fetchActs_perShelf()
+
+//    initShit()
+    //let shelfVids = fetchActs_perShelf()
     console.log('---------------useEffect2----------------------')
   }, [])
+      */
   
   async function hackHelper() {
   console.log('vvvvvvv HACK HELPER  vvvvvvvv')
   let count = 1
     while (!GoogleAuth) {
+    //while (!isSigned)
       console.log("Hack Helper: GoogleAuth NOT exist: " + count)
       await Common.sleep(100*count) 
       if (count > 40) {
         count = count * 2
-        console.log("Hack Helper: We are initing again " + count)
-        initShit()
+        console.log("Hack Helper: Something went wrong :(  " + count)
+        //initShit()
       }
       count = count + 1
     }
@@ -165,11 +157,34 @@ export function YoutubeNEW() {
     console.log('^^^^^^^^^^^^^^^^^^^^^^^^^')
   }
 
-
-  async function initShit() {
+  /*
+ async function initShit() {
+    console.time("initshit()")
     var googleAuthPromise = await GApiAuth.initGoogleAPI()  // Usually 500ms
-    GoogleAuth = await googleAuthPromise // Usually 1ms
+    GoogleAuth = await googleAuthPromise
+//    while (!googleAuthPromise) {
+      console.log('1010101010100101010101011010100101010')
+      console.log(googleAuthPromise)
+      console.log(GoogleAuth)
+      Common.sleep(3000)
+      console.log('xdx xd x   xd xd  xdxdxdxd')
+    console.timeEnd("initshit()")
+
+//    }
+    console.log('googleAuthPromise')
+    console.log(googleAuthPromise)
+
+    console.log("await googleAuthPromise")
+    console.time("await googleAuthPromise")
+    console.log('GoogleAuth')
+    console.log(GoogleAuth)
+    //GoogleAuth = await googleAuthPromise // Usually 1ms
+    console.log('GoogleAuth')
+    console.log(GoogleAuth)
+    console.timeEnd("await googleAuthPromise")
+    
   }
+  */
 
   const fetchActs_perShelf = async () => {
     console.log(" xxxxXXXXxxxx fetchActs_perShelfs xxxxXXXXxxxx")

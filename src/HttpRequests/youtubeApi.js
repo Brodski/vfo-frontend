@@ -6,17 +6,17 @@ export async function check(gapiObj, gapiString) {
   let wait = 500;
   while (!window.gapi.client.youtube) {
     wait = wait * 2
-    console.log("NOT EXISTS: gapi.client.youtube")
+    console.log("yt Api - NOT EXISTS: gapi.client.youtube")
     await Common.sleep(wait)
   }
   while (!window.gapi.auth2) {
     wait = wait * 2
-    console.log("NOT EXISTS: gapi.auth2 not found");
+    console.log("yt Api - NOT EXISTS: gapi.auth2 not found");
     await Common.sleep(wait); //sleep 100 ms
   }
   while (!window.gapi) {
     wait = wait * 2
-    console.log("NOT EXISTS: window.gapi not found");
+    console.log("yt Api - NOT EXISTS: window.gapi not found");
     await Common.sleep(wait)
   }
 }

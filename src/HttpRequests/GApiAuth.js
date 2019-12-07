@@ -10,17 +10,17 @@ export async function check(gapiObj, gapiString) {
   let wait = 500;
   while (!window.gapi.client.youtube) {
     wait = wait * 2
-    console.log("Check: NOT EXISTS: gapi.client.youtube")
+    console.log("GApi: NOT EXISTS: gapi.client.youtube")
     await Common.sleep(wait)
   }
   while (!window.gapi.auth2) {
     wait = wait * 2
-    console.log("Check: NOT EXISTS: gapi.auth2 not found");
+    console.log("GApi: NOT EXISTS: gapi.auth2 not found");
     await Common.sleep(wait); //sleep 100 ms
   }
   while (!window.gapi) {
     wait = wait * 2
-    console.log("Check: NOT EXISTS: window.gapi not found");
+    console.log("GApi: NOT EXISTS: window.gapi not found");
     await Common.sleep(wait)
   }
 }
@@ -29,10 +29,10 @@ export async function initGoogleAPI() {
   let wait = 100
   while (!window.gapi) {
     wait = wait * 2
-    console.log("NOT EXISTS: window.gapi not found");
+    console.log("GApi: NOT EXISTS: window.gapi not found");
     await Common.sleep(wait)
   }
-  
+  console.log("GApi: :) EXISTS: window.gapi found");
   
   await window.gapi.load("client:auth2", _initClient) //initClientWithAuth
 
@@ -42,8 +42,10 @@ export async function initGoogleAPI() {
     console.log("NOT EXISTS: gapi.auth2 not found");
     await Common.sleep(wait); //sleep 100 ms
   }
-
+  console.time("await window.gapi.auth2.getAuthInstance()")
+  console.log("In GapiAuth: about toawait window.gapi.auth2.getAuthInstance() ")
   GoogleAuth = await window.gapi.auth2.getAuthInstance();
+  console.timeEnd("await window.gapi.auth2.getAuthInstance()")
   return GoogleAuth
   }
 
@@ -94,10 +96,14 @@ export function isHeSignedIn() {
     console.log("isSigned??? "+ isSigned)
   }
   else
-    console.log("NOPE")
+    console.log("GoogleAuth doesnt exist")
 }
 
 export function printShit() {
+  if (!GoogleAuth) {
+    console.log("GoogleAuth doesnt exist")
+    return
+  }
   var user = GoogleAuth.currentUser.get()
   console.log("---------------------------------")
   isHeSignedIn()

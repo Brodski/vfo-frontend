@@ -1,7 +1,6 @@
-
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../Contexts/UserContext.js'
-
+import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 
 function UserGreeting(props) {
   return <h1>Welcome back!</h1>;
@@ -31,6 +30,8 @@ export const Settings = () => {
       <Greeting isLoggedIn={isSigned} />
       <button onClick={() => setIsSigned(!isSigned)} > Toggle Sign in </button>
       <button onClick={() => setUser('man this is it')} > change </button>
+
+      <ButtonsAuthDebug/>
     </div>
   );
 }
