@@ -9,7 +9,9 @@ import PostDo from './Pages/PostDo';
 import { YoutubeNEW } from './Pages/YoutubeNEW';
 import { Settings } from './Pages/Settings';
 import { UserContext } from './Contexts/UserContext.js'
+import { IsSignedContext } from './Contexts/IsSignedContext.js'
 import * as GApiAuth from './HttpRequests/GApiAuth'
+import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
 
 // $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
@@ -20,7 +22,6 @@ function App() {
 
   useEffect(() => {
 
-    console.log('---------------useEffect1----------------------')
     console.log("\n\n\n\nHELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!\n\n\n\n")
     const script = document.createElement("script");
     script.type = "text/javascript";
@@ -30,17 +31,18 @@ function App() {
     script.onload = () => {
       initShit()
     }
-    console.log('---------------useEffect2----------------------')
     }, [])
 
     
   async function initShit() {
     console.time("initshit()")
-//    var googleAuthPromise = await GApiAuth.initGoogleAPI()  // Usually 500ms
     var GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms
-  //  var GoogleAuth = await googleAuthPromise
-    console.log(GoogleAuth)
+    console.log('ServerEndpoints.getDummyUser()')
+    console.log(ServerEndpoints.getDummyUser())
+    setUser(await ServerEndpoints.getDummyUser())
     console.timeEnd("initshit()")
+    console.log('POST INITSHIT: GoogleAuth - ')
+    console.log(GoogleAuth)
   }
   
   const [isSigned, setIsSigned] = useState(false)

@@ -138,25 +138,8 @@ export function YoutubeNEW() {
     console.log('---------------useEffect2----------------------')
   }, [])
       */
-  
-  async function hackHelper() {
-  console.log('vvvvvvv HACK HELPER  vvvvvvvv')
-  let count = 1
-    while (!GoogleAuth) {
-    //while (!isSigned)
-      console.log("Hack Helper: GoogleAuth NOT exist: " + count)
-      await Common.sleep(100*count) 
-      if (count > 40) {
-        count = count * 2
-        console.log("Hack Helper: Something went wrong :(  " + count)
-        //initShit()
-      }
-      count = count + 1
-    }
-    console.log("Hack Helper: GoogleAuth !!! exist")
-    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^')
-  }
 
+      
   /*
  async function initShit() {
     console.time("initshit()")
@@ -186,11 +169,30 @@ export function YoutubeNEW() {
   }
   */
 
+  
+  async function hackHelper() {
+  console.log('vvvvvvv HACK HELPER  vvvvvvvv')
+  let count = 1
+    while (!GoogleAuth) {
+    //while (!isSigned)
+      console.log("Hack Helper: GoogleAuth NOT exist: " + count)
+      await Common.sleep(100*count) 
+      if (count > 40) {
+        count = count * 2
+        console.log("Hack Helper: Something went wrong :(  " + count)
+        //initShit()
+      }
+      count = count + 1
+    }
+    console.log("Hack Helper: GoogleAuth !!! exist")
+    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^')
+  }
+
   const fetchActs_perShelf = async () => {
     console.log(" xxxxXXXXxxxx fetchActs_perShelfs xxxxXXXXxxxx")
     let shelfsActs = null;
     await hackHelper()
-    
+    //isSigned = GApiAuth.isHeSignedIn()
     // Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
     // Kinda like: shelf[x].subscription[y].activity[z] 
     shelfsActs = await ytLogic.getActivitiesShelfs(shelfs)

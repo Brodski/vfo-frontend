@@ -5,6 +5,7 @@ import axios from 'axios';
 
 var GoogleAuth;
 var isSigned;
+const SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
 
 export async function check(gapiObj, gapiString) {
   let wait = 500;
@@ -43,7 +44,7 @@ export async function initGoogleAPI() {
     await Common.sleep(wait); //sleep 100 ms
   }
   console.time("await window.gapi.auth2.getAuthInstance()")
-  console.log("In GapiAuth: about toawait window.gapi.auth2.getAuthInstance() ")
+  console.log("In GapiAuth: about to await window.gapi.auth2.getAuthInstance() ")
   GoogleAuth = await window.gapi.auth2.getAuthInstance();
   console.timeEnd("await window.gapi.auth2.getAuthInstance()")
   return GoogleAuth
@@ -53,7 +54,7 @@ async function _initClient() {
   await window.gapi.auth2.init({
     client_id: SECRET_KEYS.clientId,
     apyKey: SECRET_KEYS.apiKey,
-    scope: "https://www.googleapis.com/auth/youtube.readonly",
+    scope: SCOPE,
     //returns gapi.auth2.GoogleAuth
   })
   _loadClient();
@@ -68,38 +69,44 @@ async function _loadClient() {
       function (err) { console.error("Error loading GAPI client for API", err); });
 }
 
-export function authenticate() {
+export function login() {
   return window.gapi.auth2.getAuthInstance()
     .signIn()
     .then(function () {
       console.log("Sign-in successful");
-      printShit()
-    },
-      function (err) { console.error("Error signing in", err); });
-}
-export function signOut() {
-  if (GoogleAuth) {
-    var isSigned = GoogleAuth.isSignedIn.get()
-    console.log("before: GoogleAuth.isSignedIn.get()")
-    console.log(isSigned)
-    GoogleAuth.signOut().then(function () {
-      console.log("after: GoogleAuth.isSignedIn.get()")
-      isSigned = GoogleAuth.isSignedIn.get()
-      console.log(isSigned)
+      return true
     })
+      .catch(function (err) { console.error("Error signing in", err); });
+}
+export function logout() {
+  if (GoogleAuth) {
+    return GoogleAuth.signOut().then(function () { 
+        console.log("Sign-out successful");
+        return true }
+      )
+      .catch( function (err) { console.error("Error signing in", err); });
   }
 }
 
 export function isHeSignedIn() {
+console.log('isHeSignedIn() ')
   if (GoogleAuth) {
-    var isSigned = GoogleAuth.isSignedIn.get()
-    console.log("isSigned??? "+ isSigned)
+    console.log('GoogleAuth.currentUser.get().hasGrantedScopes(SCOPE)')
+    console.log(GoogleAuth.currentUser.get().hasGrantedScopes(SCOPE))
+    console.log('GoogleAuth.currentUser.get()')
+    console.log(GoogleAuth.currentUser.get())
+    console.log('GoogleAuth.isSignedIn ???')
+    console.log(GoogleAuth.isSignedIn.get())
+    return GoogleAuth.isSignedIn.get()
   }
-  else
+  else {
     console.log("GoogleAuth doesnt exist")
+    return false
+  }
 }
 
 export function printShit() {
+  console.log("print shit")
   if (!GoogleAuth) {
     console.log("GoogleAuth doesnt exist")
     return
@@ -112,8 +119,6 @@ export function printShit() {
   console.log(user.getGrantedScopes())
   console.log(user.getHostedDomain())
   console.log(user.getId())
-  var isAuthorized = user.hasGrantedScopes("https://www.googleapis.com/auth/youtube.readonly");
-  var isAuthorized2 = user.hasGrantedScopes("https://www.googleapis.com/auth/youtube.force-ssl");
 
 }
 
@@ -135,7 +140,11 @@ export function testWithXML() {
 }
 
 export function getProfile() {
+  console.log("getProfile")
+  console.log(getProfile)
   if (GoogleAuth) {
+     console.log('GoogleAuth.currentUser.get()')
+     console.log(GoogleAuth.currentUser.get())
     var user = GoogleAuth.currentUser.get()
     var profile = user.getBasicProfile();
     return profile
@@ -143,6 +152,7 @@ export function getProfile() {
 }
 
 export function testAuthcode() {
+  console.log('testAuthcode')
   var user = GoogleAuth.currentUser.get()
   var profile = user.getBasicProfile();
   var someId = user.getId();
