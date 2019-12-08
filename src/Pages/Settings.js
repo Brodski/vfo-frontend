@@ -3,15 +3,32 @@ import { UserContext } from '../Contexts/UserContext.js'
 import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 import { LoginLogout } from '../Components/LoginLogout'
 import * as GApiAuth from '../HttpRequests/GApiAuth'
+import { User } from '../Classes/User'
+import { Subscription } from '../Classes/Subscription'
+import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
+
+import Sortable from 'react-sortablejs';
+import PropTypes from 'prop-types';
+import * as MySortables from '../Components/MySortables'
+
+//
+//  https://github.com/SortableJS/react-sortablejs
 
 export const Settings = () => {
   const [isSigned, setIsSigned] = useState()
   const { user, setUser } = useContext(UserContext);
-   
-  const SettingsIn = () => {
 
+
+  const SettingsIn =() => {
+    let mockUser = ServerEndpoints.getMockUser()
+    console.log('mockUser')
+    console.log(mockUser)
+
+   
     return(
+    <div>
       <h1> Grats, youre in </h1>
+    </div>
     )
   }
 
@@ -37,6 +54,11 @@ export const Settings = () => {
       <div/>
       <LoginLogout user={user}/>
       <div/>
+      <h3>====================================</h3>
+      <MySortables.GeneralList />
+      <MySortables.Fruits />
+
+      <h3>====================================</h3>
       <div/>
       <ButtonsAuthDebug/>
     </div>

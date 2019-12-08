@@ -15,6 +15,7 @@ import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
 
 // $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
+// $ npm install --save react-sortablejs
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
@@ -37,12 +38,9 @@ function App() {
   async function initShit() {
     console.time("initshit()")
     var GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms
-    console.log('ServerEndpoints.getDummyUser()')
-    console.log(ServerEndpoints.getDummyUser())
+
     setUser(await ServerEndpoints.getDummyUser())
     console.timeEnd("initshit()")
-    console.log('POST INITSHIT: GoogleAuth - ')
-    console.log(GoogleAuth)
   }
   
   const [isSigned, setIsSigned] = useState(false)

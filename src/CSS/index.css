@@ -44,3 +44,63 @@ li.myget {
   display: table;
 }
 
+
+.block-wrapper {
+  text-align: center;
+}
+
+.block-list {
+  max-width: 360px;
+  background-color: #1d5358;
+  border: 1px solid #eee;
+  border-bottom: 1px solid #5a1616;
+  border-top: 1px solid #5a1616;
+}
+
+li.block {
+  margin: 0;
+  height: 40px;
+  display: block;
+  border-top: 1px solid #5a1616;
+  border-bottom: 1px solid #5a1616;
+}
+
+i.block  {
+  padding: 5px;
+}
+
+.my-handle {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.block-list {
+  max-width: 360px;
+  background-color: #1d5358;
+  border: 1px solid #eee;
+  border-bottom: 1px solid #5a1616;
+  border-top: 1px solid #5a1616;
+}
+
+li.block {
+  margin: 0;
+  height: 40px;
+  display: block;
+  border-top: 1px solid #5a1616;
+  border-bottom: 1px solid #5a1616;
+}
+
+i.block  {
+  padding: 5px;
+}
+
+.my-handle {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
