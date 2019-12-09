@@ -16,9 +16,85 @@ import PropTypes from 'prop-types';
 // git https://github.com/SortableJS/react-sortablejs
 // examples https://github.com/SortableJS/react-sortablejs/blob/master/examples/index.jsx
 
-export const SortableList = ({ items, onChange }) => {
+//SortableList.propTypes = {
+  //  items: PropTypes.array,
+  //  onChange: PropTypes.func
+//};
 
+export const GeneralList = () => {
+  const [items, setItems] = useState([1, 2, 3, 4, 5, 6])
+  return (
+        <div>
+        
+          <h3> General list </h3>
+        <SortableList
+          items={items}
+          onChange={(items) => {
+            setItems(items);
+          }} >
+        </SortableList>
+        </div>
+    )
+}
+
+
+export const Fruits = () => {
+  const [fruits, setFruits] = useState(['Apple', 'Banana', 'Cherry', 'Guava', 'Peach', 'Strawberry'])
+  const fruitz = fruits.map(val => (<li data-id={val}>{val}</li>));
+
+  return (
+    <div>
+      <h3> Fruits </h3>
+      <Sortable> {fruitz} </Sortable>
+    </div>
+  )
+
+}
+
+
+export const FruitsSort = () => {
+
+  const [fruits, setFruits] = useState(['Apple', 'Banana', 'Cherry', 'Guava', 'Peach', '123 Strawberry', 'Strawberry'])
+  const fruitz = fruits.map(val => (<div className="block" data-id={val}>{val}</div>));
   
+
+  let sortable = null; // sortable instance
+  const reverseOrder = (evt) => { const order = sortable.toArray(); setFruits(order.reverse()); };
+  const sortOrder = (evt) => { const order = sortable.toArray(); setFruits(order.sort()) };
+  const logNSet = (evt) => { 
+    const order = sortable.toArray(); 
+    setFruits(order);
+    console.log("fruits: "); 
+    console.log(fruits)
+  };
+
+  //className="block-list" 
+  return (
+    <div>
+      <h3> Fruits Sort </h3>
+      <button type="button" onClick={reverseOrder}>Reverse Order</button>
+      <button type="button" onClick={sortOrder}>Sort Order</button>
+      <button type="button" onClick={logNSet}>Log and Set</button>
+      <Sortable 
+        options={{ 
+          animation: 200,
+          swapThreshold: .5,     
+        }}
+        className="block-list" 
+        invertSwap="true"
+        chosenClass="sortable-chosen" 
+        ref={(c) => { if (c) { sortable = c.sortable } } }
+        //onChange={(order, sortable, evt) => { sortOrder(order) }} >
+        //onChange={(order, sortable, evt) => {testThing(order) }} >
+        onChange={(order, sortable, evt) => {setFruits(order) }} >
+        {fruitz}
+      </Sortable>
+    </div>
+  )
+
+}
+
+export const SortableList = ({ items, onChange }) => {
 
   let sortable = null; // sortable instance
   const reverseOrder = (evt) => {
@@ -27,9 +103,11 @@ export const SortableList = ({ items, onChange }) => {
   };
   const listItems = items.map(val => 
     (
-        <li keys={val} data-id={val} className="block">List Item: {val}
-        </li>
-      
+        <div className="block" data-id={val} >
+          <i className="fas fa-grip-lines block handle" />
+          <li keys={val} data-id={val} className="block">List Item: {val}
+          </li>
+        </div> 
     )
   );
 
@@ -37,92 +115,62 @@ export const SortableList = ({ items, onChange }) => {
       <div>
           <button type="button" onClick={reverseOrder}>Reverse Order</button>
           <Sortable
+           
             options={{ 
-              animation: 150,
-                
+              animation: 200,
+              swapThreshold: .1,     
             }}
-            className={"block-list my-handle"}  
+            //handle="my-handle"
+            handle= ".handle"
+            className="block-list" 
+            chosenClass="sortable-chosen" //THIS IS THE DEFAULT CLASSNAME, CHOOSING MY CUSTOM WONT WORK
             ref={(c) => { if (c) { sortable = c.sortable; } }}
-            onChange={(order, sortable, evt) => {
-              console.log('order');
-              console.log(order);
-              console.log(onChange)
-              onChange(order);
-              }} >
+            onChange={(order, sortable, evt) => { onChange(order); }} >
             {listItems}
           </Sortable>
       </div>
   );
 };
 
-//          <i className="fas fa-grip-lines block" />
+          
 		  
-SortableList.propTypes = {
-    items: PropTypes.array,
-    onChange: PropTypes.func
-};
 
 
-export const GeneralList2 = () => {
-
-  const [itemz, setItemz] = useState([10, 20, 30, 40, 50, 60])
-
-  function myBtnShit(e) {
-  const order = itemz.toArray();
-            setItemz(itemz.sort(order.reverse()));
-  }
-  
-  const simpleList = itemz.map(val => ( 
-      <li data-id={val}> list Item {val} </li>
+export const SharedGroup = ( props ) => {
+  const itemz = props.items.map(val => ( 
+        <div className="block" data-id={val} >
+        <li key={val} data-id={val} > { val } </li>  
+        </div>
       ))
-  return (
-      <div>
-        <button
-        type="button"
-        onClick={myBtnShit}>
-        Reverse this shit 
-        </button>
-      <Sortable
-          options={{
-              animation: 150
-          }}
-          className="block-list"
-          ref={c => {
-              if (c) {
-                  setItemz(c.sortable);
-              }
-          }}>
-          {simpleList}
-      </Sortable>
-      </div>
-    
-
-    )
-}
-
-export const GeneralList = () => {
-
-  const [items, setItems] = useState([1, 2, 3, 4, 5, 6])
-  
-  return (
-        <SortableList
-          items={items}
-          onChange={(items) => {
-            setItems(items);
-          }} >
-
-        </SortableList>
-    )
-  
-}
-
-export const Fruits = () => {
-
-  const [fruits, setFruits] = useState(['Apple', 'Banana', 'Cherry', 'Guava', 'Peach', 'Strawberry'])
-  const fruitz = fruits.map(val => (<li data-id={val}>{val}</li>));
 
   return (
-    <Sortable> {fruitz} </Sortable>
-  )
-
+    <div>
+    <Sortable
+      className={"block-list"}
+      options={{
+          group: 'shared'
+      }} >    
+      {itemz}
+    </Sortable>
+    </div>
+  );
 }
+
+export const ControlGroup = ( props ) => {
+    const [fruits, setFruits] = useState(['Apple', 'Banana', 'Cherry', 'Guava', 'Peach', 'Strawberry'])
+    const items = fruits.map(val => (<div className="block"  key={val} data-id={val}>{val}</div>));
+
+        return (
+            <div >
+                <h3> Control group </h3>
+                <Sortable
+                    className={"block-list"}
+                    onChange={(order, sortable, evt) => {
+                        setFruits( order );
+                    }}>
+                    {items}
+                </Sortable>
+            </div>
+        );
+    }
+      

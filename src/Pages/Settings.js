@@ -10,9 +10,12 @@ import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import Sortable from 'react-sortablejs';
 import PropTypes from 'prop-types';
 import * as MySortables from '../Components/MySortables'
-
+import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 //
 //  https://github.com/SortableJS/react-sortablejs
+
+
+
 
 export const Settings = () => {
   const [isSigned, setIsSigned] = useState()
@@ -23,6 +26,7 @@ export const Settings = () => {
     let mockUser = ServerEndpoints.getMockUser()
     console.log('mockUser')
     console.log(mockUser)
+    SettingsLogic.kickIt(mockUser)
 
    
     return(
@@ -42,7 +46,8 @@ export const Settings = () => {
 
   return (
     <div> 
-      {/*!user ? <h1> You need to be logged in </h1> : <h1> YOUR IN! </h1> */}
+      {/*!user ? <h1> You need to be logged in </h1> : <h1> YOUR IN! </h1> 
+      */}
       {!user ? <SettingsOut /> : <SettingsIn /> }
       <h1>This is the settings</h1>
       <h3> user message: {user} </h3>
@@ -54,10 +59,17 @@ export const Settings = () => {
       <div/>
       <LoginLogout user={user}/>
       <div/>
+
+
       <h3>====================================</h3>
+      <MySortables.FruitsSort />
       <MySortables.GeneralList />
       <MySortables.Fruits />
-
+        <h3> Shared grup </h3>
+      <MySortables.SharedGroup items={['Apple', 'Banana', 'Cherry', 'Grape']} />
+            <h4> (shared) extra space for testing </h4>
+      <MySortables.SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach']} />
+      <MySortables.ControlGroup />
       <h3>====================================</h3>
       <div/>
       <ButtonsAuthDebug/>
