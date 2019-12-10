@@ -18,50 +18,37 @@ import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 
 export const Settings2 = (props) => {
 
-    console.log('Settings 2 props.mockUser')
-    console.log(props.mockUser)
-    const [subs, setSubs] = useState(props.mockUser)
-    const [availableSubs, setAvailableSubs] = useState([''])
+  console.log('Settings 2 props.mockUser')
+  console.log(props.mockUser)
+  const [subs, setSubs] = useState(props.mockUser)
+  const [availableSubs, setAvailableSubs] = useState([''])
 
-    useEffect(() => {
-      getShit()
-    }, []);
+  useEffect(() => {
+    setStuff()
+  }, []);
 
-    const getShit = async () => {
-      
-      //await setSubs(mockUser.subscriptions)
-      setSubs(props.mockUser)
+  const setStuff = async () => {
 
-      
-      let someShit = subs.map(s => s.channelName)
-      console.log('settings 2 someShit')
-      console.log(someShit)
-
-      setAvailableSubs(someShit)
-      console.log('settings 2 availableSubs')
-      console.log(availableSubs)
-
-      console.log('6')
-    }
-
-  function changeShit(order, sortable, evt) {
-    console.log('order')
-    console.log(order)
-    console.log('sortable')
-    console.log(sortable)
+    setSubs(props.mockUser) 
+    setAvailableSubs(subs.map(s => s.channelName))
   }
+
+  function changeShit(order, sortable, evt) {  }
+
+  function logSubzButton() {
+          console.log('subs');
+          console.log(subs);
+          console.log( subs.map(s => s.channelName))
+          //setAvailableSubs(subs.map(s => s.channelName))
+}
+
 
     return (
     
       <div>
         <h1> Settings2 </h1>
         
-      <button onClick={() => {
-          console.log('subs');
-          console.log(subs);
-          console.log( subs.map(s => s.channelName))
-          setAvailableSubs(subs.map(s => s.channelName))
-        }} >log subs </button>
+        <button onClick={logSubzButton}> log subs & subList </button>
 
         <Sortable
           className="block-list"
@@ -80,7 +67,6 @@ export const Settings2 = (props) => {
 
 export const Settings = () => {
 
-  const [isSigned, setIsSigned] = useState()
   const { user, setUser } = useContext(UserContext);
   const [subs, setSubs] = useState([ ])
   const [subsList, setSubsList] = useState([ ])
@@ -99,16 +85,13 @@ export const Settings = () => {
   const SettingsIn = () => {
 
     const ff = ['Apple', 'Banana', 'Cherry', 'Grape'];
-    //<MySortables.SharedGroup2 items={subs} onChange={setSubs}/>
+
     return (
       <div>
       <MySortables.SharedGroup items={ff} />
         <MySortables.SharedGroup2 items={subsList} onChange={setSubsList}/>
         <h1> SettingsIn </h1>
-        <button onClick={() => {
-          console.log('subs');
-          console.log(subs);
-        }} >log subs </button>
+        <button onClick={() => { console.log('subs: '); console.log(subs); }} >log subs </button>
  
         <Sortable
           className="block-list"
@@ -133,27 +116,20 @@ export const Settings = () => {
 
 
     return (
-    <div> 
-      {/*!user ? <h1> You need to be logged in </h1> : <h1> YOUR IN! </h1> 
-      */}
-      <h1> ~~~~~~~~~~~~~~~~~~~~~~~~~ </h1>
-        {!user ? <SettingsOut /> : <Settings2  mockUser={subs}/> }
-      <h1> ~~~~~~~~~~~~~~~~~~~~~~~~~ </h1>
-      {!user ? <SettingsOut /> : <SettingsIn /> }
-      
-      <h1>This is the settings</h1>
-      <h3> user message: {user} </h3>
-      
+    <div>  
+        <h1> ~~~~~~~~~~~~~~~~~~~~~~~~~ </h1>
+          {!user ? <SettingsOut /> : <Settings2  mockUser={subs}/> }
+        <h1> ~~~~~~~~~~~~~~~~~~~~~~~~~ </h1>
+        {!user ? <SettingsOut /> : <SettingsIn /> }
       <div/>
-      
-        <button onClick={() => setIsSigned(!isSigned)} > Toggle Sign in </button>
-        <button onClick={() => setUser('man this is it')} > change </button>
+        <h3> user message: {user} </h3>
+        <button onClick={() => setUser('man this is it')} > change user message </button>
       <div/>
-      <LoginLogout user={user}/>
+        <LoginLogout user={user}/>
       <div/>
 
 
-      <h3>====================================</h3>
+      <h3>====== Sortables testing & examples  =======</h3>
       <MySortables.FruitsSort />
       <MySortables.GeneralList />
       <MySortables.Fruits />
