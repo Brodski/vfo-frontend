@@ -11,6 +11,7 @@ import Sortable from 'react-sortablejs';
 import PropTypes from 'prop-types';
 
 
+
 //
 // Sortable https://sortablejs.github.io/Sortable/
 // git https://github.com/SortableJS/react-sortablejs
@@ -134,15 +135,40 @@ export const SortableList = ({ items, onChange }) => {
 
           
 		  
+export const SharedGroup2 = ({ items, onChange }) => {
+
+    const subz = items.map(s => (
+      <div className="block" data-id={s} key={s} > {s} </div>  
+    ))
+
+  return (
+    <div>
+    <Sortable
+      className="block-list"
+      options={{
+          group: 'shared'
+      }} 
+      chosenClass="sortable-chosen" 
+      //onChange={(order, sortable, evt) => { sortOrder(order) }} >
+      onChange={(order, sortable, evt) => onChange(order) }> 
+      {subz}
+    </Sortable>
+    </div>
+  );
+}
+
 
 
 export const SharedGroup = ( props ) => {
+//console.log("SharedGroup - props: ")
+//console.log(props)
   const itemz = props.items.map(val => ( 
         <div className="block" data-id={val} >
         <li key={val} data-id={val} > { val } </li>  
         </div>
       ))
-
+//console.log("SharedGroup - itemz: ")
+//console.log(itemz)
   return (
     <div>
     <Sortable
@@ -164,7 +190,7 @@ export const ControlGroup = ( props ) => {
             <div >
                 <h3> Control group </h3>
                 <Sortable
-                    className={"block-list"}
+                    className="block-list"
                     onChange={(order, sortable, evt) => {
                         setFruits( order );
                     }}>

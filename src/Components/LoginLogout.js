@@ -7,7 +7,7 @@ import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 
 const Logout = (props) => {
 
-  console.log("Out")
+  console.log("Log Out msg??")
 
   return (<button onClick={ async () => {
     console.log("Logging out...");
@@ -44,8 +44,7 @@ const LogButtons = (props) => {
 export const LoginLogout = (props) => {
   
   const { user, setUser } = useContext(UserContext);
-  console.log(props)
-  console.log(user)
+  console.log('rnd message from loginLogout???"')
   const msg = user ? "Logout :(" : "Login :)"
 
 

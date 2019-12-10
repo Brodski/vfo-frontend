@@ -115,29 +115,16 @@ export function YoutubeNEW() {
   
 
   ///////////////////////////////////////////////
-  /*
+  
     /*
      * MOVED TO APP.JS
      * 
-     * 
+     */
   useEffect( () => {
-  
-    console.log('---------------useEffect1----------------------')
-    console.log("\n\n\n\nHELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!\n\n\n\n")
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://apis.google.com/js/client.js";
-    script.async = true
-    document.body.appendChild(script)
-    script.onload = () => {
-      initShit()
-    }
-
-//    initShit()
     //let shelfVids = fetchActs_perShelf()
     console.log('---------------useEffect2----------------------')
   }, [])
-      */
+      
 
       
   /*
