@@ -36,10 +36,10 @@ export const Settings2 = (props) => {
   function changeShit(order, sortable, evt) {  }
 
   function logSubzButton() {
-          console.log('subs');
-          console.log(subs);
-          console.log( subs.map(s => s.channelName))
-          //setAvailableSubs(subs.map(s => s.channelName))
+      console.log('subs');
+      console.log(subs);
+      console.log( subs.map(s => s.channelName))
+      //setAvailableSubs(subs.map(s => s.channelName))
 }
 
 
@@ -65,19 +65,56 @@ export const Settings2 = (props) => {
 
 }
 
+const UnsortedSubsShelf = (props) => {
+  console.log("Unsorted Subs Shelf")
+  
+const [subList, setSubsList] = useState(props.mockUser.map( s => s.channelName))
+  
+  function changeShit(order, sortable, evt) {  
+    setSubsList(order)
+    }
+
+  function logButton() {
+      console.log('subsList: '); console.log(subList);
+  }
+  return (
+    <div>
+      <h1> Unsorted Sub Shelf </h1>
+        
+      <button onClick={logButton}> log subs & subList </button>
+
+      <Sortable
+        className="block-list"
+        options={{
+          group: 'shared',
+          animation: 100,
+          swapThreshold: .1,     
+        }}
+        chosenClass="sortable-chosen"
+        onChange={(order, sortable, evt) => { changeShit(order, sortable, evt) }} >
+        {subList.map(s => (<div className="block" data-id={s} key={s} > {s} </div> ))}
+      </Sortable>
+    </div>
+    )
+
+
+
+}
+
 export const Settings = () => {
 
   const { user, setUser } = useContext(UserContext);
   const [subs, setSubs] = useState([ ])
   const [subsList, setSubsList] = useState([ ])
+  let mockUser;
   useEffect(() => {
     getShit()
   }, []);
     
   async function getShit() {
-    let mockUser = await ServerEndpoints.getMockUser()
+    mockUser = await ServerEndpoints.getMockUser()
     await setSubs(mockUser.subscriptions)
-    await setSubsList( mockUser.subscriptions.map( s => s.channelName ))
+    //await setSubsList( mockUser.subscriptions.map( s => s.channelName ))
 
     //subz = subs.map(s => (<div className="block" data-id={s.channelName} key={s.channelId} > {s.channelName} </div> ))
   }
@@ -117,6 +154,8 @@ export const Settings = () => {
 
     return (
     <div>  
+        <h1> ```````````````````````` </h1>
+        {!user ? <SettingsOut /> : <UnsortedSubsShelf  mockUser={subs}/> }
         <h1> ~~~~~~~~~~~~~~~~~~~~~~~~~ </h1>
           {!user ? <SettingsOut /> : <Settings2  mockUser={subs}/> }
         <h1> ~~~~~~~~~~~~~~~~~~~~~~~~~ </h1>
