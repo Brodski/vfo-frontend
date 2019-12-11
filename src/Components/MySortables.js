@@ -149,7 +149,6 @@ export const SharedGroup2 = ({ items, onChange }) => {
           group: 'shared'
       }} 
       chosenClass="sortable-chosen" 
-      //onChange={(order, sortable, evt) => { sortOrder(order) }} >
       onChange={(order, sortable, evt) => onChange(order) }> 
       {subz}
     </Sortable>
@@ -160,15 +159,11 @@ export const SharedGroup2 = ({ items, onChange }) => {
 
 
 export const SharedGroup = ( props ) => {
-//console.log("SharedGroup - props: ")
-//console.log(props)
   const itemz = props.items.map(val => ( 
         <div className="block" data-id={val} >
         <li key={val} data-id={val} > { val } </li>  
         </div>
       ))
-//console.log("SharedGroup - itemz: ")
-//console.log(itemz)
   return (
     <div>
     <Sortable
@@ -200,3 +195,20 @@ export const ControlGroup = ( props ) => {
         );
     }
       
+export const AllThisSortableStuff = () => {
+
+  return (
+    <div>
+      <h3>====== Sortables testing & examples  =======</h3>
+        <FruitsSort />
+        <GeneralList />
+        <Fruits />
+      <h3> Shared grup </h3>
+        <SharedGroup items={['Apple', 'Banana', 'Cherry', 'Grape']} />
+          <h4> (shared) extra space for testing </h4>
+        <SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach']} />
+        <ControlGroup />
+        <h3>====================================</h3>
+    </div>
+    )
+}

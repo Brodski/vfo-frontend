@@ -45,7 +45,7 @@ export const LoginLogout = (props) => {
   
   const { user, setUser } = useContext(UserContext);
   console.log('rnd message from loginLogout???"')
-  const msg = user ? "Logout :(" : "Login :)"
+  const msg = user ? "Logout?? :(" : "Login :)"
 
 
 

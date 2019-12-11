@@ -16,6 +16,7 @@ import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 
 //var Sortable = require('react-sortablejs');
 
+/*
 export const Settings2 = (props) => {
 
   console.log('Settings 2 props.mockUser')
@@ -64,24 +65,17 @@ export const Settings2 = (props) => {
 
 
 }
+*/
 
 const UnsortedSubsShelf = (props) => {
   console.log("Unsorted Subs Shelf")
+  const [subList, setSubsList] = useState(props.mockUser.map( s => s.channelName))
   
-const [subList, setSubsList] = useState(props.mockUser.map( s => s.channelName))
-  
-  function changeShit(order, sortable, evt) {  
-    setSubsList(order)
-    }
-
-  function logButton() {
-      console.log('subsList: '); console.log(subList);
-  }
   return (
     <div>
       <h1> Unsorted Sub Shelf </h1>
         
-      <button onClick={logButton}> log subs & subList </button>
+      <button onClick={() => { console.log('subsList: '); console.log(subList); }}> log subs & subList </button>
 
       <Sortable
         className="block-list"
@@ -91,7 +85,7 @@ const [subList, setSubsList] = useState(props.mockUser.map( s => s.channelName))
           swapThreshold: .1,     
         }}
         chosenClass="sortable-chosen"
-        onChange={(order, sortable, evt) => { changeShit(order, sortable, evt) }} >
+        onChange={(order, sortable, evt) => { setSubsList(order) }} >
         {subList.map(s => (<div className="block" data-id={s} key={s} > {s} </div> ))}
       </Sortable>
     </div>
@@ -101,84 +95,39 @@ const [subList, setSubsList] = useState(props.mockUser.map( s => s.channelName))
 
 }
 
+
+const SettingsOut = () => {
+
+  return(
+    <h1> Fool! Log in! </h1>
+  )
+}
 export const Settings = () => {
 
+  let mockUser;
   const { user, setUser } = useContext(UserContext);
   const [subs, setSubs] = useState([ ])
-  const [subsList, setSubsList] = useState([ ])
-  let mockUser;
+
+  
   useEffect(() => {
     getShit()
   }, []);
     
   async function getShit() {
-    mockUser = await ServerEndpoints.getMockUser()
-    await setSubs(mockUser.subscriptions)
-    //await setSubsList( mockUser.subscriptions.map( s => s.channelName ))
-
-    //subz = subs.map(s => (<div className="block" data-id={s.channelName} key={s.channelId} > {s.channelName} </div> ))
-  }
-
-  const SettingsIn = () => {
-
-    const ff = ['Apple', 'Banana', 'Cherry', 'Grape'];
-
-    return (
-      <div>
-      <MySortables.SharedGroup items={ff} />
-        <MySortables.SharedGroup2 items={subsList} onChange={setSubsList}/>
-        <h1> SettingsIn </h1>
-        <button onClick={() => { console.log('subs: '); console.log(subs); }} >log subs </button>
- 
-        <Sortable
-          className="block-list"
-          options={{
-            group: 'shared'
-          }}
-          chosenClass="sortable-chosen"
-          onChange={(order, sortable, evt) => { setSubs(order) }} >
-          {subs.map(s => (<div className="block" data-id={s.channelName} key={s.channelId} > {s.channelName} </div> ))}
-        </Sortable>
-      </div>
-    )
+    mockUser = await ServerEndpoints.getMockUser() //Probably will "setSubs(actualUser)" in future
+    await setSubs(mockUser.subscriptions) 
 
   }
-
-  const SettingsOut = () => {
-
-    return(
-      <h1> Fool! Log in! </h1>
-    )
-  }
-
-
     return (
     <div>  
-        <h1> ```````````````````````` </h1>
-        {!user ? <SettingsOut /> : <UnsortedSubsShelf  mockUser={subs}/> }
-        <h1> ~~~~~~~~~~~~~~~~~~~~~~~~~ </h1>
-          {!user ? <SettingsOut /> : <Settings2  mockUser={subs}/> }
-        <h1> ~~~~~~~~~~~~~~~~~~~~~~~~~ </h1>
-        {!user ? <SettingsOut /> : <SettingsIn /> }
-      <div/>
+        <LoginLogout user={user}/>
         <h3> user message: {user} </h3>
         <button onClick={() => setUser('man this is it')} > change user message </button>
-      <div/>
-        <LoginLogout user={user}/>
-      <div/>
+      <h1> ```````````````````````` </h1>
+        {!user ? <SettingsOut /> : <UnsortedSubsShelf  mockUser={subs}/> }
 
 
-      <h3>====== Sortables testing & examples  =======</h3>
-      <MySortables.FruitsSort />
-      <MySortables.GeneralList />
-      <MySortables.Fruits />
-        <h3> Shared grup </h3>
-      <MySortables.SharedGroup items={['Apple', 'Banana', 'Cherry', 'Grape']} />
-            <h4> (shared) extra space for testing </h4>
-      <MySortables.SharedGroup items={['Lemon', 'Orange', 'Pear', 'Peach']} />
-      <MySortables.ControlGroup />
-      <h3>====================================</h3>
-      <div/>
+      <MySortables.AllThisSortableStuff/>
       <ButtonsAuthDebug/>
     </div>
   );
