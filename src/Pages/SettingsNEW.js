@@ -25,7 +25,7 @@ const AllShelfs = (props) => {
   console.log("AllShelfs props")
   console.log(props)
   const shelfz = props.shelfs.map(sh => {
-    return (<Shelf key={sh.title} data-id={sh.title} title={sh.title} shelfNames={sh.fewSubs.map(s => s.channelName)} />)
+    return (<Shelf key={sh.title} title={sh.title} shelfNames={sh.fewSubs.map(s => s.channelName)} />)
   })
 
   console.log(shelfz)
@@ -44,23 +44,31 @@ const Shelf = (props) => {
   console.log(props)
   const [items, setItems] = useState([ ])
 
-  useEffect(() => {
-    updateShelf()
-  }, [])
+  useEffect(() => { updateShelf() }, [])
 
   function updateShelf() {
     setItems(props.shelfNames)
-    
   }
-    var nestedSortables = [].slice.call(document.querySelectorAll('.shelfList'));
-    for (var i = 0; i < nestedSortables.length; i++) {
-	  new Sortable2(nestedSortables[i], {
-		  group: 'nested',
-		  animation: 150,
-		  fallbackOnBody: true,
-		  swapThreshold: 0.65
-	  });
-}
+
+  var nestedSortables = [].slice.call(document.querySelectorAll('.subListWrapper'));
+  for (var i = 0; i < nestedSortables.length; i++) {
+    new Sortable2(nestedSortables[i], {
+      group: 'nested',
+      animation: 150,
+      fallbackOnBody: true,
+      swapThreshold: 0.65
+    });
+  }
+
+  var nestedShelf = [].slice.call(document.querySelectorAll('.shelf'));
+  for (var i = 0; i < nestedShelf.length; i++) {
+	new Sortable2(nestedShelf[i], {
+		group: 'shelf',
+		animation: 150,
+		fallbackOnBody: true,
+		swapThreshold: 0.65
+	});
+  }
     
 
 
@@ -69,29 +77,46 @@ const Shelf = (props) => {
     console.log('order ' + order)
     
     var nestedSortablezDank = document.getElementById('dank')
-    var nestedSortables = [].slice.call(document.querySelectorAll('.shelfList'));
+    var nestedSortables = [].slice.call(document.querySelectorAll('.subListWrapper'));
     console.log('nestedSortables')
     console.log(nestedSortables)
     for (let i = 0; i < nestedSortables.length; i++) {
       console.log('nestedSortables[i]');
-      console.log(nestedSortables[i]);
+     // console.log(nestedSortables[i]);
       console.log(nestedSortables[i].dataset.id);
-      console.log(nestedSortables[i].textContent);
+      console.log(nestedSortables[i].childNodes);
+      console.log("BAM!");
+      console.log(nestedSortables[i].querySelectorAll('.block').innerHTML);
+      console.log(nestedSortables[i].querySelectorAll('.block'));
+   //   console.log(nestedSortables[i].textContent);
   }
-  
 
+    var nestedShelf = [].slice.call(document.querySelectorAll('.shelf'));
+       console.log('nestedShelf')
+    console.log(nestedShelf)
+    for (let i = 0; i < nestedShelf.length; i++) {
+      console.log('=-=-=-=-=-=-=-=-=-=-=');
+      console.log('nestedShelf[i]');
+      console.log(nestedShelf[i]);
+      console.log(nestedShelf[i].dataset.name);
+      console.log(nestedShelf[i].textContent);
+      console.log(nestedShelf[i].childNodes);
+
+    }
     }
 
   const itemz = props.shelfNames.map(s => (<div className="block" data-id={s} key={s} > {s} </div> )) 
   return (
-  <div className="shelf">
+    <div className="shelf" data-name={props.title}>
+    <div>
       <h3> Custom Sub Shelf </h3>
       <button onClick={(order, sortable, evt) => buttonLog(order,sortable) }> log this Shelf </button>  
-      <div className="shelfList">
+      <div className="subListWrapper">
         {itemz}
         </div>
     </div>
-    )
+  </div>
+  )
   }
   
 
@@ -104,8 +129,6 @@ const SettingsOut = () => {
 }
 export const SettingsNEW = () => {
 
-  let mockShelf =[];
-  let mockShelf2 =[];
   let mockUser;
   const { user, setUser } = useContext(UserContext);
   const [subs, setSubs] = useState([ ])
@@ -114,12 +137,6 @@ export const SettingsNEW = () => {
       title: '',
       fewSubs: []
     }] )
-    const [shelfs2, setShelfs2] = useState([
-    { 
-      title: '',
-      fewSubs: []
-    }] )
-  
   
   useEffect(() => {
     getShit()
@@ -136,7 +153,6 @@ export const SettingsNEW = () => {
     console.log("--------Doing 'setShelfs( mockUser.customShelfs)'------")
     await setShelfs( mockUser.customShelfs )
     let fewSubz = mockUser.customShelfs.map( shelf => shelf.fewSubs.map( s => s.channelName))
-    await setShelfs2( fewSubz)
 
   }
 
