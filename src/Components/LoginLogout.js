@@ -48,7 +48,6 @@ export const LoginLogout = (props) => {
   const msg = user ? "Logout?? :(" : "Login :)"
 
 
-
   return (
     <div>
       <h3> {msg} </h3>
@@ -57,7 +56,7 @@ export const LoginLogout = (props) => {
       <div/>
       user ternary
       {user ? <Logout setUser={setUser} /> : <Login setUser={setUser}/>}
-
+      {user ? <h3> user message: {user.fullName} </h3> : <h3> You need to logged in </h3>}
     </div>
   );
 }

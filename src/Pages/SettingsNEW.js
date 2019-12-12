@@ -7,7 +7,10 @@ import { User } from '../Classes/User'
 import { Subscription } from '../Classes/Subscription'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 
+import * as NestedStuff from '../Components/NestedStuff'
+
 import Sortable from 'react-sortablejs';
+import Sortable2 from 'sortablejs';
 import PropTypes from 'prop-types';
 import * as MySortables from '../Components/MySortables'
 import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
@@ -15,39 +18,12 @@ import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 //  https://github.com/SortableJS/react-sortablejs
 
 
-const UnsortedSubsShelf = (props) => {
-  console.log("Unsorted Subs Shelf")
-  const [subList, setSubsList] = useState(props.mockUser.map( s => s.channelName))
-  
-  return (
-    <div>
-      <h1> Unsorted Sub Shelf </h1>
-        
-      <button onClick={() => { console.log('subsList: '); console.log(subList); }}> log subs & subList </button>
-
-      <Sortable
-        className="block-list"
-        options={{
-          group: 'shared',
-          animation: 100,
-          swapThreshold: .1,     
-        }}
-        chosenClass="sortable-chosen"
-        onChange={(order, sortable, evt) => { setSubsList(order) }} >
-        {subList.map(s => (<div className="block" data-id={s} key={s} > {s} </div> ))}
-      </Sortable>
-    </div>
-    )
-}
-
 
 
 const AllShelfs = (props) => {
 
   console.log("AllShelfs props")
   console.log(props)
-  //const shelfz = props.shelfs.map(sh => { return(<Shelf data-id={sh.title} shelfNames={sh.fewSubs.map(s => s.channelName)} />) } )
-  //const shelfz = props.shelfs.map(sh => { return (<div data-id={sh.title}> this is some div <Shelf data-id={sh.title} shelfNames={sh.fewSubs.map(s => s.channelName)} /> </div>) } )
   const shelfz = props.shelfs.map(sh => {
     return (<Shelf key={sh.title} data-id={sh.title} title={sh.title} shelfNames={sh.fewSubs.map(s => s.channelName)} />)
   })
@@ -55,15 +31,7 @@ const AllShelfs = (props) => {
   console.log(shelfz)
   
   return (
-    //<Shelf id={sh.title} data-id={sh.title} shelf={sh} />
-    
-    //<button onClick={() => console.log(props.shelfs) }> log all shelfs </button>
-
     <div>
-        
-        {/* sh.map(s => (<div className="block" data-id={s} key={s} > {s} </div> ))
-        { sh.map(s => (<div data-id="poop" className="block"> u dummy </div> ))}*/}
-
       {shelfz}
     </div>
 
@@ -81,28 +49,37 @@ const Shelf = (props) => {
   }, [])
 
   function updateShelf() {
-  console.log('p')
-  console.log(props.shelfNames)
-  console.log(props)
-  //setItems(props.shelf.fewSubs.map(s => s.channelName))
-  setItems(props.shelfNames)
+    setItems(props.shelfNames)
+    
   }
+    var nestedSortables = [].slice.call(document.querySelectorAll('.shelfList'));
+    for (var i = 0; i < nestedSortables.length; i++) {
+	  new Sortable2(nestedSortables[i], {
+		  group: 'nested',
+		  animation: 150,
+		  fallbackOnBody: true,
+		  swapThreshold: 0.65
+	  });
+}
+    
+
+
   function buttonLog(order) {
-    console.log('items')
-    console.log(items)
-    console.log('props.shelfNames')
-    console.log(props.shelfNames)
-    console.log('order')
-    console.log(order)
+    console.log('items ' + items)
+    console.log('order ' + order)
     
     var nestedSortablezDank = document.getElementById('dank')
     var nestedSortables = [].slice.call(document.querySelectorAll('.shelfList'));
     console.log('nestedSortables')
     console.log(nestedSortables)
     for (let i = 0; i < nestedSortables.length; i++) {
+      console.log('nestedSortables[i]');
+      console.log(nestedSortables[i]);
+      console.log(nestedSortables[i].dataset.id);
       console.log(nestedSortables[i].textContent);
   }
-    
+  
+
     }
 
   const itemz = props.shelfNames.map(s => (<div className="block" data-id={s} key={s} > {s} </div> )) 
@@ -110,17 +87,11 @@ const Shelf = (props) => {
   <div className="shelf">
       <h3> Custom Sub Shelf </h3>
       <button onClick={(order, sortable, evt) => buttonLog(order,sortable) }> log this Shelf </button>  
-      <Sortable
-        className="block-list shelfList"
-        options={{
-            group: 'shared'
-        }} 
-        tag="div"
-        chosenClass="sortable-chosen" >
+      <div className="shelfList">
         {itemz}
-      </Sortable>
+        </div>
     </div>
-  )
+    )
   }
   
 
@@ -131,7 +102,7 @@ const SettingsOut = () => {
     <h1> Fool! Log in! </h1>
   )
 }
-export const Settings = () => {
+export const SettingsNEW = () => {
 
   let mockShelf =[];
   let mockShelf2 =[];
@@ -180,6 +151,7 @@ export const Settings = () => {
   //  {!user ? <SettingsOut /> : <UnsortedSubsShelf  mockUser={subs}/> }
     return (
     <div>  
+        <NestedStuff.Nested />
         <LoginLogout user={user}/>
         
         <button onClick={() => setUser('man this is it')} > change user message </button>

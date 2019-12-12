@@ -3,6 +3,6 @@
 export class UserShelf {
   constructor() {
     this.title = null;
-    this.subscriptions = []
+    this.fewSubs = []
   }
 }

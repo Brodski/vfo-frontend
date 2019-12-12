@@ -8,6 +8,7 @@ import PostDo from './Pages/PostDo';
 //import Youtube from './Pages/Youtube';
 import { YoutubeNEW } from './Pages/YoutubeNEW';
 import { Settings } from './Pages/Settings';
+import { SettingsNEW } from './Pages/SettingsNEW';
 import { UserContext } from './Contexts/UserContext.js'
 import { IsSignedContext } from './Contexts/IsSignedContext.js'
 import * as GApiAuth from './HttpRequests/GApiAuth'
@@ -16,6 +17,7 @@ import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
 // $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
 // $ npm install --save react-sortablejs
+// $ npm install --save sortablejs 
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
@@ -39,7 +41,8 @@ function App() {
     console.time("initshit()")
     var GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms
 
-    setUser(await ServerEndpoints.getDummyUser())
+    //setUser(await ServerEndpoints.getDummyUser())
+    setUser(ServerEndpoints.getMockUser)
     console.timeEnd("initshit()")
   }
   
@@ -57,6 +60,7 @@ function App() {
           <Route path="/doPost" component={PostDo} />
           <Route path="/youtube" component={YoutubeNEW} />
           <Route path="/settings" component={Settings} />
+          <Route path="/settings2" component={SettingsNEW} />
         </UserContext.Provider>
       </Switch>
     </Router> 

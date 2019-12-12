@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Subscription } from '../Classes/Subscription';
-import { User } from '../Classes/User';
+import { User, CustomShelf } from '../Classes/User';
 
 
 export async function getDummyUser() {
@@ -46,6 +46,18 @@ export function getMockUser() {
   u.userId = "123-UserId";
   u.fullName = "Richard Simmons"
   u.subscriptions.push(sub1, sub1C, sub1B, sub2, sub3, sub4, sub5, sub6)
+  
+
+  let cShelf1 = new CustomShelf()
+  cShelf1.title = "Shelf #1"
+  cShelf1.fewSubs.push(sub1, sub1B, sub1C)
+  
+  let cShelf2 = new CustomShelf()
+  cShelf2.title = "Shelf #2"
+  cShelf2.fewSubs.push(sub3, sub6)
+
+  u.customShelfs.push(cShelf1)
+  u.customShelfs.push(cShelf2)
 
   return u;
 }

@@ -12,6 +12,7 @@ class Nav extends React.Component {
           <li> <Link to='/doPost'> doPost </Link> </li>
           <li> <Link to='/youtube'> youtube </Link> </li>
           <li> <Link to='/settings'> Settings </Link> </li>
+          <li> <Link to='/settings2'> Settings2 </Link> </li>
         </ul>
       </nav>
     );

@@ -28,12 +28,7 @@ export const GeneralList = () => {
         <div>
         
           <h3> General list </h3>
-        <SortableList
-          items={items}
-          onChange={(items) => {
-            setItems(items);
-          }} >
-        </SortableList>
+        <SortableList items={items} onChange={(items) => { setItems(items); }} />
         </div>
     )
 }
@@ -97,37 +92,44 @@ export const FruitsSort = () => {
 
 export const SortableList = ({ items, onChange }) => {
 
-  let sortable = null; // sortable instance
+  var sortable = null
   const reverseOrder = (evt) => {
       const order = sortable.toArray();
       onChange(order.reverse());
   };
-  const listItems = items.map(val => 
-    (
-        <div className="block" data-id={val} >
-          <i className="fas fa-grip-lines block handle" />
+  /*
+   const fruitz = fruits.map(val => 
+  <div className="block" data-id={val} >
+          
           <li keys={val} data-id={val} className="block">List Item: {val}
           </li>
         </div> 
-    )
-  );
+   * (<i className="fas fa-grip-lines block" data-id={val} > <div className="block" > this is val {val}</div> </i>) );
+   */ 
+  const listItems = items.map(val => 
+      <div className="block"  keys={val}  data-id={val}> 
+        <i className="fas fa-grip-lines block handle" data-id={val}/>
+      List Item: {val} 
+    </div> ) 
+      
+    
+  
 
   return (
       <div>
           <button type="button" onClick={reverseOrder}>Reverse Order</button>
           <Sortable
-           
+            
             options={{ 
-              animation: 200,
+              animation: 100,
               swapThreshold: .1,     
+              handle: ".handle"
             }}
-            //handle="my-handle"
-            handle= ".handle"
+            
             className="block-list" 
             chosenClass="sortable-chosen" //THIS IS THE DEFAULT CLASSNAME, CHOOSING MY CUSTOM WONT WORK
-            ref={(c) => { if (c) { sortable = c.sortable; } }}
             onChange={(order, sortable, evt) => { onChange(order); }} >
-            {listItems}
+          {listItems}
           </Sortable>
       </div>
   );
@@ -148,8 +150,7 @@ export const SharedGroup2 = ({ items, onChange }) => {
       options={{
           group: 'shared'
       }} 
-      chosenClass="sortable-chosen" 
-      onChange={(order, sortable, evt) => onChange(order) }> 
+      chosenClass="sortable-chosen" >
       {subz}
     </Sortable>
     </div>
@@ -194,7 +195,8 @@ export const ControlGroup = ( props ) => {
             </div>
         );
     }
-      
+
+
 export const AllThisSortableStuff = () => {
 
   return (
