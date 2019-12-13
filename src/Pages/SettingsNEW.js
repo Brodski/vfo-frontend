@@ -14,7 +14,10 @@ import Sortable2 from 'sortablejs';
 import PropTypes from 'prop-types';
 import * as MySortables from '../Components/MySortables'
 import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
+import { Example } from '../Components/Dialog';
 
+
+//  https://www.npmjs.com/package/react-dialog
 //  https://github.com/SortableJS/react-sortablejs
 
 
@@ -34,7 +37,6 @@ const AllShelfs = (props) => {
     <div>
       {shelfz}
     </div>
-
     )
   }
 
@@ -42,80 +44,65 @@ const AllShelfs = (props) => {
 const Shelf = (props) => {
   console.log("Shelf")
   console.log(props)
-  const [items, setItems] = useState([ ])
 
-  useEffect(() => { updateShelf() }, [])
+  useEffect(() => { 
+    makeDraggableShared('.shelf', 'shelfs') //class, group name
+    makeDraggableShared('.subListWrapper', 'subscriptions')
+  } ,[])
+  
 
-  function updateShelf() {
-    setItems(props.shelfNames)
-  }
-
-  var nestedSortables = [].slice.call(document.querySelectorAll('.subListWrapper'));
-  for (var i = 0; i < nestedSortables.length; i++) {
-    new Sortable2(nestedSortables[i], {
-      group: 'nested',
-      animation: 150,
-      fallbackOnBody: true,
-      swapThreshold: 0.65
-    });
-  }
-
-  var nestedShelf = [].slice.call(document.querySelectorAll('.shelf'));
-  for (var i = 0; i < nestedShelf.length; i++) {
-	new Sortable2(nestedShelf[i], {
-		group: 'shelf',
-		animation: 150,
-		fallbackOnBody: true,
-		swapThreshold: 0.65
-	});
-  }
-    
-
-
-  function buttonLog(order) {
-    console.log('items ' + items)
-    console.log('order ' + order)
-    
-    var nestedSortablezDank = document.getElementById('dank')
-    var nestedSortables = [].slice.call(document.querySelectorAll('.subListWrapper'));
-    console.log('nestedSortables')
-    console.log(nestedSortables)
-    for (let i = 0; i < nestedSortables.length; i++) {
-      console.log('nestedSortables[i]');
-     // console.log(nestedSortables[i]);
-      console.log(nestedSortables[i].dataset.id);
-      console.log(nestedSortables[i].childNodes);
-      console.log("BAM!");
-      console.log(nestedSortables[i].querySelectorAll('.block').innerHTML);
-      console.log(nestedSortables[i].querySelectorAll('.block'));
-   //   console.log(nestedSortables[i].textContent);
-  }
-
-    var nestedShelf = [].slice.call(document.querySelectorAll('.shelf'));
-       console.log('nestedShelf')
-    console.log(nestedShelf)
-    for (let i = 0; i < nestedShelf.length; i++) {
-      console.log('=-=-=-=-=-=-=-=-=-=-=');
-      console.log('nestedShelf[i]');
-      console.log(nestedShelf[i]);
-      console.log(nestedShelf[i].dataset.name);
-      console.log(nestedShelf[i].textContent);
-      console.log(nestedShelf[i].childNodes);
-
+  function makeDraggableShared(selector, groupName) {
+    var nestedShelf = [].slice.call(document.querySelectorAll(selector));
+    for (var i = 0; i < nestedShelf.length; i++) {
+	    new Sortable2(nestedShelf[i], {
+		    group: groupName,
+		    animation: 150,
+		    fallbackOnBody: true,
+		    swapThreshold: 0.65
+	    });
     }
-    }
+  }
 
-  const itemz = props.shelfNames.map(s => (<div className="block" data-id={s} key={s} > {s} </div> )) 
+
+  function buttonLog() {
+    var shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
+    console.log('-----------shelfs-----------')
+    console.log(shelfs)
+    for (let i = 0; i < shelfs.length; i++) {
+      console.log("++ Shelf ++")
+      console.log(i)
+      for (let sub of shelfs[i].querySelectorAll('.sub-QHack')) {
+      console.log(sub)
+      console.log(sub.textContent)
+      }
+    } 
+  }
+  function editSub(sub) {
+      console.log("HI! " + sub)
+      // pop up window
+      // get filter from user
+      // fill with: user filter OR empty filter
+      // save button => update filter
+      // cancel
+  }
+
+  const itemz = props.shelfNames.map((s, idx) => (
+        <div className="subitem"> 
+            <div id={"subId" + idx} className="sub-QHack" data-id={s} key={s} > {s} </div> 
+      <button onClick={() => editSub(s)} > edit </button>
+        </div>
+        )) 
   return (
-    <div className="shelf" data-name={props.title}>
-    <div>
-      <h3> Custom Sub Shelf </h3>
-      <button onClick={(order, sortable, evt) => buttonLog(order,sortable) }> log this Shelf </button>  
-      <div className="subListWrapper">
-        {itemz}
+    <div className="shelf" >
+      <div className="sh-QHack" data-name={props.title}>
+        <h3> Custom Sub Shelf: {props.title} </h3>
+        <button onClick={(order, sortable, evt) => buttonLog() }> log this Shelf </button>  
+        <div className="subListWrapper">
+          {itemz}
         </div>
     </div>
   </div>
+  
   )
   }
   
@@ -139,10 +126,13 @@ export const SettingsNEW = () => {
     }] )
   
   useEffect(() => {
+    console.log("\n\n USE EFFECT \n")
+    
     getShit()
   }, []);
     
   async function getShit() {
+  console.log("\n\n GET SHIT\n")
     mockUser = await ServerEndpoints.getMockUser() //Probably will "setSubs(actualUser)" in future
     await setSubs(mockUser.subscriptions) 
     console.log('getShit mockUser')
@@ -156,23 +146,28 @@ export const SettingsNEW = () => {
 
   }
 
-  function shelfsButton() {
+  async function shelfsButton() {
     console.log('shelfs')
     console.log(shelfs)
-    console.log(  'mockUser.customShelfs')  
-    console.log(  mockUser.customShelfs)  
+    mockUser = await ServerEndpoints.getMockUser() //Probably will "setSubs(actualUser)" in future
+    console.log('mockUser')  
+    console.log(mockUser)  
+    console.log('mockUser.customShelfs')  
+    console.log(mockUser.customShelfs)  
 }
 
   //<CustomSubShelf shelf={shelfs[0]}/>    
   //  {!user ? <SettingsOut /> : <UnsortedSubsShelf  mockUser={subs}/> }
     return (
     <div>  
+        <div id="settings-main"> </div>
+        <Example />
         <NestedStuff.Nested />
         <LoginLogout user={user}/>
         
         <button onClick={() => setUser('man this is it')} > change user message </button>
         <button onClick={() => console.log(subs)} > Log Subs </button>
-        <button onClick={() => shelfsButton()} > Log shelfs </button>
+        <button onClick={shelfsButton} > (broken) Log shelfs </button>
         
         <AllShelfs shelfs={shelfs} setShelf={setShelfs}/>
       <h1> ```````````````````````` </h1>

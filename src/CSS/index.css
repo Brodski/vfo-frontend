@@ -68,13 +68,20 @@ li.block {
 div.block {
   margin: 0;
   height: 40px;
-  display: inline-block;
-  width: 100%;
+  
   border-top: 1px solid #5a1616;
   border-bottom: 1px solid #5a1616;
+  
+}
 
 
-
+.subitem {
+  margin: 0;
+  height: 40px;
+  border-top: 1px solid #5a1616;
+  border-bottom: 1px solid #5a1616;
+  display: flex;
+  justify-content: space-between;
 }
 
 div.subListWrapper {
@@ -84,6 +91,13 @@ div.subListWrapper {
 
 div.shelf {
   border: solid pink;
+}
+
+sh-QHack{
+
+}
+sub-QHack {
+
 }
 
 i.block {
