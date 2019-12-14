@@ -14,8 +14,8 @@ import Sortable2 from 'sortablejs';
 import PropTypes from 'prop-types';
 import * as MySortables from '../Components/MySortables'
 import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
-import { Example } from '../Components/Dialog';
-
+import { FilterDialog, Example } from '../Components/Dialog';
+import { Filter } from '../Classes/Filter'
 
 //  https://www.npmjs.com/package/react-dialog
 //  https://github.com/SortableJS/react-sortablejs
@@ -28,7 +28,7 @@ const AllShelfs = (props) => {
   console.log("AllShelfs props")
   console.log(props)
   const shelfz = props.shelfs.map(sh => {
-    return (<Shelf key={sh.title} title={sh.title} shelfNames={sh.fewSubs.map(s => s.channelName)} />)
+    return (<Shelf key={sh.title} title={sh.title} shelfNames={sh.fewSubs.map(s => s.channelName)} shelfObj={sh.fewSubs} />)
   })
 
   console.log(shelfz)
@@ -42,6 +42,13 @@ const AllShelfs = (props) => {
 
 
 const Shelf = (props) => {
+
+  // pop up window
+  // get filter from user
+  // fill with: user filter OR empty filter
+  // save button => update filter
+  // cancel
+
   console.log("Shelf")
   console.log(props)
 
@@ -63,7 +70,6 @@ const Shelf = (props) => {
     }
   }
 
-
   function buttonLog() {
     var shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
     console.log('-----------shelfs-----------')
@@ -73,25 +79,19 @@ const Shelf = (props) => {
       console.log(i)
       for (let sub of shelfs[i].querySelectorAll('.sub-QHack')) {
       console.log(sub)
+      console.log(sub.dataset)
       console.log(sub.textContent)
       }
     } 
   }
-  function editSub(sub) {
-      console.log("HI! " + sub)
-      // pop up window
-      // get filter from user
-      // fill with: user filter OR empty filter
-      // save button => update filter
-      // cancel
-  }
 
-  const itemz = props.shelfNames.map((s, idx) => (
-        <div className="subitem"> 
-            <div id={"subId" + idx} className="sub-QHack" data-id={s} key={s} > {s} </div> 
-      <button onClick={() => editSub(s)} > edit </button>
-        </div>
-        )) 
+    const itemz = props.shelfObj.map((s, idx) => (
+    <div className="subitem">
+        <div id={"subId" + idx} className="sub-QHack" data-id={s.channelName} key={s.channelName}> {s.channelName} </div> 
+      <div id={s.channelName.replace(/ /g,'')} />
+        <FilterDialog subObj={s} bindToId={s.channelName.replace(/ /g, '')} title={s.channelName} />
+    </div>
+    )) 
   return (
     <div className="shelf" >
       <div className="sh-QHack" data-name={props.title}>
@@ -102,18 +102,36 @@ const Shelf = (props) => {
         </div>
     </div>
   </div>
-  
   )
+  /*
+  const itemz = props.shelfNames.map((s, idx) => (
+    <div className="subitem">
+      <div id={"subId" + idx} className="sub-QHack" data-id={s} key={s} > {s} </div> 
+      <div id={s.replace(/ /g,'')} />
+      <FilterDialog  bindToId={s.replace(/ /g, '')} title={s} />
+    </div>
+    )) 
+  return (
+    <div className="shelf" >
+      <div className="sh-QHack" data-name={props.title}>
+        <h3> Custom Sub Shelf: {props.title} </h3>
+        <button onClick={(order, sortable, evt) => buttonLog() }> log this Shelf </button>  
+        <div className="subListWrapper">
+          {itemz}
+        </div>
+    </div>
+  </div>
+  )
+  */
+  
   }
   
 
 
-const SettingsOut = () => {
+const SettingsOut = () => { 
+  return( <h1> Fool! Log in! </h1> ) 
+  }
 
-  return(
-    <h1> Fool! Log in! </h1>
-  )
-}
 export const SettingsNEW = () => {
 
   let mockUser;
@@ -132,7 +150,7 @@ export const SettingsNEW = () => {
   }, []);
     
   async function getShit() {
-  console.log("\n\n GET SHIT\n")
+    console.log("\n\n GET SHIT\n")
     mockUser = await ServerEndpoints.getMockUser() //Probably will "setSubs(actualUser)" in future
     await setSubs(mockUser.subscriptions) 
     console.log('getShit mockUser')
@@ -156,12 +174,44 @@ export const SettingsNEW = () => {
     console.log(mockUser.customShelfs)  
 }
 
+  function testSave(s) {
+    console.log("user")
+    console.log(user)
+    let newDude =  user
+    //let shwing = { ...user, ...user.subscriptions: { ...user.subscriptions }}
+    newDude.subscriptions[0].filter.minDuration="yeah!"
+    console.log(newDude)
+    setUser(newDude)
+    console.log(user)
+    
+    console.log('find user')
+    let xsub =  user.subscriptions.find( s => s.channelName == "The Hill")
+    let xsub2 =  user.subscriptions.find( s => s.channelName == "SMTOWN")
+    let xsubInd =  user.subscriptions.findIndex( s => s.channelName == "SMTOWN")
+    console.log(xsub)
+    console.log(xsub2)
+    console.log(xsubInd)
+    let ff = new Filter() 
+    ff.requireKeyword.push("req word")
+    xsub2.filter = ff
+    newDude.subscriptions[xsubInd].filter = ff
+    setUser(newDude)
+    console.log(user)
+    //setUser({ subscriptions[0].filter.minDuration: "hey!!!!"})
+    //console.log(user)
+
+    //setUser
+
+  }
+
   //<CustomSubShelf shelf={shelfs[0]}/>    
   //  {!user ? <SettingsOut /> : <UnsortedSubsShelf  mockUser={subs}/> }
     return (
     <div>  
+        <button onClick={testSave} > test save </button>
         <div id="settings-main"> </div>
-        <Example />
+        <Example text="Hey suckah!" />
+        <FilterDialog bindToId="settings-main" />
         <NestedStuff.Nested />
         <LoginLogout user={user}/>
         
