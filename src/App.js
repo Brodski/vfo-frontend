@@ -9,11 +9,11 @@ import PostDo from './Pages/PostDo';
 import { YoutubeNEW } from './Pages/YoutubeNEW';
 import { Settings } from './Pages/Settings';
 import { SettingsNEW } from './Pages/SettingsNEW';
-import { UserContext } from './Contexts/UserContext.js'
+import { UserContext, UserSettingsContext } from './Contexts/UserContext.js'
 import { IsSignedContext } from './Contexts/IsSignedContext.js'
 import * as GApiAuth from './HttpRequests/GApiAuth'
 import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
-
+import { User } from './Classes/User'
 
 // $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
@@ -44,26 +44,36 @@ function App() {
     var GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms
 
     //setUser(await ServerEndpoints.getDummyUser())
-    setUser(ServerEndpoints.getMockUser)
+    let theUser = ServerEndpoints.getMockUser
+    setUser(theUser);
+    setUserSettings(theUser);
     console.timeEnd("initshit()")
   }
   
   const [isSigned, setIsSigned] = useState(false)
-  const [user, setUser] = useState(null)
-
+  //const [user, setUser] = useState(null)
+  const [user, setUser]                 = useState(new User())
+  const [userSettings, setUserSettings] = useState(new User())
+  //<UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
+   //     </UserSettingsContext.Provider>
   return (
     <Router>
       <Nav />
       <Switch>
         <UserContext.Provider value={{ user, setUser }}>
+        <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
           <Route path="/" exact component={Home} />
           <Route path="/about" component={About} />
           <Route path="/getServer" component={GetServer} />
           <Route path="/doPost" component={PostDo} />
           <Route path="/youtube" component={YoutubeNEW} />
+        
           <Route path="/settings" component={Settings} />
           <Route path="/settings2" component={SettingsNEW} />
+          
+        </UserSettingsContext.Provider>     
         </UserContext.Provider>
+
       </Switch>
     </Router> 
   );

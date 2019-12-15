@@ -8,7 +8,7 @@ export class User {
     //this.profiles = []
     this.subscriptions = []
     this.customShelfs = []
-
+    this.unsortedSubs = []
   }
 }
 

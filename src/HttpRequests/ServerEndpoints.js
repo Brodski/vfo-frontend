@@ -48,11 +48,24 @@ export function getMockUser() {
   sub6.channelName = "SMTOWN"
   sub6.channelId = "UCEf_Bc-KVd7onSeifS3py9g";
 
+  let uSub1 = new Subscription()
+  uSub1.channelName = "Key & Peele"
+  uSub1.channelId = "UCdN4aXTrHAtfgbVG9HjBmxQ";
+  
+  let uSub2 = new Subscription()
+  uSub2.channelName = "Tommy Boy"
+  uSub2.channelId = "UCnSR7_Oq-MdsZxfogsfk-Ug";
+    
+  let uSub3 = new Subscription()
+  uSub3.channelName = "FRONTLINE PBS | Official"
+  uSub3.channelId = "UC3ScyryU9Oy9Wse3a8OAmYQ";
+  
+
   let u = new User()
   u.userId = "123-UserId";
   u.fullName = "Richard Simmons"
   u.subscriptions.push(sub1, sub1C, sub1B, sub2, sub3, sub4, sub5, sub6)
-  
+  u.unsortedSubs.push( uSub1, uSub2, uSub3)
 
   let cShelf1 = new CustomShelf()
   cShelf1.title = "Shelf #1"

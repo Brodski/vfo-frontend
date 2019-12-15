@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../Contexts/UserContext.js'
+import { UserSettingsContext } from '../Contexts/UserContext.js'
 import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 import { LoginLogout } from '../Components/LoginLogout'
 import * as GApiAuth from '../HttpRequests/GApiAuth'
@@ -16,7 +17,9 @@ import * as MySortables from '../Components/MySortables'
 import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 import { FilterDialog, Example } from '../Components/Dialog';
 import { Filter } from '../Classes/Filter'
-
+import { UserShelf } from '../Classes/UserShelf'
+import { CustomShelf } from '../Classes/User'
+import * as Common from '../BusinessLogic/Common.js';
 //  https://www.npmjs.com/package/react-dialog
 //  https://github.com/SortableJS/react-sortablejs
 
@@ -28,26 +31,47 @@ const AllShelfs = (props) => {
   console.log("AllShelfs props")
   console.log(props)
   const shelfz = props.shelfs.map(sh => {
-    return (<Shelf key={sh.title} title={sh.title} shelfNames={sh.fewSubs.map(s => s.channelName)} shelfObj={sh.fewSubs} />)
+    return (<Shelf key={sh.title} title={sh.title} shelfNames={sh.fewSubs.map(s => s.channelName)}
+      shelfObj={sh.fewSubs} userSettings={props.userSettings} setUserSettings={props.setUserSettings} setUser={props.setUser}/>)
   })
 
-  console.log(shelfz)
+  function addShelf() {
+//    console.log('BEFORE')
+  //  console.log(props.userSettings)
+    props.setUserSettings(prevUser => {
+      let damn = { ...prevUser }
+      let cs = new CustomShelf()
+      cs.title = "Shelf " + (damn.customShelfs.length + 1)
+      damn.customShelfs.push(cs)
+      return damn
+    })
+    
+ //   console.log('AFTER')
+  //  console.log(props.userSettings)
+    //props.setUser
+  
+//      <Shelf title="New Shelf" shelfNames={['']} shelfObj={new UserShelf()} setUser={props.setUser} />
+  
+}
+  function save() {
+    console.log("SAVE!!!!!!!!")
+//    console.log(props)
+    props.setUser(props.userSettings)
+    props.setUserSettings(props.userSettings)
+  //  console.log(props)
+  }
   
   return (
     <div>
+      <button onClick={save}> Save </button>
       {shelfz}
+      <button onClick={addShelf} > Add shelf </button>
     </div>
     )
   }
 
 
 const Shelf = (props) => {
-
-  // pop up window
-  // get filter from user
-  // fill with: user filter OR empty filter
-  // save button => update filter
-  // cancel
 
   console.log("Shelf")
   console.log(props)
@@ -88,8 +112,8 @@ const Shelf = (props) => {
     const itemz = props.shelfObj.map((s, idx) => (
     <div className="subitem">
         <div id={"subId" + idx} className="sub-QHack" data-id={s.channelName} key={s.channelName}> {s.channelName} </div> 
-      <div id={s.channelName.replace(/ /g,'')} />
-        <FilterDialog subObj={s} bindToId={s.channelName.replace(/ /g, '')} title={s.channelName} />
+        <div id={s.channelName.replace(/ /g,'')} />
+        <FilterDialog userSettings={props.userSettings} setUserSettings={props.setUserSettings} subObj={s} bindToId={s.channelName.replace(/ /g, '')} />
     </div>
     )) 
   return (
@@ -137,6 +161,8 @@ export const SettingsNEW = () => {
   let mockUser;
   const { user, setUser } = useContext(UserContext);
   const [subs, setSubs] = useState([ ])
+  const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+  //const [tempUser, setTempUser] = useState(new User())
   const [shelfs, setShelfs] = useState([
     { 
       title: '',
@@ -148,9 +174,22 @@ export const SettingsNEW = () => {
     
     getShit()
   }, []);
+
+  async function setHack_TempUser() {
+    while (user.Id == null) {
+      await Common.sleep(1000)
+      console.log('sleeping..........')
+    }
+    //setTempUser(user)
+  }
+
     
   async function getShit() {
+    //setTempUser(user)
+    //setHack_TempUser()
     console.log("\n\n GET SHIT\n")
+    console.log("ACTUAL USER: \n")
+    console.log(user)
     mockUser = await ServerEndpoints.getMockUser() //Probably will "setSubs(actualUser)" in future
     await setSubs(mockUser.subscriptions) 
     console.log('getShit mockUser')
@@ -170,8 +209,8 @@ export const SettingsNEW = () => {
     mockUser = await ServerEndpoints.getMockUser() //Probably will "setSubs(actualUser)" in future
     console.log('mockUser')  
     console.log(mockUser)  
-    console.log('mockUser.customShelfs')  
-    console.log(mockUser.customShelfs)  
+    console.log('\n\n\nuserSettings')
+    console.log(userSettings)
 }
 
   function testSave(s) {
@@ -211,19 +250,22 @@ export const SettingsNEW = () => {
         <button onClick={testSave} > test save </button>
         <div id="settings-main"> </div>
         <Example text="Hey suckah!" />
-        <FilterDialog bindToId="settings-main" />
         <NestedStuff.Nested />
         <LoginLogout user={user}/>
         
-        <button onClick={() => setUser('man this is it')} > change user message </button>
+        {/*<button onClick={() => setUser('man this is it')} > change user message </button>*/}
         <button onClick={() => console.log(subs)} > Log Subs </button>
-        <button onClick={shelfsButton} > (broken) Log shelfs </button>
+        <button onClick={shelfsButton} > (shelfsButton) </button>
         
-        <AllShelfs shelfs={shelfs} setShelf={setShelfs}/>
+        {/*<AllShelfs shelfs={shelfs} setShelf={setShelfs}/>*/}
+        {/*<AllShelfs user={user} shelfs={user.customShelfs} setUser={setUser} setShelf={setShelfs}/>*/}
+        <AllShelfs shelfs={userSettings.customShelfs}
+           userSettings={userSettings} setUserSettings={setUserSettings}  setUser={setUser} setShelf={setShelfs}/>
       <h1> ```````````````````````` </h1>
         
-
-
+      <label> wtf is this
+              
+            </label>
       <MySortables.AllThisSortableStuff/>
       <ButtonsAuthDebug/>
     </div>

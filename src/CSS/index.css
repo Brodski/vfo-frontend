@@ -113,6 +113,9 @@ i.block {
   cursor: -webkit-grab;
 }
 
+.infoIcon{
+  padding: 5px;
+}
 
 
 .Modal {
