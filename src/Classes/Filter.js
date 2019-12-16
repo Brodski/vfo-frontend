@@ -2,8 +2,8 @@
 
 export class Filter {
   constructor() {
-    this.blacklist = [];
-    this.requireKeyword = [];
+    this.blocklist = [];
+    this.requireList = [];
     this.minDuration = 0;
     this.maxDuration = Infinity;
   }

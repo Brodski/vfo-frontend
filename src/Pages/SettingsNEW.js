@@ -15,13 +15,22 @@ import Sortable2 from 'sortablejs';
 import PropTypes from 'prop-types';
 import * as MySortables from '../Components/MySortables'
 import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
-import { FilterDialog, Example } from '../Components/Dialog';
+import { FilterDialog } from '../Components/Dialog';
 import { Filter } from '../Classes/Filter'
 import { UserShelf } from '../Classes/UserShelf'
 import { CustomShelf } from '../Classes/User'
 import * as Common from '../BusinessLogic/Common.js';
+
+import Tagify from '@yaireo/tagify'
+
+import Tags from "@yaireo/tagify/dist/react.tagify"
+
+//import Tags from "@yaireo/tagify/react.tagify"
 //  https://www.npmjs.com/package/react-dialog
 //  https://github.com/SortableJS/react-sortablejs
+//  https://github.com/yairEO/tagify
+
+//import Tagify from '@yaireo/tagify'
 
 
 
@@ -35,9 +44,8 @@ const AllShelfs = (props) => {
       shelfObj={sh.fewSubs} userSettings={props.userSettings} setUserSettings={props.setUserSettings} setUser={props.setUser}/>)
   })
 
+  
   function addShelf() {
-//    console.log('BEFORE')
-  //  console.log(props.userSettings)
     props.setUserSettings(prevUser => {
       let damn = { ...prevUser }
       let cs = new CustomShelf()
@@ -45,14 +53,8 @@ const AllShelfs = (props) => {
       damn.customShelfs.push(cs)
       return damn
     })
+  }
     
- //   console.log('AFTER')
-  //  console.log(props.userSettings)
-    //props.setUser
-  
-//      <Shelf title="New Shelf" shelfNames={['']} shelfObj={new UserShelf()} setUser={props.setUser} />
-  
-}
   function save() {
     console.log("SAVE!!!!!!!!")
 //    console.log(props)
@@ -73,8 +75,8 @@ const AllShelfs = (props) => {
 
 const Shelf = (props) => {
 
-  console.log("Shelf")
-  console.log(props)
+//  console.log("Shelf")
+//  console.log(props)
 
   useEffect(() => { 
     makeDraggableShared('.shelf', 'shelfs') //class, group name
@@ -116,6 +118,10 @@ const Shelf = (props) => {
         <FilterDialog userSettings={props.userSettings} setUserSettings={props.setUserSettings} subObj={s} bindToId={s.channelName.replace(/ /g, '')} />
     </div>
     )) 
+
+    
+
+
   return (
     <div className="shelf" >
       <div className="sh-QHack" data-name={props.title}>
@@ -127,26 +133,6 @@ const Shelf = (props) => {
     </div>
   </div>
   )
-  /*
-  const itemz = props.shelfNames.map((s, idx) => (
-    <div className="subitem">
-      <div id={"subId" + idx} className="sub-QHack" data-id={s} key={s} > {s} </div> 
-      <div id={s.replace(/ /g,'')} />
-      <FilterDialog  bindToId={s.replace(/ /g, '')} title={s} />
-    </div>
-    )) 
-  return (
-    <div className="shelf" >
-      <div className="sh-QHack" data-name={props.title}>
-        <h3> Custom Sub Shelf: {props.title} </h3>
-        <button onClick={(order, sortable, evt) => buttonLog() }> log this Shelf </button>  
-        <div className="subListWrapper">
-          {itemz}
-        </div>
-    </div>
-  </div>
-  )
-  */
   
   }
   
@@ -161,6 +147,7 @@ export const SettingsNEW = () => {
   let mockUser;
   const { user, setUser } = useContext(UserContext);
   const [subs, setSubs] = useState([ ])
+  const [tagifyProps, setTagifyProps] = useState([])
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
   //const [tempUser, setTempUser] = useState(new User())
   const [shelfs, setShelfs] = useState([
@@ -171,8 +158,12 @@ export const SettingsNEW = () => {
   
   useEffect(() => {
     console.log("\n\n USE EFFECT \n")
-    
+    setTagifyProps({value: ["from settingsz"], showDropdown: false})
     getShit()
+
+    var input = document.querySelector('#sometag');
+    new Tagify(input)
+
   }, []);
 
   async function setHack_TempUser() {
@@ -187,16 +178,16 @@ export const SettingsNEW = () => {
   async function getShit() {
     //setTempUser(user)
     //setHack_TempUser()
-    console.log("\n\n GET SHIT\n")
-    console.log("ACTUAL USER: \n")
-    console.log(user)
+  //  console.log("\n\n GET SHIT\n")
+ //   console.log("ACTUAL USER: \n")
+//    console.log(user)
     mockUser = await ServerEndpoints.getMockUser() //Probably will "setSubs(actualUser)" in future
     await setSubs(mockUser.subscriptions) 
-    console.log('getShit mockUser')
-    console.log(mockUser)
-    console.log('mockUser.subscriptions')
-    console.log(mockUser.subscriptions)
-    console.log(mockUser.customShelfs)
+//    console.log('getShit mockUser')
+//    console.log(mockUser)
+ //   console.log('mockUser.subscriptions')
+  //  console.log(mockUser.subscriptions)
+   // console.log(mockUser.customShelfs)
     console.log("--------Doing 'setShelfs( mockUser.customShelfs)'------")
     await setShelfs( mockUser.customShelfs )
     let fewSubz = mockUser.customShelfs.map( shelf => shelf.fewSubs.map( s => s.channelName))
@@ -243,13 +234,26 @@ export const SettingsNEW = () => {
 
   }
 
+  
+  const tagSettings = {
+    blacklist: ["xxx", "yyy", "zzz"],
+    maxTags: 6,
+    backspace: "edit",
+    placeholder: "type something",
+    dropdown: {
+      enabled: 0 // a;ways show suggestions dropdown
+    }
+  }
+  
   //<CustomSubShelf shelf={shelfs[0]}/>    
   //  {!user ? <SettingsOut /> : <UnsortedSubsShelf  mockUser={subs}/> }
+  //
     return (
     <div>  
+        <Tags settings={tagSettings} {...tagifyProps} />    
+        <input id="sometag" /> 
         <button onClick={testSave} > test save </button>
         <div id="settings-main"> </div>
-        <Example text="Hey suckah!" />
         <NestedStuff.Nested />
         <LoginLogout user={user}/>
         

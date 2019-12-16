@@ -13,7 +13,8 @@ export function getMockUser() {
   let sub1 = new Subscription()
   sub1.channelName = "The Hill"
   sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
-  sub1.filter.minDuration = "1 minute"
+  sub1.filter.minDuration = "1"
+  sub1.filter.maxDuration = "0.5"
   sub1.filter.blacklist = "the hill: pompous liberal douche"
 
 
@@ -25,7 +26,7 @@ export function getMockUser() {
   let sub1C = new Subscription()
   sub1C.channelName = "Fox News"
   sub1C.channelId = "UCXIJgqnII2ZOINSWNOGFThA";
-  sub1C.filter.minDuration = "6 minute"
+  sub1C.filter.minDuration = "6"
   sub1C.filter.blacklist = "Fox News: angry hill billy"
 
   let sub2 = new Subscription()

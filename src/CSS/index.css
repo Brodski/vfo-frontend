@@ -117,6 +117,30 @@ i.block {
   padding: 5px;
 }
 
+.customLook{ 
+  display: block;
+
+}
+
+.tagify {
+  --tags-bg: #ff0000;
+  --tag--min-width: 10px;
+}
+
+.tagify__input {
+  min-width: 10px !important;
+}
+
+
+.myTagify__input {
+  display: block;
+  margin: 5px;
+  padding: .3em .5em;
+  padding: var(--tag-pad,.3em .5em);
+  line-height: inherit;
+  position: relative;
+  white-space: pre-line;
+}
 
 .Modal {
   position: absolute;

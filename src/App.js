@@ -15,11 +15,14 @@ import * as GApiAuth from './HttpRequests/GApiAuth'
 import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
 import { User } from './Classes/User'
 
+
 // $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
 // $ npm install --save react-sortablejs
 // $ npm install --save sortablejs 
 // $ npm install --save react-modal
+// $ npm install --save @yaireo/tagify
+
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 

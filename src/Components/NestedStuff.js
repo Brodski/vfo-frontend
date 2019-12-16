@@ -41,8 +41,6 @@ const SomeNestedElements = () => {
 
 export const Nested = () => {
   var nestedSortables = [].slice.call(document.querySelectorAll('.nested-sortable'));
-  console.log('NESTED nestedSortables')
-  console.log(nestedSortables)
   // Loop through each nested sortable element
   for (var i = 0; i < nestedSortables.length; i++) {
     new Sortable(nestedSortables[i], {
