@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useEffect, useContext, useState } from 'react';
+import { UserContext } from '../Contexts/UserContext.js'
+import { UserSettingsContext } from '../Contexts/UserContext.js'
 
 function About() {
+  const { user, setUser } = useContext(UserContext);
+  const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+  useEffect(() => {
+    console.log('HOME!!!!!!!!!!!!!!!!')
+    console.log('user')
+    console.log(user)
+    console.log('userSettings')
+    console.log(userSettings)
+  },[])
   return (
     <div>
       <h1>Home</h1>

@@ -10,9 +10,8 @@ import '../CSS/index.css';
 
 
 export function FilterDialog(props){
-  console.log(" dialog props")
-  console.log(props)
-  var subtitle;
+  //console.log(" dialog props")
+//  console.log(props)
   const [modalIsOpen,setIsOpen] = useState(false);
   const [minDur, setMinDur] = useState()
   const [maxDur, setMaxDur] = useState()
@@ -20,15 +19,14 @@ export function FilterDialog(props){
   var blockIdSuffix = '-block';
   
   useEffect(() => {
-    Modal.setAppElement('#'+props.bindToId)
+    if (!document.querySelectorAll('#' + props.bindToId)[1]) {
+      Modal.setAppElement('#' + props.bindToId)
+    }
     setMinDur(props.subObj.filter.minDuration)
     setMaxDur(props.subObj.filter.maxDuration)
     } ,[])
 
-  function openModal() {
-    setIsOpen(true);
-  }
-  
+    
   function close(e) {
     console.log("close!")
     e.preventDefault();
@@ -96,13 +94,50 @@ export function FilterDialog(props){
 //    myFilter.blocklist   = _getTags(blockIdSuffix)
     //myFilter.requireList = _getTags(reqIdSuffix) }
 
-  const tagSettings = {
-    maxTags: 10,
-    placeholder: "",
-    dropdown: {
-      enabled: 0 // always show suggestions dropdown
-    }, 
-}
+  const tagSettings = { maxTags: 10, placeholder: "", dropdown: { enabled: 0 }, }// always show suggestions dropdown
+    
+
+  function save(e) {
+    // TODO: It's ugly
+
+    if(e) e.preventDefault();
+    console.log("save filter")
+    console.log(props)
+    let tempUser = props.userSettings
+
+    let shelfIndex = 0 ;
+    let subIndex;
+    let unSortedIdx;
+
+    let myFilter = new Filter() 
+    myFilter.maxDuration = maxDur;
+    myFilter.minDuration = minDur;
+    //myFilter.blocklist   = _getTags(blockIdSuffix)
+    //myFilter.requireList = _getTags(reqIdSuffix) }
+    
+    //Find which shelf and location of the User on shelf
+    //Search Custom Sub Shelfs
+    for (let sh of props.userSettings.customShelfs) {
+      subIndex =  sh.fewSubs.findIndex( s => s.channelName == props.subObj.channelName)//props.subObj.channelName)
+      if (subIndex > -1) { break }
+      shelfIndex += 1;
+    }
+
+    //if not in custom subshelf, then it's in Unsorted Subs
+    if (subIndex == -1) {
+      unSortedIdx = props.userSettings.unsortedSubs.findIndex( s => s.channelName == props.subObj.channelName)  
+    }
+
+    //Save to tempUser
+    if (unSortedIdx) {
+      tempUser.unsortedSubs[unSortedIdx].filter = myFilter
+    } else {
+      tempUser.customShelfs[shelfIndex].fewSubs[subIndex].filter = myFilter
+    }
+
+    props.setUserSettings(tempUser)
+  }
+ 
 
 
   function getBothTags(e) {
@@ -119,18 +154,23 @@ export function FilterDialog(props){
     console.log("document.querySelectorAll(tags)")
     var myList = []
     document.getElementById(props.bindToId + tagSuffix).querySelectorAll('.tagify__tag').forEach(x => myList.push(x.textContent))
+    //Note this: var nestedShelf = [].slice.call(document.querySelectorAll(selector));
     return myList
 
   }
 
+  function closeModal() {
+    save(); 
+    setIsOpen(false)
+  }
 
 
     return (
       <div>
-        <button onClick={openModal}>create filter</button>
+        <button onClick={() => setIsOpen(true) }>create filter</button>
         <Modal
           isOpen={modalIsOpen}
-          onRequestClose={() => setIsOpen(false)}
+          onRequestClose={closeModal}
           shouldCloseOnEsc={ true}
           className="Modal"
           overlayClassName="Overlay"
@@ -152,7 +192,8 @@ export function FilterDialog(props){
              </div>
               <IconHelper />*/}
           <div> </div>
-            <button onClick={getBothTags} > Get Tags </button>
+            {/*<button onClick={getBothTags} > Get Tags </button>*/}
+            <button onClick={save}>Save</button>
             <button onClick={close}>Close</button>
           </form>
         </Modal>
@@ -163,41 +204,6 @@ export function FilterDialog(props){
 //////////////////////////////////////////////////////////////
   /*
    
-  function save(e) {
-    // TODO: It's ugly
-
-    e.preventDefault();
-    console.log("save filter")
-    console.log(props)
-    let tempUser = props.userSettings
-
-    let shelfIndex = 0 ;
-    let subIndex;
-    let unSortedIdx;
-
-    //Search Custom Sub Shelfs
-    for (let sh of props.userSettings.customShelfs) {
-       subIndex =  sh.fewSubs.findIndex( s => s.channelName == props.subObj.channelName)//props.subObj.channelName)
-      if (subIndex > -1) { break }
-      shelfIndex += 1;
-    }
-    //if not in custom subshelf, then it's in Unsorted Subs
-    if (subIndex == -1) {
-      console.log(props.userSettings.unsortedSubs)
-      unSortedIdx =  props.userSettings.unsortedSubs.findIndex( s => s.channelName == props.subObj.channelName)
-    }
-
-    let myFilter = new Filter() 
-
-    if (unSortedIdx) {
-      tempUser.unsortedSubs[unSortedIdx].filter = myFilter
-    } else {
-      tempUser.customShelfs[shelfIndex].fewSubs[subIndex].filter = myFilter
-    }
-
-    props.setUserSettings(tempUser)
-  }
- 
    */
 
     
