@@ -66,18 +66,25 @@ export function getMockUser() {
   u.userId = "123-UserId";
   u.fullName = "Richard Simmons"
   u.subscriptions.push(sub1, sub1C, sub1B, sub2, sub3, sub4, sub5, sub6)
-  u.unsortedSubs.push( uSub1, uSub2, uSub3)
+  //u.unsortedSubs.push( uSub1, uSub2, uSub3)
 
   let cShelf1 = new CustomShelf()
   cShelf1.title = "Shelf #1"
   cShelf1.fewSubs.push(sub1, sub1B, sub1C)
-  
+  cShelf1.isSorted = true;
+
   let cShelf2 = new CustomShelf()
   cShelf2.title = "Shelf #2"
   cShelf2.fewSubs.push(sub3, sub6)
+  cShelf2.isSorted = true;
+
+  let cShelf3un = new CustomShelf()
+  cShelf3un.title = "Shelf #unsorted"
+  cShelf3un.fewSubs.push( uSub1, uSub2, uSub3)
+  cShelf3un.isSorted = false;
 
   u.customShelfs.push(cShelf1)
   u.customShelfs.push(cShelf2)
-
+  u.customShelfs.push(cShelf3un)
   return u;
 }

@@ -61,23 +61,25 @@ function App() {
    //     </UserSettingsContext.Provider>
   return (
     <Router>
-      <Nav />
-      <Switch>
-        <UserContext.Provider value={{ user, setUser }}>
-        <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
-          <Route path="/" exact component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/getServer" component={GetServer} />
-          <Route path="/doPost" component={PostDo} />
-          <Route path="/youtube" component={YoutubeNEW} />
+      <div className="super-body-wrap">
+        <Nav />
+        <Switch>
+          <UserContext.Provider value={{ user, setUser }}>
+          <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
+            <Route path="/" exact component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/getServer" component={GetServer} />
+            <Route path="/doPost" component={PostDo} />
+            <Route path="/youtube" component={YoutubeNEW} />
         
-          <Route path="/settings" component={Settings} />
-          <Route path="/settings2" component={SettingsNEW} />
+            <Route path="/settings" component={Settings} />
+            <Route path="/settings2" component={SettingsNEW} />
           
-        </UserSettingsContext.Provider>     
-        </UserContext.Provider>
+          </UserSettingsContext.Provider>     
+          </UserContext.Provider>
 
-      </Switch>
+        </Switch>
+      </div>
     </Router> 
   );
 }

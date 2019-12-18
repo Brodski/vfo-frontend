@@ -16,5 +16,6 @@ export class CustomShelf {
   constructor() {
     this.title = null;
     this.fewSubs = []
+    this.isSorted = false;
   }
 }

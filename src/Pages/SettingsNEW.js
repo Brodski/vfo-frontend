@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { Redirect } from 'react-router-dom'
 import { UserContext } from '../Contexts/UserContext.js'
 import { UserSettingsContext } from '../Contexts/UserContext.js'
 import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
@@ -49,18 +50,35 @@ import Tags from "@yaireo/tagify/dist/react.tagify"
 
 const AllShelfs = (props) => {
 
+  const unSName = "Subscriptions";
+
   console.log("AllShelfs props")
   console.log(props)
-  const shelfz = props.shelfs.map(sh => {
-    return (<Shelf title={sh.title} key={sh.title}
-      shelfObj={sh.fewSubs} userSettings={props.userSettings} setUserSettings={props.setUserSettings} setUser={props.setUser}/>)
+  let sortedSh = props.userSettings.customShelfs.filter((sh) => { return sh.isSorted } )
+  console.log('sortedSh')
+  console.log(sortedSh)
+  
+  const shelfz = sortedSh.map(sh => {
+    return (<Shelf title={sh.title} key={sh.title} shelf={sh} data-shelfid={sh.title + 'shelfid'}
+      userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
+  })
+
+  let unSortedSh = props.userSettings.customShelfs.filter((sh) => { return !sh.isSorted } )
+  console.log('unSortedSh')
+  console.log(unSortedSh)
+  
+  const unSortedshelfz = unSortedSh.map(sh => {
+    return (<Shelf title={unSName} key={unSName} shelf={sh} 
+      userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
   })
   
+
   function addShelf() {
     props.setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
       let cs = new CustomShelf()
       cs.title = "Shelf " + (newS.customShelfs.length + 1)
+      cs.isSorted = true;
       newS.customShelfs.push(cs)
       return newS
     })
@@ -94,12 +112,22 @@ const AllShelfs = (props) => {
       }
     } 
   }
+  const someStuffz = () => {
+    return (
+    <div> some stuff </div>
+  )}
   
   return (
     <div id="allbloodyshelfs">
       <button onClick={(order, sortable, evt) => logAllShelfs() }> log all Shelf </button>  
       <button onClick={(order, sortable, evt) => logIds() }> log IDs Shelf </button>  
-      {shelfz}
+      <div className="flex-subshelf-container">
+        {unSortedshelfz}
+        <div> some stuff </div>
+        <div>
+          {shelfz}
+        </div>
+      </div>
       <button onClick={addShelf} > Add shelf </button>
     </div>
     )
@@ -113,10 +141,17 @@ const AllShelfs = (props) => {
 
 const Shelf = (props) => {
   useEffect(() => {
-    makeDraggableShared('.shelf', 'shelfs') //class, group name
+      console.log('//// USE EFFECT SHELF  ////')
+    if (props.shelf.isSorted) {
+      //makeDraggableShared('.shelf', 'shelfs') //class, group name
+      console.log('props use effect' )
+      console.log(props)
+      makeDraggableShared2('.shelf', 'shelfs') //class, group name
+    }
     makeDraggableShared('.subListWrapper', 'subscriptions')
   }, [])
-
+  console.log('//// SHELF  ////')
+  console.log(props)
 
   function makeDraggableShared(selector, groupName) {
     var nestedShelf = [].slice.call(document.querySelectorAll(selector));
@@ -128,27 +163,39 @@ const Shelf = (props) => {
         swapThreshold: 0.65
       });
     }
-  } 
+  }
   
-  const itemz = props.shelfObj.map((s, idx) => {
-  var d = new Date();
-  var seconds = d.getTime();
+  function makeDraggableShared2(selector, groupName) {
+    console.log('makeDraggableShared')
+    var nestedShelf = document.getElementById(props.title);
+    console.log(nestedShelf)
+    new Sortable2(nestedShelf, {
+        group: groupName,
+        animation: 150,
+        fallbackOnBody: true,
+        swapThreshold: 0.65
+    });
+  }
+
+  
+  const itemz = props.shelf.fewSubs.map((s, idx) => {
     return (
-      <div className="subitem" key={s.channelName} id={s.channelName.replace(/ /g, '') }>
+      <div className="subitem" key={s.channelName} id={s.channelId }>
         <div className="sub-QHack" data-name={s.channelName}> {s.channelName} </div>
-        <FilterDialog userSettings={props.userSettings} setUserSettings={props.setUserSettings} subObj={s} bindToId={s.channelName.replace(/ /g, '') } />
+        <FilterDialog userSettings={props.userSettings} setUserSettings={props.setUserSettings} subObj={s} bindToId={s.channelId } />
       </div>
     )
   }) 
-
-  //<div className="sh-QHack" data-name={props.title} key={props.title}>
-  //id={props.bindToId}
-
+  
   // REMOVED key={props.title}  FROM classname="sh-QHack"
+  //TO DO id SHOULD BE MORE UNIQUE THAN props.title
+  //TO DO fix this class fiesta
+  let shelfClasses = props.shelf.isSorted ? "sh-QHack custom-shelf" : "sh-QHack unsort-shelf" 
+  
   return (
-    <div className="shelf" >
-      <div className="sh-QHack" data-name={props.title} data-id={props.title} >
-        <h3> Custom Sub Shelf: {props.title} </h3>
+    <div className="shelf" id={props.title}>
+      <div className={shelfClasses} data-name={props.title} data-id={props.title} data-issorted={props.shelf.isSorted} >
+        <h3> {props.title} </h3>
         <div className="subListWrapper">
           {itemz}
         </div>
@@ -156,8 +203,6 @@ const Shelf = (props) => {
   </div>
   )  
 }
-  
-
 
   
   /////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,11 +224,7 @@ export const SettingsNEW = () => {
     console.log("\n\n USE EFFECT \n")
     setTagifyProps({value: ["from settingsz"], showDropdown: false})
     getShit()
-    console.log(kickIt)
-    console.log(kickIt ? "kick it is true" : "Kick it is false")
 
-  //  var input = document.querySelector('#sometag');
-//    new Tagify(input)s
   }, []);
 
   useEffect(() => {
@@ -196,8 +237,6 @@ export const SettingsNEW = () => {
     console.log('user & userSettings')
     console.log(user)
     console.log(userSettings)
-    //await Common.sleep(10000)
-    //window.location.reload(true)
   }
 
   async function getShit() {
@@ -212,11 +251,19 @@ export const SettingsNEW = () => {
     console.log(userSettings)
 }
 
+
+
+  /////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////
+  ///////////////     -----------------> SAVE
+  ///////////////
+  /////////////////////////////////////////////////////////////////////////////////////////////
+
+
   async function testSave(s) {
 
-    //var shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
+    
     var shelfs = [].slice.call(document.querySelectorAll('.sh-QHack'));
-    //let subx1 = shelfs2[0].querySelectorAll('.sub-QHack')
     console.log('----------- SAVING! -----------')
     console.log('userSettings')
     console.log(userSettings)
@@ -226,6 +273,9 @@ export const SettingsNEW = () => {
       console.log(`${i} ++ Shelf ++`)
       let newShelf = new CustomShelf()
       newShelf.title = shelfs[i].dataset.name
+      newShelf.isSorted = (shelfs[i].dataset.issorted == 'true')
+  //    console.log('shelfs[i]')
+//      console.log(shelfs[i])
       for (let sub of shelfs[i].querySelectorAll('.sub-QHack')) {
         //console.log(shelfs[i].dataset.name)
         console.log(sub)
@@ -277,7 +327,22 @@ export const SettingsNEW = () => {
     return { shelfIndex, subIndex }
   }
 
+  const [doIt, setDoIt] = useState(false)
+  const PostSave = () => {
 
+    useEffect(() => {
+      let t = setTimeout(() => { setDoIt(true) } , 3000)
+      return () => { //"To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function"
+        clearTimeout(t)
+      }
+      
+    })
+  return (
+    <div>
+      {doIt ? <Redirect to='/' /> : <div> THANK YOU </div>}
+    </div>
+    )
+  }
   
     return (
     <div>  
@@ -288,11 +353,10 @@ export const SettingsNEW = () => {
         <LoginLogout user={user}/>
         <button onClick={shelfsButton} > (shelfsButton) </button>
         
-        {/*<AllShelfs shelfs={shelfs} setShelf={setShelfs}/>*/}
-        {/*<AllShelfs user={user} shelfs={user.customShelfs} setUser={setUser} setShelf={setShelfs}/>*/}
         <button onClick={testSave} > test save </button>
-        { kickIt ? <AllShelfs shelfs={userSettings.customShelfs} 
-          userSettings={userSettings} setUserSettings={setUserSettings} setUser={setUser} /> : <div> THANK YOU </div>}
+        <div >
+        { kickIt ? <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} /> : <PostSave /> }
+        </div>
       <h1> ```````````````````````` </h1>
         
         {/*<MySortables.AllThisSortableStuff/>*/}

@@ -74,7 +74,6 @@ div.block {
   
 }
 
-
 .subitem {
   margin: 0;
   height: 40px;
@@ -100,6 +99,38 @@ sub-QHack {
 
 }
 
+body {
+  height: 100%;
+}
+
+.custom-shelf {
+  min-width: 500px;
+  background-color: peru;
+}
+
+.unsort-shelf {
+  width: 300px;
+  background-color: lightgoldenrodyellow;
+}
+
+.flex-subshelf-container {
+  display: flex;
+  justify-content: center;
+}
+
+
+.super-body-wrap {
+
+}
+
+
+
+
+
+
+
+
+
 i.block {
   margin: 10px;
   padding: 5px;
@@ -118,6 +149,7 @@ i.block {
 }
 
 .customLook{ 
+  display: block;
   display: block;
 
 }
