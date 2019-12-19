@@ -89,14 +89,13 @@ export function logout() {
 }
 
 export function isHeSignedIn() {
-console.log('isHeSignedIn() ')
   if (GoogleAuth) {
-    console.log('GoogleAuth.currentUser.get().hasGrantedScopes(SCOPE)')
-    console.log(GoogleAuth.currentUser.get().hasGrantedScopes(SCOPE))
-    console.log('GoogleAuth.currentUser.get()')
-    console.log(GoogleAuth.currentUser.get())
-    console.log('GoogleAuth.isSignedIn ???')
-    console.log(GoogleAuth.isSignedIn.get())
+//    console.log('GoogleAuth.currentUser.get().hasGrantedScopes(SCOPE)')
+  //  console.log(GoogleAuth.currentUser.get().hasGrantedScopes(SCOPE))
+    //console.log('GoogleAuth.currentUser.get()')
+    //console.log(GoogleAuth.currentUser.get())
+    //console.log('GoogleAuth.isSignedIn ???')
+    //console.log(GoogleAuth.isSignedIn.get())
     return GoogleAuth.isSignedIn.get()
   }
   else {

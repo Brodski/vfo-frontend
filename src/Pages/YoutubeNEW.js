@@ -18,14 +18,17 @@ import { ChannelForm } from '../Components/ChannelForm';
 import { VideoShelf } from '../Components/VideoShelf';
 import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
+import { CustomShelf } from '../Classes/User';
 
 import * as ytLogic from '../BusinessLogic/ytLogic.js'
-import { UserContext } from '../Contexts/UserContext.js'
+import { UserContext, IsSignedContext } from '../Contexts/UserContext.js'
+import * as ServerEndpoints from '../HttpRequests/ServerEndpoints.js'
 
 //UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 export function YoutubeNEW() {
 
   const { user, setUser } = useContext(UserContext);
+  const { isSigned, setIsSigned } = useContext(IsSignedContext);
   var GoogleAuth;
   
   ////////////////////////////////////////////////////
@@ -41,6 +44,8 @@ export function YoutubeNEW() {
 
   /////////////////////////////////////////////
   
+
+
   let sub1 = new Subscription()
   sub1.channelName = "The Hill"
   sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
@@ -65,6 +70,7 @@ export function YoutubeNEW() {
   sub6.channelName = "SMTOWN"
   sub6.channelId = "UCEf_Bc-KVd7onSeifS3py9g";
 
+  let sshelf1 = new CustomShelf()
   let shelf1 = new UserShelf()
   shelf1.title = "Politics"
   shelf1.subscriptions.push(sub1)
@@ -79,7 +85,7 @@ export function YoutubeNEW() {
   let shelf3 = new UserShelf();
   shelf3.title = "k-pop"
   shelf3.subscriptions.push(sub6)
-
+  
   
   // This is the finalShelf
   // PageOfShelfs = finalShelfs = [ shelf, shelf, shelf ]
@@ -105,6 +111,7 @@ export function YoutubeNEW() {
   const [shelfs, setShelfs] = useState([
     {
       subscriptions: shelf1.subscriptions,
+      //mockUser.customShelfs.fewSubs
       title: shelf1.title,
     },
     {
@@ -113,65 +120,35 @@ export function YoutubeNEW() {
     }
   ] );
   
-
-  ///////////////////////////////////////////////
-  
-    /*
-     * MOVED TO APP.JS
-     * 
-     */
   useEffect( () => {
-    //let shelfVids = fetchActs_perShelf()
-    console.log('---------------useEffect2----------------------')
-  }, [])
-      
-
-      
-  /*
- async function initShit() {
-    console.time("initshit()")
-    var googleAuthPromise = await GApiAuth.initGoogleAPI()  // Usually 500ms
-    GoogleAuth = await googleAuthPromise
-//    while (!googleAuthPromise) {
-      console.log('1010101010100101010101011010100101010')
-      console.log(googleAuthPromise)
-      console.log(GoogleAuth)
-      Common.sleep(3000)
-      console.log('xdx xd x   xd xd  xdxdxdxd')
-    console.timeEnd("initshit()")
-
-//    }
-    console.log('googleAuthPromise')
-    console.log(googleAuthPromise)
-
-    console.log("await googleAuthPromise")
-    console.time("await googleAuthPromise")
-    console.log('GoogleAuth')
-    console.log(GoogleAuth)
-    //GoogleAuth = await googleAuthPromise // Usually 1ms
-    console.log('GoogleAuth')
-    console.log(GoogleAuth)
-    console.timeEnd("await googleAuthPromise")
     
-  }
-  */
-
+    //console.log(JSON.stringify(mockUser, null, 2))
+    //console.log(mockUser)
+    console.log('---------------useEffect top ----------------------')
+    console.log(user)
+    if (user.userId) {
+      let shelfVids = fetchActs_perShelf()
+    }
+    console.log('---------------useEffect bot----------------------')
+  }, [user])
+    
   
   async function hackHelper() {
   console.log('vvvvvvv HACK HELPER  vvvvvvvv')
   let count = 1
-    while (!GoogleAuth) {
-    //while (!isSigned)
+  let logged = false
+    while (logged = !GApiAuth.isHeSignedIn()) { //|| !user.id) {
       console.log("Hack Helper: GoogleAuth NOT exist: " + count)
+      console.log('Hack Helper: Logged in?: ' + logged)
       await Common.sleep(100*count) 
+      count = count + 1      
       if (count > 40) {
         count = count * 2
         console.log("Hack Helper: Something went wrong :(  " + count)
-        //initShit()
       }
-      count = count + 1
     }
     console.log("Hack Helper: GoogleAuth !!! exist")
+    console.log(GApiAuth.isHeSignedIn())
     console.log('^^^^^^^^^^^^^^^^^^^^^^^^^')
   }
 
@@ -179,41 +156,45 @@ export function YoutubeNEW() {
     console.log(" xxxxXXXXxxxx fetchActs_perShelfs xxxxXXXXxxxx")
     let shelfsActs = null;
     await hackHelper()
-    //isSigned = GApiAuth.isHeSignedIn()
+
     // Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
     // Kinda like: shelf[x].subscription[y].activity[z] 
-    shelfsActs = await ytLogic.getActivitiesShelfs(shelfs)
+    //shelfsActs = await ytLogic.getActivitiesShelfs(shelfs)
+    console.log('user')
+    console.log(user)
+    
+    shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs)
     
 //    console.log("1")
  //   console.log(shelfsActs)
     // Returns only Uploads of the activities
     shelfsActs = await ytLogic.removeNonVideos(shelfsActs)
 
-//    console.log("2")
-    //console.log(shelfsActs)
+    console.log("2")
+    console.log(shelfsActs)
     // Returns all the activies in a single array (shelf), instead array of activities in n different sub
     // Kinda like: shelf[x].Activity[z]
     shelfsActs = await shelfsActs.map( shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = await shelfsActs.map( shelf => ytLogic.sortByDate(shelf))
     
-  //  console.log("3")
-//    console.log(shelfsActs)
+    console.log("3")
+    console.log(shelfsActs)
     // Returns an array of video's ID per shelf
     let shelfsVidIds = await shelfsActs.map( sh => ytLogic.extractIds(sh))
     
- //   console.log("4")
-//    console.log(shelfsVidIds)
+    console.log("4")
+    console.log(shelfsVidIds)
     // Returns an array of video objects(yt) per shelf
     let shelfVids = await ytLogic.requestVideosShelf(shelfsVidIds)
         
- //   console.log("5")
-//    console.log(shelfVids)
+    console.log("5")
+    console.log(shelfVids)
     //Returns only "OK" status and then http results
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map( sh => sh.result.items)       
     shelfVids = shelfVids.map( shelf => ytLogic.sortByDate(shelf))
 
- //   console.log("6")
-//    console.log(shelfVids)
+    console.log("6")
+    console.log(shelfVids)
 
     console.log("\n \n WE ARE SETTING \n \n")
     console.log("_____-------WE FINISHED THE FILTER!-------_______")
@@ -230,7 +211,7 @@ export function YoutubeNEW() {
   
 
     <div>
-      <div> User message is: {user} </div>
+      
       <ShelfsMany shelfs={finalShelfs} />
       
       <h1>Youtube</h1>

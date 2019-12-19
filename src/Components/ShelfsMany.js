@@ -9,12 +9,7 @@ export const ShelfsMany = props => {
   console.log('%%%%%%%%%%%%%%%%%% END ALL SHELFS %%%%%%%%%%%%%%%%%%')
 
 return (
-    <div> fomr many shelfs 
-    {/*props.shelfs.map(vid => {
-        return (
-          <Video video={vid} />
-        )
-      })*/}
+    <div> From ShelfsMany
     {props.shelfs.map(sh => {
         return (
           <Shelf shelf={sh} />

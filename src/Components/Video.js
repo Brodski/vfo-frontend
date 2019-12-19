@@ -30,7 +30,7 @@ export const Video = (props) => {
   return (
 
     <li className="video">
-      <h3> -- {title} -- </h3>
+      <h3> {title} </h3>
       
       <a href={"https://www.youtube.com/watch?v="+id} >
         <img src={thumbnail} /> 

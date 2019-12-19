@@ -9,8 +9,8 @@ import PostDo from './Pages/PostDo';
 import { YoutubeNEW } from './Pages/YoutubeNEW';
 import { Settings } from './Pages/Settings';
 import { SettingsNEW } from './Pages/SettingsNEW';
-import { UserContext, UserSettingsContext } from './Contexts/UserContext.js'
-import { IsSignedContext } from './Contexts/IsSignedContext.js'
+import { UserContext, UserSettingsContext, IsSignedContext } from './Contexts/UserContext.js'
+
 import * as GApiAuth from './HttpRequests/GApiAuth'
 import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
 import { User } from './Classes/User'
@@ -39,24 +39,28 @@ function App() {
     script.onload = () => {
       initShit()
     }
-    }, [])
+  }, [])
 
     
   async function initShit() {
     console.time("initshit()")
     var GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms
+    await GApiAuth.isHeSignedIn()
+    console.log(GoogleAuth.isSignedIn.get())
+    console.log(GoogleAuth)
 
-    //setUser(await ServerEndpoints.getDummyUser())
     let theUser = ServerEndpoints.getMockUser
     setUser(theUser);
     setUserSettings(theUser);
+
+    setIsSigned( GoogleAuth.isSignedIn.get())
     console.timeEnd("initshit()")
   }
   
   const [isSigned, setIsSigned] = useState(false)
-  //const [user, setUser] = useState(null)
   const [user, setUser]                 = useState(new User())
   const [userSettings, setUserSettings] = useState(new User())
+
   //<UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
    //     </UserSettingsContext.Provider>
   return (
@@ -66,6 +70,7 @@ function App() {
         <Switch>
           <UserContext.Provider value={{ user, setUser }}>
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
+          <IsSignedContext.Provider value={{isSigned, setIsSigned}} >
             <Route path="/" exact component={Home} />
             <Route path="/about" component={About} />
             <Route path="/getServer" component={GetServer} />
@@ -75,6 +80,7 @@ function App() {
             <Route path="/settings" component={Settings} />
             <Route path="/settings2" component={SettingsNEW} />
           
+          </IsSignedContext.Provider>
           </UserSettingsContext.Provider>     
           </UserContext.Provider>
 

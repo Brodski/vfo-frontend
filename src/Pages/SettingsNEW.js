@@ -25,11 +25,15 @@ import * as Common from '../BusinessLogic/Common.js';
 import Tagify from '@yaireo/tagify'
 
 import Tags from "@yaireo/tagify/dist/react.tagify"
+// to consider... https://www.npmjs.com/package/choices.js
+
 
 //import Tags from "@yaireo/tagify/react.tagify"
 //  https://www.npmjs.com/package/react-dialog
 //  https://github.com/SortableJS/react-sortablejs
 //  https://github.com/yairEO/tagify
+
+// css: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
 
 //import Tagify from '@yaireo/tagify'
 
@@ -364,10 +368,3 @@ export const SettingsNEW = () => {
     </div>
   );
 }
-
-/*async function setHack_TempUser() {
-    while (user.Id == null) {
-      await Common.sleep(1000)
-      console.log('sleeping..........')
-    }
-  } */
