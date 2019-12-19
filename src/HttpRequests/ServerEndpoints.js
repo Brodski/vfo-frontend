@@ -62,6 +62,27 @@ export function getMockUser() {
   uSub3.channelId = "UC3ScyryU9Oy9Wse3a8OAmYQ";
   
 
+  
+  let uSub4 = new Subscription()
+  uSub4.channelName = 'Google Zeitgeist'
+  uSub4.channelId = 'UC522meTsOjFWjSdLLrEMMBA';
+  
+
+  let uSub5 = new Subscription()
+  uSub5.channelName = 'Maddox'
+  uSub5.channelId = 'UC_c1gdsojLxBGkgzS0NsvUw';
+  
+  let uSub6 = new Subscription()
+  uSub6.channelName = 'Asian Boss'
+  uSub6.channelId = 'UC2-_WWPT_124iN6jiym4fOw';
+  
+
+  let uSub7 = new Subscription()
+  uSub7.channelName = 'TED'
+  uSub7.channelId = 'UCAuUUnT6oDeKwE6v1NGQxug';
+
+
+
   let u = new User()
   u.userId = "123-UserId";
   u.fullName = "Richard Simmons"
@@ -79,12 +100,30 @@ export function getMockUser() {
   cShelf2.isSorted = true;
 
   let cShelf3un = new CustomShelf()
-  cShelf3un.title = "Shelf #unsorted"
+  cShelf3un.title = "Shelf #1 unsorted"
   cShelf3un.fewSubs.push( uSub1, uSub2, uSub3)
   cShelf3un.isSorted = false;
+
+  let cShelf4un = new CustomShelf()
+  cShelf4un.title = "Shelf #4"
+  cShelf4un.fewSubs.push( uSub4, uSub6)
+  cShelf4un.isSorted = true;
+  
+  let cShelf5un = new CustomShelf()
+  cShelf5un.title = "Shelf #5"
+  cShelf5un.fewSubs.push( uSub7)
+  cShelf5un.isSorted = true;
+
+  let cShelf6un = new CustomShelf()
+  cShelf6un.title = "Shelf #6"
+  cShelf6un.fewSubs.push( uSub5)
+  cShelf6un.isSorted = true;
 
   u.customShelfs.push(cShelf1)
   u.customShelfs.push(cShelf2)
   u.customShelfs.push(cShelf3un)
+  u.customShelfs.push(cShelf4un)
+  u.customShelfs.push(cShelf5un)
+  u.customShelfs.push(cShelf6un)
   return u;
 }

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as youtubeApi from '../HttpRequests/youtubeApi';
 import { Video } from './Video'
 //export async function XxxShelf(props) {
 
+// Pagination / Load More
+  //https://codepen.io/grantdotlocal/pen/zReNgE
 export const Shelf = props => {
 
 /*
@@ -15,66 +17,24 @@ export const Shelf = props => {
   let data = Array.from(props.shelf)
   console.log('data')
   console.log(data)
-
-
   console.log('+++++++++++++++++++ END +++++++++++++++++++++++')
   */
+        
+  const [numVids, setNumVids] = useState(5)
   
-    
+  
+  function loadMoreVids() {
+    setNumVids(numVids + 5)
+  }
+
+  const videos = props.shelf.slice(0,numVids).map(vid => <Video key={vid.id} video={vid} /> )
+
   return(
     <div > SHELF
       <ul className="shelf">
-        {props.shelf.map(vid => {
-          return (
-            <Video key={vid.id} video={vid} />
-          )
-        })}
-        {/*data.map(vid => {
-          return (
-            <Video video={vid} />
-          )
-        })*/}
+        {videos}
+        <button onClick={loadMoreVids} > More...? </button>
       </ul>
     </div>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//let shelf = Array.from(props.shelf)
-//  console.log(Object.keys(props.shelf));
-
-  /*
-   * {props.shelf.map(act => {
-          return (
-            <div> {act.contentDetails} </div>
-          )
-        })
-   */

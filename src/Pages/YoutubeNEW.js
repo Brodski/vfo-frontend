@@ -14,22 +14,65 @@ import { Subscription } from '../Classes/Subscription';
 import { Shelf } from '../Components/Shelf';
 import { Video } from '../Components/Video';
 import { ShelfsMany } from '../Components/ShelfsMany';
+import { ShelfsMany2 } from '../Components/ShelfsMany';
 import { ChannelForm } from '../Components/ChannelForm';
 import { VideoShelf } from '../Components/VideoShelf';
 import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 import { CustomShelf } from '../Classes/User';
+import InfiniteScroll from 'react-infinite-scroller';
+
 
 import * as ytLogic from '../BusinessLogic/ytLogic.js'
 import { UserContext, IsSignedContext } from '../Contexts/UserContext.js'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints.js'
 
 //UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
+// react infinite scroll https://github.com/CassetteRocks/react-infinite-scroller#readme
+// simpe react pagation https://codepen.io/grantdotlocal/pen/zReNgE
 export function YoutubeNEW() {
 
-  const { user, setUser } = useContext(UserContext);
-  const { isSigned, setIsSigned } = useContext(IsSignedContext);
   var GoogleAuth;
+
+  const { user, setUser }         = useContext(UserContext);
+  const { isSigned, setIsSigned } = useContext(IsSignedContext);
+  const [pageLength, setPageLength] = useState(3);
+  const [hasMoreShelfs, setHasMoreShelfs] = useState(false); //At start, there are no shelfs, thus we have mo more shelfs
+  const [activitiesShelf, setActivitiesShelf] = useState(
+    [
+      [{
+        contentDetails: {upload: {} },
+        snippet: {
+          channelId: '',
+          channelTitle: '',
+          description: '',
+          publishedAt: '',
+          thumbnails: {},
+          title: '',
+          type: '',
+        }
+    }]
+  ]
+  )
+  const [finalShelfs, setFinalShelfs] = useState(
+  [
+    [{
+      contentDetails: {},
+      snippet: {
+        thumbnails: {
+          default: {},
+          medium: {},
+          high: {},
+          standard: {},
+          maxres: {},
+        }
+      },
+      statistics: {},
+      }]
+  ]
+  )
+  
+  
   
   ////////////////////////////////////////////////////
   moment.updateLocale('en', {
@@ -44,82 +87,68 @@ export function YoutubeNEW() {
 
   /////////////////////////////////////////////
   
-
-
-  let sub1 = new Subscription()
-  sub1.channelName = "The Hill"
-  sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
-
-  let sub2 = new Subscription()
-  sub2.channelName = "Crunkmastaflexx"
-  sub2.channelId = "UCA-8h5uCH5RE-1r6gskkbTw";
-
-  let sub3 = new Subscription()
-  sub3.channelName = "Deep Beat"
-  sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";
-
-  let sub4 = new Subscription()
-  sub4.channelName = "Video Box"
-  sub4.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw";
-
-  let sub5 = new Subscription()
-  sub5.channelName = "mineralblue"
-  sub5.channelId = "UC3IngBBUGFUduHp-7haK1lw";
-
-  let sub6 = new Subscription()
-  sub6.channelName = "SMTOWN"
-  sub6.channelId = "UCEf_Bc-KVd7onSeifS3py9g";
-
-  let sshelf1 = new CustomShelf()
-  let shelf1 = new UserShelf()
-  shelf1.title = "Politics"
-  shelf1.subscriptions.push(sub1)
-  shelf1.subscriptions.push(sub2)
-  shelf1.subscriptions.push(sub3)
-
-  let shelf2 = new UserShelf();
-  shelf2.title = "Babes"
-  shelf2.subscriptions.push(sub4)
-  shelf2.subscriptions.push(sub5)
-
-  let shelf3 = new UserShelf();
-  shelf3.title = "k-pop"
-  shelf3.subscriptions.push(sub6)
+  {
+    /*
+    let sub1 = new Subscription()
+    sub1.channelName = "The Hill"
+    sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
   
+    let sub2 = new Subscription()
+    sub2.channelName = "Crunkmastaflexx"
+    sub2.channelId = "UCA-8h5uCH5RE-1r6gskkbTw";
+  
+    let sub3 = new Subscription()
+    sub3.channelName = "Deep Beat"
+    sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";
+  
+    let sub4 = new Subscription()
+    sub4.channelName = "Video Box"
+    sub4.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw";
+  
+    let sub5 = new Subscription()
+    sub5.channelName = "mineralblue"
+    sub5.channelId = "UC3IngBBUGFUduHp-7haK1lw";
+  
+    let sub6 = new Subscription()
+    sub6.channelName = "SMTOWN"
+    sub6.channelId = "UCEf_Bc-KVd7onSeifS3py9g";
+  
+    let sshelf1 = new CustomShelf()
+    let shelf1 = new UserShelf()
+    shelf1.title = "Politics"
+    shelf1.subscriptions.push(sub1)
+    shelf1.subscriptions.push(sub2)
+    shelf1.subscriptions.push(sub3)
+  
+    let shelf2 = new UserShelf();
+    shelf2.title = "Babes"
+    shelf2.subscriptions.push(sub4)
+    shelf2.subscriptions.push(sub5)
+  
+    let shelf3 = new UserShelf();
+    shelf3.title = "k-pop"
+    shelf3.subscriptions.push(sub6)
+    
+    
+    const [shelfs, setShelfs] = useState([
+      {
+        subscriptions: shelf1.subscriptions,
+        //mockUser.customShelfs.fewSubs
+        title: shelf1.title,
+      },
+      {
+        subscriptions: shelf2.subscriptions,
+        title: shelf2.title,
+      }
+    ] );
+    */
+  }
   
   // This is the finalShelf
   // PageOfShelfs = finalShelfs = [ shelf, shelf, shelf ]
   // shelf =[ vid, vid, vid, vid ]
   // vid = { id, snippet: {}, contentDetails: {} }
-  const [finalShelfs, setFinalShelfs] = useState(
-    [
-      [{
-        contentDetails: {},
-        snippet: {
-          thumbnails: {
-            default: {},
-            medium: {},
-            high: {},
-            standard: {},
-            maxres: {},
-          }
-        },
-        statistics: {},
-       }]
-    ]
-  )
-  const [shelfs, setShelfs] = useState([
-    {
-      subscriptions: shelf1.subscriptions,
-      //mockUser.customShelfs.fewSubs
-      title: shelf1.title,
-    },
-    {
-      subscriptions: shelf2.subscriptions,
-      title: shelf2.title,
-    }
-  ] );
-  
+
   useEffect( () => {
     
     //console.log(JSON.stringify(mockUser, null, 2))
@@ -169,7 +198,7 @@ export function YoutubeNEW() {
  //   console.log(shelfsActs)
     // Returns only Uploads of the activities
     shelfsActs = await ytLogic.removeNonVideos(shelfsActs)
-
+    
     console.log("2")
     console.log(shelfsActs)
     // Returns all the activies in a single array (shelf), instead array of activities in n different sub
@@ -179,6 +208,7 @@ export function YoutubeNEW() {
     
     console.log("3")
     console.log(shelfsActs)
+    setActivitiesShelf( shelfsActs )
     // Returns an array of video's ID per shelf
     let shelfsVidIds = await shelfsActs.map( sh => ytLogic.extractIds(sh))
     
@@ -202,17 +232,33 @@ export function YoutubeNEW() {
     console.log(shelfVids)
 
     setFinalShelfs(shelfVids)
-
+    setHasMoreShelfs(true) //We no have shelfs
     
     return shelfVids;
   }
+  
+  
+  
+  function loadShelf() {
+    setPageLength( pageLength + 1)
+    if (pageLength >= finalShelfs.length) {  // 3 == 0
+      console.log("PAGE LENGTH REACHED!!!!!")
+      console.log(finalShelfs.length)
+      console.log(pageLength)
+      setHasMoreShelfs(false)
+    }
+  }
 
   return(
-  
-
     <div>
-      
-      <ShelfsMany shelfs={finalShelfs} />
+      <InfiniteScroll
+        loadMore={loadShelf}
+        hasMore={hasMoreShelfs}
+        loader={(<div>Loading ...</div>)}
+      >
+        <ShelfsMany shelfs={finalShelfs.slice(0, pageLength)} /> 
+     </InfiniteScroll>
+    {/*<ShelfsMany2 shelfs={activitiesShelf} />*/}
       
       <h1>Youtube</h1>
         <div>Note, the app must ALWAYS do loadClient before any API call</div>
@@ -226,11 +272,11 @@ export function YoutubeNEW() {
         <button onClick={ytLogic.XXXgetActivitesOfChannels_2}> 2.0: Get All Subs, then get activites of 1 of your subs  </button>
       
       <div></div>
-
+      
       <ChannelForm />
       
-      <VideoShelf videoList={videoJ.items}/>
-      <Video video={videoJ.items[0]} />
+      {/*    <VideoShelf videoList={videoJ.items}/>
+      <Video video={videoJ.items[0]} />*/}
         
 
     </div>
