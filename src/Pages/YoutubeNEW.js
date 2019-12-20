@@ -32,44 +32,39 @@ import * as ServerEndpoints from '../HttpRequests/ServerEndpoints.js'
 // simpe react pagation https://codepen.io/grantdotlocal/pen/zReNgE
 export function YoutubeNEW() {
 
-  var GoogleAuth;
+//  var GoogleAuth;
 
   const { user, setUser }         = useContext(UserContext);
-  const { isSigned, setIsSigned } = useContext(IsSignedContext);
+  //const { isSigned, setIsSigned } = useContext(IsSignedContext);
+  //const [pageLength, setPageLength] = useState(3);
   const [pageLength, setPageLength] = useState(3);
-  const [hasMoreShelfs, setHasMoreShelfs] = useState(false); //At start, there are no shelfs, thus we have mo more shelfs
-  const [activitiesShelf, setActivitiesShelf] = useState(
-    [
-      [{
-        contentDetails: {upload: {} },
-        snippet: {
-          channelId: '',
-          channelTitle: '',
-          description: '',
-          publishedAt: '',
-          thumbnails: {},
-          title: '',
-          type: '',
-        }
-    }]
-  ]
-  )
+  const [hasMoreShelfs, setHasMoreShelfs] = useState(false); //At start, there are no shelfs, thus we have no more shelfs
+
   const [finalShelfs, setFinalShelfs] = useState(
-  [
-    [{
-      contentDetails: {},
-      snippet: {
-        thumbnails: {
-          default: {},
-          medium: {},
-          high: {},
-          standard: {},
-          maxres: {},
+    {
+      isActs: false,
+      shelfs: [
+        {
+          title: '',
+          videos:
+            [
+              {
+                contentDetails: {},
+                snippet: {
+                  thumbnails: {
+                    default: {},
+                    medium: {},
+                    high: {},
+                    standard: {},
+                    maxres: {},
+                  }
+                },
+                statistics: {},
+              }
+            ]
         }
-      },
-      statistics: {},
-      }]
-  ]
+      ]
+    }
   )
   
   
@@ -155,8 +150,25 @@ export function YoutubeNEW() {
     //console.log(mockUser)
     console.log('---------------useEffect top ----------------------')
     console.log(user)
-    if (user.userId) {
-      let shelfVids = fetchActs_perShelf()
+    if (user.userId) { 
+      //if (ytLogic.hasUsedRecently()) {
+      if (false) {
+          console.log("USED RECNETLY!!!")
+          console.log("getting fomr local")
+
+          let shelfsVids = ytLogic.getStorageShelfs()
+          console.log('shelfsVids')
+          console.log(shelfsVids)
+          setFinalShelfs(shelfsVids)
+          setHasMoreShelfs(true) //We know have shelfs to be rendered
+      } else {
+        console.log("NOT used !!!!!")
+        console.log("doing fetch to google")
+        setHasMoreShelfs(true)
+        //loadShelf2()
+        //let shelfVids = fetchActs_perShelf()
+
+      }
     }
     console.log('---------------useEffect bot----------------------')
   }, [user])
@@ -181,6 +193,7 @@ export function YoutubeNEW() {
     console.log('^^^^^^^^^^^^^^^^^^^^^^^^^')
   }
 
+  var prevPage = 0
   const fetchActs_perShelf = async () => {
     console.log(" xxxxXXXXxxxx fetchActs_perShelfs xxxxXXXXxxxx")
     let shelfsActs = null;
@@ -188,77 +201,191 @@ export function YoutubeNEW() {
 
     // Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
     // Kinda like: shelf[x].subscription[y].activity[z] 
-    //shelfsActs = await ytLogic.getActivitiesShelfs(shelfs)
     console.log('user')
     console.log(user)
     
-    shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs)
-    
-//    console.log("1")
- //   console.log(shelfsActs)
+    //shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs)
+    shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, pageLength))
+    console.log('shelfsActs')
+    console.log(shelfsActs)
+
+
     // Returns only Uploads of the activities
     shelfsActs = await ytLogic.removeNonVideos(shelfsActs)
     
-    console.log("2")
-    console.log(shelfsActs)
     // Returns all the activies in a single array (shelf), instead array of activities in n different sub
     // Kinda like: shelf[x].Activity[z]
     shelfsActs = await shelfsActs.map( shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = await shelfsActs.map( shelf => ytLogic.sortByDate(shelf))
-    
-    console.log("3")
-    console.log(shelfsActs)
-    setActivitiesShelf( shelfsActs )
+
+     console.log('shelfsActs after remNonVids + flat + sort ')
+     console.log(shelfsActs)
+    //Render the info that we got, the 2nd half comes after this
+    shelfsActs = shelfsActs.map(sh => sh.slice(0,20))    
+     console.log('shelfsActs after slice')
+     console.log(shelfsActs)
+    let injectShelfTitle = user.customShelfs.slice(prevPage,pageLength).map((sh, idx) => {
+      return {"videos": shelfsActs[idx], "title":sh.title}
+    })
+    console.log('injectShelfTitle')
+    console.log(injectShelfTitle)
+    setFinalShelfs({ isActs: true, shelfs: injectShelfTitle })
+    setHasMoreShelfs(true)
+    /*
     // Returns an array of video's ID per shelf
     let shelfsVidIds = await shelfsActs.map( sh => ytLogic.extractIds(sh))
-    
-    console.log("4")
-    console.log(shelfsVidIds)
+
     // Returns an array of video objects(yt) per shelf
     let shelfVids = await ytLogic.requestVideosShelf(shelfsVidIds)
-        
-    console.log("5")
-    console.log(shelfVids)
+
     //Returns only "OK" status and then http results
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map( sh => sh.result.items)       
     shelfVids = shelfVids.map( shelf => ytLogic.sortByDate(shelf))
-
-    console.log("6")
-    console.log(shelfVids)
-
+        
     console.log("\n \n WE ARE SETTING \n \n")
     console.log("_____-------WE FINISHED THE FILTER!-------_______")
-    console.log('shelfVids')
-    console.log(shelfVids)
-
-    setFinalShelfs(shelfVids)
-    setHasMoreShelfs(true) //We no have shelfs
     
-    return shelfVids;
+        
+    let lifehack2 = user.customShelfs.map((sh, idx) => {
+      return {"videos": shelfVids[idx], "title":sh.title}
+    })
+
+
+    let postxd = { isActs: false, shelfs: lifehack2 }
+    prevPage = pageLength
+    console.log(' postxd')
+    console.log(postxd)
+    setFinalShelfs(postxd)
+    */
+    setHasMoreShelfs(true) //We now have shelfs to be rendered
+    setPageLength( pageLength + 1)
+    console.log("LOAD SHELF")
+    console.log("LOAD SHELF")
+    console.log("LOAD SHELF")
+    console.log("LOAD SHELF")
+    console.log("LOAD SHELF")
+    console.log("LOAD SHELF")
+    console.log(pageLength)
+    console.log(pageLength)
+
+    if (pageLength >= user.customShelfs.length - 1 ) {  // 3 == 0
+      console.log("\n\n\n\nPAGE LENGTH REACHED!!!!!\n\n")
+      console.log(user.customShelfs.length)
+      console.log(pageLength)
+      setHasMoreShelfs(false)
+    }
+
+    
+  //ytLogic.saveToLocal(shelfVids)
+  //  return shelfVids;
   }
   
   
   
   function loadShelf() {
     setPageLength( pageLength + 1)
-    if (pageLength >= finalShelfs.length) {  // 3 == 0
+    console.log("LOAD SHELF")
+    console.log(pageLength)
+    if (pageLength >= finalShelfs.shelfs.length) {  // 3 == 0
       console.log("PAGE LENGTH REACHED!!!!!")
       console.log(finalShelfs.length)
       console.log(pageLength)
       setHasMoreShelfs(false)
     }
   }
+  
+  async function loadShelf2() {
+    console.log('loadShelf2')
+    let dankAct
+    let aShelf = user.customShelfs[pageLength]
+
+    dankAct = await ytLogic.getActivitiesShelfs([user.customShelfs[pageLength]])
+    dankAct = await ytLogic.removeNonVideos(dankAct)
+    dankAct = await dankAct.map( shelf => ytLogic.flattenShelf(shelf))
+    dankAct = await dankAct.map( shelf => ytLogic.sortByDate(shelf))
+
+    dankAct = dankAct[0].slice(0,20)
+
+    let dankInject = { "videos": dankAct, "title": user.customShelfs[pageLength].title }
+    setFinalShelfs(prev => {
+      let newS = { ...prev }
+      prev.shelfs[0].videos[0].snippet.publishedAt ? newS.shelfs.push(dankInject) : newS.shelfs[0] = dankInject
+      newS.isActs = true
+      return newS
+    })
+    
+    /*
+
+    let dankVidIds = dankAct.map( sh => ytLogic.extractIds(sh))
+    console.log('dankVidIds')
+    console.log(dankVidIds)
+    console.time('dank vids')
+    let dankVids = await ytLogic.requestVideosShelf(dankVidIds)
+    console.timeEnd('dank vids')
+    console.log('dankVids')
+    console.log(dankVids)
+    dankVids = dankVids.filter(sh => sh.status > 199 || sh.status < 300).map( sh => sh.result.items)       
+    dankVids = dankVids.map( shelf => ytLogic.sortByDate(shelf))
+    console.log('dankVids')    
+    console.log(dankVids)    
+    
+     dankInject = { "videos": dankVids, "title": user.customShelfs[pageLength].title }
+    setFinalShelfs(prev => {
+      let newS = { ...prev }
+      //Checks if 1st entry or not. Does logic to check if 1st "finalShelfs" has a real entry.
+      //props.video.statistics.viewCount
+      newS.shelfs[pageLength] = dankInject
+      newS.isActs = false
+      console.log('sneaky prev')
+      console.log(newS)
+      return newS
+    })
+    */
+    setPageLength( pageLength + 1)
+  //  setHasMoreShelfs(true)
+    
+  console.log( '+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-')
+  console.log( 'user.customShelfs.length')
+  console.log( user.customShelfs.length)
+  console.log('pageLength')
+  console.log(pageLength)
+    if (pageLength >= user.customShelfs.length -1 ) {  
+      console.log("PAGE LENGTH REACHED!!!!!")
+      console.log(finalShelfs.length)
+      console.log(pageLength)
+      setHasMoreShelfs(false)
+    }
+
+  }
 
   return(
     <div>
+     {/* 
       <InfiniteScroll
         loadMore={loadShelf}
         hasMore={hasMoreShelfs}
         loader={(<div>Loading ...</div>)}
       >
-        <ShelfsMany shelfs={finalShelfs.slice(0, pageLength)} /> 
+        <ShelfsMany isActs={finalShelfs.isActs} shelfs={finalShelfs.shelfs.slice(0, pageLength)} /> 
      </InfiniteScroll>
-    {/*<ShelfsMany2 shelfs={activitiesShelf} />*/}
+     
+    <InfiniteScroll
+        loadMore={loadShelf2}
+        hasMore={hasMoreShelfs}
+        loader={(<div>Loading ...</div>)}
+        threshold={0}
+      >
+        <ShelfsMany isActs={finalShelfs.isActs} shelfs={finalShelfs.shelfs.slice(0, pageLength)} /> 
+     </InfiniteScroll>
+     */} 
+     
+    <InfiniteScroll
+        loadMore={fetchActs_perShelf}
+        hasMore={hasMoreShelfs}
+        loader={(<div>Loading ...</div>)}
+      >
+        <ShelfsMany isActs={finalShelfs.isActs} shelfs={finalShelfs.shelfs.slice(0, pageLength)} /> 
+     </InfiniteScroll>
       
       <h1>Youtube</h1>
         <div>Note, the app must ALWAYS do loadClient before any API call</div>

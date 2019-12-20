@@ -7,25 +7,34 @@ import moment from 'moment';
 //
 export const Video = (props) => {
   //console.log(' xxxxxxxxx VIDEO xxxxxxxxxxxxx')
- // console.log('props')
-//  console.log(props)
- // console.log(props.video.id)
-//  console.log(props.video.snippet.channelTitle)
+  //console.log(props)
+  let thumbnail, id, title, pubAt, viewCount, channelName, fromNowDate, vd_aux, vidDuration;
 
-  //console.log(props.video)
-  //console.log(props.video.snippet.title)
-  
-  let thumbnail     = props.video.snippet.thumbnails.medium.url
-  let id            = props.video.id
-  let title         = props.video.snippet.title
-  let pubAt         = new Date( props.video.snippet.publishedAt )
-  let viewCount     = props.video.statistics.viewCount
-  let channelName   = props.video.snippet.channelTitle
-  let fromNowDate   = new moment(props.video.snippet.publishedAt).fromNow()    
-    
-  let vd_aux        = moment.duration( props.video.contentDetails.duration ) //Convert iso8601 string to object
-  let vidDuration       = vd_aux.minutes() + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"
-  
+  //TODO: Could be cleaner
+  if (props.isActs) {
+    thumbnail = props.video.snippet.thumbnails.medium.url
+    id = props.video.contentDetails.upload.videoId
+    title = props.video.snippet.title
+    pubAt = new Date(props.video.snippet.publishedAt)
+    viewCount = ''
+    channelName = props.video.snippet.channelTitle
+    fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
+
+    vd_aux = ''
+    vidDuration = '' 
+  } else {
+
+    thumbnail = props.video.snippet.thumbnails.medium.url
+    id = props.video.id
+    title = props.video.snippet.title
+    pubAt = new Date(props.video.snippet.publishedAt)
+    viewCount = props.video.statistics.viewCount
+    channelName = props.video.snippet.channelTitle
+    fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
+
+    vd_aux = moment.duration(props.video.contentDetails.duration) //Convert iso8601 string to object
+    vidDuration = vd_aux.minutes() + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"
+  }
 
   return (
 

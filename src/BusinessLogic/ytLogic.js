@@ -134,8 +134,6 @@ export function removeNonVideos(eachShelfsActs) {
     }
     filteredShelfs.push(fShelf)
   }
-  console.time('removeNonVideos: filteredShelfs:')
-  console.log(filteredShelfs)
   console.timeEnd('removeNonVideos')
   return filteredShelfs
 
@@ -152,8 +150,10 @@ export function extractIds(shelf) {
 }
 
 export async function requestVideosShelf(shelfsVidIds) {
+  console.log('INSIDE REQUETS VIDEOS')
+  console.log(shelfsVidIds)
     const vidIdShelf_Promise = shelfsVidIds.map(sh => {
-      return youtubeApi.getSomeVideos(sh.slice(0, 20))
+      return youtubeApi.getSomeVideos(sh)
     })
     return await Promise.all(vidIdShelf_Promise)
 }
@@ -186,3 +186,44 @@ export function extractIdsOld(shelfsActsFlat) {
   }
   return ids
 }
+
+export function saveToLocal(shelfs) {
+
+  console.log('***************************')
+  localStorage.setItem('shelfsVids', JSON.stringify(shelfs))
+  localStorage.setItem("last fetch", Date.now())
+  console.log('***************************')
+  //Save time
+  //let now = new Date() 
+  //localStorage.setItem("last fetch", now)
+}
+export function hasUsedRecently() {
+  let isRecent = false;
+  let now = new Date() 
+  let lastFetch = localStorage.getItem("last fetch")
+  //let ms = (now.getTime() - lastFetch.getTime()) ; 
+  //let pp = new Date(parseInt("1576846203951")).getTime()
+  let ms = lastFetch ? (now.getTime() - new Date(parseInt(lastFetch)).getTime()) : 0
+  if (ms < 3000 * 60) {
+    console.log("it's been under 3 minutes since")
+    isRecent = true
+  } else {
+    console.log("it's been OVERRRRR 3 minutes since")
+    isRecent = false
+  }
+  console.log(ms)
+
+  console.log('***************************')
+  return isRecent
+}
+
+export function getStorageShelfs() {
+  let shelfz = localStorage.getItem('shelfsVids')
+  shelfz = JSON.parse(shelfz)
+  console.log(shelfz)
+  return shelfz
+}
+
+
+
+

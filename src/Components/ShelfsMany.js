@@ -7,19 +7,19 @@ export const ShelfsMany = props => {
 
   console.log('%%%%%%%%%%%%%%%%%% TOP ALL SHELFS %%%%%%%%%%%%%%%%%%')
   console.log("PROPS.SHELFS")
-  console.log(props.shelfs)
+  console.log(props)
   console.log('%%%%%%%%%%%%%%%%%% END ALL SHELFS %%%%%%%%%%%%%%%%%%')
   
 
   return (
-    <div> From ShelfsMany
+    <div> 
     {props.shelfs.map(sh => {
-    console.log("//// SHELF //// ")
-    console.log(sh)
-        return (
-          <div>
-            <Shelf shelf={sh} />
-          </div>
+    //console.log("//// SHELF //// ")
+//    console.log(sh)
+      return (
+        <div className="ytShelfWrap">
+          <Shelf isActs={props.isActs} shelf={sh} />
+        </div>
         )
       })}
   </div>

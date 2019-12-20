@@ -35,9 +35,14 @@ li.video {
 
 ul.shelf {
   white-space: nowrap;
-  
-  overflow: auto;
-  overflow-y: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  /*justify-content: center;*/
+}
+
+.ytShelfWrap {
+  border-color: lightblue;
+  border-style: solid;
 }
 
 li.myget {

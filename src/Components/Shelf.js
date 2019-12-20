@@ -14,11 +14,8 @@ export const Shelf = props => {
   console.log(props)
   console.log(props.shelf)
   //https://stackoverflow.com/questions/30142361/react-js-uncaught-typeerror-this-props-data-map-is-not-a-function
-  let data = Array.from(props.shelf)
-  console.log('data')
-  console.log(data)
   console.log('+++++++++++++++++++ END +++++++++++++++++++++++')
-  */
+ */
         
   const [numVids, setNumVids] = useState(5)
   
@@ -27,14 +24,13 @@ export const Shelf = props => {
     setNumVids(numVids + 5)
   }
 
-  const videos = props.shelf.slice(0,numVids).map(vid => <Video key={vid.id} video={vid} /> )
-
+  const videos = props.shelf.videos.slice(0, numVids).map(vid => <Video isActs={props.isActs} key={vid.id} video={vid} /> )
   return(
     <div > SHELF
       <ul className="shelf">
         {videos}
-        <button onClick={loadMoreVids} > More...? </button>
       </ul>
+      <button onClick={loadMoreVids} > More...? </button>
     </div>
   )
 }
