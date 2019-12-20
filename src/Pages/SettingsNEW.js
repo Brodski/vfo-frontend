@@ -62,7 +62,7 @@ const AllShelfs = (props) => {
   console.log('sortedSh')
   console.log(sortedSh)
   
-  const shelfz = sortedSh.map(sh => {
+  const sortedShelfz = sortedSh.map(sh => {
     return (<Shelf title={sh.title} key={sh.title} shelf={sh} data-shelfid={sh.title + 'shelfid'}
       userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
   })
@@ -70,7 +70,8 @@ const AllShelfs = (props) => {
   let unSortedSh = props.userSettings.customShelfs.filter((sh) => { return !sh.isSorted } )
   console.log('unSortedSh')
   console.log(unSortedSh)
-  
+  !unSortedSh[0] ? unSortedSh.push(new CustomShelf()) : console.log('nah')
+
   const unSortedshelfz = unSortedSh.map(sh => {
     return (<Shelf title={unSName} key={unSName} shelf={sh} 
       userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
@@ -129,7 +130,7 @@ const AllShelfs = (props) => {
         {unSortedshelfz}
         <div> some stuff </div>
         <div>
-          {shelfz}
+        {sortedShelfz}
         </div>
       </div>
       <button onClick={addShelf} > Add shelf </button>
@@ -153,9 +154,10 @@ const Shelf = (props) => {
       makeDraggableShared2('.shelf', 'shelfs') //class, group name
     }
     makeDraggableShared('.subListWrapper', 'subscriptions')
+    makeDraggableShared3()
   }, [])
-  console.log('//// SHELF  ////')
-  console.log(props)
+  //console.log('//// SHELF  ////')
+  //console.log(props)
 
   function makeDraggableShared(selector, groupName) {
     var nestedShelf = [].slice.call(document.querySelectorAll(selector));
@@ -180,7 +182,27 @@ const Shelf = (props) => {
         swapThreshold: 0.65
     });
   }
-
+    function makeDraggableShared3(selector, groupName) {
+    selector = 'unsort-shelf'
+    groupName = 'subscriptions'
+    console.log('makeDraggableShared')
+    //var nestedShelf = document.querySelectorAll('.unsort-shelf');
+    var nestedShelf = document.querySelectorAll('.specialWrap');
+    var subEles = document.querySelectorAll('.subListWrapper');
+    console.log('subEles')
+    console.log(subEles)
+    console.log('nestedShelf')
+    console.log(nestedShelf[0])
+      new Sortable2(nestedShelf[0], {
+        //group: groupName,
+        group: {
+          name: 'subscriptions',
+          },
+        animation: 150,
+        fallbackOnBody: true,
+        swapThreshold: 0.65
+    });
+  }
   
   const itemz = props.shelf.fewSubs.map((s, idx) => {
     return (
@@ -195,16 +217,18 @@ const Shelf = (props) => {
   //TO DO id SHOULD BE MORE UNIQUE THAN props.title
   //TO DO fix this class fiesta
   let shelfClasses = props.shelf.isSorted ? "sh-QHack custom-shelf" : "sh-QHack unsort-shelf" 
-  
+  let specialWrap = props.shelf.isSorted ? "" : "specialWrap" 
   return (
     <div className="shelf" id={props.title}>
       <div className={shelfClasses} data-name={props.title} data-id={props.title} data-issorted={props.shelf.isSorted} >
         <h3> {props.title} </h3>
+        <div className={specialWrap}>
         <div className="subListWrapper">
           {itemz}
         </div>
+        </div>
+      </div>
     </div>
-  </div>
   )  
 }
 
@@ -311,15 +335,9 @@ export const SettingsNEW = () => {
       let newS = { ...prevUserSetting }
       newS.customShelfs = newCustomShelfs
       return newS
-     })
-    var d = new Date();
-    var seconds = d.getTime()/1000;
-    console.log(seconds)
-    console.log(d.getTime())
-    //window.location.reload()
-    
+     })    
   } 
-  //  {!user ? <SettingsOut /> : <UnsortedSubsShelf  ={subs}/> }
+
   function findSubIndex(chName) {
     let subIndex, shelfIndex = 0;
     for (let sh of userSettings.customShelfs) {

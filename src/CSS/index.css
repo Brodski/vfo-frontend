@@ -86,11 +86,13 @@ div.block {
   border-bottom: 1px solid #5a1616;
   display: flex;
   justify-content: space-between;
+  background-color: steelblue;
 }
 
 div.subListWrapper {
-  border: 3px solid purple;
-  background-color: cadetblue
+  /*border: 3px solid purple;*/
+  background-color: cadetblue;
+
 }
 
 div.shelf {
@@ -117,6 +119,12 @@ body {
 .unsort-shelf {
   width: 300px;
   background-color: lightgoldenrodyellow;
+  height:100%;
+}
+
+.specialWrap {
+  background-color: darkslategrey;
+  height: 100%;
 }
 
 .flex-subshelf-container {
