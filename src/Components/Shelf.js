@@ -17,7 +17,7 @@ export const Shelf = props => {
   console.log('+++++++++++++++++++ END +++++++++++++++++++++++')
  */
         
-  const [numVids, setNumVids] = useState(5)
+  const [numVids, setNumVids] = useState(3)
   
   
   function loadMoreVids() {

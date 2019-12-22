@@ -5,11 +5,12 @@ import { Shelf2 } from './Shelf'
 
 export const ShelfsMany = props => {
 
+/*
   console.log('%%%%%%%%%%%%%%%%%% TOP ALL SHELFS %%%%%%%%%%%%%%%%%%')
   console.log("PROPS.SHELFS")
   console.log(props)
   console.log('%%%%%%%%%%%%%%%%%% END ALL SHELFS %%%%%%%%%%%%%%%%%%')
-  
+  */
 
   return (
     <div> 

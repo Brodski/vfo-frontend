@@ -43,16 +43,11 @@ import  * as GApiAuth from '../HttpRequests/GApiAuth';
 // Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
 // Kinda like: shelf[x].subscription[y].activity[z] 
 export async function getActivitiesShelfs(shelfs) {
-  console.log('in get acts wtf')
-  console.log(shelfs)
-
   let allShelfs_Promises =[]
   for (let sh of shelfs) {
     const sh_Promises = sh.fewSubs.map(sub => youtubeApi._getActivities(sub.channelId))
     allShelfs_Promises.push(sh_Promises)
   }
-  console.log('allShelfs_Promises')
-  console.log(allShelfs_Promises)
   return await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
     
 }
@@ -123,7 +118,7 @@ export async function getAllSubs() {
 export function removeNonVideos(eachShelfsActs) {
 // TODO Remove the double loop, use map and filter
 // const damnBaby = shelf.map( act => act.result.items.filter(function (item) { return item.contentDetails.upload } ))
-  console.time('removeNonVideos: TOP')
+
   let filteredShelfs = []
   for (let shelf of eachShelfsActs) {
     let fShelf = []
@@ -138,7 +133,7 @@ export function removeNonVideos(eachShelfsActs) {
     }
     filteredShelfs.push(fShelf)
   }
-  console.timeEnd('removeNonVideos')
+
   return filteredShelfs
 
 }
@@ -154,8 +149,6 @@ export function extractIds(shelf) {
 }
 
 export async function requestVideosShelf(shelfsVidIds) {
-  console.log('INSIDE REQUETS VIDEOS')
-  console.log(shelfsVidIds)
     const vidIdShelf_Promise = shelfsVidIds.map(sh => {
       return youtubeApi.getSomeVideos(sh)
     })

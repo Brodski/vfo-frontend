@@ -22,6 +22,8 @@ export function getMockUser() {
   let sub1B = new Subscription()
   sub1B.channelName = "CNN"
   sub1B.channelId = "UCupvZG-5ko_eiXAupbDfxWw";
+  sub1B.filter.minDuration = "2"
+  sub1B.filter.maxDuration = "8"
 
   let sub1C = new Subscription()
   sub1C.channelName = "Fox News"

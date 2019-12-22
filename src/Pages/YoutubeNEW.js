@@ -26,6 +26,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import * as ytLogic from '../BusinessLogic/ytLogic.js'
 import { UserContext, IsSignedContext } from '../Contexts/UserContext.js'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints.js'
+import { FinalShelf } from '../Classes/FinalShelf';
 
 //UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 // react infinite scroll https://github.com/CassetteRocks/react-infinite-scroller#readme
@@ -33,42 +34,17 @@ import * as ServerEndpoints from '../HttpRequests/ServerEndpoints.js'
 export function YoutubeNEW() {
 
 //  var GoogleAuth;
-
-  let prevPage = 0
+  const initialPageLength = 3;
+  let prevPage;
   let spamLimit = 25;
   let spamCount = 0;
   const { user, setUser }         = useContext(UserContext);
   //const { isSigned, setIsSigned } = useContext(IsSignedContext);
   //const [pageLength, setPageLength] = useState(3);
-  const [pageLength, setPageLength] = useState(3);
+  const [pageLength, setPageLength] = useState(initialPageLength);
   const [hasMoreShelfs, setHasMoreShelfs] = useState(false); //At start, there are no shelfs, thus we have no more shelfs
 
-  const [finalShelfs, setFinalShelfs] = useState(
-    {
-      isActs: false,
-      shelfs: [
-        {
-          title: '',
-          videos:
-            [
-              {
-                contentDetails: {},
-                snippet: {
-                  thumbnails: {
-                    default: {},
-                    medium: {},
-                    high: {},
-                    standard: {},
-                    maxres: {},
-                  }
-                },
-                statistics: {},
-              }
-            ]
-        }
-      ]
-    }
-  )
+  const [finalShelfs, setFinalShelfs] = useState( new FinalShelf())
   
   
   
@@ -84,64 +60,7 @@ export function YoutubeNEW() {
   });
 
   /////////////////////////////////////////////
-  
-  {
-    /*
-    let sub1 = new Subscription()
-    sub1.channelName = "The Hill"
-    sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
-  
-    let sub2 = new Subscription()
-    sub2.channelName = "Crunkmastaflexx"
-    sub2.channelId = "UCA-8h5uCH5RE-1r6gskkbTw";
-  
-    let sub3 = new Subscription()
-    sub3.channelName = "Deep Beat"
-    sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";
-  
-    let sub4 = new Subscription()
-    sub4.channelName = "Video Box"
-    sub4.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw";
-  
-    let sub5 = new Subscription()
-    sub5.channelName = "mineralblue"
-    sub5.channelId = "UC3IngBBUGFUduHp-7haK1lw";
-  
-    let sub6 = new Subscription()
-    sub6.channelName = "SMTOWN"
-    sub6.channelId = "UCEf_Bc-KVd7onSeifS3py9g";
-  
-    let sshelf1 = new CustomShelf()
-    let shelf1 = new UserShelf()
-    shelf1.title = "Politics"
-    shelf1.subscriptions.push(sub1)
-    shelf1.subscriptions.push(sub2)
-    shelf1.subscriptions.push(sub3)
-  
-    let shelf2 = new UserShelf();
-    shelf2.title = "Babes"
-    shelf2.subscriptions.push(sub4)
-    shelf2.subscriptions.push(sub5)
-  
-    let shelf3 = new UserShelf();
-    shelf3.title = "k-pop"
-    shelf3.subscriptions.push(sub6)
-    
-    
-    const [shelfs, setShelfs] = useState([
-      {
-        subscriptions: shelf1.subscriptions,
-        //mockUser.customShelfs.fewSubs
-        title: shelf1.title,
-      },
-      {
-        subscriptions: shelf2.subscriptions,
-        title: shelf2.title,
-      }
-    ] );
-    */
-  }
-  
+
   // This is the finalShelf
   // PageOfShelfs = finalShelfs = [ shelf, shelf, shelf ]
   // shelf =[ vid, vid, vid, vid ]
@@ -155,6 +74,7 @@ export function YoutubeNEW() {
     console.log(user)
     if (user.userId) { 
       //if (ytLogic.hasUsedRecently()) {
+    
       if (false) {
           console.log("USED RECNETLY!!!")
           console.log("getting fomr local")
@@ -167,7 +87,7 @@ export function YoutubeNEW() {
       } else {
         console.log("NOT used !!!!!")
         console.log("doing fetch to google")
-        setHasMoreShelfs(true)
+        fetchMoreSubs()
         //loadShelf2()
         //let shelfVids = fetchActs_perShelf()
 
@@ -175,13 +95,22 @@ export function YoutubeNEW() {
     }
     console.log('---------------useEffect bot----------------------')
   }, [user])
-    
+   
+  function injectData(isActs, shelfstuff) {
+    let injectShelfTitle = user.customShelfs.slice(prevPage, pageLength).map((sh, idx) => {
+      return {"videos": shelfstuff[idx], "title":sh.title}
+    })
+
+    let postxd = { isActs, shelfs: injectShelfTitle }
+    return postxd
+
+  } 
   
   async function hackHelper() {
-  console.log('vvvvvvv HACK HELPER  vvvvvvvv')
+//  console.log('vvvvvvv HACK HELPER  vvvvvvvv')
   let count = 1
   let logged = false
-    while (logged = !GApiAuth.isHeSignedIn()) { //|| !user.id) {
+    while (logged = !GApiAuth.isHeSignedIn()) {
       console.log("Hack Helper: GoogleAuth NOT exist: " + count)
       console.log('Hack Helper: Logged in?: ' + logged)
       await Common.sleep(100*count) 
@@ -191,22 +120,19 @@ export function YoutubeNEW() {
         console.log("Hack Helper: Something went wrong :(  " + count)
       }
     }
-    console.log("Hack Helper: GoogleAuth !!! exist")
-    console.log(GApiAuth.isHeSignedIn())
-    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^')
+  //  console.log("Hack Helper: GoogleAuth !!! exist")
+ //   console.log(GApiAuth.isHeSignedIn())
+//    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^')
   }
 
 
-  async function fetchHalf() {
+  async function _fetchHalf() {
 
     // Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
     // Kinda like: shelf[x].subscription[y].activity[z] 
-    console.log('fetch half')
-    console.log('user.customShelfs.slice(prevPage, pageLength)')
-    console.log(user.customShelfs.slice(prevPage, pageLength))
+    
     let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, pageLength))
-    console.log('shelfsActs')
-    console.log(shelfsActs)
+    
 
 
     // Returns only Uploads of the activities
@@ -217,16 +143,13 @@ export function YoutubeNEW() {
     shelfsActs = await shelfsActs.map( shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = await shelfsActs.map( shelf => ytLogic.sortByDate(shelf))
 
-     console.log('shelfsActs after remNonVids + flat + sort ')
-     console.log(shelfsActs)
     //Render the info that we got, the 2nd half comes after this
     shelfsActs = shelfsActs.map(sh => sh.slice(0,20))    
-    console.log('shelfsActs after slice')
-    console.log(shelfsActs)
+
     return shelfsActs
   }
   
-  async function fetch2ndHalf(shelfsActs) {
+  async function _fetch2ndHalf(shelfsActs) {
     // Returns an array of video's ID per shelf
     let shelfsVidIds = await shelfsActs.map( sh => ytLogic.extractIds(sh))
 
@@ -239,85 +162,138 @@ export function YoutubeNEW() {
     return shelfVids
   }
   
-  const fetchActs_perShelf = async () => {
-    console.log(" xxxxXXXXxxxx fetchActs_perShelfs xxxxXXXXxxxx")
-    await hackHelper()
-    if (spamCount > spamLimit) {
+
+  function filterUploadsForUser(finalSh) {//
+    //finalSh.shelfs[i].videos[i].snippet.channelTitle = "google"
+    
+
+  }
+
+  function isEndReached() {
+    let isEnd = false;
+    if (spamCount > spamLimit || pageLength > user.customShelfs.length) {
       console.log('\n\n\n\nbro you reached the spam limit\n\n\n')
+
+      console.log("LOAD SHELF")
+      console.log(pageLength)
+      console.log('user.customShelfs.length')
+      console.log(user.customShelfs.length)
+      isEnd = true
+    }
+    return isEnd
+  }
+
+  const fetchMoreSubs = async () => {
+    setHasMoreShelfs(false) //instantly halt any possible room for multi fetches
+    prevPage = pageLength == initialPageLength ? 0 : pageLength - 1 //PrevPage = 0 for initial load & prevPage = pageLength - 1 then after
+    console.log(" xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
+    
+    console.log("\n\n TOP setting pages: ")
+    console.log("prevPage: " + prevPage)
+    console.log("pageLength: " + pageLength)
+    
+
+    await hackHelper()
+    if ( isEndReached()) {
+      Common.sleep(5000)
       return
     }
-    console.log('user')
-    console.log(user)
 
-    let shelfsActs = await fetchHalf()
-
-    let injectShelfTitle = user.customShelfs.slice(prevPage, pageLength).map((sh, idx) => {
-      return { "videos": shelfsActs[idx], "title": sh.title }
-    })
-    let trickShot = { isActs: 'lol yes!', shelfs: { videos: { ...shelfsActs }, title: 'lol title' } }
-  
-    console.log('trickShot')
-    console.log(trickShot)
-    setFinalShelfs({ isActs: true, shelfs: injectShelfTitle })
-    setHasMoreShelfs(true)
-
-
-    console.log('shelfsActs pre map')
-    console.log(shelfsActs)
-    let shelfVids = await fetch2ndHalf(shelfsActs)
+    let shelfsActs = await _fetchHalf()
+    let iData = injectData(true, shelfsActs)
+   //let iData
+    console.log('iData')
+    console.log(iData)
     
-    console.log("\n \n WE ARE SETTING \n \n")
+    /*
+    setFinalShelfs(prevShs => {
+      let newS = { ...prevShs }
+      prevPage != 0 ? newS.shelfs.push(...iData.shelfs) : newS = iData
+      newS.isActs = true
+      return newS
+    })
+    */
+    
+    let shelfVids = await _fetch2ndHalf(shelfsActs)
+    iData = injectData(false, shelfVids)
+
     console.log("_____-------WE FINISHED THE FILTER!-------_______")
+    console.log("_____ {prevPage, pageLength} " + {prevPage, pageLength} )
+    console.log('finalShelfs')
+    console.log(finalShelfs)
+    console.log('iData')
+    console.log(iData)
+    /*
+    let shitty = finalShelfs
+    if (prevPage == 0) {
+      for (let i = 0; i < pageLength; i++) {
+        shitty.shelfs[prevPage + i] = iData.shelfs[i]
+      }
+    } else {
+      console.log('shitty.shelfs')
+      console.log(shitty.shelfs)
+      if (shitty.shelfs[prevPage ]) {
+        console.log("YEAH THIS SHIT IS HERE")
+        shitty.shelfs[prevPage ] =  iData.shelfs[0]
+      } else {
+        console.log("NO ITS NOT")
+        shitty.shelfs.push(iData.shelfs[0])
+      }
+      shitty.isActs = true
+      console.log('shitty')
+      console.log(shitty)
+    }
+    */
+
+      setFinalShelfs(prevShs => {
+        let newS = { ...prevShs }
+        if (prevPage == 0) {
+          for (let i = 0; i < pageLength; i++) {
+            newS.shelfs[prevPage + i] = iData.shelfs[i]
+          }
+        } else {
+            if (newS.shelfs[prevPage ]) {
+              console.log("YEAH THIS SHIT IS HERE")
+              newS.shelfs[prevPage ] =  iData.shelfs[0]
+            } else {
+              console.log("NO ITS NOT")
+              newS.shelfs.push(iData.shelfs[0])
+            }
+        }
+        newS.isActs = false
+        return newS
+      })
     
-        
-    let lifehack2 = user.customShelfs.map((sh, idx) => {
-      return {"videos": shelfVids[idx], "title":sh.title}
-    })
-
-
-    let postxd = { isActs: false, shelfs: lifehack2 }
-    prevPage = pageLength
-    console.log(' postxd')
-    console.log(postxd)
-    setFinalShelfs(postxd)
-    //ytLogic.saveToLocal(postxd)  
-
-    setHasMoreShelfs(true) //We now have shelfs to be rendered
+    //filterUploadsForUser(iData)
+    //ytLogic.saveToLocal(iData)  
+    //prevPage = pageLength
     setPageLength( pageLength + 1)
-    spamCount = spamCount + 1;
-    console.log("LOAD SHELF")
-    console.log("LOAD SHELF")
-    console.log(pageLength)
-    console.log(pageLength)
+    
+    console.log("\n\n BOTTOM setting pages: ")
+    console.log("prevPage: " + prevPage)
+    console.log("pageLength: " + pageLength)
 
-    if (pageLength >= user.customShelfs.length - 1 ) {  // 3 == 0
+    spamCount = spamCount + 1;
+    if (pageLength > user.customShelfs.length) {  // 3 == 0
       console.log("\n\n\n\nPAGE LENGTH REACHED!!!!!\n\n")
       console.log(user.customShelfs.length)
       console.log(pageLength)
       setHasMoreShelfs(false)
+    } else {
+      setHasMoreShelfs(true) //We now have shelfs to be rendered
     }
+
   //  return shelfVids;
   }
+    
   
-  
-  
-  function loadShelf() {
-    setPageLength( pageLength + 1)
-    console.log("LOAD SHELF")
-    console.log(pageLength)
-    if (pageLength >= finalShelfs.shelfs.length) {  // 3 == 0
-      console.log("PAGE LENGTH REACHED!!!!!")
-      console.log(finalShelfs.length)
-      console.log(pageLength)
-      setHasMoreShelfs(false)
-    }
-  }
-  
+    
+    
   return(
     <div>
      
     <InfiniteScroll
-        loadMore={fetchActs_perShelf}
+        loadMore={fetchMoreSubs}
         hasMore={hasMoreShelfs}
         loader={(<div>Loading ...</div>)}
       >

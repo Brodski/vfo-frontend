@@ -6,17 +6,17 @@ export async function check(gapiObj, gapiString) {
   let wait = 500;
   while (!window.gapi.client.youtube) {
     wait = wait * 2
-    console.log("yt Api - NOT EXISTS: gapi.client.youtube")
+    console.log("yt Api 1- NOT EXISTS: gapi.client.youtube")
     await Common.sleep(wait)
   }
   while (!window.gapi.auth2) {
     wait = wait * 2
-    console.log("yt Api - NOT EXISTS: gapi.auth2 not found");
+    console.log("yt Api 2- NOT EXISTS: gapi.auth2 not found");
     await Common.sleep(wait); //sleep 100 ms
   }
   while (!window.gapi) {
     wait = wait * 2
-    console.log("yt Api - NOT EXISTS: window.gapi not found");
+    console.log("yt Api 3- NOT EXISTS: window.gapi not found");
     await Common.sleep(wait)
   }
 }
@@ -48,7 +48,6 @@ await check()
 export async function getChannelInfo(e) {
 await check()
   e.preventDefault();
-  //console.log("CLICKEDDD! - channel: " + channel)
   let id = "UCPWXiRWZ29zrxPFIQT7eHSA, UCeMFHOzX9MDWbr-pu2WdmVw, UC3IngBBUGFUduHp-7haK1lw, UCA-8h5uCH5RE-1r6gskkbTw, UC0CeYMTh57zSsbUKhsyOPfw"
   return window.gapi.client.youtube.channels.list({
     "part": "snippet",

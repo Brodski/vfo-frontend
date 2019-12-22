@@ -117,6 +117,8 @@ export function FilterDialog(props){
     
     //Find which shelf and location of the User on shelf
     //Search Custom Sub Shelfs
+
+
     for (let sh of props.userSettings.customShelfs) {
       subIndex =  sh.fewSubs.findIndex( s => s.channelName == props.subObj.channelName)//props.subObj.channelName)
       if (subIndex > -1) { break }

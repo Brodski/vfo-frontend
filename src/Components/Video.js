@@ -7,7 +7,7 @@ import moment from 'moment';
 //
 export const Video = (props) => {
   //console.log(' xxxxxxxxx VIDEO xxxxxxxxxxxxx')
-  //console.log(props)
+//  console.log(props)
   let thumbnail, id, title, pubAt, viewCount, channelName, fromNowDate, vd_aux, vidDuration;
 
   //TODO: Could be cleaner
@@ -28,7 +28,7 @@ export const Video = (props) => {
     id = props.video.id
     title = props.video.snippet.title
     pubAt = new Date(props.video.snippet.publishedAt)
-    viewCount = props.video.statistics.viewCount
+    viewCount = props.video.statistics.viewCount 
     channelName = props.video.snippet.channelTitle
     fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
 
