@@ -11,6 +11,7 @@ npm start
 Or -   
    
 npm install npm-install-all -g  
+npm-install-all  
 npm install  
 npm start  
 
