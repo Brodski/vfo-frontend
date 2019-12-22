@@ -223,28 +223,8 @@ export function YoutubeNEW() {
     console.log(finalShelfs)
     console.log('iData')
     console.log(iData)
-    /*
-    let shitty = finalShelfs
-    if (prevPage == 0) {
-      for (let i = 0; i < pageLength; i++) {
-        shitty.shelfs[prevPage + i] = iData.shelfs[i]
-      }
-    } else {
-      console.log('shitty.shelfs')
-      console.log(shitty.shelfs)
-      if (shitty.shelfs[prevPage ]) {
-        console.log("YEAH THIS SHIT IS HERE")
-        shitty.shelfs[prevPage ] =  iData.shelfs[0]
-      } else {
-        console.log("NO ITS NOT")
-        shitty.shelfs.push(iData.shelfs[0])
-      }
-      shitty.isActs = true
-      console.log('shitty')
-      console.log(shitty)
-    }
-    */
 
+      //TODO clean this slop 
       setFinalShelfs(prevShs => {
         let newS = { ...prevShs }
         if (prevPage == 0) {

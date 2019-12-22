@@ -1,3 +1,24 @@
+Getting Started:  
+  
+Get api-key.js from me.  
+Put "api-key.js" in "src/"   
+   
+Either -   
+   
+npm install   
+npm start   
+  
+Or -   
+   
+npm install npm-install-all -g  
+npm install  
+npm start  
+
+
+------------------------------------------------------------------------------
+  
+  
+  
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
