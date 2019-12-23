@@ -68,34 +68,39 @@ export function YoutubeNEW() {
 
   useEffect( () => {
     
-    //console.log(JSON.stringify(mockUser, null, 2))
-    //console.log(mockUser)
+    
     console.log('---------------useEffect top ----------------------')
     console.log(user)
-    if (user.userId) { 
+    if (user.userId) { //Since state variable has 'new User()' default 'values', we need to check for actual user existence
       //if (ytLogic.hasUsedRecently()) {
-    
       if (false) {
           console.log("USED RECNETLY!!!")
           console.log("getting fomr local")
-
           let shelfsVids = ytLogic.getStorageShelfs()
-          console.log('shelfsVids')
-          console.log(shelfsVids)
           setFinalShelfs(shelfsVids)
-          setHasMoreShelfs(true) //We know have shelfs to be rendered
+          setHasMoreShelfs(true) //We now have shelfs to be rendered
       } else {
         console.log("NOT used !!!!!")
         console.log("doing fetch to google")
-        fetchMoreSubs()
-        //loadShelf2()
-        //let shelfVids = fetchActs_perShelf()
+        fetchMoreSubs(true) // true ---> first run
 
       }
     }
     console.log('---------------useEffect bot----------------------')
   }, [user])
    
+  function putUnsortedShelfAtBottom() {
+    console.log('user')
+    console.log(user)
+    let newUser = user;
+    let sort    = user.customShelfs.filter( sh => sh.isSorted)
+    let unSort  = user.customShelfs.filter( sh => !sh.isSorted)  
+    sort = sort.concat(unSort)
+    newUser.customShelfs = sort
+    setUser(newUser)
+
+  }
+
   function injectData(isActs, shelfstuff) {
     let injectShelfTitle = user.customShelfs.slice(prevPage, pageLength).map((sh, idx) => {
       return {"videos": shelfstuff[idx], "title":sh.title}
@@ -107,7 +112,6 @@ export function YoutubeNEW() {
   } 
   
   async function hackHelper() {
-//  console.log('vvvvvvv HACK HELPER  vvvvvvvv')
   let count = 1
   let logged = false
     while (logged = !GApiAuth.isHeSignedIn()) {
@@ -120,16 +124,13 @@ export function YoutubeNEW() {
         console.log("Hack Helper: Something went wrong :(  " + count)
       }
     }
-  //  console.log("Hack Helper: GoogleAuth !!! exist")
- //   console.log(GApiAuth.isHeSignedIn())
-//    console.log('^^^^^^^^^^^^^^^^^^^^^^^^^')
   }
 
 
-  async function _fetchHalf() {
+  async function _fetch1stHalf() {
 
     // Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
-    // Kinda like: shelf[x].subscription[y].activity[z] 
+    // Kinda like: shelf[x].subscription[y].activity[z]
     
     let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, pageLength))
     
@@ -143,8 +144,9 @@ export function YoutubeNEW() {
     shelfsActs = await shelfsActs.map( shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = await shelfsActs.map( shelf => ytLogic.sortByDate(shelf))
 
-    //Render the info that we got, the 2nd half comes after this
-    shelfsActs = shelfsActs.map(sh => sh.slice(0,20))    
+    // Fetch data from youtube api
+    const fetchThisManyVideosPerShelf = 20 //Arbitrary number
+    shelfsActs = shelfsActs.map(sh => sh.slice(0,fetchThisManyVideosPerShelf))    
 
     return shelfsActs
   }
@@ -163,16 +165,48 @@ export function YoutubeNEW() {
   }
   
 
-  function filterUploadsForUser(finalSh) {//
-    //finalSh.shelfs[i].videos[i].snippet.channelTitle = "google"
+  function beginFilter(iData) {
+  //iData = {isActs, shelfsSliced [] }
     
+    //apply the user's filter on the subscriber
+    //Match iData.shelfs with user.customShelfs
+    //TODO, should be an easier, readable way to do this.
+    let userShelfs = user.customShelfs.slice(prevPage,pageLength) //Use slice for tricks & improvment
+    console.log('\n\n\n\n userShelfs')
+    console.log(userShelfs)
+    for (let uSh of userShelfs) {     
+      //Get a shelf-of-videos fr
+      console.log('uSh')
+      console.log(uSh)
+      //Get the vids for shelf uSh
+      let unfiltVids = iData.shelfs.filter( iSh => iSh.title == uSh.title) // TODO // NEED AN ID! (I think) Or perhap require titles to be unique??
+      console.log(' unfiltVids')
+      console.log(unfiltVids)
+      //compare each vid with the user's filter (compare with each sub in fewSubs)
+      for (let vid of unfiltVids[0].videos) {
+        
+        // Recall:
+        //      sub = { youtubeObj }
+        //      uSh = { fewSubs: [sub, sub, sub], title: "shelfx", isSorted }
+        //      sub = { filter{}, channelTitle, channelId }
+        let dankFilter = uSh.fewSubs.filter( sub => sub.channelId == vid.snippet.channelId)
+        console.log('dankFilter')
+        console.log(dankFilter[0].channelId)
+        console.log(vid.snippet.channelId)
+        // remove the video if passes filter.
+        // else keep it.
+        //applyFilter() 
+      }
+      
+    }
+
 
   }
 
   function isEndReached() {
     let isEnd = false;
     if (spamCount > spamLimit || pageLength > user.customShelfs.length) {
-      console.log('\n\n\n\nbro you reached the spam limit\n\n\n')
+      console.log('\n\n\n\nbro you reached the limit\n\n\n')
 
       console.log("LOAD SHELF")
       console.log(pageLength)
@@ -183,26 +217,31 @@ export function YoutubeNEW() {
     return isEnd
   }
 
-  const fetchMoreSubs = async () => {
+  const fetchMoreSubs = async (isFirstRun) => {
+    console.log("INSIDE OF FILTER UPLOADS")
+    console.log(isFirstRun)
+    if (isFirstRun) { await putUnsortedShelfAtBottom() }
+    console.log('user post w/e')
+    console.log(user)
+
     setHasMoreShelfs(false) //instantly halt any possible room for multi fetches
-    prevPage = pageLength == initialPageLength ? 0 : pageLength - 1 //PrevPage = 0 for initial load & prevPage = pageLength - 1 then after
+    prevPage = pageLength == initialPageLength ? 0 : pageLength - 1 //PrevPage = 0 for initial load //After that prevPage = pageLength - 1
     console.log(" xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
     
     console.log("\n\n TOP setting pages: ")
-    console.log("prevPage: " + prevPage)
-    console.log("pageLength: " + pageLength)
+    console.log("prevPage, pageLength ")
+    console.log(prevPage + ',' + pageLength)
     
 
     await hackHelper()
-    if ( isEndReached()) {
-      Common.sleep(5000)
+    if ( isEndReached()) { //If all shelfs retrieved, then quit
       return
     }
 
-    let shelfsActs = await _fetchHalf()
+    let shelfsActs = await _fetch1stHalf()
     let iData = injectData(true, shelfsActs)
-   //let iData
-    console.log('iData')
+
+    console.log('iData - Activities')
     console.log(iData)
     
     /*
@@ -217,12 +256,16 @@ export function YoutubeNEW() {
     let shelfVids = await _fetch2ndHalf(shelfsActs)
     iData = injectData(false, shelfVids)
 
+    beginFilter(iData)
+
     console.log("_____-------WE FINISHED THE FILTER!-------_______")
     console.log("_____ {prevPage, pageLength} " + {prevPage, pageLength} )
     console.log('finalShelfs')
     console.log(finalShelfs)
-    console.log('iData')
+    console.log('iData - Videos')
     console.log(iData)
+    console.log('user')
+    console.log(user)
 
       //TODO clean this slop 
       setFinalShelfs(prevShs => {
@@ -233,10 +276,10 @@ export function YoutubeNEW() {
           }
         } else {
             if (newS.shelfs[prevPage ]) {
-              console.log("YEAH THIS SHIT IS HERE")
               newS.shelfs[prevPage ] =  iData.shelfs[0]
-            } else {
-              console.log("NO ITS NOT")
+            } else { 
+              console.log("I Think we doing this")
+              console.log(newS.shelfs.length + " newS.shelfs.length")
               newS.shelfs.push(iData.shelfs[0])
             }
         }
@@ -246,24 +289,11 @@ export function YoutubeNEW() {
     
     //filterUploadsForUser(iData)
     //ytLogic.saveToLocal(iData)  
-    //prevPage = pageLength
+
+    /// increment ect.
     setPageLength( pageLength + 1)
-    
-    console.log("\n\n BOTTOM setting pages: ")
-    console.log("prevPage: " + prevPage)
-    console.log("pageLength: " + pageLength)
-
     spamCount = spamCount + 1;
-    if (pageLength > user.customShelfs.length) {  // 3 == 0
-      console.log("\n\n\n\nPAGE LENGTH REACHED!!!!!\n\n")
-      console.log(user.customShelfs.length)
-      console.log(pageLength)
-      setHasMoreShelfs(false)
-    } else {
-      setHasMoreShelfs(true) //We now have shelfs to be rendered
-    }
-
-  //  return shelfVids;
+    setHasMoreShelfs(true) //We now have shelfs to be rendered
   }
     
   

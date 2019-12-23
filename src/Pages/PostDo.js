@@ -21,8 +21,8 @@ function PostDo() {
   return (
     <div>
       <form onSubmit={sentIt} >
-        <input type="text" name="username" value={newUser} onChange={e => setUser(e.target.value)} />
-        <input type="text" name="id" value={newId} onChange={e => setId(e.target.value)} />
+        "Username"<input type="text" name="username" value={newUser} onChange={e => setUser(e.target.value)} />
+        "userId"<input type="text" name="id" value={newId} onChange={e => setId(e.target.value)} />
         <button>Submit</button>
       </form>
     </div>
