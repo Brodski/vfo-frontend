@@ -24,9 +24,11 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 
 import * as ytLogic from '../BusinessLogic/ytLogic.js'
-import { UserContext, IsSignedContext } from '../Contexts/UserContext.js'
+import { UserContext } from '../Contexts/UserContext.js'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints.js'
-import { FinalShelf } from '../Classes/FinalShelf';
+import { FinalShelfs, FinalShelfs2 } from '../Classes/FinalShelfs';
+import * as FS  from '../Classes/FinalShelfs';
+
 
 //UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 // react infinite scroll https://github.com/CassetteRocks/react-infinite-scroller#readme
@@ -39,12 +41,11 @@ export function YoutubeNEW() {
   let spamLimit = 25;
   let spamCount = 0;
   const { user, setUser }         = useContext(UserContext);
-  //const { isSigned, setIsSigned } = useContext(IsSignedContext);
   //const [pageLength, setPageLength] = useState(3);
   const [pageLength, setPageLength] = useState(initialPageLength);
   const [hasMoreShelfs, setHasMoreShelfs] = useState(false); //At start, there are no shelfs, thus we have no more shelfs
 
-  const [finalShelfs, setFinalShelfs] = useState( new FinalShelf())
+  const [finalShelfs, setFinalShelfs] = useState( new FinalShelfs())
   
   
   
@@ -100,14 +101,23 @@ export function YoutubeNEW() {
     setUser(newUser)
 
   }
+  
+  function isEndReached() {
+    let isEnd = false;
+    if (spamCount > spamLimit || pageLength > user.customShelfs.length) {
+      console.log('\n\n\n\nbro you reached the limit\n\n\n')
+      console.log(pageLength)
+      console.log(user.customShelfs.length)
+      isEnd = true
+    }
+    return isEnd
+  }
 
   function injectData(isActs, shelfstuff) {
     let injectShelfTitle = user.customShelfs.slice(prevPage, pageLength).map((sh, idx) => {
-      return {"videos": shelfstuff[idx], "title":sh.title}
+      return {"videos": shelfstuff[idx], "title":sh.title, "filters": sh.fewSubs.map(sub => sub.filter)}
     })
-
-    let postxd = { isActs, shelfs: injectShelfTitle }
-    return postxd
+    return { isActs, shelfs: injectShelfTitle }
 
   } 
   
@@ -127,11 +137,10 @@ export function YoutubeNEW() {
   }
 
 
-  async function _fetch1stHalf() {
+  async function _fetchActivities() {
 
     // Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
     // Kinda like: shelf[x].subscription[y].activity[z]
-    
     let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, pageLength))
     
 
@@ -145,84 +154,47 @@ export function YoutubeNEW() {
     shelfsActs = await shelfsActs.map( shelf => ytLogic.sortByDate(shelf))
 
     // Fetch data from youtube api
-    const fetchThisManyVideosPerShelf = 20 //Arbitrary number
+    const fetchThisManyVideosPerShelf = 20 //Arbitrary number (max 50) (see youtube's Video api)
     shelfsActs = shelfsActs.map(sh => sh.slice(0,fetchThisManyVideosPerShelf))    
 
+    
+    {/*as Object
+      let actResponses = shelfsActs.map(sh => (sh.map(sub => {
+      let actRes = new FS.ActRes()
+      actRes.contentDetails = sub.contentDetails;
+      actRes.snippet = sub.snippet;
+      return actRes
+    })))
+    return actResponses*/}
     return shelfsActs
+
   }
   
   async function _fetch2ndHalf(shelfsActs) {
     // Returns an array of video's ID per shelf
-    let shelfsVidIds = await shelfsActs.map( sh => ytLogic.extractIds(sh))
+    let shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
 
     // Returns an array of video objects(yt) per shelf
     let shelfVids = await ytLogic.requestVideosShelf(shelfsVidIds)
 
     //Returns only "OK" status and then http results
-    shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map( sh => sh.result.items)       
-    shelfVids = shelfVids.map( shelf => ytLogic.sortByDate(shelf))
+    shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
+    shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
+
+    {/*let vidResponses = shelfVids.map(sh => (sh.map(sub => {
+      let vidRes = new FS.VideoRes()
+      vidRes.contentDetails = sub.contentDetails;
+      vidRes.snippet        = sub.snippet;
+      vidRes.statistics     = sub.statistics
+      return vidRes
+    })))
+    return vidResponses*/}
+
     return shelfVids
   }
-  
 
-  function beginFilter(iData) {
-  //iData = {isActs, shelfsSliced [] }
-    
-    //apply the user's filter on the subscriber
-    //Match iData.shelfs with user.customShelfs
-    //TODO, should be an easier, readable way to do this.
-    let userShelfs = user.customShelfs.slice(prevPage,pageLength) //Use slice for tricks & improvment
-    console.log('\n\n\n\n userShelfs')
-    console.log(userShelfs)
-    for (let uSh of userShelfs) {     
-      //Get a shelf-of-videos fr
-      console.log('uSh')
-      console.log(uSh)
-      //Get the vids for shelf uSh
-      let unfiltVids = iData.shelfs.filter( iSh => iSh.title == uSh.title) // TODO // NEED AN ID! (I think) Or perhap require titles to be unique??
-      console.log(' unfiltVids')
-      console.log(unfiltVids)
-      //compare each vid with the user's filter (compare with each sub in fewSubs)
-      for (let vid of unfiltVids[0].videos) {
-        
-        // Recall:
-        //      sub = { youtubeObj }
-        //      uSh = { fewSubs: [sub, sub, sub], title: "shelfx", isSorted }
-        //      sub = { filter{}, channelTitle, channelId }
-        let dankFilter = uSh.fewSubs.filter( sub => sub.channelId == vid.snippet.channelId)
-        console.log('dankFilter')
-        console.log(dankFilter[0].channelId)
-        console.log(vid.snippet.channelId)
-        // remove the video if passes filter.
-        // else keep it.
-        //applyFilter() 
-      }
-      
-    }
-
-
-  }
-
-  function isEndReached() {
-    let isEnd = false;
-    if (spamCount > spamLimit || pageLength > user.customShelfs.length) {
-      console.log('\n\n\n\nbro you reached the limit\n\n\n')
-
-      console.log("LOAD SHELF")
-      console.log(pageLength)
-      console.log('user.customShelfs.length')
-      console.log(user.customShelfs.length)
-      isEnd = true
-    }
-    return isEnd
-  }
-
-  const fetchMoreSubs = async (isFirstRun) => {
-    console.log("INSIDE OF FILTER UPLOADS")
-    console.log(isFirstRun)
+const fetchMoreSubs = async (isFirstRun) => {
     if (isFirstRun) { await putUnsortedShelfAtBottom() }
-    console.log('user post w/e')
-    console.log(user)
 
     setHasMoreShelfs(false) //instantly halt any possible room for multi fetches
     prevPage = pageLength == initialPageLength ? 0 : pageLength - 1 //PrevPage = 0 for initial load //After that prevPage = pageLength - 1
@@ -238,25 +210,32 @@ export function YoutubeNEW() {
       return
     }
 
-    let shelfsActs = await _fetch1stHalf()
+    let shelfsActs = await _fetchActivities()
+    console.log('shelfsActs')
+    console.log(shelfsActs)
+
     let iData = injectData(true, shelfsActs)
 
     console.log('iData - Activities')
     console.log(iData)
     
-    /*
-    setFinalShelfs(prevShs => {
+    
+    /*setFinalShelfs(prevShs => {
       let newS = { ...prevShs }
       prevPage != 0 ? newS.shelfs.push(...iData.shelfs) : newS = iData
       newS.isActs = true
       return newS
-    })
-    */
+    })*/
+    
     
     let shelfVids = await _fetch2ndHalf(shelfsActs)
+    
     iData = injectData(false, shelfVids)
+    
+    ytLogic.beginFilter2(iData.shelfs)
+    //beginFilter(iData)
 
-    beginFilter(iData)
+    //beginFilter(iData)
 
     console.log("_____-------WE FINISHED THE FILTER!-------_______")
     console.log("_____ {prevPage, pageLength} " + {prevPage, pageLength} )
@@ -270,27 +249,21 @@ export function YoutubeNEW() {
       //TODO clean this slop 
       setFinalShelfs(prevShs => {
         let newS = { ...prevShs }
+        newS.isActs = false
         if (prevPage == 0) {
           for (let i = 0; i < pageLength; i++) {
             newS.shelfs[prevPage + i] = iData.shelfs[i]
           }
         } else {
-            if (newS.shelfs[prevPage ]) {
-              newS.shelfs[prevPage ] =  iData.shelfs[0]
-            } else { 
-              console.log("I Think we doing this")
-              console.log(newS.shelfs.length + " newS.shelfs.length")
-              newS.shelfs.push(iData.shelfs[0])
-            }
+          console.log("I Think we doing this")
+          newS.shelfs.push(iData.shelfs[0])
         }
-        newS.isActs = false
         return newS
       })
     
-    //filterUploadsForUser(iData)
     //ytLogic.saveToLocal(iData)  
 
-    /// increment ect.
+
     setPageLength( pageLength + 1)
     spamCount = spamCount + 1;
     setHasMoreShelfs(true) //We now have shelfs to be rendered
@@ -301,7 +274,8 @@ export function YoutubeNEW() {
     
   return(
     <div>
-     
+      <button onClick={() => {console.log('finalShelfs'); console.log(finalShelfs); } }> log finalShelfs </button>
+      <button onClick={() => {console.log('user'); console.log(user); } }> log User </button>
     <InfiniteScroll
         loadMore={fetchMoreSubs}
         hasMore={hasMoreShelfs}
@@ -334,3 +308,47 @@ export function YoutubeNEW() {
 }
 
 
+/*
+
+
+
+  function beginFilter(vidsNShit) {
+  //iData = {isActs, shelfsSliced [] }
+  console.log('vidsNShit')
+  console.log(vidsNShit)
+    
+    //apply the user's filter on the subscriber
+    //Match iData.shelfs with user.customShelfs
+    //TODO, should be an easier, readable way to do this.
+    let userShelfs = user.customShelfs.slice(prevPage,pageLength) 
+    console.log('\n\n\n\n userShelfs')
+    console.log(userShelfs)
+    for (let usSh of userShelfs) {     
+      //Get a shelf-of-videos fr
+      console.log('uSh')
+      console.log(usSh)
+      //Get the vids for shelf uSh
+      let unfiltVids = vidsNShit.filter( iSh => iSh.title == usSh.title) // TODO // NEED AN ID! (I think) Or perhap require titles to be unique??
+      console.log(' unfiltVids')
+      console.log(unfiltVids)
+      //compare each vid with the user's filter (compare with each sub in fewSubs)
+      for (let vid of unfiltVids[0].videos) {
+        
+        // Recall:
+        //      sub = { youtubeObj }
+        //      uSh = { fewSubs: [sub, sub, sub], title: "shelfx", isSorted }
+        //      sub = { filter{}, channelTitle, channelId }
+        let dankFilter = usSh.fewSubs.filter( sub => sub.channelId == vid.snippet.channelId)
+        console.log('dankFilter')
+        console.log(dankFilter[0].channelId)
+        console.log(vid.snippet.channelId)
+        // remove the video if passes filter.
+        // else keep it.
+        //applyFilter() 
+      }
+      
+    }
+    
+
+  }
+*/

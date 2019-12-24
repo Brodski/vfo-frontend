@@ -11,7 +11,6 @@ export const ShelfsMany = props => {
   console.log(props)
   console.log('%%%%%%%%%%%%%%%%%% END ALL SHELFS %%%%%%%%%%%%%%%%%%')
   */
-
   return (
     <div> 
     {props.shelfs.map(sh => {

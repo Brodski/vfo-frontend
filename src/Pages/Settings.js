@@ -15,33 +15,6 @@ import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 //  https://github.com/SortableJS/react-sortablejs
 
 
-const UnsortedSubsShelf = (props) => {
-  console.log("Unsorted Subs Shelf")
-  const [subList, setSubsList] = useState(props.mockUser.map( s => s.channelName))
-  
-  return (
-    <div>
-      <h1> Unsorted Sub Shelf </h1>
-        
-      <button onClick={() => { console.log('subsList: '); console.log(subList); }}> log subs & subList </button>
-
-      <Sortable
-        className="block-list"
-        options={{
-          group: 'shared',
-          animation: 100,
-          swapThreshold: .1,     
-        }}
-        chosenClass="sortable-chosen"
-        onChange={(order, sortable, evt) => { setSubsList(order) }} >
-        {subList.map(s => (<div className="block" data-id={s} key={s} > {s} </div> ))}
-      </Sortable>
-    </div>
-    )
-}
-
-
-
 const AllShelfs = (props) => {
 
   console.log("AllShelfs props")
@@ -60,10 +33,6 @@ const AllShelfs = (props) => {
     //<button onClick={() => console.log(props.shelfs) }> log all shelfs </button>
 
     <div>
-        
-        {/* sh.map(s => (<div className="block" data-id={s} key={s} > {s} </div> ))
-        { sh.map(s => (<div data-id="poop" className="block"> u dummy </div> ))}*/}
-
       {shelfz}
     </div>
 

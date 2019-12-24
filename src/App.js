@@ -23,6 +23,8 @@ import { User } from './Classes/User'
 // $ npm install --save react-modal
 // $ npm install --save @yaireo/tagify
 // $ npm install --save react-infinite-scroller
+// $ npm install --save react-sortablejs <-- dele thtis trash
+// $ npm install react-drag-and-drop
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 

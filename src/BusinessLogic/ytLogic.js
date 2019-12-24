@@ -221,6 +221,27 @@ export function getStorageShelfs() {
   return shelfz
 }
 
+//I'm sorry for this. I messed up ealier :(
+export function beginFilter2(fShelfs) {
+  //console.log('+++++++++++ BEGIN FILTER ++++++++++++++')
+  //console.log('fShelfs')
+  //console.log(fShelfs)
+  //Go through every shelf's vid and find it's filter then apply it
+    for (let sh of fShelfs) {
+      for (let vid of sh.videos) {
+        for (let f of sh.filters) {
+          if (f.id == vid.snippet.channelId) {
+            let duration = moment.duration(vid.contentDetails.duration)
+            let isPass = f.checkDurations(duration.minutes() + (duration.seconds() / 60))
+            if (!isPass) {
+              sh.videos = sh.videos.filter( v => v.id != vid.id)
+              break
 
-
-
+            }
+          }
+        }
+      }
+  }
+  //console.log("AFTER ALL THIS")
+//  console.log(fShelfs)
+}

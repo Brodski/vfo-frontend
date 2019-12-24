@@ -5,5 +5,6 @@ export class Subscription {
     this.channelId = null;
     this.channelName = null;
     this.filter = new Filter();
+    
   }
 }

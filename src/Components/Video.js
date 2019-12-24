@@ -1,22 +1,19 @@
 import React from 'react';
 import moment from 'moment';
 
-
-//
-// Expect an activity object from youtube 
-//
 export const Video = (props) => {
   //console.log(' xxxxxxxxx VIDEO xxxxxxxxxxxxx')
-//  console.log(props)
+ // console.log(props)
   let thumbnail, id, title, pubAt, viewCount, channelName, fromNowDate, vd_aux, vidDuration;
+
 
   //TODO: Could be cleaner
   if (props.isActs) {
-    thumbnail = props.video.snippet.thumbnails.medium.url
-    id = props.video.contentDetails.upload.videoId
-    title = props.video.snippet.title
-    pubAt = new Date(props.video.snippet.publishedAt)
-    viewCount = ''
+    thumbnail   = props.video.snippet.thumbnails.medium.url
+    id          = props.video.contentDetails.upload.videoId
+    title       = props.video.snippet.title
+    pubAt       = new Date(props.video.snippet.publishedAt)
+    viewCount   = ''
     channelName = props.video.snippet.channelTitle
     fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
 
@@ -24,11 +21,11 @@ export const Video = (props) => {
     vidDuration = '' 
   } else {
 
-    thumbnail = props.video.snippet.thumbnails.medium.url
-    id = props.video.id
-    title = props.video.snippet.title
-    pubAt = new Date(props.video.snippet.publishedAt)
-    viewCount = props.video.statistics.viewCount 
+    thumbnail   = props.video.snippet.thumbnails.medium.url
+    id          = props.video.id
+    title       = props.video.snippet.title
+    pubAt       = new Date(props.video.snippet.publishedAt)
+    viewCount   = props.video.statistics.viewCount 
     channelName = props.video.snippet.channelTitle
     fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
 
