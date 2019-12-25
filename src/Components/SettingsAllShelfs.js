@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import {SettingsShelf} from '../Components/SettingsShelf';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { CustomShelf } from '../Classes/User'
+import { rename } from 'fs';
+import { RenameDialog } from './RenameDialog';
 
 export const AllShelfs = (props) => {
 
@@ -9,24 +11,7 @@ export const AllShelfs = (props) => {
 
   console.log("AllShelfs props")
   console.log(props)
-  let sortedSh = props.userSettings.customShelfs.filter( sh => { return sh.isSorted } )
-  console.log('sortedSh')
-  console.log(sortedSh)
-  
-  const sortedShelfz = sortedSh.map((sh,idx) => {
-    return (<SettingsShelf title={sh.title} key={idx} shelf={sh} data-shelfid={sh.title + 'shelfid'}
-      userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
-  })
 
-  let unSortedSh = props.userSettings.customShelfs.filter((sh) => { return !sh.isSorted } )
-  console.log('unSortedSh')
-  console.log(unSortedSh)
-  if (!unSortedSh[0]) { unSortedSh.push(new CustomShelf()) }
-
-  const unSortedshelfz = unSortedSh.map(sh => {
-    return (<SettingsShelf title={unSName} key={unSName+'keyquasiunique'} shelf={sh} 
-      userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
-  })
   
   
   function addShelf() {
@@ -39,6 +24,20 @@ export const AllShelfs = (props) => {
       return newS
     })
   }
+  
+  let sortedSh    = props.userSettings.customShelfs.filter( sh => { return sh.isSorted } )
+  let unSortedSh  = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
+  if (!unSortedSh[0]) { unSortedSh.push(new CustomShelf()) }
+  
+  const sortedShelfz = sortedSh.map((sh,idx) => {
+    return (<SettingsShelf  key={sh.title} bindToId={'shelfid'+idx} shelf={sh} data-shelfid={sh.title + 'shelfid'}
+      userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
+  })
+
+  const unSortedshelfz = unSortedSh.map((sh,idx) => {
+    return (<SettingsShelf title={unSName} bindToId={unSName+'keyquasiunique'} key={unSName+'keyquasiunique'} shelf={sh} 
+      userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
+  })
   
   
   return (

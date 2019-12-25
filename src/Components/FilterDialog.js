@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import { Filter } from '../Classes/Filter';
 import Tagify from '@yaireo/tagify'
 import Tags from "@yaireo/tagify/dist/react.tagify";
-import '../CSS/index.css';
+
 //https://github.com/reactjs/react-modal
 
 
@@ -24,7 +24,7 @@ export function FilterDialog(props){
     }
     setMinDur(props.subObj.filter.minDuration)
     setMaxDur(props.subObj.filter.maxDuration)
-    } ,[])
+    } ,[props.userSettings])
 
     
   function close(e) {
@@ -42,27 +42,25 @@ export function FilterDialog(props){
 
   const handleMinDur = (e) => {
     setMinDur(e.target.value)
-    console.log(e)
-    console.log(e.target.value)
-    console.log(minDur)
   }
   const handleMaxDur = (e) => {
     setMaxDur(e.target.value)
-    console.log(e)
-    console.log(e.target.value)
-    console.log(maxDur)
   }
 
   const MaxDurationDropdown = (props) => {
     return (
       <select value={maxDur} onChange={handleMaxDur} >
-        <option value="Infinity" >  </option>
+        <option value="Infinity" > Off  </option>
         <option value="0.5"> 30 seconds </option>
         <option value="1" >  1 minutes </option>
         <option value="2" >  2 minutes</option>
         <option value="3" >  3 minutes</option>
         <option value="4" >  4 minutes</option>
         <option value="5" >  5 minutes</option>
+        <option value="6" >  6 minutes</option>
+        <option value="7" >  7 minutes</option>
+        <option value="8" >  8 minutes</option>
+        <option value="9" >  9 minutes</option>
         <option value="10" > 10 minutes</option>
         <option value="15" > 15 minutes</option>
         <option value="30" > 30 minutes</option>
@@ -74,13 +72,17 @@ export function FilterDialog(props){
   const MinDurationDropdown = (props) => {
     return (
       <select value={minDur} onChange={handleMinDur} >
-        <option value='0' >  </option>
+        <option value='0' > Off </option>
         <option value="0.5"> 30 seconds </option>
         <option value="1" >  1 minutes </option>
         <option value="2" >  2 minutes</option>
         <option value="3" >  3 minutes</option>
         <option value="4" >  4 minutes</option>
         <option value="5" >  5 minutes</option>
+        <option value="6" >  6 minutes</option>
+        <option value="7" >  7 minutes</option>
+        <option value="8" >  8 minutes</option>
+        <option value="9" >  9 minutes</option>
         <option value="10" > 10 minutes</option>
         <option value="15" > 15 minutes</option>
         <option value="30" > 30 minutes</option>
@@ -138,6 +140,7 @@ export function FilterDialog(props){
     }
 
     props.setUserSettings(tempUser)
+    setIsOpen(false)
   }
  
 
@@ -169,7 +172,7 @@ export function FilterDialog(props){
 
     return (
       <div>
-        <button onClick={() => setIsOpen(true) }>create filter</button>
+        <button onClick={() => { console.log(props); setIsOpen(true); } }>create filter</button>
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}

@@ -23,8 +23,7 @@ import { User } from './Classes/User'
 // $ npm install --save react-modal
 // $ npm install --save @yaireo/tagify
 // $ npm install --save react-infinite-scroller
-// $ npm install --save react-sortablejs <-- dele thtis trash
-// $ npm install react-drag-and-drop
+// $ npm install --save array-move
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
@@ -49,9 +48,8 @@ function App() {
     var GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms
     await GApiAuth.isHeSignedIn()
     console.log(GoogleAuth.isSignedIn.get())
-    console.log(GoogleAuth)
 
-    let theUser = ServerEndpoints.getMockUser
+    let theUser = ServerEndpoints.getMockUser()
     setUser(theUser);
     setUserSettings(theUser);
 

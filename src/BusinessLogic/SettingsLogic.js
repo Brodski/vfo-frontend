@@ -39,6 +39,7 @@ export function queryShelfs(userSettings) {
     var shelfs = [].slice.call(document.querySelectorAll('.sh-QHack'));
     for (let i = 0; i < shelfs.length; i++) {
       console.log(`${i} ++ Shelf ++`)
+      console.log( shelfs[i])
       let newShelf = new CustomShelf()
       newShelf.title = shelfs[i].dataset.name
       newShelf.isSorted = (shelfs[i].dataset.issorted == 'true')

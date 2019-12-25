@@ -92,7 +92,8 @@ export const SettingsNEW = () => {
     console.log(userSettings)
 
     let newCustomShelfs = stLogic.queryShelfs(userSettings)
-
+    console.log('newCustomShelfs')
+    console.log(newCustomShelfs)
     
 
     setKickIt(false)
