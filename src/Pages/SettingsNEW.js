@@ -125,7 +125,7 @@ export const SettingsNEW = () => {
         <LoginLogout user={user}/>
         <button onClick={shelfsButton} > (shelfsButton) </button>
         
-        <button onClick={testSave} > test save </button>
+        <button onClick={testSave} > Save </button>
         <button onClick={logUS} > log user settomg </button>
         <div >
         { kickIt ? <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} /> : <PostSave /> }

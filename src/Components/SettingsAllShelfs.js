@@ -16,27 +16,34 @@ export const AllShelfs = (props) => {
   console.log("AllShelfs props")
   console.log(props)
 
-  function addShelf() {
-    //This is preserve changes the user made to the drag n drop
+
+  const saveUi2Settings = () => {
+    console.log("SAVED!")
     props.setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
-      //I bad programmer :(
-      /*let preq = stLogic.queryShelfs(props.userSettings, true)
+      let preq = stLogic.queryShelfs(props.userSettings, true)
       console.log('preq')
       console.log(preq)
       newS.customShelfs = preq
-      */
+      return newS
+    })
+    
+  }
+  function addShelf() {
+    //This is preserve changes the user made to the drag n drop
+    //saveUi2Settings()
+    props.setUserSettings(prevUserSetting => {
+      let newS = { ...prevUserSetting }
+      let preq = stLogic.queryShelfs(props.userSettings, true)
+      newS.customShelfs = preq
+      
       let cs = new CustomShelf()
       cs.title = "Shelf " + (newS.customShelfs.length + 1)
       cs.isSorted = true;
       newS.customShelfs.push(cs)
-      
 
-      console.log('1/2 newS')
-      console.log(newS)
       return newS
     })
-    updateForce()
 
     // Afterwards, Add shelf
 /*    props.setUserSettings(prevUserSetting => {
@@ -50,36 +57,63 @@ export const AllShelfs = (props) => {
       return newS
     })*/
   }
+  const UltraShelfs = () => {
   
-  let sortedSh    = props.userSettings.customShelfs.filter( sh => { return sh.isSorted } )
-  let unSortedSh  = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
-  if (!unSortedSh[0]) { unSortedSh.push(new CustomShelf()) }
+    let sortedSh    = props.userSettings.customShelfs.filter( sh => { return sh.isSorted } )
+    let unSortedSh  = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
+    if (!unSortedSh[0]) { unSortedSh.push(new CustomShelf()) }
   
-  const sortedShelfz = sortedSh.map((sh,idx) => {
-    let id = nextId('shelfid-')
-    return (<SettingsShelf  key={ id } bindToId={id} shelf={sh} 
-      userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
-  })
+    const sortedShelfz = sortedSh.map( sh => {
+      let id = nextId('shelfid-')
+      return (<SettingsShelf  key={ id } bindToId={id} shelf={sh} saveUi2Settings={saveUi2Settings}
+        userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
+    })
 
-  const unSortedshelfz = unSortedSh.map((sh,idx) => {
-    let id =unSName+'keyquasiunique'
-    return (<SettingsShelf key={id} bindToId={id}  shelf={sh} 
-      userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
-  })
+    const unSortedshelfz = unSortedSh.map( sh => {
+      let id = nextId('unsortShelf-')
+      return (<SettingsShelf key={id} bindToId={id} shelf={sh} saveUi2Settings={saveUi2Settings}
+        userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
+    })
+    return(
+        <div className="flex-subshelf-container">
+          {unSortedshelfz}
+        <div> some stuff </div>
+        <div>
+          {sortedShelfz}
+        </div>
+      </div>
+    )
+
+  }
+ 
   
+    
+  const allShelfs = props.userSettings.customShelfs.map((sh, idx) => {
+    let id = nextId('shelfidlol-')
+
+    console.log(idx, ' allShelfs: sh ')
+    console.log(sh)
+  
+    let sortedSh    = props.userSettings.customShelfs.filter( sh => { return sh.isSorted } )
+    let unSortedSh  = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
+    if (!unSortedSh[0]) { unSortedSh.push(new CustomShelf()) }
+
+    return (
+      <SettingsShelf key={id} bindToId={id} shelf={sh} userSettings={props.userSettings} setUserSettings={props.setUserSettings} />    
+    )
+  }
+)
+
+
   
   return (
     <div id="allbloodyshelfs">
       <button onClick={() => stLogic.logAllShelfs() }> log all Shelf </button>  
       <button onClick={() => stLogic.logIds() }> log IDs Shelf </button>  
-      <div className="flex-subshelf-container">
-        {unSortedshelfz}
-        <div> some stuff </div>
-        <div>
-        {sortedShelfz}
-        </div>
-      </div>
-      {/*<button className="shelfEditBtn" onClick={updateForce } >updateThis </button>*/}
+      
+        <UltraShelfs/>
+      <button className="shelfEditBtn" onClick={updateForce } >updateThis </button>
+      <button className="shelfEditBtn" onClick={saveUi2Settings } >save! </button>
       <button onClick={addShelf} > Add shelf </button>
     </div>
     )

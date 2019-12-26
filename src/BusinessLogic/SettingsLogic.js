@@ -37,28 +37,36 @@ export function queryShelfs(userSettings, allowEmpty = false) {
   console.log(userSettings)
   let newCustomShelfs = []
   //Loop though each shelf and each item on shelf
-  var shelfs = [].slice.call(document.querySelectorAll('.sh-QHack'));
-  for (let i = 0; i < shelfs.length; i++) {
+  let shelfsQ = [].slice.call(document.querySelectorAll('.sh-QHack'));
+  for (let i = 0; i < shelfsQ.length; i++) {
     console.log(`${i} ++ Shelf ++`)
-  //  console.log(shelfs[i])
-    let newShelf = new CustomShelf()
-    newShelf.title = shelfs[i].dataset.name
-    newShelf.isSorted = (shelfs[i].dataset.issorted == 'true')
+    console.log(shelfsQ[i].dataset)
+    //Create a temp shelf 
+    let tempShelf = new CustomShelf()
+    tempShelf.title = shelfsQ[i].dataset.name
 
-    for (let sub of shelfs[i].querySelectorAll('.sub-QHack')) {
+    tempShelf.isSorted = (shelfsQ[i].dataset.issorted == 'true')
+    console.log(tempShelf.isSorted)
+
+    for (let sub of shelfsQ[i].querySelectorAll('.sub-QHack')) {
+      console.log(`${i} -----> sub `)
+    //  console.log(sub)
+      console.log(sub.dataset)
       let idxs = _findSubIndex(sub.dataset.name, userSettings)
       let tempSub = userSettings.customShelfs[idxs.shelf_Index].fewSubs[idxs.sub_Index]
-      newShelf.fewSubs.push(tempSub)
+      tempShelf.fewSubs.push(tempSub)
     }
     if (allowEmpty) {                                     //true => push
-      newCustomShelfs.push(newShelf)
-    } else if (newShelf.fewSubs[0] && !allowEmpty) {     // yes && !true
+      newCustomShelfs.push(tempShelf)
+    } else if (tempShelf.fewSubs[0] && !allowEmpty) {     // yes && !true
                                                          // no  && !true
                                                          // yes && !false => push
                                                          // no  && !false
-       newCustomShelfs.push(newShelf)
+       newCustomShelfs.push(tempShelf)
     }
   }
+  console.log("\n\\nEND OF QURERY\n\n")
+  console.log(newCustomShelfs)
   return newCustomShelfs
 }
 

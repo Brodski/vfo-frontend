@@ -62,14 +62,13 @@ export function YoutubeNEW() {
 
   /////////////////////////////////////////////
 
-  // This is the finalShelf
+  // This is the finalShelf:
+  //
   // PageOfShelfs = finalShelfs = [ shelf, shelf, shelf ]
-  // shelf =[ vid, vid, vid, vid ]
-  // vid = { id, snippet: {}, contentDetails: {} }
+  // shelf        = [ vid, vid, vid, vid ]
+  // vid          = { id, snippet: {}, contentDetails: {} }
 
   useEffect( () => {
-    
-    
     console.log('---------------useEffect top ----------------------')
     console.log(user)
     if (user.userId) { //Since state variable has 'new User()' default 'values', we need to check for actual user existence
@@ -123,10 +122,12 @@ export function YoutubeNEW() {
   
   async function hackHelper() {
   let count = 1
-  let logged = false
-    while (logged = !GApiAuth.isHeSignedIn()) {
+  let isloggedOut;
+    while (isloggedOut = !GApiAuth.isHeSignedIn()) {
       console.log("Hack Helper: GoogleAuth NOT exist: " + count)
-      console.log('Hack Helper: Logged in?: ' + logged)
+      console.log('Hack Helper: Logged out?: ' + isloggedOut)
+      console.log('user')
+      console.log(user)
       await Common.sleep(100*count) 
       count = count + 1      
       if (count > 40) {
@@ -274,6 +275,7 @@ const fetchMoreSubs = async (isFirstRun) => {
     
   return(
     <div>
+        <ButtonsAuthDebug />
       <button onClick={() => {console.log('finalShelfs'); console.log(finalShelfs); } }> log finalShelfs </button>
       <button onClick={() => {console.log('user'); console.log(user); } }> log User </button>
     <InfiniteScroll
@@ -286,7 +288,6 @@ const fetchMoreSubs = async (isFirstRun) => {
       
       <h1>Youtube</h1>
         <div>Note, the app must ALWAYS do loadClient before any API call</div>
-        <ButtonsAuthDebug />
       
       <h3> Youtube api </h3>
       
@@ -307,48 +308,3 @@ const fetchMoreSubs = async (isFirstRun) => {
     );
 }
 
-
-/*
-
-
-
-  function beginFilter(vidsNShit) {
-  //iData = {isActs, shelfsSliced [] }
-  console.log('vidsNShit')
-  console.log(vidsNShit)
-    
-    //apply the user's filter on the subscriber
-    //Match iData.shelfs with user.customShelfs
-    //TODO, should be an easier, readable way to do this.
-    let userShelfs = user.customShelfs.slice(prevPage,pageLength) 
-    console.log('\n\n\n\n userShelfs')
-    console.log(userShelfs)
-    for (let usSh of userShelfs) {     
-      //Get a shelf-of-videos fr
-      console.log('uSh')
-      console.log(usSh)
-      //Get the vids for shelf uSh
-      let unfiltVids = vidsNShit.filter( iSh => iSh.title == usSh.title) // TODO // NEED AN ID! (I think) Or perhap require titles to be unique??
-      console.log(' unfiltVids')
-      console.log(unfiltVids)
-      //compare each vid with the user's filter (compare with each sub in fewSubs)
-      for (let vid of unfiltVids[0].videos) {
-        
-        // Recall:
-        //      sub = { youtubeObj }
-        //      uSh = { fewSubs: [sub, sub, sub], title: "shelfx", isSorted }
-        //      sub = { filter{}, channelTitle, channelId }
-        let dankFilter = usSh.fewSubs.filter( sub => sub.channelId == vid.snippet.channelId)
-        console.log('dankFilter')
-        console.log(dankFilter[0].channelId)
-        console.log(vid.snippet.channelId)
-        // remove the video if passes filter.
-        // else keep it.
-        //applyFilter() 
-      }
-      
-    }
-    
-
-  }
-*/

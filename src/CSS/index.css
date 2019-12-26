@@ -118,6 +118,7 @@ body {
 .unSortDndWrap {
   background-color: darkslategrey;
   height: 100%;
+  min-height: 40px;
 }
 
 .flex-subshelf-container {
@@ -136,16 +137,23 @@ h3.shelfText {
   margin: auto;
 }
 
-.allShContainer {
+.shContainer {
   border: solid pink;
+  min-height: 60px;
 }
 .super-body-wrap {
 }
 
 
+.auxSort {
+  
+  border: solid red;
+}
 
-
-
+.auxUnsort {
+  
+  border: solid blue;
+}
 
 
 
