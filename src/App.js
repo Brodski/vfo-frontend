@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import About from './Pages/About';
+//import About from './Pages/About';
+import SortableComponent from './Pages/About';
 import Home from './Pages/Home';
 import Nav from './Pages/Nav';
 import GetServer from './Pages/GetServer';
@@ -24,6 +25,7 @@ import { User } from './Classes/User'
 // $ npm install --save @yaireo/tagify
 // $ npm install --save react-infinite-scroller
 // $ npm install --save array-move
+// $ npm install --save react-id-generator
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
@@ -72,7 +74,7 @@ function App() {
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
           <IsSignedContext.Provider value={{isSigned, setIsSigned}} >
             <Route path="/" exact component={Home} />
-            <Route path="/about" component={About} />
+            <Route path="/about" component={SortableComponent} />
             <Route path="/getServer" component={GetServer} />
             <Route path="/doPost" component={PostDo} />
             <Route path="/youtube" component={YoutubeNEW} />

@@ -32,26 +32,34 @@ export function logIds() {
   }
 }
 
-export function queryShelfs(userSettings) {
+export function queryShelfs(userSettings, allowEmpty = false) {
   console.log('userSettings')
   console.log(userSettings)
   let newCustomShelfs = []
-    var shelfs = [].slice.call(document.querySelectorAll('.sh-QHack'));
-    for (let i = 0; i < shelfs.length; i++) {
-      console.log(`${i} ++ Shelf ++`)
-      console.log( shelfs[i])
-      let newShelf = new CustomShelf()
-      newShelf.title = shelfs[i].dataset.name
-      newShelf.isSorted = (shelfs[i].dataset.issorted == 'true')
+  //Loop though each shelf and each item on shelf
+  var shelfs = [].slice.call(document.querySelectorAll('.sh-QHack'));
+  for (let i = 0; i < shelfs.length; i++) {
+    console.log(`${i} ++ Shelf ++`)
+  //  console.log(shelfs[i])
+    let newShelf = new CustomShelf()
+    newShelf.title = shelfs[i].dataset.name
+    newShelf.isSorted = (shelfs[i].dataset.issorted == 'true')
 
-      for (let sub of shelfs[i].querySelectorAll('.sub-QHack')) {
-        let idxs = _findSubIndex(sub.dataset.name, userSettings)
-        let tempSub = userSettings.customShelfs[idxs.shelf_Index].fewSubs[idxs.sub_Index]
-        newShelf.fewSubs.push(tempSub)
-      }
-      if (newShelf.fewSubs[0]) { newCustomShelfs.push(newShelf) }
+    for (let sub of shelfs[i].querySelectorAll('.sub-QHack')) {
+      let idxs = _findSubIndex(sub.dataset.name, userSettings)
+      let tempSub = userSettings.customShelfs[idxs.shelf_Index].fewSubs[idxs.sub_Index]
+      newShelf.fewSubs.push(tempSub)
     }
-    return newCustomShelfs
+    if (allowEmpty) {                                     //true => push
+      newCustomShelfs.push(newShelf)
+    } else if (newShelf.fewSubs[0] && !allowEmpty) {     // yes && !true
+                                                         // no  && !true
+                                                         // yes && !false => push
+                                                         // no  && !false
+       newCustomShelfs.push(newShelf)
+    }
+  }
+  return newCustomShelfs
 }
 
 function _findSubIndex(chName, userSettings) {

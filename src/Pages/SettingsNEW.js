@@ -95,7 +95,10 @@ export const SettingsNEW = () => {
     console.log('newCustomShelfs')
     console.log(newCustomShelfs)
     
-
+    let breh = userSettings;
+    breh.customShelfs = newCustomShelfs
+    console.log('breh')
+    console.log(breh)
     setKickIt(false)
     setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
@@ -109,7 +112,9 @@ export const SettingsNEW = () => {
      })    
   } 
 
-
+  function logUS() {
+    console.log(userSettings)
+  }
   
     return (
     <div>  
@@ -121,6 +126,7 @@ export const SettingsNEW = () => {
         <button onClick={shelfsButton} > (shelfsButton) </button>
         
         <button onClick={testSave} > test save </button>
+        <button onClick={logUS} > log user settomg </button>
         <div >
         { kickIt ? <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} /> : <PostSave /> }
         </div>

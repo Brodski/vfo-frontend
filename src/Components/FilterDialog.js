@@ -19,6 +19,10 @@ export function FilterDialog(props){
   var blockIdSuffix = '-block';
   
   useEffect(() => {
+    /*console.log("document.querySelectorAll('#' + props.bindToId)")
+    console.log(document.querySelectorAll('#' + props.bindToId))
+    console.log(props.bindToId)
+    console.log(props)*/
     if (!document.querySelectorAll('#' + props.bindToId)[1]) {
       Modal.setAppElement('#' + props.bindToId)
     }
