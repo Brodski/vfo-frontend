@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export const Video = (props) => {
   //console.log(' xxxxxxxxx VIDEO xxxxxxxxxxxxx')
- // console.log(props)
+//  console.log(props)
   let thumbnail, id, title, pubAt, viewCount, channelName, fromNowDate, vd_aux, vidDuration;
 
 

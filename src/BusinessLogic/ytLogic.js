@@ -233,15 +233,21 @@ export function beginFilter2(fShelfs) {
           if (f.id == vid.snippet.channelId) {
             let duration = moment.duration(vid.contentDetails.duration)
             let isPass = f.checkDurations(duration.minutes() + (duration.seconds() / 60))
+       //     console.log('+++++++++++++++++')
+     //       console.log(vid.snippet.channelTitle + ' ' + vid.snippet.title)
+    //        console.log(vid)
+   //         console.log("duration: " + duration.minutes() + (duration.seconds() / 60))
+  //          console.log( f.minDuration )
+ //           console.log( f.maxDuration )
+//            console.log( isPass )
+//            console.log('+++++++++++++++++')
             if (!isPass) {
               sh.videos = sh.videos.filter( v => v.id != vid.id)
               break
-
+            
             }
           }
         }
       }
   }
-  //console.log("AFTER ALL THIS")
-//  console.log(fShelfs)
 }

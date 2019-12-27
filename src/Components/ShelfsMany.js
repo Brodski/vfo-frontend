@@ -2,6 +2,7 @@ import React from 'react'
 import { Video } from './Video'
 import { Shelf } from './Shelf'
 import { Shelf2 } from './Shelf'
+import nextId  from "react-id-generator";
 
 export const ShelfsMany = props => {
 
@@ -17,8 +18,8 @@ export const ShelfsMany = props => {
     //console.log("//// SHELF //// ")
 //    console.log(sh)
       return (
-        <div className="ytShelfWrap">
-          <Shelf isActs={props.isActs} shelf={sh} />
+        <div  key={nextId('shelfid-')} className="ytShelfWrap">
+          <Shelf  isActs={props.isActs} shelf={sh} />
         </div>
         )
       })}

@@ -4,58 +4,59 @@ import { SECRET_KEYS } from '../api-key';
 import axios from 'axios';
 
 var GoogleAuth;
-var isSigned;
 const SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
 
-export async function check(gapiObj, gapiString) {
-  let wait = 500;
-  while (!window.gapi.client.youtube) {
-    wait = wait * 2
-    console.log("GApi: NOT EXISTS: gapi.client.youtube")
-    await Common.sleep(wait)
-  }
-  while (!window.gapi.auth2) {
-    wait = wait * 2
-    console.log("GApi: NOT EXISTS: gapi.auth2 not found");
-    await Common.sleep(wait); //sleep 100 ms
-  }
-  while (!window.gapi) {
-    wait = wait * 2
-    console.log("GApi: NOT EXISTS: window.gapi not found");
-    await Common.sleep(wait)
-  }
-}
 
+
+//////////////////////////////////////////////////////////////////
+//////////////////     INITIALIZE CLIENT     /////////////////////
+//////////////////////////////////////////////////////////////////
+/* Google Sign In For Web
+ * https://developers.google.com/identity/sign-in/web/reference
+ * 
+ * Authentication:
+ * 
+ * "GoogleAuth" is a singleton class that provides methods to allow the user to sign in with 
+ * a Google account, get the user's current sign-in status, get specific data from the user's 
+ * Google profile, request additional scopes, and sign out from the current account.
+ */
 export async function initGoogleAPI() {
+  // Wait until googleApi is loaded: "script.src = "https://apis.google.com/js/client.js"
+  console.log('=== 1 ===')
   let wait = 100
   while (!window.gapi) {
     wait = wait * 2
-    console.log("GApi: NOT EXISTS: window.gapi not found");
+    console.log("GApi 1 :( GApi NOT EXISTS: ");
     await Common.sleep(wait)
   }
-  console.log("GApi: :) EXISTS: window.gapi found");
+  console.log("GApi 1 :) GApi EXISTS: ");
   
+  // Wait until client is loaded
+  console.log('=== 2 ===')
   await window.gapi.load("client:auth2", _initClient) //initClientWithAuth
 
+  //Wait until client is authenticated
+  console.log('=== 3 ===')
   wait = 100
   while (!window.gapi.auth2) {
     wait = wait * 2
-    console.log("NOT EXISTS: gapi.auth2 not found");
+    console.log("GAPI 2 :( gapi.auth2 NOT EXISTS");
     await Common.sleep(wait); //sleep 100 ms
   }
-  console.time("await window.gapi.auth2.getAuthInstance()")
-  console.log("In GapiAuth: about to await window.gapi.auth2.getAuthInstance() ")
+
+  //Wait until GoogleAuth object is loaded
+  console.log('=== 4 ===')
+  console.time("TIME 4 window.gapi.auth2.getAuthInstance()")
   GoogleAuth = await window.gapi.auth2.getAuthInstance();
-  console.timeEnd("await window.gapi.auth2.getAuthInstance()")
+  console.timeEnd("TIME 4 window.gapi.auth2.getAuthInstance()")
   return GoogleAuth
-  }
+}
 
 async function _initClient() {
   await window.gapi.auth2.init({
     client_id: SECRET_KEYS.clientId,
     apyKey: SECRET_KEYS.apiKey,
     scope: SCOPE,
-    //returns gapi.auth2.GoogleAuth
   })
   _loadClient();
 }
@@ -63,16 +64,36 @@ async function _initClient() {
 async function _loadClient() {
    return window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
     .then(function (res2) {
-      console.log("GAPI client loaded for API");
-//      isHeSignedIn()
+      console.log("GApi client loaded for API");
     }).catch(
       function (err) { console.error("Error loading GAPI client for API", err); });
 }
 
+//////////////////////////////////////////////////////////////////
+////////////////////   LOGIN - LOG OUT   ////////////////////////
+/////////////////////////////////////////////////////////////////
+export async function check(gapiObj, gapiString) {
+  let wait = 500;
+  while (!window.gapi.client.youtube) {
+    wait = wait * 2
+    console.log("1 check GApi: NOT EXISTS: gapi.client.youtube")
+    await Common.sleep(wait)
+  }
+  while (!window.gapi.auth2) {
+    wait = wait * 2
+    console.log("2 check GApi: NOT EXISTS: gapi.auth2 not found");
+    await Common.sleep(wait); //sleep 100 ms
+  }
+  while (!window.gapi) {
+    wait = wait * 2
+    console.log("3 check GApi: NOT EXISTS: window.gapi not found");
+    await Common.sleep(wait)
+  }
+}
+
 export function login() {
-  return window.gapi.auth2.getAuthInstance()
-    .signIn()
-    .then(function () {
+  if (GoogleAuth)
+    return GoogleAuth.signIn().then(function () {
       console.log("Sign-in successful");
       return true
     })
@@ -82,20 +103,14 @@ export function logout() {
   if (GoogleAuth) {
     return GoogleAuth.signOut().then(function () { 
         console.log("Sign-out successful");
-        return true }
-      )
+        return true 
+    })
       .catch( function (err) { console.error("Error signing in", err); });
   }
 }
 
 export function isHeSignedIn() {
   if (GoogleAuth) {
-//    console.log('GoogleAuth.currentUser.get().hasGrantedScopes(SCOPE)')
-  //  console.log(GoogleAuth.currentUser.get().hasGrantedScopes(SCOPE))
-    //console.log('GoogleAuth.currentUser.get()')
-    //console.log(GoogleAuth.currentUser.get())
-    //console.log('GoogleAuth.isSignedIn ???')
-  //  console.log(GoogleAuth.isSignedIn.get())
     return GoogleAuth.isSignedIn.get()
   }
   else {
@@ -104,16 +119,26 @@ export function isHeSignedIn() {
   }
 }
 
+
+//////////////////////////////////////////////////////////
+///////////////////   helper stuff ///////////////////
+//////////////////////////////////////////////////////////
 export function printShit() {
   console.log("print shit")
+  console.log("---------------------------------")
   if (!GoogleAuth) {
     console.log("GoogleAuth doesnt exist")
     return
   }
-  var user = GoogleAuth.currentUser.get()
-  console.log("---------------------------------")
-  isHeSignedIn()
-
+  let user = GoogleAuth.currentUser.get()
+  let profile = user.getBasicProfile()
+  console.log(profile.getId())
+  console.log(profile.getName()) // USE THIS!!!! for user name
+  console.log(profile.getGivenName()) //first naem
+  console.log(profile.getFamilyName()) // last name
+  console.log(profile.getImageUrl())
+  console.log(profile.getEmail())
+  console.log(profile.getId()) //dont use this
   console.log(user.getBasicProfile())
   console.log(user.getGrantedScopes())
   console.log(user.getHostedDomain())
@@ -121,32 +146,13 @@ export function printShit() {
 
 }
 
-
-export function testWithXML() {
-  var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-  var theUrl = "http://localhost:8080/user/authorize";
-  xmlhttp.onreadystatechange = function () {
-    if (xmlhttp.readyState === 4) {
-      console.log(xmlhttp.response);
-      console.log(xmlhttp.responseText);
-    }
-  }
-  xmlhttp.open("POST", theUrl);
-  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xmlhttp.send(JSON.stringify({ "email": "hello@user.com", "response": { "name": "Tester" } }));
-
-
-}
-
+////////////////////////// https://developers.google.com/identity/sign-in/web/reference#googleusergetid
 export function getProfile() {
   console.log("getProfile")
-  console.log(getProfile)
   if (GoogleAuth) {
-     console.log('GoogleAuth.currentUser.get()')
-     console.log(GoogleAuth.currentUser.get())
     var user = GoogleAuth.currentUser.get()
     var profile = user.getBasicProfile();
-    return profile
+    return profile 
     }
 }
 
@@ -190,4 +196,23 @@ export function getAuthCodeForServerSideShit() {
     }
     
   })
+}
+
+
+/////////////////////////////////////////////////////
+
+export function testWithXML() {
+  var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
+  var theUrl = "http://localhost:8080/user/authorize";
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4) {
+      console.log(xmlhttp.response);
+      console.log(xmlhttp.responseText);
+    }
+  }
+  xmlhttp.open("POST", theUrl);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xmlhttp.send(JSON.stringify({ "email": "hello@user.com", "response": { "name": "Tester" } }));
+
+
 }

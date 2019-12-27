@@ -11,8 +11,9 @@ return(
     <button onClick={GApiAuth.getAuthCodeForServerSideShit} >Auth Code For Server</button>
 
     <div></div>
-    <button onClick={GApiAuth.isHeSignedIn}> isHeSignedIn</button>
+    <button onClick={() => { console.log(GApiAuth.isHeSignedIn()) }}> isHeSignedIn</button>
     <button onClick={GApiAuth.printShit}> print shit</button>
+    <button onClick={GApiAuth.getProfile}> get profile</button>
 
     <div></div>
     <button onClick={GApiAuth.testAuthcode} > get your profile from localhost </button>

@@ -44,11 +44,10 @@ export const Shelf = props => {
     return true
   }
 
-  const videos = props.shelf.videos.slice(0, numVids).map(vid => {
-    //if (doesItPassFilter(vid) == false) {
-  //    return null
-//    }
-   return( <Video isActs={props.isActs} key={vid.snippet.channelId} video={vid} /> )
+  const videos = props.shelf.videos.slice(0, numVids).map( (vid,idx) => {
+  //let id = vid.contentDetails.upload.videoId //FOR ACTS
+  
+   return( <Video isActs={props.isActs} key={vid.id} video={vid} /> )
   })
   return(
     <div > SHELF

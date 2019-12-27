@@ -22,8 +22,6 @@ export const AllShelfs = (props) => {
     props.setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
       let preq = stLogic.queryShelfs(props.userSettings, true)
-      console.log('preq')
-      console.log(preq)
       newS.customShelfs = preq
       return newS
     })
@@ -36,7 +34,7 @@ export const AllShelfs = (props) => {
       let newS = { ...prevUserSetting }
       let preq = stLogic.queryShelfs(props.userSettings, true)
       newS.customShelfs = preq
-      
+      // Afterwards, Add shelf  
       let cs = new CustomShelf()
       cs.title = "Shelf " + (newS.customShelfs.length + 1)
       cs.isSorted = true;
@@ -44,18 +42,6 @@ export const AllShelfs = (props) => {
 
       return newS
     })
-
-    // Afterwards, Add shelf
-/*    props.setUserSettings(prevUserSetting => {
-      let newS = { ...prevUserSetting }
-      let cs = new CustomShelf()
-      cs.title = "Shelf " + (newS.customShelfs.length + 1)
-      cs.isSorted = true;
-      newS.customShelfs.push(cs)
-      console.log('2/2 newS')
-      console.log(newS)
-      return newS
-    })*/
   }
   const UltraShelfs = () => {
   
@@ -90,14 +76,6 @@ export const AllShelfs = (props) => {
     
   const allShelfs = props.userSettings.customShelfs.map((sh, idx) => {
     let id = nextId('shelfidlol-')
-
-    console.log(idx, ' allShelfs: sh ')
-    console.log(sh)
-  
-    let sortedSh    = props.userSettings.customShelfs.filter( sh => { return sh.isSorted } )
-    let unSortedSh  = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
-    if (!unSortedSh[0]) { unSortedSh.push(new CustomShelf()) }
-
     return (
       <SettingsShelf key={id} bindToId={id} shelf={sh} userSettings={props.userSettings} setUserSettings={props.setUserSettings} />    
     )

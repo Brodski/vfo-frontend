@@ -16,7 +16,7 @@ import { Video } from '../Components/Video';
 import { ShelfsMany } from '../Components/ShelfsMany';
 import { ShelfsMany2 } from '../Components/ShelfsMany';
 import { ChannelForm } from '../Components/ChannelForm';
-import { VideoShelf } from '../Components/VideoShelf';
+
 import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 import { CustomShelf } from '../Classes/User';
@@ -27,8 +27,8 @@ import * as ytLogic from '../BusinessLogic/ytLogic.js'
 import { UserContext } from '../Contexts/UserContext.js'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints.js'
 import { FinalShelfs, FinalShelfs2 } from '../Classes/FinalShelfs';
-import * as FS  from '../Classes/FinalShelfs';
 
+import nextId  from "react-id-generator";
 
 //UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 // react infinite scroll https://github.com/CassetteRocks/react-infinite-scroller#readme
@@ -67,6 +67,7 @@ export function YoutubeNEW() {
   // PageOfShelfs = finalShelfs = [ shelf, shelf, shelf ]
   // shelf        = [ vid, vid, vid, vid ]
   // vid          = { id, snippet: {}, contentDetails: {} }
+  const [vidsOnShelf, setVidsOnShelf] = useState( [{ vids: 0, shelfId: '' }] )
 
   useEffect( () => {
     console.log('---------------useEffect top ----------------------')
@@ -83,8 +84,12 @@ export function YoutubeNEW() {
         console.log("NOT used !!!!!")
         console.log("doing fetch to google")
         fetchMoreSubs(true) // true ---> first run
-
       }
+
+      setVidsOnShelf( [ { vids: 0 }, { vids: 0 }, { vids: 0 } ])
+      console.log('vidsOnShelf')
+      console.log(vidsOnShelf)
+      
     }
     console.log('---------------useEffect bot----------------------')
   }, [user])
@@ -220,7 +225,7 @@ const fetchMoreSubs = async (isFirstRun) => {
     console.log('iData - Activities')
     console.log(iData)
     
-    
+    // start rendering via the activites
     /*setFinalShelfs(prevShs => {
       let newS = { ...prevShs }
       prevPage != 0 ? newS.shelfs.push(...iData.shelfs) : newS = iData
@@ -234,9 +239,6 @@ const fetchMoreSubs = async (isFirstRun) => {
     iData = injectData(false, shelfVids)
     
     ytLogic.beginFilter2(iData.shelfs)
-    //beginFilter(iData)
-
-    //beginFilter(iData)
 
     console.log("_____-------WE FINISHED THE FILTER!-------_______")
     console.log("_____ {prevPage, pageLength} " + {prevPage, pageLength} )
@@ -275,15 +277,16 @@ const fetchMoreSubs = async (isFirstRun) => {
     
   return(
     <div>
-        <ButtonsAuthDebug />
-      <button onClick={() => {console.log('finalShelfs'); console.log(finalShelfs); } }> log finalShelfs </button>
-      <button onClick={() => {console.log('user'); console.log(user); } }> log User </button>
-    <InfiniteScroll
+      <ButtonsAuthDebug />
+      <button onClick={() => {console.log('vidsOnShelf'); console.log(vidsOnShelf); } }> c.log vidsOnShelf </button>
+      <button onClick={() => {console.log('finalShelfs'); console.log(finalShelfs); } }> c.log finalShelfs </button>
+      <button onClick={() => {console.log('user'); console.log(user); } }> c.log User </button>
+    <InfiniteScroll key={nextId('infScroll-')}
         loadMore={fetchMoreSubs}
         hasMore={hasMoreShelfs}
         loader={(<div>Loading ...</div>)}
       >
-        <ShelfsMany isActs={finalShelfs.isActs} shelfs={finalShelfs.shelfs.slice(0, pageLength)} /> 
+        <ShelfsMany key={nextId('manyShelfsid-')} isActs={finalShelfs.isActs} shelfs={finalShelfs.shelfs.slice(0, pageLength)} /> 
      </InfiniteScroll>
       
       <h1>Youtube</h1>
@@ -300,8 +303,6 @@ const fetchMoreSubs = async (isFirstRun) => {
       
       <ChannelForm />
       
-      {/*    <VideoShelf videoList={videoJ.items}/>
-      <Video video={videoJ.items[0]} />*/}
         
 
     </div>
