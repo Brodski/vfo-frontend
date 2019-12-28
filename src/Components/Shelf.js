@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import * as youtubeApi from '../HttpRequests/youtubeApi';
 import { Video } from './Video'
 import moment from 'moment'
@@ -9,48 +9,38 @@ import moment from 'moment'
   //https://codepen.io/grantdotlocal/pen/zReNgE
 export const Shelf = props => {
 
-/*
+  /*
   console.log('++++++++++++++++ TOP +++++++++++++++++++++')
 
   console.log("PROPS")
   console.log(props)
-  //  console.log(props.shelf)
   //https://stackoverflow.com/questions/30142361/react-js-uncaught-typeerror-this-props-data-map-is-not-a-function
   console.log('+++++++++++++++++++ END +++++++++++++++++++++++')
-   */
+  */
 
-  const [numVids, setNumVids] = useState(3)
-
+  //const [numVids, setNumVids] = useState(3)
 
   function loadMoreVids() {
-    setNumVids(numVids + 5)
+    //setNumVids(numVids + 5)
+    props.setNumVids(prev => { //hacky solution :(
+      let newN = { ...prev}
+      newN[props._setIdx].numVids += 5 // Render 5 more vids after clicking "More"
+      return newN
+
+    })
+
   }
 
-  function doesItPassFilter(vid) {
-    //Find the filter that matches the vid's channel
-    console.time('doesItPassFilter()')
-    for (let f of props.shelf.filters) {
-      if (f.id == vid.snippet.channelId) {
-        //after found, apply filter
-        let duration = moment.duration(vid.contentDetails.duration)
-        let isPass = f.checkDurations(duration.minutes() + (duration.seconds() / 60))
-    //    console.log('isPass')
-  //      console.log(isPass)
-//        console.timeEnd('doesItPassFilter()')
-        return isPass;
-      }
-    }
-    console.log("SOMETHING WENT WRONG")
-    return true
-  }
+  let numVidzRendered = props.numVids[props._setIdx].numVids 
 
-  const videos = props.shelf.videos.slice(0, numVids).map( (vid,idx) => {
+  const videos = props.shelf.videos.slice(0, numVidzRendered ).map( (vid,idx) => {
   //let id = vid.contentDetails.upload.videoId //FOR ACTS
   
    return( <Video isActs={props.isActs} key={vid.id} video={vid} /> )
   })
   return(
-    <div > SHELF
+    <div > 
+      <h2> {props.shelf.title} </h2>
       <ul className="shelf">
         {videos}
       </ul>

@@ -36,14 +36,12 @@ export const Video = (props) => {
   return (
 
     <li className="video">
-      <h3> {title} </h3>
-      
       <a href={"https://www.youtube.com/watch?v="+id} >
         <img src={thumbnail} /> 
       </a>
       
       {/*<div> {pubAt.toString()} </div>*/}
-      <div> {title} </div>
+      <h4> {title} </h4>
       <div> channel: {channelName} </div>
       <div> relative: {fromNowDate} </div>
       <div> Views: {viewCount} </div>

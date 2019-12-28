@@ -1,5 +1,6 @@
 import React from 'react'
-import * as GApiAuth from '../HttpRequests/GApiAuth'
+import * as GApiAuth        from '../HttpRequests/GApiAuth'
+
 
 export const ButtonsAuthDebug = () => {
 

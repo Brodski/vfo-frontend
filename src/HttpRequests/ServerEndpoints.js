@@ -100,9 +100,10 @@ export function getMockUser() {
 
 
   let u = new User()
-  u.userId = "123-UserId";
+  u.id = "123-UserId";
   u.fullName = "Richard Simmons"
   u.subscriptions.push(sub1, sub1C, sub1B, sub2, sub3, sub4, sub5, sub6)
+  u.isDemo = true;
   //u.unsortedSubs.push( uSub1, uSub2, uSub3)
 
   let cShelf1 = new CustomShelf()
