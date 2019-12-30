@@ -3,7 +3,7 @@ import * as Common from '../BusinessLogic/Common';
 import { SECRET_KEYS } from '../api-key';
 import axios from 'axios';
 
-var GoogleAuth;
+let GoogleAuth;
 const SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
 
 
@@ -20,35 +20,28 @@ const SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
  * a Google account, get the user's current sign-in status, get specific data from the user's 
  * Google profile, request additional scopes, and sign out from the current account.
  */
+
 export async function initGoogleAPI() {
   // Wait until googleApi is loaded: "script.src = "https://apis.google.com/js/client.js"
   console.log('=== 1 ===')
-  let wait = 100
-  while (!window.gapi) {
-    wait = wait * 2
-    console.log("GApi 1 :( GApi NOT EXISTS: ");
-    await Common.sleep(wait)
-  }
-  console.log("GApi 1 :) GApi EXISTS: ");
+  await waitForGApiLoad()
   
   // Wait until client is loaded
+  console.time('2')
   console.log('=== 2 ===')
   await window.gapi.load("client:auth2", _initClient) //initClientWithAuth
-
-  //Wait until client is authenticated
+  console.timeEnd('2')
+    
+  //Wait until client is authenticated  
   console.log('=== 3 ===')
-  wait = 100
-  while (!window.gapi.auth2) {
-    wait = wait * 2
-    console.log("GAPI 2 :( gapi.auth2 NOT EXISTS");
-    await Common.sleep(wait); //sleep 100 ms
-  }
+  await waitForAuthLoad()
 
   //Wait until GoogleAuth object is loaded
   console.log('=== 4 ===')
-  console.time("TIME 4 window.gapi.auth2.getAuthInstance()")
+  
   GoogleAuth = await window.gapi.auth2.getAuthInstance();
-  console.timeEnd("TIME 4 window.gapi.auth2.getAuthInstance()")
+  
+  
   return GoogleAuth
 }
 
@@ -58,15 +51,61 @@ async function _initClient() {
     apyKey: SECRET_KEYS.apiKey,
     scope: SCOPE,
   })
-  _loadClient();
+  await _loadClient();
 }
 
 async function _loadClient() {
+  //let loaded = await window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+  //console.log("GApi client loaded for API");
+//  return loaded
    return window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
     .then(function (res2) {
       console.log("GApi client loaded for API");
     }).catch(
       function (err) { console.error("Error loading GAPI client for API", err); });
+}
+
+async function waitForGApiLoad() {
+  let wait = 100
+  while (!window.gapi) {
+    wait = wait * 2
+    console.log("GApi 1 :( GApi NOT EXISTS ");
+    await Common.sleep(wait)
+  }
+  console.log("GApi 1 :) GApi EXISTS ");
+
+}
+
+async function waitForAuthLoad() {
+  let wait = 100
+  while (!window.gapi.auth2) {
+    wait = wait * 2
+    console.log("GAPI 2 :( gapi.auth2 NOT EXISTS");
+    await Common.sleep(wait); //sleep 100 ms
+  }
+  console.log("GAPI 2 :) gapi.auth2 EXISTS");
+}
+
+export async function getGoogleAuth() {
+  let wait = 100;
+  while (!GoogleAuth) {
+    await Common.sleep(wait)
+    wait = wait * 1.5
+  }
+  return GoogleAuth
+}
+
+export async function checkAll() {
+  if (!window.gapi.auth2 || !window.gapi || GoogleAuth) {
+    console.log('window.gapi.auth2' )
+    console.log(window.gapi.auth2 )
+    console.log('window.gapi' )
+    console.log(window.gapi )
+    console.log('GoogleAuth' )
+    console.log(GoogleAuth )
+    return false
+  }
+  return true
 }
 
 //////////////////////////////////////////////////////////////////
@@ -116,6 +155,13 @@ export function isHeSignedIn() {
   else {
     console.log("GoogleAuth doesnt exist")
     return false
+  }
+}
+
+export function getToken() {
+  if (GoogleAuth) {
+    let idtoken =  GoogleAuth.currentUser.get().getAuthResponse().id_token;
+    return idtoken
   }
 }
 

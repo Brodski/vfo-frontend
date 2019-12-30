@@ -7,7 +7,7 @@ import { User } from '../Classes/User'
 import { Subscription } from '../Classes/Subscription'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 
-import Sortable from 'react-sortablejs';
+//import Sortable from 'react-sortablejs';
 import PropTypes from 'prop-types';
 
 

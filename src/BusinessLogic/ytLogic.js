@@ -23,7 +23,7 @@ import  * as GApiAuth from '../HttpRequests/GApiAuth';
 
 //OAuth https://developers.google.com/youtube/v3/guides/authentication
 
-/// FIELD THINGY: https://developers.google.com/youtube/v3/getting-started
+/// FIELD FILTER GAPI: https://developers.google.com/youtube/v3/getting-started
 //    URL: https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=YOUR_API_KEY
 //         &part=snippet, statistics & fields=items(id,snippet,statistics)
 ///
@@ -46,6 +46,8 @@ export async function getActivitiesShelfs(shelfs) {
   let allShelfs_Promises =[]
   for (let sh of shelfs) {
     const sh_Promises = sh.fewSubs.map(sub => youtubeApi._getActivities(sub.channelId))
+    console.log('sh_Promises')
+    console.log(sh_Promises)
     allShelfs_Promises.push(sh_Promises)
   }
   return await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
@@ -198,9 +200,7 @@ export function hasUsedRecently() {
   let isRecent = false;
   let now = new Date() 
   let lastFetch = localStorage.getItem("last fetch")
-  //let ms = (now.getTime() - lastFetch.getTime()) ; 
-  //let pp = new Date(parseInt("1576846203951")).getTime()
-  let ms = lastFetch ? (now.getTime() - new Date(parseInt(lastFetch)).getTime()) : 0
+  let ms = lastFetch ? (now.getTime() - new Date(parseInt(lastFetch)).getTime()) : 0 //Convert last fetch to ms
   if (ms < 3000 * 60) {
     console.log("it's been under 3 minutes since")
     isRecent = true

@@ -8,7 +8,7 @@ import GetServer from './Pages/GetServer';
 import PostDo from './Pages/PostDo';
 //import Youtube from './Pages/Youtube';
 import { YoutubeNEW } from './Pages/YoutubeNEW';
-import { Settings } from './Pages/Settings';
+
 import { SettingsNEW } from './Pages/SettingsNEW';
 import { UserContext, UserSettingsContext } from './Contexts/UserContext.js'
 
@@ -31,6 +31,8 @@ import { User } from './Classes/User'
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
 function App() {
 
+
+
   useEffect(() => {
 
     console.log("\n\n\n\nHELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!\n\n\n\n")
@@ -43,22 +45,29 @@ function App() {
       initShit()
     }
   }, [])
-
+  
     
   async function initShit() {
+  
     console.time("initshit()")
-    var GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms
-    //console.log(GoogleAuth.isSignedIn.get())
+    let GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms
+    console.log('from initshit GoogleAuth')
+    console.log(GoogleAuth)
     
-//    let theUser = ServerEndpoints.getMockUser()
-  //  setUser(theUser);
-//    setUserSettings(theUser);
-
+    console.log(GoogleAuth.isSignedIn.get())
+    
+    /*
+    if (GoogleAuth.isSignedIn.get() == false) {
+      let theUser = ServerEndpoints.getMockUser()
+      setUser(theUser);
+      setUserSettings(theUser);
+    }
     console.timeEnd("initshit()")
+    */
   }
   
-  const [user, setUser]                 = useState(new User())
-  const [userSettings, setUserSettings] = useState(new User())
+  const [user, setUser]                 = useState(ServerEndpoints.getMockUser())
+  const [userSettings, setUserSettings] = useState(ServerEndpoints.getMockUser())
 
   return (
     <Router>
@@ -72,7 +81,7 @@ function App() {
             <Route path="/doPost" component={PostDo} />
             <Route path="/youtube" component={YoutubeNEW} />
         
-            <Route path="/settings" component={Settings} />
+            
             <Route path="/settings2" component={SettingsNEW} />
           
           </UserSettingsContext.Provider>     

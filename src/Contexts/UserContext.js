@@ -9,5 +9,7 @@ export const UserSettingsContext = createContext(null);
 
 export const IsSignedContext = createContext(false)
 
+export const IsLoggedContext = createContext(null)
+
 
   

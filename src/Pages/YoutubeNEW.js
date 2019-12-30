@@ -36,7 +36,10 @@ export function YoutubeNEW() {
 
   const [finalShelfs, setFinalShelfs]       = useState( new FinalShelfs())
   const [numVids, setNumVids]               = useState( [new VidCounter()] ) // {vids: 0, shelfId: '' 
-  
+
+
+  const [isLogged, setIsLogged] = useState(false)
+  let GoogleAuthxxx;
           
   ////////////////////////////////////////////////////
   moment.updateLocale('en', {
@@ -49,40 +52,123 @@ export function YoutubeNEW() {
     }
   });
 
-  /////////////////////////////////////////////
+  ///////////////////////////////////////////// //Since state variable has 'new User()' default 'values', we need to check for actual user existence
 
   // This is the finalShelf:
   //
   // PageOfShelfs = finalShelfs = [ shelf, shelf, shelf ]
   // shelf        = [ vid, vid, vid, vid ]
   // vid          = { id, snippet: {}, contentDetails: {} }
+  let isFirst = true;
+  const [shittyCount, setShittyCount] = useState(0)
+  let GoogleAuth;
+  /*
+  useEffect(() => {
 
+    console.log("\n\n\n\nHELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!\n\n\n\n")
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://apis.google.com/js/client.js";
+    script.async = true
+    document.body.appendChild(script)
+    script.onload = () => {
+      initShit()
+    }
+  }, [])
+  */
   useEffect( () => {
     console.log('---------------useEffect top ----------------------')
+    initShit()
+    console.log('---------------useEffect bot----------------------')
+  //}, [user])
+  }, [isLogged])
+
+  useEffect(() => {
+    console.log("Google log in status changed")
+    console.log("Google log in status changed")
+    console.log("Google log in status changed")
+    console.log("Google log in status changed")
+    console.log("Google log in status changed")
+  }, [isLogged])
+  
+
+  async function initShit() {
+    await doGAuth()
+
+    console.log('user, isLogged?')
+    console.log(isLogged)
     console.log(user)
-    if (user.id) { //Since state variable has 'new User()' default 'values', we need to check for actual user existence
-      //if (ytLogic.hasUsedRecently()) {
+    if (shittyCount > 6) {  return   }
+    setShittyCount( prev => prev + 1)
+    /*if (ytLogic.hasUsedRecently()) { //3 min
+        console.log("Request recently used. Using local storage")
+        let shelfsVids = ytLogic.getStorageShelfs()
+        setFinalShelfs(shelfsVids)
+        setHasMoreShelfs(true)    //We now have shelfs to be rendered
+      } */
+    if (!GApiAuth.isHeSignedIn() && user.isDemo) {
+    //  loadMock()
+      console.log('post load mock user')
+      console.log(user)
+     // fetchMoreSubs(true)
+      setNumVids(user.customShelfs.map(() => new VidCounter()))
+    }
+    if (GApiAuth.isHeSignedIn() && !user.isDemo) {
+      console.log("Should be doing fetch to server")
+    }
+    
+    console.log('numVids')
+    console.log(numVids)
+  }
+  
+  async function doGAuth() {
+    if (!GoogleAuth) {
+      console.time("pre init")
+      //let GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms   
+      GoogleAuth = await GApiAuth.getGoogleAuth()  // Usually 500ms   
+      console.log("YOU SHOULD SEE ME BEFORE END")
+      console.log("YOU SHOULD SEE ME BEFORE END")
+      console.log("YOU SHOULD SEE ME BEFORE END")
+      console.log(GApiAuth.isHeSignedIn())
+      console.log(GoogleAuth.isSignedIn.get())
+      console.timeEnd("pre init")
+      //let GoogleAuth = await GApiAuth.getGoogleAuth()
+      GoogleAuth.isSignedIn.listen(signinChanged);
+      setIsLogged(GApiAuth.isHeSignedIn())
+    }
+  }
+  let signinChanged = function (val) {
+    console.log("SETTING TO: ", GApiAuth.isHeSignedIn())
+    console.log('Signin state changed to ', val);
+    //ServerEndpoints.authenticate()
+    setIsLogged(GApiAuth.isHeSignedIn())
+  }
+
+  function initUser() {
+  console.log('\n\n\n\n\n WE ARE INIT ING USER \n\n\n\n\n\n')
+  //if (ytLogic.hasUsedRecently()) { //3 min
       if (false) {
-          console.log("Request recently used. Using local storage")
-          let shelfsVids = ytLogic.getStorageShelfs()
-          setFinalShelfs(shelfsVids)
-          setHasMoreShelfs(true) //We now have shelfs to be rendered
-      } else {
+       // console.log("Request recently used. Using local storage")
+     //   let shelfsVids = ytLogic.getStorageShelfs()
+   //     setFinalShelfs(shelfsVids)
+ //       setHasMoreShelfs(true) //We now have shelfs to be rendered
+      } 
+      else {
+   //     ServerEndpoints.requestUserFromDatabase()
         console.log("Doing fetch to Google. Local storage expired.")
         fetchMoreSubs(true) // true ---> first run
       }
-
-      setNumVids( user.customShelfs.map ( () => new VidCounter()))
+      setNumVids(user.customShelfs.map(() => new VidCounter()))
       console.log('numVids')
       console.log(numVids)
-      
-    }
-    console.log('---------------useEffect bot----------------------')
-  }, [user])
-   
-  function loadMock() {
+  }
+
+  
+ async function loadMock() {
     let theUser = ServerEndpoints.getMockUser()
-    setUser(theUser);
+    console.log("LOAD MOCK")
+    console.log(theUser)
+    await setUser(theUser)
     setUserSettings(theUser);
   }
 
@@ -119,9 +205,9 @@ export function YoutubeNEW() {
   
   async function hackHelper() {
   let count = 1
-  let isloggedOut;
-    while (isloggedOut = !GApiAuth.isHeSignedIn()) {
-      console.log('Hack Helper: Logged out?: ' + isloggedOut + ' - ' + count)
+  let isReady;
+    while (isReady = !GApiAuth.checkAll()) {
+      console.log('Hack Helper: Logged out?: ' + isReady + ' - ' + count)
       console.log('user')
       console.log(user)
       await Common.sleep(100*count) 
@@ -190,8 +276,25 @@ export function YoutubeNEW() {
     return shelfVids
   }
 
+  function _preRenderViaActs(shelfsActs) {
+    let iData0 = injectData(true, shelfsActs)
+    console.log('iData0 - Activities')
+    console.log(iData0)
+    
+    
+    setFinalShelfs(prevShs => {
+      let newS = { ...prevShs }
+      prevPage != 0 ? newS.shelfs.push(...iData0.shelfs) : newS = iData0
+      newS.isActs = true
+      return newS
+    })
+}
+
+
   const fetchMoreSubs = async (isFirstRun) => {
     console.log(" xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
+    console.log('user in fetch')
+    console.log(user)
     if (isFirstRun) { await putUnsortedShelfAtBottom() }
 
     setHasMoreShelfs(false) //instantly halt any possible room for multi fetches
@@ -204,22 +307,9 @@ export function YoutubeNEW() {
     }
 
     let shelfsActs = await _fetchActivities()
-//    console.log('shelfsActs')
-  //  console.log(shelfsActs)
-
-    
-    /*let iData0 = injectData(true, shelfsActs)
-        // start rendering the activites
-    console.log('iData0 - Activities')
-    console.log(iData0)
-    
-    
-    setFinalShelfs(prevShs => {
-      let newS = { ...prevShs }
-      prevPage != 0 ? newS.shelfs.push(...iData0.shelfs) : newS = iData0
-      newS.isActs = true
-      return newS
-    })*/
+    console.log('shelfsActs')
+    console.log(shelfsActs)
+    //await preRenderViaActs(shelfsActs)
     
     
     let shelfVids = await _fetch2ndHalf(shelfsActs)
@@ -228,12 +318,11 @@ export function YoutubeNEW() {
     
     ytLogic.beginFilter2(iData.shelfs)
 
-    console.log("_____-------WE FINISHED THE FILTER!-------_______")
-    console.log("_____ {prevPage, pageLength} " + {prevPage, pageLength} )
+    console.log("_____-------WE FINISHED THE FETCH & PROCESSING!-------_______")
+    console.log("_____ {prevPage, pageLength} ", prevPage, ', ', pageLength )
     console.log('finalShelfs')
     console.log(finalShelfs)
-    console.log('iData - Videos')
-    console.log(iData)
+    //console.log('iData - Videos')
 
     //TODO clean this slop 
     setFinalShelfs(prevShs => {
@@ -289,7 +378,28 @@ export function YoutubeNEW() {
       )
   }
     
-          
+  function doAuth() {
+    console.log('GApiAuth.isHeSignedIn()')
+    console.log(GApiAuth.isHeSignedIn())
+    if (!GApiAuth.isHeSignedIn()) {
+      console.log("NOT SIGNED. RETURNING")
+      return
+    }
+    ServerEndpoints.authenticate();
+
+  }
+
+  function doCreate() {
+    console.log('GApiAuth.isHeSignedIn()')
+    console.log(GApiAuth.isHeSignedIn())
+    if (!GApiAuth.isHeSignedIn()) {
+      console.log("NOT SIGNED. RETURNING")
+      return
+    }
+    ServerEndpoints.createUser();
+  }
+
+
   return(
     <div>
       <h1>Youtube</h1>
@@ -298,7 +408,12 @@ export function YoutubeNEW() {
       <button onClick={() => {console.log('numVids'); console.log(numVids); } }> c.log numVids </button>
       <button onClick={() => {console.log('finalShelfs'); console.log(finalShelfs); } }> c.log finalShelfs </button>
       <button onClick={() => {console.log('user'); console.log(user); } }> c.log User </button>
+      <button onClick={() => {console.log('isLogged'); console.log(isLogged); } }> c.log isLogged </button>
+      <div></div>
+      <button onClick={() => {console.log('DoAuth'); doAuth(); } }> DoAuth </button>
+      <button onClick={() => {console.log('doCreate'); doCreate(); } }> doCreate </button>
       <h3> Youtube api </h3>
+      { isLogged ? <div> THIS GUYS IS SIGNED IN </div> : <div> NOT SIGNED IN </div> }
       <div/>
         <button onClick={ytLogic.getAllSubs}> Get All Subs  </button> 
       <div/>
@@ -306,7 +421,7 @@ export function YoutubeNEW() {
       <div></div>
       
       <ChannelForm />
-      { user.isDemo  ? <LoggedOut /> : <LoggedIn /> }
+      { isLogged ? <LoggedIn /> :  <LoggedOut /> }
       <Shelfs />
     </div>
     );

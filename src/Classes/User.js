@@ -6,9 +6,9 @@ export class User {
     this.id = null;
     this.fullName = null;
     //this.profiles = []
-    this.subscriptions = []
+   
     this.customShelfs = []
-    this.unsortedSubs = []
+   
     this.isDemo = true;
   }
 }

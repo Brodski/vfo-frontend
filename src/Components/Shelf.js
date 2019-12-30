@@ -30,13 +30,19 @@ export const Shelf = props => {
     })
 
   }
-
-  let numVidzRendered = props.numVids[props._setIdx].numVids 
+  /*
+  console.log(' SHELF ')
+  console.log('props.numVids')
+  console.log(props.numVids)
+  console.log(props._setIdx)
+  console.log(props.numVids[props._setIdx])
+  */
+  let numVidzRendered = props.numVids[0] ? props.numVids[props._setIdx].numVids  : 0
 
   const videos = props.shelf.videos.slice(0, numVidzRendered ).map( (vid,idx) => {
   //let id = vid.contentDetails.upload.videoId //FOR ACTS
   
-   return( <Video isActs={props.isActs} key={vid.id} video={vid} /> )
+   return( <Video isActs={props.isActs} key={vid.id || 'somevidid'} video={vid} /> )
   })
   return(
     <div > 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Subscription } from '../Classes/Subscription';
 import { User, CustomShelf } from '../Classes/User';
-
+import  * as GApiAuth from '../HttpRequests/GApiAuth';
 
 export async function getDummyUser() {
 
@@ -9,16 +9,50 @@ export async function getDummyUser() {
 
 }
 
+export async function createUser() {
+  let idtoken = GApiAuth.getToken()
+  console.log('idtoken')
+  console.log(idtoken)
+  axios.post('http://localhost:8080/user/create', { "idtoken": idtoken }).then(res => { logShit(res) })
+
+
+}
+export async function authenticate() {
+  let idtoken = GApiAuth.getToken()
+  console.log('idtoken')
+  console.log(idtoken)
+  axios.post('http://localhost:8080/user/authenticate', { "idtoken": idtoken }).then(res => { logShit(res) })
+}
+
+export async function requestUserFromDatabase() {
+    //axios.post('http://localhost:8080/userDebug', { "username": newUser }).then(res => { logShit(res) })
+
+}
+
+function logShit(res) {
+  console.log('----------------------------------------')
+  console.log(`Status code: ${res.status}`);
+  console.log(`Status text: ${res.statusText}`)
+  console.log(`Request method: ${res.request.method}`)
+  console.log(`Path: ${res.request.path}`)
+
+  console.log(`Date: ${res.headers.date}`)
+  console.log(`Date: ${res.headers}`)
+  console.log(`Data: ${res.data}`)
+  console.log(`Config: ${res.config}`)
+
+  console.log(res.config);
+  console.log('----------------------------------------')
+}
+
+
 export function getMockUser() {
   let sub1 = new Subscription()
   sub1.channelName = "The Hill"
   sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
   sub1.filter.minDuration = "1"
   sub1.filter.maxDuration = "0.5"
-  sub1.filter.blacklist = "the hill: pompous liberal douche"
   sub1.filter.id = "UCPWXiRWZ29zrxPFIQT7eHSA"
-
-
 
   let sub1B = new Subscription()
   sub1B.channelName = "CNN"
@@ -31,7 +65,6 @@ export function getMockUser() {
   sub1C.channelName = "Fox News"
   sub1C.channelId = "UCXIJgqnII2ZOINSWNOGFThA";
   sub1C.filter.minDuration = "6"
-  sub1C.filter.blacklist = "Fox News: angry hill billy"
   sub1C.filter.id = "UCXIJgqnII2ZOINSWNOGFThA"
 
   let sub2 = new Subscription()
@@ -102,7 +135,7 @@ export function getMockUser() {
   let u = new User()
   u.id = "123-UserId";
   u.fullName = "Richard Simmons"
-  u.subscriptions.push(sub1, sub1C, sub1B, sub2, sub3, sub4, sub5, sub6)
+  //u.subscriptions.push(sub1, sub1C, sub1B, sub2, sub3, sub4, sub5, sub6)
   u.isDemo = true;
   //u.unsortedSubs.push( uSub1, uSub2, uSub3)
 

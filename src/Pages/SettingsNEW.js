@@ -11,7 +11,6 @@ import { PostSave } from '../Components/PostSave';
 
 
 
-import Sortable from 'react-sortablejs';
 import Sortable2 from 'sortablejs';
 
 
@@ -20,9 +19,6 @@ import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 import { CustomShelf } from '../Classes/User'
 import * as Common from '../BusinessLogic/Common.js';
 
-import Tagify from '@yaireo/tagify'
-
-import Tags from "@yaireo/tagify/dist/react.tagify"
 // to consider... https://www.npmjs.com/package/choices.js
 
 
@@ -32,8 +28,6 @@ import Tags from "@yaireo/tagify/dist/react.tagify"
 //  https://github.com/yairEO/tagify
 
 // css: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
-
-//import Tagify from '@yaireo/tagify'
 
 
   /*const tagSettings = {
