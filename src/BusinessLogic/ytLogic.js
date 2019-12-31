@@ -80,8 +80,11 @@ export async function XXXgetActivitesOfChannels_2() {
 
 export async function getAllSubs() {
   var response = await youtubeApi._getThisUsersSubs()
+  console.log("get all subs: response")
+  console.log(response)
   let allSubs = response.result.items
-
+  console.log("response.result.items")
+  console.log(allSubs)
   while (response.result.nextPageToken) {
     response = await youtubeApi._getThisUsersSubs(response.result.nextPageToken)
     allSubs = !allSubs ? response.result.items : allSubs.concat(response.result.items)
@@ -174,7 +177,7 @@ export function sortByDate(shelf) {
   return shelf
 }
   
-
+///////////////////////////////////////////////////////////////////////////
 // THIS IS OLD
 export function extractIdsOld(shelfsActsFlat) {
   // TODO: double map, improve performance.
@@ -184,6 +187,15 @@ export function extractIdsOld(shelfsActsFlat) {
     ids.push(miniIds)
   }
   return ids
+}
+
+
+export function getDemoSubs(user) {
+  let isRecent = isUsedRecently(user)
+  
+  let shelfz = localStorage.getItem('demoSubs')
+  shelfz = JSON.parse(shelfz)
+  console.log(shelfz)
 }
 
 export function saveToLocal(shelfs) {
@@ -196,10 +208,15 @@ export function saveToLocal(shelfs) {
   //let now = new Date() 
   //localStorage.setItem("last fetch", now)
 }
-export function hasUsedRecently() {
+export function isUsedRecently(user) {
+  let lastFetch;
   let isRecent = false;
   let now = new Date() 
-  let lastFetch = localStorage.getItem("last fetch")
+  if (user.isDemo) {
+    lastFetch = localStorage.getItem("demoSubs")
+  } else {
+    lastFetch = localStorage.getItem(user.fullName +'-yt')
+  }
   let ms = lastFetch ? (now.getTime() - new Date(parseInt(lastFetch)).getTime()) : 0 //Convert last fetch to ms
   if (ms < 3000 * 60) {
     console.log("it's been under 3 minutes since")

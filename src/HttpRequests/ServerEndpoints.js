@@ -11,12 +11,23 @@ export async function getDummyUser() {
 
 export async function createUser() {
   let idtoken = GApiAuth.getToken()
-  console.log('idtoken')
-  console.log(idtoken)
+  //console.log('idtoken')
+//  console.log(idtoken)
   axios.post('http://localhost:8080/user/create', { "idtoken": idtoken }).then(res => { logShit(res) })
 
 
 }
+
+export async function loginToBackend() {
+  let idtoken = GApiAuth.getToken()
+  //console.log('idtoken')
+//  console.log(idtoken)
+  axios.post('http://localhost:8080/user/login', { "idtoken": idtoken }).then(res => { logShit(res) })
+
+
+}
+
+
 export async function authenticate() {
   let idtoken = GApiAuth.getToken()
   console.log('idtoken')

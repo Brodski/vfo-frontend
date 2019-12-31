@@ -45,25 +45,38 @@ export async function initGoogleAPI() {
   return GoogleAuth
 }
 
+// "You can also now use gapi.client to perform authenticated requests."  instead of auth.init
+// https://developers.google.com/identity/sign-in/web/reference#example
 async function _initClient() {
-  await window.gapi.auth2.init({
+  /*await window.gapi.auth2.init({
     client_id: SECRET_KEYS.clientId,
-    apyKey: SECRET_KEYS.apiKey,
+    //apiKey: SECRET_KEYS.apiKey,
     scope: SCOPE,
   })
-  await _loadClient();
+  */
+  let discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
+  await window.gapi.client.init({
+    clientId: SECRET_KEYS.clientId,
+    apiKey: SECRET_KEYS.apiKey,
+    discoveryDocs: [discoveryUrl],
+    scope: SCOPE,
+  })   
+  //await _loadClient();
 }
 
+/*
 async function _loadClient() {
-  //let loaded = await window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-  //console.log("GApi client loaded for API");
-//  return loaded
+   window.gapi.client.setApiKey(SECRET_KEYS.apiKey);
    return window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
     .then(function (res2) {
       console.log("GApi client loaded for API");
     }).catch(
       function (err) { console.error("Error loading GAPI client for API", err); });
 }
+*/
+
+
+
 
 async function waitForGApiLoad() {
   let wait = 100
@@ -132,16 +145,18 @@ export async function check(gapiObj, gapiString) {
 
 export function login() {
   if (GoogleAuth)
-    return GoogleAuth.signIn().then(function () {
+    return GoogleAuth.signIn().then(function (res) {
       console.log("Sign-in successful");
+      console.log(res);
       return true
     })
       .catch(function (err) { console.error("Error signing in", err); });
 }
 export function logout() {
   if (GoogleAuth) {
-    return GoogleAuth.signOut().then(function () { 
+    return GoogleAuth.signOut().then(function (res) { 
         console.log("Sign-out successful");
+        console.log(res);
         return true 
     })
       .catch( function (err) { console.error("Error signing in", err); });

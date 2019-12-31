@@ -56,6 +56,8 @@ function logShit(res) {
   console.log(`Config: ${res.config}`)
 
   console.log(res.config);
+  
+  console.log('----------------------------------------')
 }
 
 export default PostDo;
