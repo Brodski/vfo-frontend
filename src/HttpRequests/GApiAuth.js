@@ -109,13 +109,13 @@ export async function getGoogleAuth() {
 }
 
 export async function checkAll() {
-  if (!window.gapi.auth2 || !window.gapi || GoogleAuth) {
-    console.log('window.gapi.auth2' )
+  if (!window.gapi.auth2 || !window.gapi || !GoogleAuth) {
+    /*console.log('window.gapi.auth2' )
     console.log(window.gapi.auth2 )
     console.log('window.gapi' )
     console.log(window.gapi )
     console.log('GoogleAuth' )
-    console.log(GoogleAuth )
+    console.log(GoogleAuth )*/
     return false
   }
   return true

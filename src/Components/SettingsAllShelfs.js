@@ -91,7 +91,7 @@ export const AllShelfs = (props) => {
       
         <UltraShelfs/>
       <button className="shelfEditBtn" onClick={updateForce } >updateThis </button>
-      <button className="shelfEditBtn" onClick={saveUi2Settings } >save! </button>
+      <button className="shelfEditBtn" onClick={saveUi2Settings } >save! Ui2Settings! </button>
       <button onClick={addShelf} > Add shelf </button>
     </div>
     )

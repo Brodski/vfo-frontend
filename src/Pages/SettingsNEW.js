@@ -47,7 +47,7 @@ import * as Common from '../BusinessLogic/Common.js';
 export const SettingsNEW = () => {
 //export class SettingsNEW extends React.Component {
 
-  let mockUser;
+  
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
   const [tagifyProps, setTagifyProps] = useState([])
@@ -55,13 +55,9 @@ export const SettingsNEW = () => {
   useEffect(() => {
     console.log("\n\n USE EFFECT \n")
     setTagifyProps({value: ["from settingsz"], showDropdown: false})
-    getShit()
 
   }, []);
   
-  async function getShit() {
-    mockUser = await ServerEndpoints.getMockUser() //Probably will "setSubs(actualUser)" in future    
-  }
   
   async function shelfsButton() {
 
@@ -80,21 +76,20 @@ export const SettingsNEW = () => {
   /////////////////////////////////////////////////////////////////////////////////////////////
 
 
-  async function testSave() {
-    console.log('----------- SAVING! -----------')
-    console.log('userSettings')
-    console.log(userSettings)
-
-    let newCustomShelfs = stLogic.queryShelfs(userSettings)
-    console.log('newCustomShelfs')
-    console.log(newCustomShelfs)
+  async function save() {
+    //console.log('----------- SAVING! -----------')
     
-    let breh = userSettings;
-    breh.customShelfs = newCustomShelfs
-    console.log('breh')
-    console.log(breh)
+    let newCustomShelfs = stLogic.queryShelfs(userSettings)
+    
+    let newS = { ...userSettings }
+    newS.customShelfs = newCustomShelfs
+    setUserSettings(newS)
+    setUser(newS)
     setKickIt(false)
-    setUserSettings(prevUserSetting => {
+    if (!user.isDemo) {
+      ServerEndpoints.saveSettings(user)
+    }
+    /*setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
       newS.customShelfs = newCustomShelfs
       return newS
@@ -104,6 +99,7 @@ export const SettingsNEW = () => {
       newS.customShelfs = newCustomShelfs
       return newS
      })    
+     */
   } 
 
   function logUS() {
@@ -119,7 +115,7 @@ export const SettingsNEW = () => {
         <LoginLogout user={user}/>
         <button onClick={shelfsButton} > (shelfsButton) </button>
         
-        <button onClick={testSave} > Save </button>
+        <button onClick={save} > Save </button>
         <button onClick={logUS} > log user settomg </button>
         <div >
         { kickIt ? <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} /> : <PostSave /> }

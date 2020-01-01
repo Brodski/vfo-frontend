@@ -9,30 +9,32 @@ export async function getDummyUser() {
 
 }
 
-export async function createUser() {
-  let idtoken = GApiAuth.getToken()
-  //console.log('idtoken')
-//  console.log(idtoken)
-  axios.post('http://localhost:8080/user/create', { "idtoken": idtoken }).then(res => { logShit(res) })
+/*const axiosClient = axios.create()
+axiosClient.interceptors.request.use(function (config) {
+  console.log("inside axios client. config:")
+  console.log(config)
+  return config
+}, function (e) {
+  console.log("inside axios client. error:")
+  console.log(e)
+  return Promise.reject(e)
+})*/
 
-
-}
 
 export async function loginToBackend() {
   let idtoken = GApiAuth.getToken()
-  //console.log('idtoken')
-//  console.log(idtoken)
-  axios.post('http://localhost:8080/user/login', { "idtoken": idtoken }).then(res => { logShit(res) })
+  //return axiosClient.post('http://localhost:8080/user/login', { "idtoken": idtoken, timeout: 1000, })
+  return axios.post('http://localhost:8080/user/login', { "idtoken": idtoken })
+    .then(res => {
+    console.log("PASS")
+      logShit(res);
+      return res
+    })
+    .catch(e => {
+      console.log(`Axios request failed: ${e}`);
+      return e
+    })
 
-
-}
-
-
-export async function authenticate() {
-  let idtoken = GApiAuth.getToken()
-  console.log('idtoken')
-  console.log(idtoken)
-  axios.post('http://localhost:8080/user/authenticate', { "idtoken": idtoken }).then(res => { logShit(res) })
 }
 
 export async function requestUserFromDatabase() {
@@ -40,20 +42,45 @@ export async function requestUserFromDatabase() {
 
 }
 
+export async function saveSettings(user) {
+  let idtoken = GApiAuth.getToken()
+  return axios.post('http://localhost:8080/user/save', { "idtoken": idtoken, "user": user }).then(res => { logShit(res); return res })
+}
+
+
 function logShit(res) {
   console.log('----------------------------------------')
+  //console.log("res: ")
+//  console.log(res)
+
+  //console.log("res.request: ")
+//  console.log(res.request)
+  console.log(`res.request.status ${res.request.status}`)
   console.log(`Status code: ${res.status}`);
-  console.log(`Status text: ${res.statusText}`)
-  console.log(`Request method: ${res.request.method}`)
-  console.log(`Path: ${res.request.path}`)
 
-  console.log(`Date: ${res.headers.date}`)
-  console.log(`Date: ${res.headers}`)
-  console.log(`Data: ${res.data}`)
-  console.log(`Config: ${res.config}`)
+  console.log(`Data: `)
+  console.log(res.data)
 
-  console.log(res.config);
+//  console.log(`Config: `)
+//  console.log(res.config);
+
   console.log('----------------------------------------')
+}
+
+//https://www.npmjs.com/package/axios#handling-errors
+function handleError(error) {
+  if (error.response) { // response != 2xx
+    console.log(error.response.data);
+    console.log(error.response.status);
+    console.log(error.response.headers);
+  } else if (error.request) { // request sent but recieved no response
+    console.log(error.request);
+  } else { 
+    console.log('Error', error.message);
+  }
+  console.log("error.config")
+  console.log(error.config);
+  
 }
 
 

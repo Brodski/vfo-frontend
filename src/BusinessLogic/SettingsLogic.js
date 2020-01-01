@@ -33,25 +33,23 @@ export function logIds() {
 }
 
 export function queryShelfs(userSettings, allowEmpty = false) {
-  console.log('userSettings')
-  console.log(userSettings)
+  
   let newCustomShelfs = []
   //Loop though each shelf and each item on shelf
   let shelfsQ = [].slice.call(document.querySelectorAll('.sh-QHack'));
   for (let i = 0; i < shelfsQ.length; i++) {
-    console.log(`${i} ++ Shelf ++`)
-    console.log(shelfsQ[i].dataset)
+//    console.log(`${i} ++ Shelf ++`)
+  //  console.log(shelfsQ[i].dataset)
     //Create a temp shelf 
     let tempShelf = new CustomShelf()
     tempShelf.title = shelfsQ[i].dataset.name
 
     tempShelf.isSorted = (shelfsQ[i].dataset.issorted == 'true')
-    console.log(tempShelf.isSorted)
 
     for (let sub of shelfsQ[i].querySelectorAll('.sub-QHack')) {
-      console.log(`${i} -----> sub `)
+      //console.log(`${i} -----> sub `)
     //  console.log(sub)
-      console.log(sub.dataset)
+      //console.log(sub.dataset)
       let idxs = _findSubIndex(sub.dataset.name, userSettings)
       let tempSub = userSettings.customShelfs[idxs.shelf_Index].fewSubs[idxs.sub_Index]
       tempShelf.fewSubs.push(tempSub)
@@ -66,7 +64,7 @@ export function queryShelfs(userSettings, allowEmpty = false) {
     }
   }
   console.log("\n\\nEND OF QURERY\n\n")
-  console.log(newCustomShelfs)
+  //console.log(newCustomShelfs)
   return newCustomShelfs
 }
 

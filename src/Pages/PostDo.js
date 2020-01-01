@@ -13,8 +13,8 @@ function PostDo() {
     e.preventDefault();
     //axios.post('https://jsonplaceholder.typicode.com/posts', { 'username': newUser, 'id': newId }).then(res => { logShit(res) })
 
-    axios.post('http://localhost:8080/userDebug', { "username": newUser }).then(res => { logShit(res) })
-    axios.post('http://localhost:8080/createUser', { "username": newUser }).then(res => { logShit(res) })
+    axios.post('http://localhost:8080/userDebug', { "username": newUser }).then(res => { console.log(res) })
+    axios.post('http://localhost:8080/createUser', { "username": newUser }).then(res => { console.log(res) })
   }
     
 
@@ -29,35 +29,5 @@ function PostDo() {
   );
 }
 
-//https://www.npmjs.com/package/axios#handling-errors
-function handleError(error) {
-  if (error.response) { // response != 2xx
-    console.log(error.response.data);
-    console.log(error.response.status);
-    console.log(error.response.headers);
-  } else if (error.request) { // request sent but recieved no response
-    console.log(error.request);
-  } else { 
-    console.log('Error', error.message);
-  }
-  console.log(error.config);
-}
-
-function logShit(res) {
-  console.log('----------------------------------------')
-  console.log(`Status code: ${res.status}`);
-  console.log(`Status text: ${res.statusText}`)
-  console.log(`Request method: ${res.request.method}`)
-  console.log(`Path: ${res.request.path}`)
-
-  console.log(`Date: ${res.headers.date}`)
-  console.log(`Date: ${res.headers}`)
-  console.log(`Data: ${res.data}`)
-  console.log(`Config: ${res.config}`)
-
-  console.log(res.config);
-  
-  console.log('----------------------------------------')
-}
 
 export default PostDo;

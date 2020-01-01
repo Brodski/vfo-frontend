@@ -10,7 +10,7 @@ import PostDo from './Pages/PostDo';
 import { YoutubeNEW } from './Pages/YoutubeNEW';
 
 import { SettingsNEW } from './Pages/SettingsNEW';
-import { UserContext, UserSettingsContext } from './Contexts/UserContext.js'
+import { UserContext, UserSettingsContext, IsLoggedContext } from './Contexts/UserContext.js'
 
 import * as GApiAuth from './HttpRequests/GApiAuth'
 import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
@@ -50,11 +50,7 @@ function App() {
   async function initShit() {
   
     console.time("initshit()")
-    let GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500ms
-    console.log('from initshit GoogleAuth')
-    console.log(GoogleAuth)
-    
-    console.log(GoogleAuth.isSignedIn.get())
+    let GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
     
     /*
     if (GoogleAuth.isSignedIn.get() == false) {
@@ -68,13 +64,14 @@ function App() {
   
   const [user, setUser]                 = useState(ServerEndpoints.getMockUser())
   const [userSettings, setUserSettings] = useState(ServerEndpoints.getMockUser())
-
+  const [isLogged2, setIsLogged2]       = useState('firstrun')
   return (
     <Router>
         <Nav />
         <Switch>
           <UserContext.Provider value={{ user, setUser }}>
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
+          <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
             <Route path="/" exact component={Home} />
             <Route path="/about" component={SortableComponent} />
             <Route path="/getServer" component={GetServer} />
@@ -83,7 +80,7 @@ function App() {
         
             
             <Route path="/settings2" component={SettingsNEW} />
-          
+          </IsLoggedContext.Provider>
           </UserSettingsContext.Provider>     
           </UserContext.Provider>
 

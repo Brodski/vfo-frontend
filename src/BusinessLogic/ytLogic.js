@@ -46,8 +46,8 @@ export async function getActivitiesShelfs(shelfs) {
   let allShelfs_Promises =[]
   for (let sh of shelfs) {
     const sh_Promises = sh.fewSubs.map(sub => youtubeApi._getActivities(sub.channelId))
-    console.log('sh_Promises')
-    console.log(sh_Promises)
+  //  console.log('sh_Promises')
+//    console.log(sh_Promises)
     allShelfs_Promises.push(sh_Promises)
   }
   return await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
@@ -192,10 +192,13 @@ export function extractIdsOld(shelfsActsFlat) {
 
 export function getDemoSubs(user) {
   let isRecent = isUsedRecently(user)
+  let shelfz;
+  if (isRecent) {
+    shelfz = localStorage.getItem('demoSubs')
+    shelfz = JSON.parse(shelfz)
+    console.log(shelfz)
+  }
   
-  let shelfz = localStorage.getItem('demoSubs')
-  shelfz = JSON.parse(shelfz)
-  console.log(shelfz)
 }
 
 export function saveToLocal(shelfs) {
@@ -208,16 +211,33 @@ export function saveToLocal(shelfs) {
   //let now = new Date() 
   //localStorage.setItem("last fetch", now)
 }
+
+export function saveDemoToLocal(shelfs) {
+  localStorage.setItem('demoSubs-sh-yt', JSON.stringify(shelfs))
+  localStorage.setItem('demoSubs-pagelength-yt', JSON.stringify(shelfs))
+  localStorage.setItem("demoSubs-time-yt", Date.now())
+}
+
+/*export function getDataFromLocal___FINISHLATER() {
+    let shelfz = localStorage.getItem('demoSubs-sh-yt')
+    let pageL = localStorage.getItem('demoSubs-numpages-yt')
+    shelfz = JSON.parse(shelfz)
+    console.log('initshit():  True = ytLogic.isUsedRecently(user')
+    console.log(shelfz)
+    setFinalShelfs(shelfz)
+    setHasMoreShelfs(true)
+}*/
+
 export function isUsedRecently(user) {
-  let lastFetch;
+  let fetchTime;
   let isRecent = false;
   let now = new Date() 
   if (user.isDemo) {
-    lastFetch = localStorage.getItem("demoSubs")
+    fetchTime = localStorage.getItem("demoSubs-time-yt")
   } else {
-    lastFetch = localStorage.getItem(user.fullName +'-yt')
+    fetchTime = localStorage.getItem(user.fullName +'-time-yt')
   }
-  let ms = lastFetch ? (now.getTime() - new Date(parseInt(lastFetch)).getTime()) : 0 //Convert last fetch to ms
+  let ms = fetchTime ? (now.getTime() - new Date(parseInt(fetchTime)).getTime()) : Infinity //Convert last fetch to ms... 0ms --> never recieved
   if (ms < 3000 * 60) {
     console.log("it's been under 3 minutes since")
     isRecent = true
@@ -249,17 +269,21 @@ export function beginFilter2(fShelfs) {
         for (let f of sh.filters) {
           if (f.id == vid.snippet.channelId) {
             let duration = moment.duration(vid.contentDetails.duration)
-            let isPass = f.checkDurations(duration.minutes() + (duration.seconds() / 60))
-       //     console.log('+++++++++++++++++')
-     //       console.log(vid.snippet.channelTitle + ' ' + vid.snippet.title)
-    //        console.log(vid)
-   //         console.log("duration: " + duration.minutes() + (duration.seconds() / 60))
-  //          console.log( f.minDuration )
- //           console.log( f.maxDuration )
-//            console.log( isPass )
-//            console.log('+++++++++++++++++')
+            let isPass = f.checkDurations(duration.asMinutes())
             if (!isPass) {
+              /*
+              console.log('+++++++++++++++++')
+              console.log(vid.snippet.channelTitle + ' ' + vid.snippet.title)
+              console.log(vid.id)
+              console.log(vid)
+              
+              console.log("duration: " + duration.asMinutes())
+              console.log('min ', f.minDuration )
+              console.log('max ', f.maxDuration )
+              console.log('pass? ', isPass )
+              console.log('+++++++++++++++++') 
               sh.videos = sh.videos.filter( v => v.id != vid.id)
+              */
               break
             
             }
