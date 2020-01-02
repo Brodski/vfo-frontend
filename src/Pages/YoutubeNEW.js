@@ -9,11 +9,13 @@ import * as youtubeApi                  from "../HttpRequests/youtubeApi";
 import * as ServerEndpoints             from '../HttpRequests/ServerEndpoints.js'
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
 import { FinalShelfs }                 from '../Classes/FinalShelfs'
+import { CustomShelf, VidCounter, User }                       from '../Classes/User'
+
+import { Subscription }                 from '../Classes/Subscription'
 import { ShelfsMany }                   from '../Components/ShelfsMany';
 import { ChannelForm }                  from '../Components/ChannelForm';
 import { ButtonsAuthDebug }             from '../Components/ButtonsAuthDebug';
 
-import { CustomShelf, VidCounter }    from '../Classes/User';
 
 import axios from 'axios';
 import InfiniteScroll                 from 'react-infinite-scroller';
@@ -40,7 +42,7 @@ export function YoutubeNEW() {
   const [numVids, setNumVids] = useState([new VidCounter()]) // {vids: 0, shelfId: '' 
 
 
-  const [isLogged, setIsLogged] = useState('lol')
+  //const [isLogged, setIsLogged] = useState('lol')
   //const [isFirst, setIsFirst] = useState(true)
   let GoogleAuthxxx;
 
@@ -91,10 +93,40 @@ export function YoutubeNEW() {
     }
     else if (GApiAuth.isHeSignedIn()) {
       console.log("initshit(): Should be doing fetch to server")
-      doLoginToBackend()
+      let res = await doLoginToBackend()
+      
+      console.log("res after login: ")
+      console.log(res)
+      processUserDataFromServer(res)
+
+      }
+    }
+  
+
+  async function processUserDataFromServer(res) {
+    if (res.status > 199 && res.status < 300) {
+      let resUser = res.data
+      // if (resUser is new, ie never existed before)
+      if (resUser.customShelfs == null) { resUser.customShelfs = [] }
+      console.log('resUser: ')
+      console.log(resUser)
+      setUser(resUser)
+      let subz = await ytLogic.getAllSubs()
+      //checkForNewSubs(subz, resUser)
+      
+      //If user not in db
+      let u = new User()
+      u.initNewUser(subz, res.data)
+      saveBackend(u)
     }
   }
 
+  function checkForNewSubs(subs, resUser) {
+    console.log("Checking for new subs")
+    console.log(subs)
+    console.log(resUser)
+  
+  }
 
 
   async function doGAuth() {
@@ -109,12 +141,7 @@ export function YoutubeNEW() {
     }
   }
   let signinChanged = function (val) {
-    console.log('sign: val')
-    console.log(val)
-    console.log('sign: GApiAuth.isHeSignedIn()')
-    console.log(GApiAuth.isHeSignedIn())
-    console.log("SETTING TO: ", GApiAuth.isHeSignedIn())
-    console.log('Signin state changed to ', val);
+    console.log('Signin state changed to ', val, "\nSETTING TO: ", GApiAuth.isHeSignedIn());
     //ServerEndpoints.authenticate()
     setIsLogged2(GApiAuth.isHeSignedIn())
   }
@@ -340,9 +367,21 @@ export function YoutubeNEW() {
       console.log("NOT SIGNED. RETURNING")
       return
     }
+      console.log("doLogin, going itno serverendpitns")
     let res = await ServerEndpoints.loginToBackend();
     
-    
+    return res
+  }
+
+  async function saveBackend(u) {
+    console.log('save backend u')
+    console.log(u)
+    ServerEndpoints.saveSettings(u)
+  }
+  
+  async function debugUser(u) {
+    console.log(u)
+    ServerEndpoints.debugUser(u)
   }
   
   const LoggedOut = () => {
@@ -357,7 +396,7 @@ export function YoutubeNEW() {
   const LoggedIn = () => {
     return(
       <div>
-        <h2> Hi {user.fullName} </h2>
+        <h2> Hi {user.username} </h2>
       </div>
       )
   }
@@ -386,6 +425,9 @@ export function YoutubeNEW() {
       <button onClick={() => {console.log('isLogged2'); console.log(isLogged2); } }> c.log isLogged2 </button>
       <div></div>
       <button onClick={() => {console.log('doLoginToBackend'); doLoginToBackend(); } }> doLoginToBackend </button>
+      <button onClick={() => {console.log('saveBackend'); saveBackend(user); } }> saveBackend </button>
+
+      <button onClick={() => {console.log('debugUser'); debugUser(user); } }> debugUser </button>
       <h3> Youtube api </h3>
       { isLogged2 ? <div> THIS GUYS IS SIGNED IN </div> : <div> NOT SIGNED IN </div> }
       <div/>

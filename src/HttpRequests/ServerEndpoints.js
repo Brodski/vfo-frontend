@@ -37,8 +37,9 @@ export async function loginToBackend() {
 
 }
 
-export async function requestUserFromDatabase() {
-    //axios.post('http://localhost:8080/userDebug', { "username": newUser }).then(res => { logShit(res) })
+export async function debugUser(user) {
+    
+    axios.post('http://localhost:8080/userDebug', { "username": user }).then(res => { logShit(res) })
 
 }
 
@@ -90,89 +91,89 @@ export function getMockUser() {
   sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
   sub1.filter.minDuration = "1"
   sub1.filter.maxDuration = "0.5"
-  sub1.filter.id = "UCPWXiRWZ29zrxPFIQT7eHSA"
+  sub1.filter.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA"
 
   let sub1B = new Subscription()
   sub1B.channelName = "CNN"
   sub1B.channelId = "UCupvZG-5ko_eiXAupbDfxWw";
   sub1B.filter.minDuration = "2"
   sub1B.filter.maxDuration = "8"
-  sub1B.filter.id = "UCupvZG-5ko_eiXAupbDfxWw"
+  sub1B.filter.channelId = "UCupvZG-5ko_eiXAupbDfxWw"
 
   let sub1C = new Subscription()
   sub1C.channelName = "Fox News"
   sub1C.channelId = "UCXIJgqnII2ZOINSWNOGFThA";
   sub1C.filter.minDuration = "6"
-  sub1C.filter.id = "UCXIJgqnII2ZOINSWNOGFThA"
+  sub1C.filter.channelId = "UCXIJgqnII2ZOINSWNOGFThA"
 
   let sub2 = new Subscription()
   sub2.channelName = "Crunkmastaflexx"
   sub2.channelId = "UCA-8h5uCH5RE-1r6gskkbTw";
-  sub2.filter.id = "UCA-8h5uCH5RE-1r6gskkbTw"
+  sub2.filter.channelId = "UCA-8h5uCH5RE-1r6gskkbTw"
 
   let sub3 = new Subscription()
   sub3.channelName = "Deep Beat"
   sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";
-  sub3.filter.id = "UC0CeYMTh57zSsbUKhsyOPfw"
+  sub3.filter.channelId = "UC0CeYMTh57zSsbUKhsyOPfw"
 
   let sub4 = new Subscription()
   sub4.channelName = "Video Box"
   sub4.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw";
-  sub4.filter.id = "UCeMFHOzX9MDWbr-pu2WdmVw"
+  sub4.filter.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw"
 
   let sub5 = new Subscription()
   sub5.channelName = "mineralblue"
   sub5.channelId = "UC3IngBBUGFUduHp-7haK1lw";
-  sub5.filter.id = "UC3IngBBUGFUduHp-7haK1lw"
+  sub5.filter.channelId = "UC3IngBBUGFUduHp-7haK1lw"
 
   let sub6 = new Subscription()
   sub6.channelName = "SMTOWN"
   sub6.channelId = "UCEf_Bc-KVd7onSeifS3py9g";
   sub6.filter.minDuration = "2"
   sub6.filter.maxDuration = "6"
-  sub6.filter.id = "UCEf_Bc-KVd7onSeifS3py9g"
+  sub6.filter.channelId = "UCEf_Bc-KVd7onSeifS3py9g"
 
   let uSub1 = new Subscription()
   uSub1.channelName = "Key & Peele"
   uSub1.channelId = "UCdN4aXTrHAtfgbVG9HjBmxQ";
-  uSub1.filter.id = "UCdN4aXTrHAtfgbVG9HjBmxQ";
+  uSub1.filter.channelId = "UCdN4aXTrHAtfgbVG9HjBmxQ";
 
   let uSub2 = new Subscription()
   uSub2.channelName = "Tommy Boy"
   uSub2.channelId = "UCnSR7_Oq-MdsZxfogsfk-Ug";
-  uSub2.filter.id = "UCnSR7_Oq-MdsZxfogsfk-Ug";
+  uSub2.filter.channelId = "UCnSR7_Oq-MdsZxfogsfk-Ug";
 
   let uSub3 = new Subscription()
   uSub3.channelName = "FRONTLINE PBS | Official"
   uSub3.channelId = "UC3ScyryU9Oy9Wse3a8OAmYQ";
-  uSub3.filter.id = "UC3ScyryU9Oy9Wse3a8OAmYQ";
+  uSub3.filter.channelId = "UC3ScyryU9Oy9Wse3a8OAmYQ";
 
   
   let uSub4 = new Subscription()
   uSub4.channelName = 'Google Zeitgeist'
   uSub4.channelId = 'UC522meTsOjFWjSdLLrEMMBA';
-  uSub4.filter.id = "UC522meTsOjFWjSdLLrEMMBA";
+  uSub4.filter.channelId = "UC522meTsOjFWjSdLLrEMMBA";
 
   let uSub5 = new Subscription()
   uSub5.channelName = 'Maddox'
   uSub5.channelId = 'UC_c1gdsojLxBGkgzS0NsvUw';
-  uSub5.filter.id = "UC_c1gdsojLxBGkgzS0NsvUw";
+  uSub5.filter.channelId = "UC_c1gdsojLxBGkgzS0NsvUw";
 
   let uSub6 = new Subscription()
   uSub6.channelName = 'Asian Boss'
   uSub6.channelId = 'UC2-_WWPT_124iN6jiym4fOw';
-  uSub6.filter.id = "UC2-_WWPT_124iN6jiym4fOw";
+  uSub6.filter.channelId = "UC2-_WWPT_124iN6jiym4fOw";
 
 
   let uSub7 = new Subscription()
   uSub7.channelName = 'TED'
   uSub7.channelId = 'UCAuUUnT6oDeKwE6v1NGQxug';
-  uSub7.filter.id = "UCAuUUnT6oDeKwE6v1NGQxug";
+  uSub7.filter.channelId = "UCAuUUnT6oDeKwE6v1NGQxug";
 
 
   let u = new User()
-  u.id = "123-UserId";
-  u.fullName = "Richard Simmons"
+  u.googleId = "123-UserId";
+  u.username = "Richard Simmons"
   //u.subscriptions.push(sub1, sub1C, sub1B, sub2, sub3, sub4, sub5, sub6)
   u.isDemo = true;
   //u.unsortedSubs.push( uSub1, uSub2, uSub3)

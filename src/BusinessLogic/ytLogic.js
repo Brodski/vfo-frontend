@@ -80,11 +80,11 @@ export async function XXXgetActivitesOfChannels_2() {
 
 export async function getAllSubs() {
   var response = await youtubeApi._getThisUsersSubs()
-  console.log("get all subs: response")
-  console.log(response)
+  if (response.status < 200 || response.status > 299) {
+    console.log("Error in response :( Status code: ", response.status)
+    return
+  }
   let allSubs = response.result.items
-  console.log("response.result.items")
-  console.log(allSubs)
   while (response.result.nextPageToken) {
     response = await youtubeApi._getThisUsersSubs(response.result.nextPageToken)
     allSubs = !allSubs ? response.result.items : allSubs.concat(response.result.items)

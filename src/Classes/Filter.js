@@ -5,8 +5,8 @@ export class Filter {
     this.blocklist = [];
     this.requireList = [];
     this.minDuration = 0;
-    this.maxDuration = Infinity;
-    this.id = id;
+    this.maxDuration = "Infinity";
+    this.channelId = id;
   
   }
   checkDurations(vidDuration) {
@@ -15,8 +15,8 @@ export class Filter {
     console.log(this.id)
     console.log(this.minDuration)
     console.log(this.maxDuration)*/
-
-    if (vidDuration  >= this.minDuration && vidDuration <= this.maxDuration) {
+    let max = this.maxDuration == "Infinity" ? Infinity : this.maxDuration
+    if (vidDuration  >= this.minDuration && vidDuration <= max) {
       return true
     }
     return false
