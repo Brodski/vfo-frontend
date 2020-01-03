@@ -186,28 +186,23 @@ export function getMockUser() {
   //u.unsortedSubs.push( uSub1, uSub2, uSub3)
 
   let cShelf1 = new CustomShelf()
-  cShelf1.title = "Shelf #1"
+  cShelf1.title = "News (Shelf #1)"
   cShelf1.fewSubs.push(sub1, sub1B, sub1C)
   cShelf1.isSorted = true;
 
   let cShelf2 = new CustomShelf()
-  cShelf2.title = "Shelf #2"
+  cShelf2.title = "Music (Shelf #2)"
   cShelf2.fewSubs.push(sub3, sub6)
   cShelf2.isSorted = true;
 
-  let cShelf3un = new CustomShelf()
-  cShelf3un.title = "Shelf #1 unsorted"
-  cShelf3un.fewSubs.push( uSub1, uSub2, uSub3)
-  cShelf3un.isSorted = false;
-
   let cShelf4un = new CustomShelf()
-  cShelf4un.title = "Shelf #4"
-  cShelf4un.fewSubs.push( uSub4, uSub6)
+  cShelf4un.title = "Talks & stuff (Shelf #4)"
+  cShelf4un.fewSubs.push( uSub7, uSub4)
   cShelf4un.isSorted = true;
   
   let cShelf5un = new CustomShelf()
   cShelf5un.title = "Shelf #5"
-  cShelf5un.fewSubs.push( uSub7)
+  cShelf5un.fewSubs.push(uSub6 )
   cShelf5un.isSorted = true;
 
   let cShelf6un = new CustomShelf()
@@ -215,9 +210,32 @@ export function getMockUser() {
   cShelf6un.fewSubs.push( uSub5)
   cShelf6un.isSorted = true;
 
+
+  let cShelf3unA = new CustomShelf()
+  cShelf3unA.title = "Key & Peele"
+  cShelf3unA.fewSubs.push( uSub1)
+  cShelf3unA.isSorted = false;
+
+  let cShelf3unB = new CustomShelf()
+  cShelf3unB.title = "Tommy Boy"
+  cShelf3unB.fewSubs.push(  uSub2)
+  cShelf3unB.isSorted = false;
+
+  let cShelf3unC = new CustomShelf()
+  cShelf3unC.title = "FRONTLINE PBS | Official"
+  cShelf3unC.fewSubs.push( uSub3)
+  cShelf3unC.isSorted = false;
+
+
+
+
+
+
   u.customShelfs.push(cShelf1)
   u.customShelfs.push(cShelf2)
-  u.customShelfs.push(cShelf3un)
+  u.customShelfs.push(cShelf3unA)
+  u.customShelfs.push(cShelf3unB)
+  u.customShelfs.push(cShelf3unC)
   u.customShelfs.push(cShelf4un)
   u.customShelfs.push(cShelf5un)
   u.customShelfs.push(cShelf6un)

@@ -27,7 +27,7 @@ import * as moment from 'moment';
 // simpe react pagation https://codepen.io/grantdotlocal/pen/zReNgE
 export function YoutubeNEW() {
 
-  const initialPageLength = 1;
+  const initialPageLength = 3;
   let prevPage;
   let spamLimit = 25;
   let spamCount = 0;
@@ -35,7 +35,8 @@ export function YoutubeNEW() {
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
 
-  const [pageLength, setPageLength] = useState(initialPageLength);
+  //const [pageLength, setPageLength] = useState(1);
+  const [pageLength, setPageLength] = useState(1);
   const [hasMoreShelfs, setHasMoreShelfs] = useState(false); //At start, there are no shelfs, thus we have no more shelfs
 
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
@@ -44,7 +45,6 @@ export function YoutubeNEW() {
   const [chillBro, setChillBro] = useState(0)
   //const [isLogged, setIsLogged] = useState('lol')
   const [isFirst, setIsFirst] = useState(true)
-  let GoogleAuthxxx;
 
   ////////////////////////////////////////////////////
   moment.updateLocale('en', {
@@ -67,16 +67,6 @@ export function YoutubeNEW() {
 
   let GoogleAuth;
 
-  /*useEffect(() => {
-    console.log('vvvvvvvvvvvvvvvv INITIAL LOAD???? vvvvvvvvvvvvvvvv')
- 
-    console.log("The Fetcher: ", isLogged2)
-    if (isLogged2 == 'firstrun') { return }
-    if (isFirst) { return }
-    console.log('^^^^^^^^^^^^^^^^ INITIAL LOAD???? ^^^^^^^^^^^^^^^^')
-    }, [isFirst])
-  //}, [isFirst])
-  */
   useEffect(() => {
     console.log('---------------useEffect top ----------------------')
     initShit()
@@ -86,25 +76,50 @@ export function YoutubeNEW() {
 
   async function initShit() {
     await doGAuth()
-    setNumVids(user.customShelfs.map(() => new VidCounter()))
+    
     setChillBro(prev => { return prev + 1 })
     if (chillBro > 6) {
       console.log("\n\n bro, ...chill. ")
       return
     }
     //if (isFirst) { return }
+    
+
     if (isLogged2 =='firstrun') { return }
-    if (!GApiAuth.isHeSignedIn()) {
-    //  fetchMoreSubs(true) ///////////////
-      console.log("initshit(): NOT LOGGED")
-      fetchMoreSubs(isFirst)
-    }
-    else if (GApiAuth.isHeSignedIn()) {
+
+    if (GApiAuth.isHeSignedIn() && user.isDemo) {
       console.log("initshit(): LOGGED IN Should be doing fetch to server")
       let res = await doLoginToBackend()
-      await processUserFromServer(res)
-      await fetchMoreSubs(isFirst)
+      if (res.status > 199 && res.status < 300) {
+        console.log('Recieved user from server: ')
+        console.log(res.data)
+        await processUserFromServer(res)
       }
+    }
+    else {
+      loadMock()
+    }
+    
+    // after the fetch
+    
+    console.log('console.log(numVids)')
+    console.log(console.log(numVids))
+    console.log(user)
+    console.log( 'user.customShelfs.map(() => new VidCounter()) ')
+    console.log( user.customShelfs.map(() => new VidCounter()) )
+    setNumVids(user.customShelfs.map(() => new VidCounter()))
+    
+    // not working as desired :/
+    /* if (user.customShelfs.length > initialPageLength) {
+        //setPageLength(res.data.customShelfs.length)
+        setPageLength(initialPageLength)
+        } else {
+        setPageLength(user.customShelfs.length)
+         }
+    */
+
+    fetchMoreSubs(isFirst)
+
 
 
     
@@ -112,15 +127,13 @@ export function YoutubeNEW() {
   
 
   async function processUserFromServer(res) {
-    if (res.status > 199 && res.status < 300) {
-      console.log('Recieved user from server: ')
-      console.log(res.data)
-      //let resUser = res.data
+
       let u = new User()
       let subzPromise = ytLogic.getAllSubs()
-      // if (resUser is new, ie never existed before)
+
+      
       // TODO create variable/method/header
-      if (res.data.customShelfs == null) {
+      if (res.data.customShelfs == null) { // new user
         //subzPromise = await subzPromise;
         u.initNewUser(await subzPromise, res.data)
         ServerEndpoints.saveUser(u)
@@ -131,16 +144,11 @@ export function YoutubeNEW() {
         u.pictureUrl = res.data.pictureUrl
         u.username = res.data.username
         u.isDemo = false
+      console.time('check new subs')
+      let newSubs = checkForNewSubs(  subzPromise, res.data)
+      console.timeEnd('check new subs')
         
       }
-      
-      if (res.data.customShelfs.length > initialPageLength) {
-        //setPageLength(res.data.customShelfs.length)
-        setPageLength(3)
-      } else {
-        setPageLength(res.data.customShelfs.length)
-      }
-
 
       setUser(prev => {
         prev.customShelfs = u.customShelfs
@@ -150,12 +158,16 @@ export function YoutubeNEW() {
         prev.isDemo     = false
         return prev
       })
-      console.time('check new subs')
-      let newSubs = checkForNewSubs(  subzPromise, res.data)
-      console.timeEnd('check new subs')
-      //If user not in db
+      setUserSettings(prev => {
+        prev.customShelfs = u.customShelfs
+        prev.googleId   = u.googleId
+        prev.pictureUrl = u.pictureUrl
+        prev.username   = u.username
+        prev.isDemo     = false
+        return prev
+      })
       
-    }
+    
   }
 
   async function checkForNewSubs(subsFromYt, subsFromBackend) { //SubsfromYt is promise
@@ -182,14 +194,13 @@ export function YoutubeNEW() {
     
     if (newSubs.length > 0) {
       setUser(prev => {
-        let newU = { ...prev }
-        newSubs.forEach(newS => {
-          prev.addSub(newS)
-          //newU.addSub(newS)
-        })
-        console.log('prev')
-        console.log(prev)
+        newSubs.forEach(newS => { prev.addSub(newS) })
         ServerEndpoints.saveUser(prev)
+        return prev
+      })
+
+      setUserSettings(prev => {
+        newSubs.forEach(newS => { prev.addSub(newS) })
         return prev
       })
     }
@@ -238,16 +249,16 @@ export function YoutubeNEW() {
   function isEndReached() {
     let isEnd = false;
 /*    console.log( 'spamCount, ect'  )
-    console.log( spamCount  )
-    console.log( spamLimit  )
-    console.log( pageLength  )
-    console.log( user.customShelfs.length  )
-    console.log( spamCount > spamLimit  )
-    console.log( pageLength > user.customShelfs.length  )
-  */  if (spamCount > spamLimit || pageLength > user.customShelfs.length) {
+    console.log( 'spamCount  : ' , spamCount)
+    console.log( 'spamLimit : ', spamLimit  )
+    console.log( 'pageLength: ', pageLength  )
+    console.log( 'user.customShelfs.length : ', user.customShelfs.length  )
+    console.log( 'spamCount > spamLimit : ', spamCount > spamLimit  )
+    console.log( 'pageLength > user.customShelfs.length : ', pageLength > user.customShelfs.length  )
+   */ if (spamCount > spamLimit || pageLength > user.customShelfs.length) {
       console.log('\n\n\n\nbro you reached the limit\n\n\n')
-      console.log(pageLength)
-      console.log(user.customShelfs.length)
+      console.log('pageLength : ', pageLength)
+      console.log('user.customShelfs.length: ', user.customShelfs.length)
       isEnd = true
     }
     return isEnd
@@ -319,15 +330,6 @@ export function YoutubeNEW() {
     const fetchThisManyVideosPerShelf = 35 //Arbitrary number (max 50) (see youtube's Video api)
     shelfsActs = shelfsActs.map(sh => sh.slice(0,fetchThisManyVideosPerShelf))    
 
-    
-    {/*as Object
-      let actResponses = shelfsActs.map(sh => (sh.map(sub => {
-      let actRes = new FS.ActRes()
-      actRes.contentDetails = sub.contentDetails;
-      actRes.snippet = sub.snippet;
-      return actRes
-    })))
-    return actResponses*/}
     return shelfsActs
 
   }
@@ -342,15 +344,6 @@ export function YoutubeNEW() {
     //Returns only "OK" status and then http results
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
     shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
-
-    {/*let vidResponses = shelfVids.map(sh => (sh.map(sub => {
-      let vidRes = new FS.VideoRes()
-      vidRes.contentDetails = sub.contentDetails;
-      vidRes.snippet        = sub.snippet;
-      vidRes.statistics     = sub.statistics
-      return vidRes
-    })))
-    return vidResponses*/}
 
     return shelfVids
   }
@@ -389,7 +382,7 @@ export function YoutubeNEW() {
     if (isFirstRun) { await putUnsortedShelfAtBottom() }
 
     setHasMoreShelfs(false) //instantly halt any possible room for multi fetches
-    prevPage = pageLength == initialPageLength ? 0 : pageLength - 1 //PrevPage = 0 for initial load //After that prevPage = pageLength - 1
+    prevPage = pageLength <= initialPageLength ? 0 : pageLength - 1 //PrevPage = 0 for initial load //After that prevPage = pageLength - 1
     
 
     await hackHelper()
@@ -444,7 +437,8 @@ export function YoutubeNEW() {
       return
     }
     let res = ServerEndpoints.loginToBackend();
-    console.log("Status: after login: ", res.status)
+    console.log("Status: after login: ")
+    console.log(res)
     
     return res
   }
@@ -478,12 +472,12 @@ export function YoutubeNEW() {
   }
 
   const Shelfs = () => {
-    return ( 
-        <InfiniteScroll key={nextId('infScroll-')}
-          loadMore={fetchMoreSubs}
-          hasMore={hasMoreShelfs}
-          loader={(<div key={nextId('loader-')}>Loading ...</div>)}
-          threshold={10}
+    return (
+      <InfiniteScroll key={nextId('infScroll-')}
+        loadMore={fetchMoreSubs}
+        hasMore={hasMoreShelfs}
+        loader={(<div key={nextId('loader-')}>Loading ...</div>)}
+        threshold={1000}
             >
           <ShelfsMany key={nextId('manyShelfsid-')} isActs={finalShelfs.isActs} shelfs={finalShelfs.shelfs.slice(0, pageLength)} numVids={numVids} setNumVids={setNumVids} /> 
         </InfiniteScroll>

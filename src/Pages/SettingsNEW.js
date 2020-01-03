@@ -68,29 +68,68 @@ export const SettingsNEW = () => {
 
 
   async function save() {
-    //console.log('----------- SAVING! -----------')
+    console.log('----------- SAVING! -----------')
     
     let newCustomShelfs = stLogic.queryShelfs(userSettings)
-    
-    let newS = { ...userSettings }
-    newS.customShelfs = newCustomShelfs
-    setUserSettings(newS)
-    setUser(newS)
+    console.log('newCustomShelfs')
+    console.log(newCustomShelfs)
+
     setKickIt(false)
-    if (!user.isDemo) {
-      ServerEndpoints.saveUser(user)
+
+    let newSet = { ...userSettings }
+    
+    //let auxNewCustomShelfs = newSet.customShelfs.filter( sh => sh.isSorted)
+    //let unSort = newSet.customShelfs.filter( sh => !sh.isSorted)[0]
+
+    let auxNewCustomShelfs = newCustomShelfs.filter( sh => sh.isSorted)
+    let unSort = newCustomShelfs.filter( sh => !sh.isSorted)[0]
+
+    console.log('unSort')
+    console.log('unSort')
+    console.log('unSort')
+    console.log('unSort')
+    console.log('unSort')
+    console.log('unSort')
+    console.log('unSort')
+    console.log('unSort')
+    console.log('unSort')
+    console.log('unSort')
+    console.log(unSort)
+    if (unSort) {
+      unSort.fewSubs.map(sub => {
+        let newSh = new CustomShelf()
+        newSh.title = sub.channelName
+        newSh.isSorted = false // sh.isSorted = false
+        newSh.fewSubs = [sub]
+        console.log("Pushing newSh: ")
+        console.log(newSh)
+        auxNewCustomShelfs.push(newSh)
+      })
+      console.log('user after save')
+      newSet.customShelfs = auxNewCustomShelfs
+      console.log(newSet)
+      console.log('BROTHER!!!! auxNewCustomShelfs')
+      console.log(auxNewCustomShelfs)
     }
-    /*setUserSettings(prevUserSetting => {
+    if (!user.isDemo) {
+      //ServerEndpoints.saveUser(newS)
+      console.log("Saving newSet: ")
+      console.log(newSet)
+      ServerEndpoints.saveUser(newSet)
+    }
+    setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
-      newS.customShelfs = newCustomShelfs
+      //newS.customShelfs = newCustomShelfs
+      newS.customShelfs = auxNewCustomShelfs
       return newS
     })
     setUser(prevUserSetting => {
       let newS = { ...prevUserSetting }
-      newS.customShelfs = newCustomShelfs
+      //newS.customShelfs = newCustomShelfs
+      newS.customShelfs = auxNewCustomShelfs
       return newS
      })    
-     */
+    
   } 
 
   function logUS() {

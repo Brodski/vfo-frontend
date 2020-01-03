@@ -24,23 +24,9 @@ export class User {
   }
 
   initNewUser(subz, data) {
-    
-    let subArr = subz.map(ytSub => {
+    subz.map(ytSub => {
       this.addSub(ytSub)
-/*      let sub = new Subscription()
-      sub.channelName = ytSub.snippet.title
-      sub.channelId = ytSub.snippet.resourceId.channelId;
-      sub.filter.channelId = ytSub.snippet.resourceId.channelId;
-//      return sub
-      let shelf = new CustomShelf()
-      shelf.title = sub.channelName;
-      shelf.fewSubs = [sub]
-      this.customShelfs.push(shelf)
-  */  })
-    //let shelf = new CustomShelf()
-    //shelf.title = "Initial Shelf";
-    //shelf.fewSubs = subArr;
-    //this.customShelfs = [shelf]
+    })
 
     //TODO
     // need to update username and pic
