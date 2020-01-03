@@ -27,7 +27,7 @@ import * as moment from 'moment';
 // simpe react pagation https://codepen.io/grantdotlocal/pen/zReNgE
 export function YoutubeNEW() {
 
-  const initialPageLength = 3;
+  const initialPageLength = 1;
   let prevPage;
   let spamLimit = 25;
   let spamCount = 0;
@@ -41,9 +41,9 @@ export function YoutubeNEW() {
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
   const [numVids, setNumVids] = useState([new VidCounter()]) // {vids: 0, shelfId: '' 
 
-
+  const [chillBro, setChillBro] = useState(0)
   //const [isLogged, setIsLogged] = useState('lol')
-  //const [isFirst, setIsFirst] = useState(true)
+  const [isFirst, setIsFirst] = useState(true)
   let GoogleAuthxxx;
 
   ////////////////////////////////////////////////////
@@ -67,65 +67,134 @@ export function YoutubeNEW() {
 
   let GoogleAuth;
 
-  useEffect(() => {
+  /*useEffect(() => {
     console.log('vvvvvvvvvvvvvvvv INITIAL LOAD???? vvvvvvvvvvvvvvvv')
-    //initShit()
+ 
+    console.log("The Fetcher: ", isLogged2)
+    if (isLogged2 == 'firstrun') { return }
+    if (isFirst) { return }
     console.log('^^^^^^^^^^^^^^^^ INITIAL LOAD???? ^^^^^^^^^^^^^^^^')
-    //}, [user])
-  }, [])
-  
+    }, [isFirst])
+  //}, [isFirst])
+  */
   useEffect(() => {
     console.log('---------------useEffect top ----------------------')
     initShit()
     console.log('---------------useEffect bot----------------------')
-  //}, [user])
-    }, [isLogged2])
+  }, [isLogged2])
 
 
   async function initShit() {
     await doGAuth()
     setNumVids(user.customShelfs.map(() => new VidCounter()))
-    
-    if (isLogged2 == 'firstrun') { return }
+    setChillBro(prev => { return prev + 1 })
+    if (chillBro > 6) {
+      console.log("\n\n bro, ...chill. ")
+      return
+    }
+    //if (isFirst) { return }
+    if (isLogged2 =='firstrun') { return }
     if (!GApiAuth.isHeSignedIn()) {
-      console.log('initshit():  False = ytLogic.isUsedRecently(user')
-      fetchMoreSubs(true)
+    //  fetchMoreSubs(true) ///////////////
+      console.log("initshit(): NOT LOGGED")
+      fetchMoreSubs(isFirst)
     }
     else if (GApiAuth.isHeSignedIn()) {
-      console.log("initshit(): Should be doing fetch to server")
+      console.log("initshit(): LOGGED IN Should be doing fetch to server")
       let res = await doLoginToBackend()
-      
-      console.log("res after login: ")
-      console.log(res)
-      processUserDataFromServer(res)
-
+      await processUserFromServer(res)
+      await fetchMoreSubs(isFirst)
       }
+
+
+    
     }
   
 
-  async function processUserDataFromServer(res) {
+  async function processUserFromServer(res) {
     if (res.status > 199 && res.status < 300) {
-      let resUser = res.data
-      // if (resUser is new, ie never existed before)
-      if (resUser.customShelfs == null) { resUser.customShelfs = [] }
-      console.log('resUser: ')
-      console.log(resUser)
-      setUser(resUser)
-      let subz = await ytLogic.getAllSubs()
-      //checkForNewSubs(subz, resUser)
-      
-      //If user not in db
+      console.log('Recieved user from server: ')
+      console.log(res.data)
+      //let resUser = res.data
       let u = new User()
-      u.initNewUser(subz, res.data)
-      saveBackend(u)
+      let subzPromise = ytLogic.getAllSubs()
+      // if (resUser is new, ie never existed before)
+      // TODO create variable/method/header
+      if (res.data.customShelfs == null) {
+        //subzPromise = await subzPromise;
+        u.initNewUser(await subzPromise, res.data)
+        ServerEndpoints.saveUser(u)
+      }
+      else {
+        u.customShelfs = res.data.customShelfs
+        u.googleId = res.data.googleId
+        u.pictureUrl = res.data.pictureUrl
+        u.username = res.data.username
+        u.isDemo = false
+        
+      }
+      
+      if (res.data.customShelfs.length > initialPageLength) {
+        //setPageLength(res.data.customShelfs.length)
+        setPageLength(3)
+      } else {
+        setPageLength(res.data.customShelfs.length)
+      }
+
+
+      setUser(prev => {
+        prev.customShelfs = u.customShelfs
+        prev.googleId   = u.googleId
+        prev.pictureUrl = u.pictureUrl
+        prev.username   = u.username
+        prev.isDemo     = false
+        return prev
+      })
+      console.time('check new subs')
+      let newSubs = checkForNewSubs(  subzPromise, res.data)
+      console.timeEnd('check new subs')
+      //If user not in db
+      
     }
   }
 
-  function checkForNewSubs(subs, resUser) {
-    console.log("Checking for new subs")
-    console.log(subs)
-    console.log(resUser)
-  
+  async function checkForNewSubs(subsFromYt, subsFromBackend) { //SubsfromYt is promise
+    subsFromYt = await subsFromYt
+
+    let newSubs = []
+    
+    for (let bs of subsFromYt) {
+      let doesMatches = false;
+      for (let uSh of subsFromBackend.customShelfs) {
+        for (let sub of uSh.fewSubs) {
+          if (bs.snippet.resourceId.channelId == sub.channelId) {
+            doesMatches = true;
+            break
+          }
+        }
+      }
+      if (doesMatches == false) {
+        newSubs.push(bs)
+      }
+    }
+    console.log('newSubs')
+    console.log(newSubs)
+    
+    if (newSubs.length > 0) {
+      setUser(prev => {
+        let newU = { ...prev }
+        newSubs.forEach(newS => {
+          prev.addSub(newS)
+          //newU.addSub(newS)
+        })
+        console.log('prev')
+        console.log(prev)
+        ServerEndpoints.saveUser(prev)
+        return prev
+      })
+    }
+    
+    return newSubs          
   }
 
 
@@ -138,6 +207,8 @@ export function YoutubeNEW() {
       
       GoogleAuth.isSignedIn.listen(signinChanged);
       setIsLogged2(GApiAuth.isHeSignedIn())
+      setIsFirst(false)
+
     }
   }
   let signinChanged = function (val) {
@@ -155,8 +226,6 @@ export function YoutubeNEW() {
   }
 
   function putUnsortedShelfAtBottom() {
-    console.log('user')
-    console.log(user)
     let newUser = user;
     let sort = user.customShelfs.filter(sh => sh.isSorted)
     let unSort = user.customShelfs.filter(sh => !sh.isSorted)
@@ -168,7 +237,14 @@ export function YoutubeNEW() {
 
   function isEndReached() {
     let isEnd = false;
-    if (spamCount > spamLimit || pageLength > user.customShelfs.length) {
+/*    console.log( 'spamCount, ect'  )
+    console.log( spamCount  )
+    console.log( spamLimit  )
+    console.log( pageLength  )
+    console.log( user.customShelfs.length  )
+    console.log( spamCount > spamLimit  )
+    console.log( pageLength > user.customShelfs.length  )
+  */  if (spamCount > spamLimit || pageLength > user.customShelfs.length) {
       console.log('\n\n\n\nbro you reached the limit\n\n\n')
       console.log(pageLength)
       console.log(user.customShelfs.length)
@@ -308,7 +384,7 @@ export function YoutubeNEW() {
 
   const fetchMoreSubs = async (isFirstRun) => {
     console.log(" xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
-    console.log('user in fetch')
+    console.log("user")
     console.log(user)
     if (isFirstRun) { await putUnsortedShelfAtBottom() }
 
@@ -367,8 +443,8 @@ export function YoutubeNEW() {
       console.log("NOT SIGNED. RETURNING")
       return
     }
-      console.log("doLogin, going itno serverendpitns")
-    let res = await ServerEndpoints.loginToBackend();
+    let res = ServerEndpoints.loginToBackend();
+    console.log("Status: after login: ", res.status)
     
     return res
   }
@@ -376,7 +452,7 @@ export function YoutubeNEW() {
   async function saveBackend(u) {
     console.log('save backend u')
     console.log(u)
-    ServerEndpoints.saveSettings(u)
+    ServerEndpoints.saveUser(u)
   }
   
   async function debugUser(u) {
@@ -423,6 +499,7 @@ export function YoutubeNEW() {
       <button onClick={() => {console.log('finalShelfs'); console.log(finalShelfs); } }> c.log finalShelfs </button>
       <button onClick={() => {console.log('user'); console.log(user); } }> c.log User </button>
       <button onClick={() => {console.log('isLogged2'); console.log(isLogged2); } }> c.log isLogged2 </button>
+      <button onClick={() => {console.log('pageLength'); console.log(pageLength); } }> c.log pageLength </button>
       <div></div>
       <button onClick={() => {console.log('doLoginToBackend'); doLoginToBackend(); } }> doLoginToBackend </button>
       <button onClick={() => {console.log('saveBackend'); saveBackend(user); } }> saveBackend </button>

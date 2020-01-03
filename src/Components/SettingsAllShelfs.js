@@ -46,8 +46,36 @@ export const AllShelfs = (props) => {
   const UltraShelfs = () => {
   
     let sortedSh    = props.userSettings.customShelfs.filter( sh => { return sh.isSorted } )
-    let unSortedSh  = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
+    console.log('sortedSh')
+    console.log(sortedSh)
+    let unSortedSh  = [new CustomShelf()]
+    unSortedSh[0].isSorted = false
+    unSortedSh[0].title = "Your Subscriptions"
+    let aux_unSortedSh = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
+    console.log('unSortedSh')
+    console.log(unSortedSh)
+    console.log('aux_unSortedSh')
+    console.log(aux_unSortedSh)
+    let bigFlat = []
+    let shit = aux_unSortedSh.map(sh => {
+      console.log('sh.fewSubs');
+      console.log(sh.fewSubs);
+      return sh.fewSubs.map(sub => { bigFlat = bigFlat.concat(sub) })
+    })
+    console.log('shit')
+    console.log(shit)
+    console.log('bigFlat')
+    console.log(bigFlat)
+    unSortedSh[0].fewSubs = bigFlat
+    //let unSortedSh  = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
     if (!unSortedSh[0]) { unSortedSh.push(new CustomShelf()) }
+    if (!sortedSh[0]) {
+        let c = new CustomShelf();
+        c.title = 'New Shelf'
+        c.isSorted = true
+        c.customShelfs = []
+        sortedSh.push(c)
+      } 
   
     const sortedShelfz = sortedSh.map( sh => {
       let id = nextId('shelfid-')

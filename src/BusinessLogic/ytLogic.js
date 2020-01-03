@@ -89,8 +89,6 @@ export async function getAllSubs() {
     response = await youtubeApi._getThisUsersSubs(response.result.nextPageToken)
     allSubs = !allSubs ? response.result.items : allSubs.concat(response.result.items)
   }
-  console.log('allSubs : ')
-  console.log(allSubs)
   return allSubs
 
 }

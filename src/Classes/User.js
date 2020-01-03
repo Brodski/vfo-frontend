@@ -10,24 +10,46 @@ export class User {
     this.isDemo = true;
   }
 
+  addSub(ytSub) {
+    let sub = new Subscription()
+    sub.channelName = ytSub.snippet.title
+    sub.channelId = ytSub.snippet.resourceId.channelId;
+    sub.filter.channelId = ytSub.snippet.resourceId.channelId;
+
+    let shelf = new CustomShelf()
+    shelf.title = sub.channelName;
+    shelf.fewSubs = [sub]
+    shelf.isSorted = false;
+    this.customShelfs.push(shelf)
+  }
+
   initNewUser(subz, data) {
-  
-    console.log("Subz: ")
-    console.log( subz)
+    
     let subArr = subz.map(ytSub => {
-      let sub = new Subscription()
+      this.addSub(ytSub)
+/*      let sub = new Subscription()
       sub.channelName = ytSub.snippet.title
       sub.channelId = ytSub.snippet.resourceId.channelId;
       sub.filter.channelId = ytSub.snippet.resourceId.channelId;
-      return sub
-    })
-    let shelf = new CustomShelf()
-    shelf.title = "Initial Shelf";
-    shelf.fewSubs = subArr;
-    this.customShelfs = [shelf]
+//      return sub
+      let shelf = new CustomShelf()
+      shelf.title = sub.channelName;
+      shelf.fewSubs = [sub]
+      this.customShelfs.push(shelf)
+  */  })
+    //let shelf = new CustomShelf()
+    //shelf.title = "Initial Shelf";
+    //shelf.fewSubs = subArr;
+    //this.customShelfs = [shelf]
+
+    //TODO
+    // need to update username and pic
     this.username = data.username
     this.pictureUrl = data.pictureUrl
     this.isDemo = false
+    if (this.customShelfs[0] == null) { 
+      this.customShelfs = []  
+    }
   }
 
 }
@@ -37,6 +59,11 @@ export class CustomShelf {
     this.title = null;
     this.fewSubs = []
     this.isSorted = false;
+  }
+  auxConstructor(t, fewS, isSorted) {
+    this.title =t;
+    this.fewSubs=fewS;
+    this.isSorted=isSorted;
   }
 }
 

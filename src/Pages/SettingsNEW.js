@@ -22,19 +22,11 @@ import * as Common from '../BusinessLogic/Common.js';
 // to consider... https://www.npmjs.com/package/choices.js
 
 
-//import Tags from "@yaireo/tagify/react.tagify"
 //  https://www.npmjs.com/package/react-dialog
 //  https://github.com/SortableJS/react-sortablejs
 //  https://github.com/yairEO/tagify
 
 // css: https://css-tricks.com/snippets/css/a-guide-to-flexbox/
-
-
-  /*const tagSettings = {
-    maxTags: 6,
-    placeholder: "type something",
-    dropdown: { enabled: 0 }// a;ways show suggestions dropdown
-   }*/
 
 
   /////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,12 +42,11 @@ export const SettingsNEW = () => {
   
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
-  const [tagifyProps, setTagifyProps] = useState([])
+  
   const [kickIt, setKickIt] = useState(true)
   useEffect(() => {
     console.log("\n\n USE EFFECT \n")
-    setTagifyProps({value: ["from settingsz"], showDropdown: false})
-
+    setUserSettings(user)
   }, []);
   
   
@@ -87,7 +78,7 @@ export const SettingsNEW = () => {
     setUser(newS)
     setKickIt(false)
     if (!user.isDemo) {
-      ServerEndpoints.saveSettings(user)
+      ServerEndpoints.saveUser(user)
     }
     /*setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
@@ -116,7 +107,8 @@ export const SettingsNEW = () => {
         <button onClick={shelfsButton} > (shelfsButton) </button>
         
         <button onClick={save} > Save </button>
-        <button onClick={logUS} > log user settomg </button>
+        <button onClick={logUS} > log user settings </button>
+        <button onClick={() => console.log(user)} > log user </button>
         <div >
         { kickIt ? <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} /> : <PostSave /> }
         </div>

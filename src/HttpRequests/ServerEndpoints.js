@@ -26,8 +26,7 @@ export async function loginToBackend() {
   //return axiosClient.post('http://localhost:8080/user/login', { "idtoken": idtoken, timeout: 1000, })
   return axios.post('http://localhost:8080/user/login', { "idtoken": idtoken })
     .then(res => {
-    console.log("PASS")
-      logShit(res);
+//      logShit(res);
       return res
     })
     .catch(e => {
@@ -43,9 +42,17 @@ export async function debugUser(user) {
 
 }
 
-export async function saveSettings(user) {
+export async function saveUser(user) {
   let idtoken = GApiAuth.getToken()
-  return axios.post('http://localhost:8080/user/save', { "idtoken": idtoken, "user": user }).then(res => { logShit(res); return res })
+  return axios.post('http://localhost:8080/user/save', { "idtoken": idtoken, "user": user })
+    .then(res => { 
+    //  logShit(res); 
+      return res 
+    })
+    .catch(e => {
+      console.log(`Axios request failed: ${e}`);
+      return e
+    })
 }
 
 
