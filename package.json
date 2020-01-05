@@ -19,8 +19,8 @@
     "sortablejs": "^1.10.1"
   },
   "scripts": {
-    "start-windowz": "set PORT=2000 && react-scripts start",
-    "start-linux": "PORT=2000 react-scripts start",
+    "start-windowz": "set PORT=80 && react-scripts start",
+    "start-linux": "PORT=80 react-scripts start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
