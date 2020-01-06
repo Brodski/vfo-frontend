@@ -26,6 +26,7 @@ import { User } from './Classes/User'
 // $ npm install --save react-infinite-scroller
 // $ npm install --save array-move
 // $ npm install --save react-id-generator
+// $ npm install --save env-cmd 
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 

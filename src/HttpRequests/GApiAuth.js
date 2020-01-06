@@ -5,7 +5,7 @@ import axios from 'axios';
 
 let GoogleAuth;
 const SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
-
+const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localhost:8080
 
 
 //////////////////////////////////////////////////////////////////
@@ -223,8 +223,8 @@ export function testAuthcode() {
   var profile = user.getBasicProfile();
   var someId = user.getId();
   if (someId) {
-    //axios.post('http://localhost:8080/userDebug', { authcode: someId }).then(res => { (console.log(res)) })
-    axios.post('http://localhost:8080/user/authorize', { authcode: someId }).then(res => { (console.log(res)) })
+    //axios.post(SPRING_BACKEND +'/userDebug', { authcode: someId }).then(res => { (console.log(res)) })
+    axios.post(SPRING_BACKEND + '/user/authorize', { authcode: someId }).then(res => { (console.log(res)) })
     console.log("SOME ID")
     console.log(someId)
 
@@ -247,8 +247,8 @@ export function getAuthCodeForServerSideShit() {
   }).then(function (resp) {
     var authcode = resp.code;
     if (resp.code) {
-      axios.post('http://localhost:8080/userDebug', { authcode: resp.code } ) .then(res => { (console.log(res)) })
-      axios.post('http://localhost:8080/user/authorize', { authcode: resp.code } ) .then(res => { (console.log(res)) })
+      axios.post(SPRING_BACKEND + '/userDebug', { authcode: resp.code } ) .then(res => { (console.log(res)) })
+      axios.post(SPRING_BACKEND + '/user/authorize', { authcode: resp.code } ) .then(res => { (console.log(res)) })
       var authcode22 = resp.poopy;
       console.log("RESPONSE AND CODE FROM AUTHCODE")
       console.log(resp)
@@ -264,7 +264,7 @@ export function getAuthCodeForServerSideShit() {
 
 export function testWithXML() {
   var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 
-  var theUrl = "http://localhost:8080/user/authorize";
+  var theUrl = SPRING_BACKEND + "/user/authorize";
   xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState === 4) {
       console.log(xmlhttp.response);

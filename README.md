@@ -13,9 +13,15 @@ Or -
 npm install npm-install-all -g  
 npm-install-all  
 npm install  
-npm start  
-
-
+//npm start  
+  
+npm run start-windowz  
+-- OR --    
+sudo npm run start-linux  
+  
+  
+  
+//https://stackoverflow.com/questions/45082648/npm-package-json-os-specific-script
 ------------------------------------------------------------------------------
   
   

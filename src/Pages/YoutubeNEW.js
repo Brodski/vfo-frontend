@@ -144,9 +144,11 @@ export function YoutubeNEW() {
         u.pictureUrl = res.data.pictureUrl
         u.username = res.data.username
         u.isDemo = false
-      console.time('check new subs')
-      let newSubs = checkForNewSubs(  subzPromise, res.data)
-      console.timeEnd('check new subs')
+        console.time('check new subs')
+        let newSubs = checkForNewSubs(  subzPromise, res.data)
+        console.timeEnd('check new subs')
+        prevPage = null
+        setPageLength(1)
         
       }
 
@@ -156,6 +158,17 @@ export function YoutubeNEW() {
         prev.pictureUrl = u.pictureUrl
         prev.username   = u.username
         prev.isDemo     = false
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log("THIS SHOULD BE NEW USER!!!")
+        console.log(prev)
         return prev
       })
       setUserSettings(prev => {
@@ -219,6 +232,7 @@ export function YoutubeNEW() {
       GoogleAuth.isSignedIn.listen(signinChanged);
       setIsLogged2(GApiAuth.isHeSignedIn())
       setIsFirst(false)
+      
 
     }
   }
@@ -226,6 +240,47 @@ export function YoutubeNEW() {
     console.log('Signin state changed to ', val, "\nSETTING TO: ", GApiAuth.isHeSignedIn());
     //ServerEndpoints.authenticate()
     setIsLogged2(GApiAuth.isHeSignedIn())
+    if (val == false) {
+      console.log("HOT DAYM!")
+      console.log("HOT DAYM!")
+      console.log("HOT DAYM!")
+      console.log("HOT DAYM!")
+      console.log("HOT DAYM!")
+      console.log("HOT DAYM!")
+      console.log("HOT DAYM!")
+      console.log("HOT DAYM!")
+      
+      loadMock()
+      let u2 = ServerEndpoints.getMockUser()
+      console.log(u2)
+      setUser(loadMock())
+      setUserSettings(loadMock())
+      prevPage = null
+      setPageLength(1)
+      fetchMoreSubs(isFirst)
+    console.log( 'loadMock().map(() => new VidCounter()) ')
+    console.log( u2.customShelfs.map(() => new VidCounter()) )
+    setNumVids( u2.customShelfs.map(() => new VidCounter()))
+/*      let u = loadMock()
+      setUser(prev => {
+        prev.customShelfs = u.customShelfs
+        prev.googleId   = u.googleId
+        prev.pictureUrl = u.pictureUrl
+        prev.username   = u.username
+        prev.isDemo     = false
+        console.log(prev)
+        return prev
+      })
+      setUserSettings(prev => {
+        prev.customShelfs = u.customShelfs
+        prev.googleId   = u.googleId
+        prev.pictureUrl = u.pictureUrl
+        prev.username   = u.username
+        prev.isDemo     = false
+        return prev
+      })
+      */
+    }
   }
 
   async function loadMock() {

@@ -9,12 +9,14 @@ function PostDo() {
   const [newId, setId] = useState('');
 
 
+  const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localhost:8080
+
   const sentIt = (e) => {
     e.preventDefault();
     //axios.post('https://jsonplaceholder.typicode.com/posts', { 'username': newUser, 'id': newId }).then(res => { logShit(res) })
 
-    axios.post('http://localhost:8080/userDebug', { "username": newUser }).then(res => { console.log(res) })
-    axios.post('http://localhost:8080/createUser', { "username": newUser }).then(res => { console.log(res) })
+    axios.post(SPRING_BACKEND + '/userDebug', { "username": newUser }).then(res => { console.log(res) })
+    axios.post(SPRING_BACKEND + '/createUser', { "username": newUser }).then(res => { console.log(res) })
   }
     
 

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+
 // Basic get https://www.youtube.com/watch?v=bYFYF2GnMy8
 function GetServer() {
   const [userSss, setUserSss] = useState(['']);
   const [users, setUsers] = useState(['']);
+  const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localhost:8080
 
   useEffect(() => {
     axios.get('https://jsonplaceholder.typicode.com/users')
@@ -15,7 +18,7 @@ function GetServer() {
         console.log(err);
       });
 
-    axios.get('http://127.0.0.1:8080/all')
+    axios.get(SPRING_BACKEND +'/all')
         .then(res2 => {
           console.log(res2);
           setUsers(res2.data)
