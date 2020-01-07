@@ -66,8 +66,7 @@ export function YoutubeNEW() {
 
   async function initShit() {
     await doGAuth()
-    console.log('A pageLength')
-    console.log(pageLength)
+
     setChillBro(prev => { return prev + 1 })
     if (chillBro > 10) {
       console.log("\n\n bro, ...chill. ")
@@ -83,11 +82,9 @@ export function YoutubeNEW() {
       if (res.status > 199 && res.status < 300) {
         console.log('Recieved user from server: ')
         console.log(res.data)
-        console.log('B pageLength')
-        console.log(pageLength)
+
         await processUserFromServer(res)
-        console.log('C pageLength')
-        console.log(pageLength)
+
       }
     }
     else {
@@ -99,8 +96,7 @@ export function YoutubeNEW() {
       console.log("HOT DAYM!")
       console.log("HOT DAYM!")
       console.log("HOT DAYM!")
-      console.log('D pageLength')
-      console.log(pageLength)
+
       loadMock()
       let u2 = ServerEndpoints.getMockUser()
       //fetchMoreSubs(true)
@@ -114,11 +110,9 @@ export function YoutubeNEW() {
     console.log(user.customShelfs.map(() => new VidCounter()))
     setNumVids(user.customShelfs.map(() => new VidCounter()))
     //prevPage = null
-    console.log('E pageLength')
-    console.log(pageLength)
+
     await fetchMoreSubs(isFirst)
-    console.log('F pageLength')
-    console.log(pageLength)
+
 
     // not working as desired :/
     /* if (user.customShelfs.length > initialPageLength) {
@@ -531,7 +525,7 @@ export function YoutubeNEW() {
 
       <button onClick={() => {console.log('debugUser'); debugUser(user); } }> debugUser </button>
       <h3> Youtube api </h3>
-      { isLogged2 ? <div> THIS GUYS IS SIGNED IN </div> : <div> NOT SIGNED IN </div> }
+      { isLogged2==true ? <div> THIS GUYS IS SIGNED IN </div> : <div> NOT SIGNED IN </div> }
       <div/>
         <button onClick={ytLogic.getAllSubs}> Get All Subs  </button> 
       <div/>
