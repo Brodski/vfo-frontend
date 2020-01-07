@@ -66,7 +66,6 @@ export function YoutubeNEW() {
 
   async function initShit() {
     await doGAuth()
-    await wtf()
     console.log('A pageLength')
     console.log(pageLength)
     setChillBro(prev => { return prev + 1 })
@@ -239,7 +238,7 @@ export function YoutubeNEW() {
       return newShit
     })*/
     setIsLogged2(GApiAuth.isHeSignedIn())
-    window.location.reload();
+    window.location.reload(true);
   }
 
   function wtf() {
