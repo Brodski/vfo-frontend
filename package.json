@@ -22,9 +22,10 @@
   },
   "scripts": {
     "start-windowz": "env-cmd -f .env.delopment set PORT=80 && react-scripts start",
-    "start-linux": "env-cmd -f .env.production PORT=80 react-scripts start",
+    "start-linux": "env-cmd -f .env.production react-scripts start",
+    "build-linux": "env-cmd -f .env.production react-scripts build",
     "start": "env-cmd -f .env.development react-scripts start",
-    "build": "react-scripts build",
+    "build": "env-cmd -f .env.delopment react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
