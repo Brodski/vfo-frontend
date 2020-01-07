@@ -5,6 +5,18 @@ export const Video = (props) => {
   //console.log(' xxxxxxxxx VIDEO xxxxxxxxxxxxx')
 //  console.log(props)
   let thumbnail, id, title, pubAt, viewCount, channelName, fromNowDate, vd_aux, vidDuration;
+    ////////////////////////////////////////////////////
+  moment.updateLocale('en', {
+    relativeTime: {
+      m: "1 minute",
+      h: "1 hour",
+      d: "1 day",
+      M: "1 month",
+      y: "1 year",
+    }
+  });
+
+  ///////////////////////////////////////////// //Since state variable has 'new User()' default 'values', we need to check for actual user existence
 
 
   //TODO: Could be cleaner

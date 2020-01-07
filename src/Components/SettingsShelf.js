@@ -37,6 +37,7 @@ export const SettingsShelf = (props) => {
         animation: 150,
         fallbackOnBody: true,
         swapThreshold: 0.65,
+        forceFallback: true,
         onEnd: function (evt) {
           props.saveUi2Settings()
         }
@@ -95,50 +96,18 @@ export const SettingsShelf = (props) => {
     </div>
     )
   }
-  /*
-  const ShelfAuxAux = () => {
-    let shelfClasses = props.shelf.isSorted   ? "sh-QHack custom-shelf" : "sh-QHack unsort-shelf" 
-    let unSortDndWrap = props.shelf.isSorted  ? ""        : emptySpaceDrag 
-    let dragClass = props.shelf.isSorted      ? shelfDrag : "" 
-    return(
-    <div className={ dragClass + " allShContainer"}  >
-      <div data-name={props.shelf.title} data-issorted={props.shelf.isSorted} className={shelfClasses}  >
-        <div  id={props.bindToId}  className="shelfTitleWrap"> 
-          <h3 className="shelfText"> 
-            {props.shelf.title}  
-          </h3>
-
-          <RenameDialog  shelfObj={props.shelf} bindToId={props.bindToId} updateForce={updateForce} userSettings={props.userSettings} setUserSettings={props.setUserSettings}/>
-        </div>
-        <div className={unSortDndWrap}>
-          <div className={subsDrag}>
-          {itemz}
-          </div>
-        </div>
-      </div>
-    </div>
-    )
-  }
-
-  const ShelfAux = () => {
-    if (props.shelf.isSorted) {
-      return(
-        <div className="auxSort">   <ShelfAuxAux /> </div>
-      )
-    } else { 
-      return (
-        <div className="auxUnsort"> <ShelfAuxAux /> </div> 
-      )
-    }
-  }
-  */
+  
+  
   // REMOVED key={props.title}  FROM classname="sh-QHack"
   //TO DO fix this class fiesta
   let shelfClasses = props.shelf.isSorted   ? "sh-QHack custom-shelf" : "sh-QHack unsort-shelf" 
   let unSortDndWrap = props.shelf.isSorted  ? ""        : emptySpaceDrag 
   let dragClass = props.shelf.isSorted      ? shelfDrag : "" 
   return (
-    <div> <ShelfAux2 /> </div>
+    <div> 
+      <ShelfAux2 /> 
+    </div>
+
     )
     {/*<div className={ dragClass + " allShContainer"}  >
       <div data-name={props.shelf.title} data-issorted={props.shelf.isSorted} className={shelfClasses}  >

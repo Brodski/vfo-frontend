@@ -146,7 +146,18 @@ export async function check(gapiObj, gapiString) {
 export function login() {
   if (GoogleAuth)
     return GoogleAuth.signIn().then(function (res) {
-      console.log("Sign-in successful");
+      console.log("Sign-in successful")
+      console.log("        IN         ")
+      console.log("        IN         ")
+      console.log("        IN         ")
+      console.log("        IN         ")
+      console.log("        IN         ")
+      console.log("        IN         ")
+      console.log("        IN         ")
+      console.log("        IN         ")
+      console.log("        IN         ")
+      console.log("        IN         ")
+      console.log("Sign-in successful")
       console.log(res);
       return true
     })
@@ -155,6 +166,17 @@ export function login() {
 export function logout() {
   if (GoogleAuth) {
     return GoogleAuth.signOut().then(function (res) { 
+        console.log("Sign-out successful");
+        console.log("        OUT        ");
+        console.log("        OUT        ");
+        console.log("        OUT        ");
+        console.log("        OUT        ");
+        console.log("        OUT        ");
+        console.log("        OUT        ");
+        console.log("        OUT        ");
+        console.log("        OUT        ");
+        console.log("        OUT        ");
+        console.log("        OUT        ");
         console.log("Sign-out successful");
         console.log(res);
         return true 

@@ -27,6 +27,7 @@ import { User } from './Classes/User'
 // $ npm install --save array-move
 // $ npm install --save react-id-generator
 // $ npm install --save env-cmd 
+// $ npm install --save react-loading
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
@@ -51,7 +52,8 @@ function App() {
   async function initShit() {
   
     console.time("initshit()")
-    let GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
+    await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
+    
     
     /*
     if (GoogleAuth.isSignedIn.get() == false) {
