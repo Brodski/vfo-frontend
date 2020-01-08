@@ -33,27 +33,23 @@ import { User } from './Classes/User'
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
 function App() {
 
-
-
   useEffect(() => {
-
-    console.log("\n\n\n\nHELLO YOU SHOULD ONLY SEE ME ONCE!!!!!!!!!!!!!!!!!!\n\n\n\n")
+    console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://apis.google.com/js/client.js";
     script.async = true
     document.body.appendChild(script)
     script.onload = () => {
-      initShit()
+      initGApi()
     }
   }, [])
+      
+  async function initGApi() {
   
-    
-  async function initShit() {
-  
-    console.time("initshit()")
+    console.time("initGApi()")
     await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
-    
+    console.timeEnd("initGApi()")
     
     /*
     if (GoogleAuth.isSignedIn.get() == false) {
@@ -61,7 +57,6 @@ function App() {
       setUser(theUser);
       setUserSettings(theUser);
     }
-    console.timeEnd("initshit()")
     */
   }
   

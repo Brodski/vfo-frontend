@@ -45,22 +45,6 @@ await check()
   }
 
 
-export async function getChannelInfo(e) {
-await check()
-  e.preventDefault();
-  let id = "UCPWXiRWZ29zrxPFIQT7eHSA, UCeMFHOzX9MDWbr-pu2WdmVw, UC3IngBBUGFUduHp-7haK1lw, UCA-8h5uCH5RE-1r6gskkbTw, UC0CeYMTh57zSsbUKhsyOPfw"
-  return window.gapi.client.youtube.channels.list({
-    "part": "snippet",
-    "id": id,
-    "maxResults": 50,
-    "fields": "items(id, snippet/title,snippet/thumbnails/default)",
-  })
-    .then(function (response) {
-      console.log("Response", response.result);  //console.log("Response", JSON.stringify(response.result, null, 2)); 
-    })
-  }
-
-
 export async function getSomeVideos(vidIdList = [""]) {
 await check()
 //console.log(vidIdList.toString())
@@ -91,9 +75,6 @@ await check()
   }
 
 */
-
-
-
 
 
 

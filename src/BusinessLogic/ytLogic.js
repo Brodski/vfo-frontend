@@ -9,6 +9,8 @@ import * as videoJ from '../Scratch/api_video.json';
 import * as moment from 'moment';
 import * as youtubeApi from "../HttpRequests/youtubeApi";
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
+import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
+import { User } from '../Classes/User';
 
 // Github: JS Client https://github.com/google/google-api-javascript-client
 //
@@ -75,6 +77,98 @@ export async function XXXgetActivitesOfChannels_2() {
       console.log("---------- Activity -----------------------------------------")
 //      console.log(JSON.stringify(act.result, null, 2))
     }    
+  }
+
+  
+export async function processUserFromServer(res) {
+
+  let u = new User()
+  let subzPromise = getAllSubs()
+
+  if (res.data.customShelfs == null) { // implies new user
+    u.initNewUser(await subzPromise, res.data)
+    ServerEndpoints.saveUser(u)
+  }
+  else {
+    u.customShelfs = res.data.customShelfs
+    u.googleId = res.data.googleId
+    u.pictureUrl = res.data.pictureUrl
+    u.username = res.data.username
+    u.isDemo = false
+
+    //Below: Sync subs from the User's YT account and this app's database.
+    let newSubs = checkForNewSubs(await subzPromise, res.data)
+    let removedSubArr = checkForRemovedSubs(await subzPromise, res.data)
+    u.addArrayOfSubs(newSubs)
+    u.removeSubs(removedSubArr)
+    if (removedSubArr[0] || newSubs[0]) {
+      ServerEndpoints.saveUser(u)
+    }
+    console.log('newSubs')
+    console.log('remvoedSubs')
+    console.log(newSubs)
+    console.log(removedSubArr)
+    console.log('user after add and remove')
+    console.log(u)
+
+  }
+  return u
+}
+
+  //Goes through every sub from the backend, if a sub does not match any subs from YT, then we found a sub that was removed from YT user.
+  function checkForRemovedSubs(subsFromYt, subsFromBackend) {
+  
+    let removedSubs = []
+    let doesMatches = false;
+    let allBackendSubz = []
+    subsFromBackend.customShelfs.map(sh => {
+      allBackendSubz.push(...sh.fewSubs)
+    })
+    console.log('allBackendSubz')
+    console.log(allBackendSubz)
+
+    for (let backS of allBackendSubz) {
+      doesMatches = false
+      for (let ytS of subsFromYt) {
+        if (ytS.snippet.resourceId.channelId == backS.channelId) {
+          doesMatches = true
+          break
+        }
+      }
+      //if this sub from backend doesnt exist in subsFrom Yt, then it was removed
+      if (!doesMatches) {
+        removedSubs.push(backS)
+      }
+    }
+
+    console.log('remove subsFromBackend AFTER ALL THIS SHIT')
+    console.log(subsFromBackend)
+    console.log(subsFromBackend.customShelfs)
+    console.log(removedSubs)
+    return removedSubs
+  }
+
+  //TODO could be cleaner, pretty confusing.
+  //Goes through every sub from YT, if a sub does not match any subs from the backend, then we found a new sub.
+  function checkForNewSubs(subsFromYt, subsFromBackend) {     
+    console.log('subsFromYt')
+    console.log(subsFromYt)
+    let newSubs = []
+    for (let ytS of subsFromYt) {
+      let doesMatches = false;
+      for (let uSh of subsFromBackend.customShelfs) {
+        for (let sub of uSh.fewSubs) {
+          if (ytS.snippet.resourceId.channelId == sub.channelId) {
+            doesMatches = true;
+            break
+          }
+        }
+      }
+      if (doesMatches == false) {
+        newSubs.push(ytS)
+      }
+    }
+    return newSubs
   }
 
 
@@ -220,8 +314,6 @@ export function saveDemoToLocal(shelfs) {
     let shelfz = localStorage.getItem('demoSubs-sh-yt')
     let pageL = localStorage.getItem('demoSubs-numpages-yt')
     shelfz = JSON.parse(shelfz)
-    console.log('initshit():  True = ytLogic.isUsedRecently(user')
-    console.log(shelfz)
     setFinalShelfs(shelfz)
     setHasMoreShelfs(true)
 }*/
@@ -255,6 +347,39 @@ export function getStorageShelfs() {
   console.log(shelfz)
   return shelfz
 }
+
+
+function orderdAndSplice(shelfsActs) {
+    let orderedActs = shelfsActs.map(sh => {
+      return sh.map(sub => {
+        return this.sortByDate(sub)
+      })
+    })
+     //A very nice print
+    for (let sh of orderedActs) {
+      for (let s of sh) {
+        for (let v of s) {
+        console.log(v.snippet.channelTitle, ' ', v.snippet.publishedAt, ' ', v.snippet.title)
+        }
+      }
+    }
+    console.log('\n\n\n\n\n\n\n\n\n ORDERED ACTS \n\n\n\n\n\n\n\n\n\n')
+    console.log(orderedActs)
+    return orderedActs
+  }
+
+  
+  function printShelfs(shelfsActs) {
+    let ilol = 0
+    for (let sh of shelfsActs) {
+      console.log('FETCH: ACTS SHELF ', ilol)
+      for (let s of sh) {
+        console.log(s.snippet.channelTitle + ' - ' + s.snippet.title)
+      }
+      ilol++
+    }
+  }
+
 
 //I'm sorry for this. I messed up ealier :(
 export function beginFilter2(fShelfs) {

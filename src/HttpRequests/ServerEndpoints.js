@@ -23,8 +23,11 @@ axiosClient.interceptors.request.use(function (config) {
 const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localhost:8080
 
 export async function loginToBackend() {
+  if (!GApiAuth.isHeSignedIn()) {
+    console.log("NOT SIGNED. RETURNING")
+    return
+  }
   let idtoken = GApiAuth.getToken()
-  //return axiosClient.post(SPRING_BACKEND + '/user/login', { "idtoken": idtoken, timeout: 1000, })
   return axios.post(SPRING_BACKEND +'/user/login', { "idtoken": idtoken })
     .then(res => {
 //      logShit(res);
@@ -38,9 +41,7 @@ export async function loginToBackend() {
 }
 
 export async function debugUser(user) {
-    
     axios.post(SPRING_BACKEND +'/userDebug', { "username": user }).then(res => { logShit(res) })
-
 }
 
 export async function saveUser(user) {
@@ -48,6 +49,7 @@ export async function saveUser(user) {
   return axios.post(SPRING_BACKEND +'/user/save', { "idtoken": idtoken, "user": user })
     .then(res => { 
     //  logShit(res); 
+      console.log(`user has been saved with status code ${res.status}`)
       return res 
     })
     .catch(e => {

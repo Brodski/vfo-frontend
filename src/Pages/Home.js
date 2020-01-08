@@ -9,11 +9,6 @@ function Home() {
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
 
-  useEffect(() => {
-    console.log('HOME!!!!!!!!!!!!!!!!')
-    //ytLogic.saveToLocal([])
-  },[])
-
 
   return (
     <div>
@@ -21,7 +16,7 @@ function Home() {
       <button onClick={() => console.log(userSettings)}> log userSettings </button>
       <h1>Home</h1>
       <h3> This environment is for: {process.env.REACT_APP_ENV_NAME} </h3>
-      <h3> DB/server at {process.env.REACT_APP_SPRINGB_DOMAIN} </h3>
+      <h3> DB, HTTP Server, and backend server at: {process.env.REACT_APP_SPRINGB_DOMAIN} </h3>
     </div>
   );
 }

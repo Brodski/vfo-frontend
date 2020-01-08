@@ -20,6 +20,7 @@ const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localh
  * a Google account, get the user's current sign-in status, get specific data from the user's 
  * Google profile, request additional scopes, and sign out from the current account.
  */
+////////////////////////////////////////////////////////////////
 
 export async function initGoogleAPI() {
   // Wait until googleApi is loaded: "script.src = "https://apis.google.com/js/client.js"
@@ -27,10 +28,8 @@ export async function initGoogleAPI() {
   await waitForGApiLoad()
   
   // Wait until client is loaded
-  console.time('2')
   console.log('=== 2 ===')
-  await window.gapi.load("client:auth2", _initClient) //initClientWithAuth
-  console.timeEnd('2')
+  await window.gapi.load("client:auth2", _initClient) 
     
   //Wait until client is authenticated  
   console.log('=== 3 ===')
@@ -39,21 +38,13 @@ export async function initGoogleAPI() {
   //Wait until GoogleAuth object is loaded
   console.log('=== 4 ===')
   
-  GoogleAuth = await window.gapi.auth2.getAuthInstance();
-  
-  
+  GoogleAuth = await window.gapi.auth2.getAuthInstance(); 
   return GoogleAuth
 }
 
 // "You can also now use gapi.client to perform authenticated requests."  instead of auth.init
 // https://developers.google.com/identity/sign-in/web/reference#example
 async function _initClient() {
-  /*await window.gapi.auth2.init({
-    client_id: SECRET_KEYS.clientId,
-    //apiKey: SECRET_KEYS.apiKey,
-    scope: SCOPE,
-  })
-  */
   let discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
   await window.gapi.client.init({
     clientId: SECRET_KEYS.clientId,
@@ -61,23 +52,9 @@ async function _initClient() {
     discoveryDocs: [discoveryUrl],
     scope: SCOPE,
   })   
-  //await _loadClient();
 }
 
-/*
-async function _loadClient() {
-   window.gapi.client.setApiKey(SECRET_KEYS.apiKey);
-   return window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-    .then(function (res2) {
-      console.log("GApi client loaded for API");
-    }).catch(
-      function (err) { console.error("Error loading GAPI client for API", err); });
-}
-*/
-
-
-
-
+// Pass-by-value issues prevent me from abstracting out the 3 'wait loop function' below
 async function waitForGApiLoad() {
   let wait = 100
   while (!window.gapi) {
@@ -86,7 +63,6 @@ async function waitForGApiLoad() {
     await Common.sleep(wait)
   }
   console.log("GApi 1 :) GApi EXISTS ");
-
 }
 
 async function waitForAuthLoad() {
@@ -110,12 +86,6 @@ export async function getGoogleAuth() {
 
 export async function checkAll() {
   if (!window.gapi.auth2 || !window.gapi || !GoogleAuth) {
-    /*console.log('window.gapi.auth2' )
-    console.log(window.gapi.auth2 )
-    console.log('window.gapi' )
-    console.log(window.gapi )
-    console.log('GoogleAuth' )
-    console.log(GoogleAuth )*/
     return false
   }
   return true
@@ -229,7 +199,7 @@ export function printShit() {
 
 }
 
-////////////////////////// https://developers.google.com/identity/sign-in/web/reference#googleusergetid
+// https://developers.google.com/identity/sign-in/web/reference#googleusergetid
 export function getProfile() {
   console.log("getProfile")
   if (GoogleAuth) {
@@ -267,11 +237,10 @@ export function getAuthCodeForServerSideShit() {
   user.grantOfflineAccess({
     scope: "https://www.googleapis.com/auth/youtube.readonly"
   }).then(function (resp) {
-    var authcode = resp.code;
     if (resp.code) {
       axios.post(SPRING_BACKEND + '/userDebug', { authcode: resp.code } ) .then(res => { (console.log(res)) })
       axios.post(SPRING_BACKEND + '/user/authorize', { authcode: resp.code } ) .then(res => { (console.log(res)) })
-      var authcode22 = resp.poopy;
+
       console.log("RESPONSE AND CODE FROM AUTHCODE")
       console.log(resp)
       console.log("------------")

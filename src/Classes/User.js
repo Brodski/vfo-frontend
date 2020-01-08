@@ -23,22 +23,56 @@ export class User {
     this.customShelfs.push(shelf)
   }
 
+  addArrayOfSubs(ytSubArr) {
+    if (!ytSubArr[0]) {
+      console.log('User has not subscribed from any new channels recently')
+      return
+    }
+    console.log('SUBS HAVE BEEN ADDED')
+    ytSubArr.forEach(ytSub => { this.addSub(ytSub) })
+  }
+
   initNewUser(subz, data) {
     subz.map(ytSub => {
       this.addSub(ytSub)
     })
-
     //TODO
     // need to update username and pic
     this.username = data.username
     this.pictureUrl = data.pictureUrl
     this.isDemo = false
-    if (this.customShelfs[0] == null) { 
-      this.customShelfs = []  
+    if (this.customShelfs[0] == null) {
+      this.customShelfs = []
     }
   }
 
+  removeSubs(removedSubsArr) {
+    if (!removedSubsArr[0]) {
+      console.log('User has not unsubscribed from any channel recently')
+      return
+    }
+    console.log('SUBS HAVE BEEN REMOVED')
+    for (let sh of this.customShelfs) {
+      for (let sub of sh.fewSubs) {
+        for (let rmS of removedSubsArr) {
+          if (rmS.channelId == sub.channelId) {
+            let idz = sh.fewSubs.indexOf(sub)
+            console.log(sub)
+            sh.fewSubs.splice(idz, 1)
+            if (sh.fewSubs.length === 0) {
+              let idz2 = this.customShelfs.indexOf(sh)
+              this.customShelfs.splice(idz2, 1)
+            }
+          }
+        }
+      }
+    }
+  }
 }
+
+
+
+
 
 export class CustomShelf {
   constructor() {
@@ -62,3 +96,22 @@ export class VidCounter {
     this.shelfId = '';
   }
 }
+
+
+
+    //  for (let uSh of subsFromBackend.customShelfs) {
+    //    for (let sub of uSh.fewSubs) {
+    //      for (let rmS of removedSubs) {
+    //        if (rmS.channelId == sub.channelId) {
+    //          let idz = uSh.fewSubs.indexOf(sub)
+    //          console.log(idz)
+    //          console.log(sub)
+    //          uSh.fewSubs.splice(idz,1)
+    //          if (uSh.fewSubs.length === 0) {
+    //            let idz2 = subsFromBackend.customShelfs.indexOf(uSh)
+    //            subsFromBackend.customShelfs.splice(idz2,1)
+    //          }
+    //        }
+    //      }
+    //    }
+    //}
