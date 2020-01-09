@@ -70,7 +70,6 @@ export function YoutubeNEW() {
 
     if (GApiAuth.isHeSignedIn() && user.isDemo) {
       console.log("LOGGED IN Should be doing fetch to server")
-      //let res = await doLoginToBackend()
       let res = await ServerEndpoints.loginToBackend();
       if (res.status > 199 && res.status < 300) {
         console.log('Recieved user from server: ', res.status)
@@ -108,37 +107,21 @@ export function YoutubeNEW() {
       return prev
     })
     setNumVids(u.customShelfs.map(() => new VidCounter()))
-      /*setUser(prevUser => {
-        newSubs.forEach(newS => { prevUser.addSub(newS) })
-        ServerEndpoints.saveUser(prevUser)
-        return prevUser
-      })
-
-      setUserSettings(prevUser => {
-        newSubs.forEach(newS => { prevUser.addSub(newS) })
-        return prevUser
-      })
-      setNumVids(user.customShelfs.map(() => new VidCounter()))*/
-
-
-
   }
 
   async function doGAuth() {
     if (!GoogleAuth) {
       GoogleAuth = await GApiAuth.getGoogleAuth()  // Usually 500ms   
-      GoogleAuth.isSignedIn.listen(signinChanged);
+      GoogleAuth.isSignedIn.listen( function (val) {
+        console.log('Signin state changed to ', val, "\nSetting to: ", GApiAuth.isHeSignedIn());
+        setIsLogged2(GApiAuth.isHeSignedIn())
+        window.location.reload(true);
+      });
       setIsLogged2(GApiAuth.isHeSignedIn())
       setIsFirst(false)
     }
   }
-
-  let signinChanged = function (val) {
-    console.log('Signin state changed to ', val, "\nSETTING TO: ", GApiAuth.isHeSignedIn());
-    setIsLogged2(GApiAuth.isHeSignedIn())
-    window.location.reload(true);
-  }
-  
+    
   async function loadMock() {
     let theUser = ServerEndpoints.getMockUser()
     console.log("LOADING MOCK")
@@ -231,9 +214,6 @@ export function YoutubeNEW() {
   
   const preFetchMoreSubs = async () => {
 
-    if (isEndReached()) { //If all shelfs retrieved, then quit
-      return
-    }
     if (isFirst) {  
       putUnsortedShelfAtBottom() 
     }
@@ -249,6 +229,9 @@ export function YoutubeNEW() {
     console.log("user")
     console.log(user)
     /////////////////////////////////
+    if (isEndReached()) { //If all shelfs retrieved, then quit
+      return
+    }
     await preFetchMoreSubs()
 
     let shelfsActs = await _fetchActivities()    
@@ -291,16 +274,6 @@ export function YoutubeNEW() {
       setHasMoreShelfs(true) 
   }
 
-
-  //async function doLoginToBackend() {
-    
-  //  if (!GApiAuth.isHeSignedIn()) {
-  //    console.log("NOT SIGNED. RETURNING")
-  //    return
-  //  }
-  //  let res = ServerEndpoints.loginToBackend();
-  //  return res
-  //}
 
   async function saveBackend(u) {
     console.log('save backend u')

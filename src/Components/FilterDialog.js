@@ -2,8 +2,6 @@
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import { Filter } from '../Classes/Filter';
-import Tagify from '@yaireo/tagify'
-import Tags from "@yaireo/tagify/dist/react.tagify";
 
 //https://github.com/reactjs/react-modal
 
@@ -15,14 +13,10 @@ export function FilterDialog(props){
   const [modalIsOpen,setIsOpen] = useState(false);
   const [minDur, setMinDur] = useState()
   const [maxDur, setMaxDur] = useState()
-  var reqIdSuffix = '-req';
-  var blockIdSuffix = '-block';
   
   useEffect(() => {
-    /*console.log("document.querySelectorAll('#' + props.bindToId)")
-    console.log(document.querySelectorAll('#' + props.bindToId))
-    console.log(props.bindToId)
-    console.log(props)*/
+    // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
+    //ReactDOM.render(<Example />, document.getElementById('settings-main'));
     if (!document.querySelectorAll('#' + props.bindToId)[1]) {
       Modal.setAppElement('#' + props.bindToId)
     }
@@ -30,19 +24,6 @@ export function FilterDialog(props){
     setMaxDur(props.subObj.filter.maxDuration)
     } ,[props.userSettings])
 
-    
-  function close(e) {
-    console.log("close!")
-    e.preventDefault();
-    setIsOpen(false)
-  }
-
-  const IconHelper = () => {
-    return (
-    <i className="fas fa-info-circle infoIcon">
-      <span> Comma separated </span>
-    </i> )
-  }
 
   const handleMinDur = (e) => {
     setMinDur(e.target.value)
@@ -51,10 +32,18 @@ export function FilterDialog(props){
     setMaxDur(e.target.value)
   }
 
-  const MaxDurationDropdown = (props) => {
+  
+  const IconHelper = () => {
     return (
-      <select value={maxDur} onChange={handleMaxDur} >
-        <option value="Infinity" > Off  </option>
+    <i className="fas fa-info-circle infoIcon">
+      <span> Comma separated </span>
+    </i> )
+  }
+
+  const MaxMinDurationDropdown = (props) => {
+    return (
+      <select value={props.maxOrMinState} onChange={props.maxOrMinHandler} >
+        <option value={props.firstValue} > Off  </option>
         <option value="0.5"> 30 seconds </option>
         <option value="1" >  1 minutes </option>
         <option value="2" >  2 minutes</option>
@@ -73,53 +62,22 @@ export function FilterDialog(props){
     </select>
     )
   }
-  const MinDurationDropdown = (props) => {
-    return (
-      <select value={minDur} onChange={handleMinDur} >
-        <option value='0' > Off </option>
-        <option value="0.5"> 30 seconds </option>
-        <option value="1" >  1 minutes </option>
-        <option value="2" >  2 minutes</option>
-        <option value="3" >  3 minutes</option>
-        <option value="4" >  4 minutes</option>
-        <option value="5" >  5 minutes</option>
-        <option value="6" >  6 minutes</option>
-        <option value="7" >  7 minutes</option>
-        <option value="8" >  8 minutes</option>
-        <option value="9" >  9 minutes</option>
-        <option value="10" > 10 minutes</option>
-        <option value="15" > 15 minutes</option>
-        <option value="30" > 30 minutes</option>
-        <option value="45" > 45 minutes</option>
-        <option value="60" > 60 minutes</option>
-    </select>
-    )
-  }
-  // function saveFilter() {
-  //  myFilter.requireList.push("req word")
-//    myFilter.blocklist   = _getTags(blockIdSuffix)
-    //myFilter.requireList = _getTags(reqIdSuffix) }
-
-  const tagSettings = { maxTags: 10, placeholder: "", dropdown: { enabled: 0 }, }// always show suggestions dropdown
-    
-
+      
   function save(e) {
     // TODO: It's ugly
 
-    if(e) e.preventDefault();
     console.log("save filter")
     console.log(props)
-    let tempUser = props.userSettings
+    
 
     let shelfIndex = 0 ;
     let subIndex;
     let unSortedIdx;
+    let tempUser = props.userSettings
 
     let myFilter = new Filter() 
     myFilter.maxDuration = maxDur;
     myFilter.minDuration = minDur;
-    //myFilter.blocklist   = _getTags(blockIdSuffix)
-    //myFilter.requireList = _getTags(reqIdSuffix) }
     
     //Find which shelf and location of the User on shelf
     //Search Custom Sub Shelfs
@@ -146,30 +104,11 @@ export function FilterDialog(props){
     props.setUserSettings(tempUser)
     setIsOpen(false)
   }
- 
-
-
-  function getBothTags(e) {
-    e.preventDefault()
-    var blocks = _getTags(blockIdSuffix)
-    console.log(blockIdSuffix)
-    console.log(blocks)
-    var reqs = _getTags(reqIdSuffix)
-    console.log(reqIdSuffix)
-    console.log(reqs)
-  }
-
-  function _getTags(tagSuffix) {
-    console.log("document.querySelectorAll(tags)")
-    var myList = []
-    document.getElementById(props.bindToId + tagSuffix).querySelectorAll('.tagify__tag').forEach(x => myList.push(x.textContent))
-    //Note this: var nestedShelf = [].slice.call(document.querySelectorAll(selector));
-    return myList
-
-  }
-
-  function closeModal() {
-    save(); 
+  
+  function close(e) {
+    e.preventDefault();
+    setMinDur(props.subObj.filter.minDuration)
+    setMaxDur(props.subObj.filter.maxDuration)
     setIsOpen(false)
   }
 
@@ -179,7 +118,7 @@ export function FilterDialog(props){
         <button onClick={() => { console.log(props); setIsOpen(true); } }>create filter</button>
         <Modal
           isOpen={modalIsOpen}
-          onRequestClose={closeModal}
+          onRequestClose={close}
           shouldCloseOnEsc={ true}
           className="Modal"
           overlayClassName="Overlay"
@@ -189,19 +128,18 @@ export function FilterDialog(props){
           <h3>Only show videos that are ... </h3>
           <form>
             <div>(Min) Longer than: </div>
-              <MinDurationDropdown />
+            {/*<MinDurationDropdown />*/}
+              <MaxMinDurationDropdown maxOrMinState={minDur} maxOrMinHandler={handleMinDur} firstValue={"0"} />
             <div> (Max) Shorter than: </div>
-              <MaxDurationDropdown />
+              <MaxMinDurationDropdown maxOrMinState={maxDur} maxOrMinHandler={handleMaxDur} firstValue={"Infinity"} />
+            {/*<MaxDurationDropdown />*/}
+
             {/*<div id={props.bindToId + reqIdSuffix}>Title must contain:
-            <Tags settings={tagSettings} /> 
-              <IconHelper />
+                <Tags settings={tagSettings} /> 
+                <IconHelper />
                </div>
-            <div id={props.bindToId + blockIdSuffix}>Title cannot contain: 
-            <Tags settings={tagSettings} {...tagifyProps2}/>
-             </div>
-              <IconHelper />*/}
+            */}
           <div> </div>
-            {/*<button onClick={getBothTags} > Get Tags </button>*/}
             <button onClick={save}>Save</button>
             <button onClick={close}>Close</button>
           </form>
@@ -210,12 +148,3 @@ export function FilterDialog(props){
     );
 }
 
-//////////////////////////////////////////////////////////////
-  /*
-   
-   */
-
-    
-
-// Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-//ReactDOM.render(<Example />, document.getElementById('settings-main'));

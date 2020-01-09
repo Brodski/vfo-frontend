@@ -14,7 +14,6 @@ return(
     <h3>Common</h3>
     <button onClick={GApiAuth.login}> Login </button>
     <button onClick={GApiAuth.logout} > Log Out </button>
-    <button onClick={GApiAuth.getAuthCodeForServerSideShit} >Auth Code For Server</button>
 
     <div></div>
     <button onClick={() => { console.log(GApiAuth.isHeSignedIn()) }}> isHeSignedIn</button>
@@ -34,7 +33,7 @@ return(
     <button onClick={() => {console.log('pageLength');  console.log(props.data.pageLength) }   }>  c.log pageLength  </button>
     <div></div>
     <button onClick={() => {console.log('doLoginToBackend'); props.data.doLoginToBackend(); }  }> doLoginToBackend </button>
-    <button onClick={() => {console.log('saveBackend'); props.data.saveBackend(props.user); }      }> saveBackend </button>
+    <button onClick={() => {console.log('saveBackend'); ServerEndpoints.saveUser(props.user); }      }> saveBackend </button>
     <button onClick={() => {console.log('set Page 1');  props.data.setPageLength(1); }                    }> set Page 1 </button>
     <button onClick={() => {console.log('debugUser');   debugUser(props.user); }    }> debugUser </button>
     <div></div>

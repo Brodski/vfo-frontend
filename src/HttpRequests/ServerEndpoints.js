@@ -3,86 +3,68 @@ import { Subscription } from '../Classes/Subscription';
 import { User, CustomShelf } from '../Classes/User';
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 
-export async function getDummyUser() {
-
-  return "this is dummy user from backend, after a post to localhost"
-
-}
-
-/*const axiosClient = axios.create()
-axiosClient.interceptors.request.use(function (config) {
-  console.log("inside axios client. config:")
-  console.log(config)
-  return config
-}, function (e) {
-  console.log("inside axios client. error:")
-  console.log(e)
-  return Promise.reject(e)
-})*/
-
 const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localhost:8080
+
+axios.defaults.baseURL = SPRING_BACKEND;
+axios.interceptors.request.use( (config) => {
+  console.log(`Request was made to ${config.url}`)  
+  return config
+}, error => {
+  console.log("Request error")
+  return Promise.reject(error)
+
+})
+
+axios.interceptors.response.use( (res) => {
+  console.log(`Response recieved with status ${res.status} `)  
+  return res
+}, error => {
+  console.log('Response error')
+  return Promise.reject(error)
+
+})
+
 
 export async function loginToBackend() {
   if (!GApiAuth.isHeSignedIn()) {
-    console.log("NOT SIGNED. RETURNING")
+    console.log('User is not logged in. Returning')
     return
   }
   let idtoken = GApiAuth.getToken()
-  return axios.post(SPRING_BACKEND +'/user/login', { "idtoken": idtoken })
+  return axios.post('/user/login', { "idtoken": idtoken })
     .then(res => {
-//      logShit(res);
+      console.log('User login successful')
       return res
     })
     .catch(e => {
-      console.log(`Axios request failed: ${e}`);
+      console.log(`Axios request failed: Login ${e}`);
       return e
     })
 
 }
 
 export async function debugUser(user) {
-    axios.post(SPRING_BACKEND +'/userDebug', { "username": user }).then(res => { logShit(res) })
+    axios.post(SPRING_BACKEND +'/userDebug', { "username": user }).then(res => { console.log(res) })
 }
 
 export async function saveUser(user) {
-  let idtoken = GApiAuth.getToken()
-  return axios.post(SPRING_BACKEND +'/user/save', { "idtoken": idtoken, "user": user })
-    .then(res => { 
-    //  logShit(res); 
-      console.log(`user has been saved with status code ${res.status}`)
-      return res 
-    })
-    .catch(e => {
-      console.log(`Axios request failed: saveUser(user)`);
-      console.log(`Axios request failed: ${e}`);
-      return e
-    })
-}
-
-
-function logShit(res) {
-  console.log('----------------------------------------')
-  //console.log("res: ")
-//  console.log(res)
-
-  //console.log("res.request: ")
-//  console.log(res.request)
-  console.log(`res.request.status ${res.request.status}`)
-  console.log(`Status code: ${res.status}`);
-
-  console.log(`Data: `)
-  console.log(res.data)
-
-//  console.log(`Config: `)
-//  console.log(res.config);
-
-  console.log('----------------------------------------')
+  if (GApiAuth.isHeSignedIn) {
+    let idtoken = GApiAuth.getToken()
+    return axios.post(SPRING_BACKEND + '/user/save', { "idtoken": idtoken, "user": user })
+      .then(res => {
+        console.log(`User has been saved with status code ${res.status}`)
+        return res
+      })
+      .catch(e => {
+        console.log(`Axios request failed: save user ${e}`);
+        return e
+      })
+  }
 }
 
 //https://www.npmjs.com/package/axios#handling-errors
 function handleError(error) {
   if (error.response) { // response != 2xx
-    console.log(error.response.data);
     console.log(error.response.status);
     console.log(error.response.headers);
   } else if (error.request) { // request sent but recieved no response

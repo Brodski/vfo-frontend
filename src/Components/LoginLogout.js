@@ -26,8 +26,8 @@ const Login = (props) => {
   return (<button onClick={ async () => {
     console.log("Logging in...");
     let rtn = await GApiAuth.login()
-    rtn ? props.setUser(await ServerEndpoints.getDummyUser() ) :  console.log("Login canceled")
-    rtn ? console.log("Log in successful")              :  console.log("Login canceled")
+    //rtn ? props.setUser( "lul wut" :  console.log("Login canceled")
+    //rtn ? console.log("Log in successful")              :  console.log("Login canceled")
       
   }}> Login </button> )
 }

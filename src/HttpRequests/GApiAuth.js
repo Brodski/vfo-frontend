@@ -121,12 +121,6 @@ export function login() {
       console.log("        IN         ")
       console.log("        IN         ")
       console.log("        IN         ")
-      console.log("        IN         ")
-      console.log("        IN         ")
-      console.log("        IN         ")
-      console.log("        IN         ")
-      console.log("        IN         ")
-      console.log("        IN         ")
       console.log("Sign-in successful")
       console.log(res);
       return true
@@ -137,12 +131,6 @@ export function logout() {
   if (GoogleAuth) {
     return GoogleAuth.signOut().then(function (res) { 
         console.log("Sign-out successful");
-        console.log("        OUT        ");
-        console.log("        OUT        ");
-        console.log("        OUT        ");
-        console.log("        OUT        ");
-        console.log("        OUT        ");
-        console.log("        OUT        ");
         console.log("        OUT        ");
         console.log("        OUT        ");
         console.log("        OUT        ");

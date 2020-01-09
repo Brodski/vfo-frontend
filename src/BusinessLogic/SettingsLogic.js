@@ -56,15 +56,11 @@ export function queryShelfs(userSettings, allowEmpty = false) {
     }
     if (allowEmpty) {                                     //true => push
       newCustomShelfs.push(tempShelf)
-    } else if (tempShelf.fewSubs[0] && !allowEmpty) {     // yes && !true
-                                                         // no  && !true
-                                                         // yes && !false => push
-                                                         // no  && !false
+    } else if (tempShelf.fewSubs[0] && !allowEmpty) {    // yes && !false => push
        newCustomShelfs.push(tempShelf)
     }
   }
   console.log("\n\\nEND OF QURERY\n\n")
-  //console.log(newCustomShelfs)
   return newCustomShelfs
 }
 

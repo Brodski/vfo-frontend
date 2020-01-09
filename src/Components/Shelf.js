@@ -31,7 +31,7 @@ export const Shelf = props => {
 
   }
   /*
-  console.log(' SHELF ')
+  console.log(' ***************** SHELF ***********************')
   console.log('props.numVids')
   console.log(props.numVids)
   console.log(props._setIdx)

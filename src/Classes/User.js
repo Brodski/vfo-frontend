@@ -10,6 +10,25 @@ export class User {
     this.isDemo = true;
   }
 
+  
+  convertUnSortedShelfsToSubs() {
+    let aux_unSortedSh = this.customShelfs.filter( sh => { return !sh.isSorted } )
+    let wut = aux_unSortedSh.map(sh => {
+        return [...sh.fewSubs]
+      })
+
+      console.log('wut')
+      console.log('wut')
+      console.log('wut')
+      console.log('wut')
+      console.log('wut')
+      console.log(wut)
+    return wut
+  }
+
+
+
+
   addSub(ytSub) {
     let sub = new Subscription()
     sub.channelName = ytSub.snippet.title
@@ -85,6 +104,35 @@ export class CustomShelf {
     this.fewSubs=fewS;
     this.isSorted=isSorted;
   }
+
+  convertAllSubsToShelfs() {
+    return this.fewSubs.map(sub => 
+      this.convertSubToShelf(sub)
+    )
+  }
+
+  convertSubToShelf(sub) {
+    let newSh = new CustomShelf()
+    newSh.title = sub.channelName
+    newSh.isSorted = false
+    newSh.fewSubs = [sub]
+    return newSh
+  }
+
+
+  //prepareYourSubscriptionsContainer() {
+  //  let aux_unSortedSh = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
+
+  //  let bigFlat = []
+  //  aux_unSortedSh.map(sh => {
+  //    return sh.fewSubs.map(sub => { bigFlat = bigFlat.concat(sub) })
+  //  })
+  //  let unSortedSh  = [new CustomShelf()]
+  //  unSortedSh[0].isSorted = false
+  //  unSortedSh[0].title = "Your Subscriptions"
+  //  unSortedSh[0].fewSubs = bigFlat
+
+  //}
 }
 
 

@@ -22,7 +22,7 @@ import { User } from './Classes/User'
 // $ npm install --save react-sortablejs
 // $ npm install --save sortablejs 
 // $ npm install --save react-modal
-// $ npm install --save @yaireo/tagify
+
 // $ npm install --save react-infinite-scroller
 // $ npm install --save array-move
 // $ npm install --save react-id-generator
