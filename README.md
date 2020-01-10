@@ -23,7 +23,10 @@ sudo npm run start-linux
   
 //https://stackoverflow.com/questions/45082648/npm-package-json-os-specific-script
 ------------------------------------------------------------------------------
+
+if user subs/unsubs it will not be garuanteed to show up instantly. User must refresh page (full F5) to get changes
   
+------------------------------------------------------------------------------
   
   
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

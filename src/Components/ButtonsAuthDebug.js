@@ -33,12 +33,11 @@ return(
     <button onClick={() => {console.log('pageLength');  console.log(props.data.pageLength) }   }>  c.log pageLength  </button>
     <div></div>
     <button onClick={() => {console.log('doLoginToBackend'); props.data.doLoginToBackend(); }  }> doLoginToBackend </button>
-    <button onClick={() => {console.log('saveBackend'); ServerEndpoints.saveUser(props.user); }      }> saveBackend </button>
+    <button onClick={() => {console.log('save user to Backend'); ServerEndpoints.saveUser(props.user); }      }> save user 2 Backend </button>
     <button onClick={() => {console.log('set Page 1');  props.data.setPageLength(1); }                    }> set Page 1 </button>
     <button onClick={() => {console.log('debugUser');   debugUser(props.user); }    }> debugUser </button>
     <div></div>
     <button onClick={ytLogic.getAllSubs}> Get All Subs  </button> 
-    <button onClick={ytLogic.XXXgetActivitesOfChannels_2}> 2.0: Get All Subs, then get activites of 1 of your subs  </button>
   </div>
 
     )

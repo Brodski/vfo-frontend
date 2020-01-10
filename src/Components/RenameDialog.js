@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
-
 import Modal from 'react-modal';
-import { Filter } from '../Classes/Filter';
-
-
 
 export function RenameDialog(props) {
-  //console.log(" dialog props")
-  //  console.log(props)
   const [modalIsOpen, setIsOpen] = useState(false);
   const [newName, setNewName] = useState()
 
@@ -18,9 +12,6 @@ export function RenameDialog(props) {
 
 
   function close(e) {
-    console.log("close!")
-      console.log(props)
-      console.log(props.shelfObj.title)
     e.preventDefault();
     setIsOpen(false)
   }
@@ -54,7 +45,6 @@ export function RenameDialog(props) {
           <form>
             <input value={newName} type="text" placeholder="Rename" onChange={changeHandler} />
             <div> </div>
-            {/*<button onClick={getBothTags} > Get Tags </button>*/}
             <button onClick={save}>Save</button>
             <button onClick={close}>Close</button>
           </form>

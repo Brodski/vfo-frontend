@@ -62,46 +62,74 @@ export function FilterDialog(props){
     </select>
     )
   }
+
+  function findIndexesOfChannelName() {
+  let subIndex;
+  let shelfIndex = 0;
+    for (let sh of props.userSettings.customShelfs) {
+        subIndex =  sh.fewSubs.findIndex( s => s.channelName == props.subObj.channelName)
+        if (subIndex > -1) { 
+          break 
+        }
+        shelfIndex += 1;
+      }
+    return { subIndex, shelfIndex }
+  }
       
   function save(e) {
     // TODO: It's ugly
-
+    e.preventDefault()
     console.log("save filter")
     console.log(props)
     
-
-    let shelfIndex = 0 ;
-    let subIndex;
-    let unSortedIdx;
-    let tempUser = props.userSettings
-
-    let myFilter = new Filter() 
-    myFilter.maxDuration = maxDur;
-    myFilter.minDuration = minDur;
+    //let shelfIndex = 0 ;
+    //let subIndex;
+    //let unSortedIdx;
     
-    //Find which shelf and location of the User on shelf
-    //Search Custom Sub Shelfs
+    //let myFilter = new Filter() 
+    //myFilter.maxDuration = maxDur;
+    //myFilter.minDuration = minDur;
+    
+    
+    let { subIndex, shelfIndex } = findIndexesOfChannelName()
+    
+    //for (let sh of props.userSettings.customShelfs) {
+    //  subIndex =  sh.fewSubs.findIndex( s => s.channelName == props.subObj.channelName)
+    //  if (subIndex > -1) { 
+    //    break 
+    //  }
+    //  shelfIndex += 1;
+    //}
 
+    //let tempUser = props.userSettings
+    //tempUser.customShelfs[shelfIndex].fewSubs[subIndex].filter.minDuration = minDur
+    //tempUser.customShelfs[shelfIndex].fewSubs[subIndex].filter.maxDuration = maxDur
+    
 
-    for (let sh of props.userSettings.customShelfs) {
-      subIndex =  sh.fewSubs.findIndex( s => s.channelName == props.subObj.channelName)//props.subObj.channelName)
-      if (subIndex > -1) { break }
-      shelfIndex += 1;
-    }
+    props.setUserSettings(prevSettings => {
+      let newU = prevSettings
+      //console.log('newU')
+      //console.log('newU')
+      //console.log('newU')
+      //console.log('newU')
+      //console.log('newU')
+      //console.log(newU)
+      let newFilter = new Filter()
+      newFilter.channelId = prevSettings.customShelfs[shelfIndex].fewSubs[subIndex].filter.channelId 
+      newFilter.maxDuration = maxDur
+      newFilter.minDuration = minDur
+      newU.customShelfs[shelfIndex].fewSubs[subIndex].filter = newFilter
+      //console.log('newFilter')
+      //console.log(newFilter)
+      //console.log('newU')
+      //console.log(newU)
+      //console.log('shelfIndex')
+      //console.log(shelfIndex)
+      //console.log('subIndex')
+      //console.log(subIndex)
+      return newU
 
-    //if not in custom subshelf, then it's in Unsorted Subs
-    if (subIndex == -1) {
-      unSortedIdx = props.userSettings.unsortedSubs.findIndex( s => s.channelName == props.subObj.channelName)  
-    }
-
-    //Save to tempUser
-    if (unSortedIdx) {
-      tempUser.unsortedSubs[unSortedIdx].filter = myFilter
-    } else {
-      tempUser.customShelfs[shelfIndex].fewSubs[subIndex].filter = myFilter
-    }
-
-    props.setUserSettings(tempUser)
+    })
     setIsOpen(false)
   }
   

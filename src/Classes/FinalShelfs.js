@@ -3,7 +3,6 @@ import moment from 'moment';
 
 export class FinalShelfs {
   constructor() {
-    this.isActs = false
     this.shelfs = [
       {
         title: '',

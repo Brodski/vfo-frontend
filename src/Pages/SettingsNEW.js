@@ -1,14 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
-import { UserContext } from '../Contexts/UserContext.js'
-import { UserSettingsContext } from '../Contexts/UserContext.js'
+import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js'
+import {  } from '../Contexts/UserContext.js'
 import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 import { LoginLogout } from '../Components/LoginLogout'
 import { AllShelfs } from '../Components/SettingsAllShelfs';
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
+import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
+import * as ytLogic                     from '../BusinessLogic/ytLogic.js'
 
-import { PostSave } from '../Components/PostSave';
-
+import { PostSave }                     from '../Components/PostSave';
+import { LoadingMain }                  from '../Components/LoadingMain';
 
 
 import Sortable2 from 'sortablejs';
@@ -33,15 +35,26 @@ import * as Common from '../BusinessLogic/Common.js';
 export const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+  const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
   
-  const [kickIt, setKickIt] = useState(true)
+  const [shouldRedirect, setShouldRedirect] = useState(false)
+  const [isInitFinished, setIsInitFinished] = useState(false)
 
   useEffect(() => {
     console.log("\n\n USE EFFECT \n")
     setUserSettings(user)
+    initPage2()
   }, []);
   
-  
+async function initPage2() {
+  await GApiAuth.getGoogleAuth() 
+    
+  if (GApiAuth.isHeSignedIn() && user.isDemo) {
+    await ytLogic.loginAndSet(setUser, setUserSettings)
+  }
+  setIsInitFinished(true)
+}
+
   async function logUserAndSettings() {
 
     console.log('user')  
@@ -49,8 +62,6 @@ export const SettingsNEW = () => {
     console.log('\n\n\nuserSettings')
     console.log(userSettings)
 }
-
-
 
   /////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////
@@ -61,23 +72,19 @@ export const SettingsNEW = () => {
 
   async function save() {
     console.log('----------- SAVING! -----------')
+    setShouldRedirect(true)
 
     
     let newSet = { ...userSettings }    
     let newCustomShelfs = stLogic.queryShelfs(userSettings)
-    setKickIt(false)
     console.log('newCustomShelfs (after query)')
     console.log('newCustomShelfs (after query)')
     console.log('newCustomShelfs (after query)')
     console.log('newCustomShelfs (after query)')
     console.log(newCustomShelfs)
 
-
     let auxNewCustomShelfs = newCustomShelfs.filter( sh => sh.isSorted)
-    
     let yourSubscriptionsShelf = newCustomShelfs.filter( sh => !sh.isSorted)[0]
-    console.log('yourSubscriptionsShelf')
-    console.log(yourSubscriptionsShelf)
 
     if (yourSubscriptionsShelf) {
       let converted = yourSubscriptionsShelf.convertAllSubsToShelfs()
@@ -93,7 +100,7 @@ export const SettingsNEW = () => {
   } 
 
   function setAndManageData(auxNewCustomShelfs) {
-    //TODO could be better
+    //TODO looks questionable
     setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
       newS.customShelfs = auxNewCustomShelfs
@@ -108,6 +115,16 @@ export const SettingsNEW = () => {
 
   }
 
+  const LoadShelfs = () => {
+    if (isInitFinished) {
+      return ( <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} /> )
+    }
+    else {
+      return ( <LoadingMain /> )
+    }
+      
+  }
+
     return (
     <div>  
         {/*<LoginLogout user={user}/>*/}
@@ -116,7 +133,9 @@ export const SettingsNEW = () => {
         <button onClick={logUserAndSettings} > log User & Settings </button>
         <ButtonsAuthDebug/>
         <div >
-        { kickIt ? <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} /> : <PostSave /> }
+        { shouldRedirect 
+          ? <PostSave /> 
+          : <LoadShelfs /> }
         </div>
       <h1> ```````````````````````` </h1>
         

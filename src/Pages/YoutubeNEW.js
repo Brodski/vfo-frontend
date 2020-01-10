@@ -15,7 +15,7 @@ import { Subscription }                 from '../Classes/Subscription'
 import { ShelfsMany }                   from '../Components/ShelfsMany';
 
 import { ButtonsAuthDebug }             from '../Components/ButtonsAuthDebug';
-
+import { LoadingMain }                  from '../Components/LoadingMain';
 
 import axios from 'axios';
 import InfiniteScroll                 from 'react-infinite-scroller';
@@ -33,95 +33,149 @@ export function YoutubeNEW() {
   let prevPage;
   let spamLimit = 25;
   let spamCount = 0;
+  let GoogleAuth;
   const { user, setUser } = useContext(UserContext);
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
 
-  //const [pageLength, setPageLength] = useState(1);
   const [pageLength, setPageLength] = useState(1);
   const [hasMoreShelfs, setHasMoreShelfs] = useState(false); //At start, there are no shelfs, thus we have no more shelfs
 
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
   const [numVids, setNumVids] = useState([new VidCounter()]) // {vids: 0, shelfId: '' 
-
   const [chillBro, setChillBro] = useState(0)
-  //const [isLogged, setIsLogged] = useState('lol')
   const [isFirst, setIsFirst] = useState(true)
-  let GoogleAuth;
-
-
+  
 
   // This is the finalShelf:
-  //
-  // PageOfShelfs = finalShelfs = [ shelf, shelf, shelf ]
+  // finalShelfs  = [ shelf, shelf, shelf ]
   // shelf        = [ vid, vid, vid, vid ]
   // vid          = { id, snippet: {}, contentDetails: {} }
 
   useEffect(() => {
     console.log('---------------useEffect top ----------------------')
-    initShit()
+    initPage()
     console.log('---------------useEffect bot----------------------')
   }, [])
 
 
   //Set up login/logout handlers, get user, then fetch data from youtube
-  async function initShit() {
-    await doGAuth()
-
+  //TODO could abstract initPage() and initPage2() (in settings) probably
+  async function initPage() {
+    await GApiAuth.getGoogleAuth() 
+    
     if (GApiAuth.isHeSignedIn() && user.isDemo) {
-      console.log("LOGGED IN Should be doing fetch to server")
-      let res = await ServerEndpoints.loginToBackend();
-      if (res.status > 199 && res.status < 300) {
-        console.log('Recieved user from server: ', res.status)
-        console.log(res.data)
-        let u = await ytLogic.processUserFromServer(res)
-        setUserDataHelper(u)
-      }
-    }
-    else {
-      loadMock()
-      setNumVids(user.customShelfs.map(() => new VidCounter()))
+      await ytLogic.loginAndSet(setUser, setUserSettings)
     }
 
-    await fetchMoreSubs(isFirst)
+    setIsFirst(false)
+    setNumVids(user.customShelfs.map(() => new VidCounter()))
+    await fetchMoreSubs()
   }
 
-
-  async function setUserDataHelper(u) {
-
-    //TODO could be better
-    setUser(prev => {
-      prev.customShelfs = u.customShelfs
-      prev.googleId = u.googleId
-      prev.pictureUrl = u.pictureUrl
-      prev.username = u.username
-      prev.isDemo = false
-      return prev
-    })
-    setUserSettings(prev => {
-      prev.customShelfs = u.customShelfs
-      prev.googleId = u.googleId
-      prev.pictureUrl = u.pictureUrl
-      prev.username = u.username
-      prev.isDemo = false
-      return prev
-    })
-    setNumVids(u.customShelfs.map(() => new VidCounter()))
-  }
 
   async function doGAuth() {
-    if (!GoogleAuth) {
-      GoogleAuth = await GApiAuth.getGoogleAuth()  // Usually 500ms   
-      GoogleAuth.isSignedIn.listen( function (val) {
-        console.log('Signin state changed to ', val, "\nSetting to: ", GApiAuth.isHeSignedIn());
-        setIsLogged2(GApiAuth.isHeSignedIn())
-        window.location.reload(true);
-      });
-      setIsLogged2(GApiAuth.isHeSignedIn())
-      setIsFirst(false)
-    }
+    //await GApiAuth.getGoogleAuth() 
+    //setIsLogged2(GApiAuth.isHeSignedIn())
+    //setIsFirst(false)
+    //if (!GoogleAuth) {
+    //  GoogleAuth = await GApiAuth.getGoogleAuth()  // Usually 500ms   
+    //  GoogleAuth.isSignedIn.listen( function (val) {
+    //    console.log('Signin state changed to ', val, "\nSetting to: ", GApiAuth.isHeSignedIn());
+    //    setIsLogged2(GApiAuth.isHeSignedIn())
+    //    window.location.reload(true);
+    //  });
+   // }
   }
     
+    
+  const preFetchMoreSubs = async () => {
+
+    if (isFirst) {  
+      putUnsortedShelfAtBottom() 
+    }
+    // instantly halt any possible room for multi fetches
+    setHasMoreShelfs(false) 
+    prevPage = pageLength - 1
+    await hackHelper()
+  }
+
+  const fetchMoreSubs = async () => {
+    console.log(" xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
+    console.log(user)
+
+    if (isEndReached()) { 
+      return
+    }
+    await preFetchMoreSubs()
+
+    let shelfsActs = await _fetchActivities()    
+
+    let shelfVids = await _fetchVideos(shelfsActs)
+
+    let iData = injectData(shelfVids)
+    //console.log('iData------')
+    //console.log(iData)
+    ytLogic.beginFilter2(iData.shelfs)
+
+    setFinalShelfAux(iData)
+    
+    console.log("_____-------WE FINISHED THE FETCH & PROCESSING!-------_______")
+    console.log("_____ {prevPage, pageLength} ", prevPage, ', ', pageLength)
+    console.log('finalShelfs')
+    console.log(finalShelfs)
+  }
+
+  function setFinalShelfAux(iData) {
+    //FIXME clean this slop 
+    setFinalShelfs(prevShs => {
+        let newS = { ...prevShs }
+        newS.isActs = false
+        if (prevPage == 0) {
+          for (let i = 0; i < pageLength; i++) {
+            newS.shelfs[prevPage + i] = iData.shelfs[i]
+          }
+        } else { 
+          // when we reach the bottom, new data gets pushed onto the shelfs
+          console.log("Pushing data to finalshelfs")
+          newS.shelfs.push(iData.shelfs[0])
+        }
+        return newS
+      })
+      setPageLength(pageLength + 1)
+      spamCount = spamCount + 1;
+      setHasMoreShelfs(true) 
+  }
+
+  async function _fetchActivities() {
+    let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, pageLength))
+
+    shelfsActs = await ytLogic.removeNonVideos(shelfsActs)   
+    // TODO: follow up logic for orderdAndSplice(shelfsActs)
+
+    // Returns - shelf[x].Activity[z]
+    shelfsActs = await shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
+    shelfsActs = await shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
+    
+    // Arbitrary number (max 50) (see youtube's Video api)
+    const fetchThisManyVideosPerShelf = 35 
+    shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
+
+    return shelfsActs
+
+  }
+
+  async function _fetchVideos(shelfsActs) {
+
+    let shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
+    let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
+
+    shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
+    shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
+
+    return shelfVids
+  }
+
   async function loadMock() {
     let theUser = ServerEndpoints.getMockUser()
     console.log("LOADING MOCK")
@@ -137,7 +191,6 @@ export function YoutubeNEW() {
     sort = sort.concat(unSort)
     newUser.customShelfs = sort
     setUser(newUser)
-
   }
 
   function isEndReached() {
@@ -151,11 +204,11 @@ export function YoutubeNEW() {
     return isEnd
   }
 
-  function injectData(isActs, shelfstuff) {
+  function injectData( shelfstuff) {
     let injectShelfTitle = user.customShelfs.slice(prevPage, pageLength).map((sh, idx) => {
       return { "videos": shelfstuff[idx], "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
     })
-    return { isActs, shelfs: injectShelfTitle }
+    return { shelfs: injectShelfTitle }
 
   }
 
@@ -174,112 +227,7 @@ export function YoutubeNEW() {
   }
 
 
-  async function _fetchActivities() {
-    // Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
-    // Kinda like: shelf[x].subscription[y].activity[z]
-    let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, pageLength))
-    
-    // Returns only Uploads of the channels activities
-    shelfsActs = await ytLogic.removeNonVideos(shelfsActs)  
-    //TODO: follow up logic for let ordered = orderdAndSplice(shelfsActs)
 
-    // Returns all the activies in a single array (shelf), instead array of activities in n different sub
-    // Kinda like: shelf[x].Activity[z]
-    shelfsActs = await shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
-
-    shelfsActs = await shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
-
-    // Fetch data from youtube api
-    const fetchThisManyVideosPerShelf = 35 //Arbitrary number (max 50) (see youtube's Video api)
-    shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
-
-    return shelfsActs
-
-  }
-
-  async function _fetchVideos(shelfsActs) {
-    // Returns an array of video's ID per shelf
-    let shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
-
-    // Returns an array of video objects(yt) per shelf
-    let shelfVids = await ytLogic.requestVideosShelf(shelfsVidIds)
-
-    //Returns only "OK" status and then http results
-    shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
-    shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
-
-    return shelfVids
-  }
-
-  
-  const preFetchMoreSubs = async () => {
-
-    if (isFirst) {  
-      putUnsortedShelfAtBottom() 
-    }
-    setHasMoreShelfs(false) //instantly halt any possible room for multi fetches
-    prevPage = pageLength - 1
-    await hackHelper()
-  }
-
-  const fetchMoreSubs = async () => {
-    /////////////////////////////////
-    console.log(" xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
-    console.log(" isFirst: ", isFirst)
-    console.log("user")
-    console.log(user)
-    /////////////////////////////////
-    if (isEndReached()) { //If all shelfs retrieved, then quit
-      return
-    }
-    await preFetchMoreSubs()
-
-    let shelfsActs = await _fetchActivities()    
-
-    let shelfVids = await _fetchVideos(shelfsActs)
-
-    let iData = injectData(false, shelfVids)
-    console.log('iData------')
-    console.log(iData)
-    ytLogic.beginFilter2(iData.shelfs)
-
-    setAndManageData(iData)
-    ////////////////////////////////////////////
-    console.log("_____-------WE FINISHED THE FETCH & PROCESSING!-------_______")
-    console.log("_____ {prevPage, pageLength} ", prevPage, ', ', pageLength)
-    console.log('finalShelfs')
-    console.log(finalShelfs)
-    ////////////////////////////////////////////
-  }
-
-  function setAndManageData(iData) {
-    //FIXME clean this slop 
-    setFinalShelfs(prevShs => {
-        let newS = { ...prevShs }
-        newS.isActs = false
-        if (prevPage == 0) {
-          console.log("Initializing finalshelfs from prevPage --> pageLength ", prevPage, " --> ", pageLength)
-          for (let i = 0; i < pageLength; i++) {
-            newS.shelfs[prevPage + i] = iData.shelfs[i]
-          }
-        } else { 
-          // when we reach the bottom, new data gets pushed onto the shelfs
-          console.log("Pushing data to finalshelfs")
-          newS.shelfs.push(iData.shelfs[0])
-        }
-        return newS
-      })
-      setPageLength(pageLength + 1)
-      spamCount = spamCount + 1;
-      setHasMoreShelfs(true) 
-  }
-
-
-  async function saveBackend(u) {
-    console.log('save backend u')
-    console.log(u)
-    ServerEndpoints.saveUser(u)
-  }
 
 
   const LoggedOut = () => {
@@ -302,30 +250,25 @@ export function YoutubeNEW() {
   const Shelfs = () => {
     return (
       <InfiniteScroll key={nextId('infScroll-')}
-        loadMore={() => fetchMoreSubs(isFirst) }
+        loadMore={() => fetchMoreSubs() }
         hasMore={hasMoreShelfs}
         loader={(<div key={nextId('loader-')}>Loading ...</div>)}
         threshold={200}
        >
-          <ShelfsMany key={nextId('manyShelfsid-')} isActs={finalShelfs.isActs} shelfs={finalShelfs.shelfs.slice(0, pageLength)} numVids={numVids} setNumVids={setNumVids} /> 
+          <ShelfsMany 
+            key={nextId('manyShelfsid-')} 
+            shelfs={finalShelfs.shelfs.slice(0, pageLength)} 
+            numVids={numVids} 
+            setNumVids={setNumVids} 
+          /> 
        </InfiniteScroll>
       )
   }
 
-  const LoadingMain = props => {
-    return (
-      <div className="loading-main-animation">
-        <ReactLoading type={'spinningBubbles'} />
-      </div>
-    )
-  }
-     
   return(
     <div>
-      <ButtonsAuthDebug data={{ numVids, finalShelfs, user, isLogged2, pageLength, saveBackend, setPageLength, user }}/>
+      <ButtonsAuthDebug data={{ numVids, finalShelfs, user, isLogged2, pageLength, setPageLength, user }}/>
       <h1>Youtube</h1>
-      <h3> Youtube api </h3>
-      {/* isLogged2==true ? <div> THIS GUYS IS SIGNED IN </div> : <div> NOT SIGNED IN </div> */}
       
       {isLogged2 === true && !user.isDemo ? <LoggedIn /> : <LoggedOut />}
       
@@ -347,17 +290,6 @@ export function YoutubeNEW() {
   }
 */
 
-      {/*<button onClick={loadMock} >Load mock user</button>
-      <button onClick={() => {console.log('numVids');     console.log(numVids) }      }>  c.log numVids     </button>
-      <button onClick={() => {console.log('finalShelfs'); console.log(finalShelfs) }  }>  c.log finalShelfs </button>
-      <button onClick={() => {console.log('user');        console.log(user) }         }>  c.log User        </button>
-      <button onClick={() => {console.log('isLogged2');   console.log(isLogged2) }    }>  c.log isLogged2   </button>
-      <button onClick={() => {console.log('pageLength');  console.log(pageLength) }   }>  c.log pageLength  </button>
-      <div></div>
-      <button onClick={() => {console.log('doLoginToBackend'); doLoginToBackend(); } }> doLoginToBackend </button>
-      <button onClick={() => {console.log('saveBackend'); saveBackend(user); } }> saveBackend </button>
-      <button onClick={() => {console.log('set Page 1'); wtf(); } }> set Page 1 </button>*/}
-     
 
 {/*
     // not working as desired :/

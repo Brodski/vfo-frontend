@@ -9,25 +9,28 @@ export class User {
     this.pictureUrl = null;
     this.isDemo = true;
   }
-
   
+  initNewUser(subz, data) {
+    subz.map(ytSub => {
+      this.addSub(ytSub)
+    })
+    //TODO
+    // need to update username and pic
+    this.username = data.username
+    this.pictureUrl = data.pictureUrl
+    this.isDemo = false
+    if (this.customShelfs[0] == null) {
+      this.customShelfs = []
+    }
+  }
+
   convertUnSortedShelfsToSubs() {
     let aux_unSortedSh = this.customShelfs.filter( sh => { return !sh.isSorted } )
     let wut = aux_unSortedSh.map(sh => {
         return [...sh.fewSubs]
       })
-
-      console.log('wut')
-      console.log('wut')
-      console.log('wut')
-      console.log('wut')
-      console.log('wut')
-      console.log(wut)
     return wut
   }
-
-
-
 
   addSub(ytSub) {
     let sub = new Subscription()
@@ -47,30 +50,16 @@ export class User {
       console.log('User has not subscribed from any new channels recently')
       return
     }
-    console.log('SUBS HAVE BEEN ADDED')
+    console.log('User has subscribed to a channel since last visit')
     ytSubArr.forEach(ytSub => { this.addSub(ytSub) })
-  }
-
-  initNewUser(subz, data) {
-    subz.map(ytSub => {
-      this.addSub(ytSub)
-    })
-    //TODO
-    // need to update username and pic
-    this.username = data.username
-    this.pictureUrl = data.pictureUrl
-    this.isDemo = false
-    if (this.customShelfs[0] == null) {
-      this.customShelfs = []
-    }
   }
 
   removeSubs(removedSubsArr) {
     if (!removedSubsArr[0]) {
-      console.log('User has not unsubscribed from any channel recently')
+      console.log('User has not unsubscribed from any channels recently')
       return
     }
-    console.log('SUBS HAVE BEEN REMOVED')
+    console.log('User has unsubscribed from a channel recently')
     for (let sh of this.customShelfs) {
       for (let sub of sh.fewSubs) {
         for (let rmS of removedSubsArr) {
@@ -120,7 +109,21 @@ export class CustomShelf {
   }
 
 
-  //prepareYourSubscriptionsContainer() {
+
+  //findIndexesOfChannelName(channelName) {
+
+  //  for (let sh of this.customShelfs) {
+  //    subIndex = sh.fewSubs.findIndex(s => s.channelName == channelName)
+  //    if (subIndex > -1) {
+  //      break
+  //    }
+  //    shelfIndex += 1;
+  //  }
+  //}
+
+
+
+  //prepareTheYourSubscriptionsContainer() {
   //  let aux_unSortedSh = props.userSettings.customShelfs.filter( sh => { return !sh.isSorted } )
 
   //  let bigFlat = []

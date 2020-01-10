@@ -42,42 +42,43 @@ import { User } from '../Classes/User';
 //
 
 
-// Returns array of Shelfs, each shelf is an array of subscription. Each sub is an array of activities
-// Kinda like: shelf[x].subscription[y].activity[z] 
+// Returns - shelf[x].subscription[y].activity[z]
 export async function getActivitiesShelfs(shelfs) {
   let allShelfs_Promises =[]
   for (let sh of shelfs) {
     const sh_Promises = sh.fewSubs.map(sub => youtubeApi._getActivities(sub.channelId))
-  //  console.log('sh_Promises')
-//    console.log(sh_Promises)
     allShelfs_Promises.push(sh_Promises)
   }
   return await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
     
 }
 
-export async function XXXgetActivitesOfChannels_2() {
-
-  console.time("Subs getting")
-  let allSubs = await getAllSubs()
-  console.timeEnd("Subs getting")
-    
-  console.time("map")
-  const allSubs_Promises = allSubs.map( sub =>  youtubeApi._getActivities(sub.snippet.resourceId.channelId))
-  console.timeEnd("map")
-
-  console.time("Acts getting")
-  const allActivities_response = await Promise.all(allSubs_Promises)
-  console.timeEnd("Acts getting")
-
-  console.log(allSubs_Promises)
-  console.log(allActivities_response)
-    
-    for (let act of allActivities_response) {
-      console.log("---------- Activity -----------------------------------------")
-//      console.log(JSON.stringify(act.result, null, 2))
-    }    
+export async function loginAndSet(setUser, setUserSettings) {
+  console.log("Logged in: Should be doing fetch to server")
+  let res = await ServerEndpoints.loginToBackend();
+  if (res.status > 199 && res.status < 300) {
+    console.log('Recieved user from server: ', res.status)
+    let u = await processUserFromServer(res)
+    //TODO could be better
+    setUser(prev => {
+      prev.customShelfs = u.customShelfs
+      prev.googleId = u.googleId
+      prev.pictureUrl = u.pictureUrl
+      prev.username = u.username
+      prev.isDemo = false
+      return prev
+    })
+    setUserSettings(prev => {
+      prev.customShelfs = u.customShelfs
+      prev.googleId = u.googleId
+      prev.pictureUrl = u.pictureUrl
+      prev.username = u.username
+      prev.isDemo = false
+      return prev
+    })
+    return u
   }
+}
 
   
 export async function processUserFromServer(res) {
@@ -104,13 +105,11 @@ export async function processUserFromServer(res) {
     if (removedSubArr[0] || newSubs[0]) {
       ServerEndpoints.saveUser(u)
     }
+    
     console.log('newSubs')
     console.log('remvoedSubs')
     console.log(newSubs)
     console.log(removedSubArr)
-    console.log('user after add and remove')
-    console.log(u)
-
   }
   return u
 }
@@ -124,9 +123,6 @@ export async function processUserFromServer(res) {
     subsFromBackend.customShelfs.map(sh => {
       allBackendSubz.push(...sh.fewSubs)
     })
-    console.log('allBackendSubz')
-    console.log(allBackendSubz)
-
     for (let backS of allBackendSubz) {
       doesMatches = false
       for (let ytS of subsFromYt) {
@@ -141,18 +137,12 @@ export async function processUserFromServer(res) {
       }
     }
 
-    console.log('remove subsFromBackend AFTER ALL THIS SHIT')
-    console.log(subsFromBackend)
-    console.log(subsFromBackend.customShelfs)
-    console.log(removedSubs)
     return removedSubs
   }
 
   //TODO could be cleaner, pretty confusing.
   //Goes through every sub from YT, if a sub does not match any subs from the backend, then we found a new sub.
   function checkForNewSubs(subsFromYt, subsFromBackend) {     
-    console.log('subsFromYt')
-    console.log(subsFromYt)
     let newSubs = []
     for (let ytS of subsFromYt) {
       let doesMatches = false;
@@ -171,7 +161,6 @@ export async function processUserFromServer(res) {
     return newSubs
   }
 
-
 export async function getAllSubs() {
   var response = await youtubeApi._getThisUsersSubs()
   if (response.status < 200 || response.status > 299) {
@@ -184,7 +173,6 @@ export async function getAllSubs() {
     allSubs = !allSubs ? response.result.items : allSubs.concat(response.result.items)
   }
   return allSubs
-
 }
 
 
@@ -193,28 +181,28 @@ export async function getAllSubs() {
  * ///////////       INFORMATION      ////////////
  * ///////////////////////////////////////////////
 * eachShelfsActs:
-* array of shelfs
+* is a array of shelfs
 * [ {shelf}, {shelf}, {shelf} ]
-* 
-* 
-*  shelf:
-*  is array of subscriptions
-*  [ {subscription}, {subscription}, {subscription}, {subscription} ]
+*
+* shelf:
+* is a array of subscriptions
+* [ {subscription}, {subscription}, {subscription}, {subscription} ]
 *  
-*    subscription:
-*     is array of activities
-*     [ {activity}, {activity}, {activity}, {activity}, {activity}, {activity} ]
+* subscription:
+* is array of activities
+* [ {activity}, {activity}, {activity}, {activity}, {activity}, {activity} ]
 
-*        activity (from yt):
-*        { 
-*         contentDetails.upload.videoId
-*         snippet.channelId
-*         snippet.channelName 
-*        }
+* activity (from yt):
+* { 
+*   contentDetails.upload.videoId
+*   snippet.channelId
+*   snippet.channelName 
+*  }
  */
-export function removeNonVideos(eachShelfsActs) {
+
+// Returns only Uploads of the channels activities
 // TODO Remove the double loop, use map and filter
-// const damnBaby = shelf.map( act => act.result.items.filter(function (item) { return item.contentDetails.upload } ))
+export function removeNonVideos(eachShelfsActs) {
 
   let filteredShelfs = []
   for (let shelf of eachShelfsActs) {
@@ -224,35 +212,31 @@ export function removeNonVideos(eachShelfsActs) {
           console.log("Not 200 for activity: " + act)
           continue
         }
-      const result = act.result.items.filter(function (item) { return item.contentDetails.upload } )
+      const result = act.result.items.filter((item) => { 
+        return item.contentDetails.upload 
+      })
       fShelf.push(result)
-
     }
     filteredShelfs.push(fShelf)
   }
-
   return filteredShelfs
 
 }
 
-
 export function extractIds(shelf) {
-
   let ids = []
   shelf.map( act => ids.push(act.contentDetails.upload.videoId))
-  //console.log('miniIds')
-  //console.log(miniIds)
   return ids
 }
 
-export async function requestVideosShelf(shelfsVidIds) {
+export async function fetchVideos(shelfsVidIds) {
     const vidIdShelf_Promise = shelfsVidIds.map(sh => {
       return youtubeApi.getSomeVideos(sh)
     })
     return await Promise.all(vidIdShelf_Promise)
 }
 
-// Returns all the activies in a single array (shelf), instead array of activities in n different sub
+// Returns all the activies in a single array (shelf)
 // Kinda like: shelf[x].Activity[z]
 export function flattenShelf(shelf) {
   let bigsub = []
@@ -260,93 +244,61 @@ export function flattenShelf(shelf) {
   return bigsub
 }
 
+// Sort by most recent
 export function sortByDate(shelf) {
   shelf.sort(function (a, b) {
     let dateA = new Date(a.snippet.publishedAt)
     let dateB = new Date(b.snippet.publishedAt)
-    return dateB - dateA // Sort by most recent
+    return dateB - dateA 
   })
   return shelf
 }
-  
-///////////////////////////////////////////////////////////////////////////
-// THIS IS OLD
-export function extractIdsOld(shelfsActsFlat) {
-  // TODO: double map, improve performance.
-  let ids = []
-  for (let shelf of shelfsActsFlat) {
-    let miniIds = shelf.map(act => act.contentDetails.upload.videoId)
-    ids.push(miniIds)
+
+// See note in Filter class
+function checkDurations(filt, vidDuration) {
+  let max = filt.maxDuration == "Infinity" ? Infinity : filt.maxDuration
+  if (vidDuration >= filt.minDuration && vidDuration <= max) {
+    return true
   }
-  return ids
+  return false
 }
 
-
-export function getDemoSubs(user) {
-  let isRecent = isUsedRecently(user)
-  let shelfz;
-  if (isRecent) {
-    shelfz = localStorage.getItem('demoSubs')
-    shelfz = JSON.parse(shelfz)
-    console.log(shelfz)
+//I'm sorry for this. I messed up ealier :(
+export function beginFilter2(fShelfs) {
+  //console.log('+++++++++++ BEGIN FILTER ++++++++++++++')
+  //console.log('fShelfs')
+  //console.log(fShelfs)
+  //Go through every shelf's vid and find it's filter then apply it
+    for (let sh of fShelfs) {
+      for (let vid of sh.videos) {
+        for (let f of sh.filters) {
+          if (f.channelId == vid.snippet.channelId) {
+            let duration = moment.duration(vid.contentDetails.duration)
+            let isPass = checkDurations(f, duration.asMinutes())
+            if (!isPass) {
+              /*
+              console.log('+++++++++++++++++')
+              console.log(vid.snippet.channelTitle + ' ' + vid.snippet.title)
+              console.log(vid.id)
+              console.log(vid)
+              
+              console.log("duration: " + duration.asMinutes())
+              console.log('min ', f.minDuration )
+              console.log('max ', f.maxDuration )
+              console.log('pass? ', isPass )
+              console.log('+++++++++++++++++') 
+              */
+              sh.videos = sh.videos.filter( v => v.id != vid.id)
+              
+              break
+            
+            }
+          }
+        }
+      }
   }
-  
 }
 
-export function saveToLocal(shelfs) {
-
-  console.log('***************************')
-  localStorage.setItem('shelfsVids', JSON.stringify(shelfs))
-  localStorage.setItem("last fetch", Date.now())
-  console.log('***************************')
-  //Save time
-  //let now = new Date() 
-  //localStorage.setItem("last fetch", now)
-}
-
-export function saveDemoToLocal(shelfs) {
-  localStorage.setItem('demoSubs-sh-yt', JSON.stringify(shelfs))
-  localStorage.setItem('demoSubs-pagelength-yt', JSON.stringify(shelfs))
-  localStorage.setItem("demoSubs-time-yt", Date.now())
-}
-
-/*export function getDataFromLocal___FINISHLATER() {
-    let shelfz = localStorage.getItem('demoSubs-sh-yt')
-    let pageL = localStorage.getItem('demoSubs-numpages-yt')
-    shelfz = JSON.parse(shelfz)
-    setFinalShelfs(shelfz)
-    setHasMoreShelfs(true)
-}*/
-
-export function isUsedRecently(user) {
-  let fetchTime;
-  let isRecent = false;
-  let now = new Date() 
-  if (user.isDemo) {
-    fetchTime = localStorage.getItem("demoSubs-time-yt")
-  } else {
-    fetchTime = localStorage.getItem(user.fullName +'-time-yt')
-  }
-  let ms = fetchTime ? (now.getTime() - new Date(parseInt(fetchTime)).getTime()) : Infinity //Convert last fetch to ms... 0ms --> never recieved
-  if (ms < 3000 * 60) {
-    console.log("it's been under 3 minutes since")
-    isRecent = true
-  } else {
-    console.log("it's been OVERRRRR 3 minutes since")
-    isRecent = false
-  }
-  console.log(ms)
-
-  console.log('***************************')
-  return isRecent
-}
-
-export function getStorageShelfs() {
-  let shelfz = localStorage.getItem('shelfsVids')
-  shelfz = JSON.parse(shelfz)
-  console.log(shelfz)
-  return shelfz
-}
 
 
 function orderdAndSplice(shelfsActs) {
@@ -369,49 +321,72 @@ function orderdAndSplice(shelfsActs) {
   }
 
   
-  function printShelfs(shelfsActs) {
-    let ilol = 0
-    for (let sh of shelfsActs) {
-      console.log('FETCH: ACTS SHELF ', ilol)
-      for (let s of sh) {
-        console.log(s.snippet.channelTitle + ' - ' + s.snippet.title)
-      }
-      ilol++
+function printShelfs(shelfsActs) {
+  let ilol = 0
+  for (let sh of shelfsActs) {
+    console.log('FETCH: ACTS SHELF ', ilol)
+    for (let s of sh) {
+      console.log(s.snippet.channelTitle + ' - ' + s.snippet.title)
     }
-  }
-
-
-//I'm sorry for this. I messed up ealier :(
-export function beginFilter2(fShelfs) {
-  //console.log('+++++++++++ BEGIN FILTER ++++++++++++++')
-  //console.log('fShelfs')
-  //console.log(fShelfs)
-  //Go through every shelf's vid and find it's filter then apply it
-    for (let sh of fShelfs) {
-      for (let vid of sh.videos) {
-        for (let f of sh.filters) {
-          if (f.id == vid.snippet.channelId) {
-            let duration = moment.duration(vid.contentDetails.duration)
-            let isPass = f.checkDurations(duration.asMinutes())
-            if (!isPass) {
-              /*
-              console.log('+++++++++++++++++')
-              console.log(vid.snippet.channelTitle + ' ' + vid.snippet.title)
-              console.log(vid.id)
-              console.log(vid)
-              
-              console.log("duration: " + duration.asMinutes())
-              console.log('min ', f.minDuration )
-              console.log('max ', f.maxDuration )
-              console.log('pass? ', isPass )
-              console.log('+++++++++++++++++') 
-              sh.videos = sh.videos.filter( v => v.id != vid.id)
-              */
-              break
-            
-            }
-          }
-        }
-      }
+    ilol++
   }
 }
+
+
+
+
+
+//export function getDemoSubs(user) {
+//  let isRecent = isUsedRecently(user)
+//  let shelfz;
+//  if (isRecent) {
+//    shelfz = localStorage.getItem('demoSubs')
+//    shelfz = JSON.parse(shelfz)
+//    console.log(shelfz)
+//  }  
+//}
+
+//export function saveToLocal(shelfs) {
+
+//  console.log('***************************')
+//  localStorage.setItem('shelfsVids', JSON.stringify(shelfs))
+//  localStorage.setItem("last fetch", Date.now())
+//  console.log('***************************')
+//}
+
+//export function saveDemoToLocal(shelfs) {
+//  localStorage.setItem('demoSubs-sh-yt', JSON.stringify(shelfs))
+//  localStorage.setItem('demoSubs-pagelength-yt', JSON.stringify(shelfs))
+//  localStorage.setItem("demoSubs-time-yt", Date.now())
+//}
+
+//export function isUsedRecently(user) {
+//  let fetchTime;
+//  let isRecent = false;
+//  let now = new Date() 
+//  if (user.isDemo) {
+//    fetchTime = localStorage.getItem("demoSubs-time-yt")
+//  } else {
+//    fetchTime = localStorage.getItem(user.fullName +'-time-yt')
+//  }
+//  let ms = fetchTime ? (now.getTime() - new Date(parseInt(fetchTime)).getTime()) : Infinity //Convert last fetch to ms... 0ms --> never recieved
+//  if (ms < 3000 * 60) {
+//    console.log("it's been under 3 minutes since")
+//    isRecent = true
+//  } else {
+//    console.log("it's been OVERRRRR 3 minutes since")
+//    isRecent = false
+//  }
+//  console.log(ms)
+
+//  console.log('***************************')
+//  return isRecent
+//}
+
+//export function getStorageShelfs() {
+//  let shelfz = localStorage.getItem('shelfsVids')
+//  shelfz = JSON.parse(shelfz)
+//  console.log(shelfz)
+//  return shelfz
+//}
+

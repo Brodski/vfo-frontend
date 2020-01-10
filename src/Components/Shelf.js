@@ -8,28 +8,6 @@ import moment from 'moment'
 // Pagination / Load More
   //https://codepen.io/grantdotlocal/pen/zReNgE
 export const Shelf = props => {
-
-  /*
-  console.log('++++++++++++++++ TOP +++++++++++++++++++++')
-
-  console.log("PROPS")
-  console.log(props)
-  //https://stackoverflow.com/questions/30142361/react-js-uncaught-typeerror-this-props-data-map-is-not-a-function
-  console.log('+++++++++++++++++++ END +++++++++++++++++++++++')
-  */
-
-  //const [numVids, setNumVids] = useState(3)
-
-  function loadMoreVids() {
-    //setNumVids(numVids + 5)
-    props.setNumVids(prev => { //hacky solution :(
-      let newN = { ...prev}
-      newN[props._setIdx].numVids += 5 // Render 5 more vids after clicking "More"
-      return newN
-
-    })
-
-  }
   /*
   console.log(' ***************** SHELF ***********************')
   console.log('props.numVids')
@@ -37,12 +15,20 @@ export const Shelf = props => {
   console.log(props._setIdx)
   console.log(props.numVids[props._setIdx])
   */
+  function loadMoreVids() {
+    props.setNumVids(prev => { 
+      let newN = { ...prev}
+      newN[props._setIdx].numVids += 5 // Render 5 more vids after clicking "More"
+      return newN
+    })
+  }
+
   let numVidzRendered = props.numVids[0] ? props.numVids[props._setIdx].numVids  : 0
 
-  const videos = props.shelf.videos.slice(0, numVidzRendered ).map( (vid,idx) => {
-  //let id = vid.contentDetails.upload.videoId //FOR ACTS
-  
-   return( <Video isActs={props.isActs} key={vid.id || 'somevidid'} video={vid} /> )
+  const videos = props.shelf.videos.slice(0, numVidzRendered ).map( (video) => {
+    return( 
+      <Video key={video.id || 'somevidid'} video={video} /> 
+    )
   })
   return(
     <div > 
