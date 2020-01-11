@@ -1,6 +1,6 @@
 import { CustomShelf } from '../Classes/User'
 
-
+//Debug button
 export function logAllShelfs() {
   var shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
   console.log('-----------shelfs-----------')
@@ -17,9 +17,8 @@ export function logAllShelfs() {
   } 
 }
 
-
-
-export function logIds() {
+//Debug button
+export function logIds() { 
   var shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
   console.log('----------- I D S -----------')
   console.log(shelfs)
@@ -33,30 +32,24 @@ export function logIds() {
 }
 
 export function queryShelfs(userSettings, allowEmpty = false) {
+  //Loop though each shelf and each item on shelf
   
   let newCustomShelfs = []
-  //Loop though each shelf and each item on shelf
   let shelfsQ = [].slice.call(document.querySelectorAll('.sh-QHack'));
   for (let i = 0; i < shelfsQ.length; i++) {
-//    console.log(`${i} ++ Shelf ++`)
-  //  console.log(shelfsQ[i].dataset)
-    //Create a temp shelf 
     let tempShelf = new CustomShelf()
     tempShelf.title = shelfsQ[i].dataset.name
 
     tempShelf.isSorted = (shelfsQ[i].dataset.issorted == 'true')
 
     for (let sub of shelfsQ[i].querySelectorAll('.sub-QHack')) {
-      //console.log(`${i} -----> sub `)
-    //  console.log(sub)
-      //console.log(sub.dataset)
       let idxs = _findSubIndex(sub.dataset.name, userSettings)
       let tempSub = userSettings.customShelfs[idxs.shelf_Index].fewSubs[idxs.sub_Index]
       tempShelf.fewSubs.push(tempSub)
     }
-    if (allowEmpty) {                                     //true => push
+    if (allowEmpty) { 
       newCustomShelfs.push(tempShelf)
-    } else if (tempShelf.fewSubs[0] && !allowEmpty) {    // yes && !false => push
+    } else if (tempShelf.fewSubs[0] && !allowEmpty) {
        newCustomShelfs.push(tempShelf)
     }
   }

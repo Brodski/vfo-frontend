@@ -1,15 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
-
-import * as ServerEndpoints from "../HttpRequests/ServerEndpoints"
-import { User } from "../Classes/User"
-
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import arrayMove from 'array-move';
-import { conditionalExpression } from '@babel/types';
-
-import { render } from "react-dom";
-
-
 
 
 //try

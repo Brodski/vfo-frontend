@@ -66,7 +66,6 @@ function App() {
       window.location.reload(true);
     });
     
-
     //if (GApiAuth.isHeSignedIn() && user.isDemo) {
     //  console.log("Logged in: Should be doing fetch to server")
     //  //await ytLogic.loginAndSet(setUser, setUserSettings)
@@ -91,10 +90,12 @@ function App() {
     //      return prev
     //    } 
     //  }
+    
+
   }
   
-  const [user, setUser]                 = useState(ServerEndpoints.getMockUser())
-  const [userSettings, setUserSettings] = useState(ServerEndpoints.getMockUser())
+  const [user, setUser]                 = useState(Common.getMockUser())
+  const [userSettings, setUserSettings] = useState(Common.getMockUser())
   const [isLogged2, setIsLogged2]       = useState(false)
   return (
     <Router>

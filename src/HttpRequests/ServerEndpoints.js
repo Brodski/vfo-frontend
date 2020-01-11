@@ -6,6 +6,7 @@ import  * as GApiAuth from '../HttpRequests/GApiAuth';
 const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localhost:8080
 
 axios.defaults.baseURL = SPRING_BACKEND;
+
 axios.interceptors.request.use( (config) => {
   //console.log(`Request was made to ${config.url}`)  
   return config
@@ -43,10 +44,6 @@ export async function loginToBackend() {
 
 }
 
-export async function debugUser(user) {
-    axios.post(SPRING_BACKEND +'/userDebug', { "username": user }).then(res => { console.log(res) })
-}
-
 export async function saveUser(user) {
   if (GApiAuth.isHeSignedIn) {
     let idtoken = GApiAuth.getToken()
@@ -78,7 +75,7 @@ function handleError(error) {
 }
 
 
-export function getMockUser() {
+function getMockUser() {
   let sub1 = new Subscription()
   sub1.channelName = "The Hill"
   sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
@@ -167,9 +164,9 @@ export function getMockUser() {
   let u = new User()
   u.googleId = "123-UserId";
   u.username = "Richard Simmons"
-  //u.subscriptions.push(sub1, sub1C, sub1B, sub2, sub3, sub4, sub5, sub6)
+  
   u.isDemo = true;
-  //u.unsortedSubs.push( uSub1, uSub2, uSub3)
+  
 
   let cShelf1 = new CustomShelf()
   cShelf1.title = "News (Shelf #1)"
@@ -211,10 +208,6 @@ export function getMockUser() {
   cShelf3unC.title = "FRONTLINE PBS | Official"
   cShelf3unC.fewSubs.push( uSub3)
   cShelf3unC.isSorted = false;
-
-
-
-
 
 
   u.customShelfs.push(cShelf1)

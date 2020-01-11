@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
-
-
-import { SECRET_KEYS } from '../api-key';
 import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js';
+
 import * as Common                    from '../BusinessLogic/Common.js';
 import * as ytLogic                     from '../BusinessLogic/ytLogic.js'
 import * as youtubeApi                  from "../HttpRequests/youtubeApi";
@@ -72,23 +70,7 @@ export function YoutubeNEW() {
     setNumVids(user.customShelfs.map(() => new VidCounter()))
     await fetchMoreSubs()
   }
-
-
-  async function doGAuth() {
-    //await GApiAuth.getGoogleAuth() 
-    //setIsLogged2(GApiAuth.isHeSignedIn())
-    //setIsFirst(false)
-    //if (!GoogleAuth) {
-    //  GoogleAuth = await GApiAuth.getGoogleAuth()  // Usually 500ms   
-    //  GoogleAuth.isSignedIn.listen( function (val) {
-    //    console.log('Signin state changed to ', val, "\nSetting to: ", GApiAuth.isHeSignedIn());
-    //    setIsLogged2(GApiAuth.isHeSignedIn())
-    //    window.location.reload(true);
-    //  });
-   // }
-  }
-    
-    
+      
   const preFetchMoreSubs = async () => {
 
     if (isFirst) {  
@@ -114,8 +96,7 @@ export function YoutubeNEW() {
     let shelfVids = await _fetchVideos(shelfsActs)
 
     let iData = injectData(shelfVids)
-    //console.log('iData------')
-    //console.log(iData)
+
     ytLogic.beginFilter2(iData.shelfs)
 
     setFinalShelfAux(iData)
@@ -136,7 +117,7 @@ export function YoutubeNEW() {
             newS.shelfs[prevPage + i] = iData.shelfs[i]
           }
         } else { 
-          // when we reach the bottom, new data gets pushed onto the shelfs
+          // when we reach the bottom of page, new data gets pushed onto the shelfs
           console.log("Pushing data to finalshelfs")
           newS.shelfs.push(iData.shelfs[0])
         }
@@ -175,15 +156,7 @@ export function YoutubeNEW() {
 
     return shelfVids
   }
-
-  async function loadMock() {
-    let theUser = ServerEndpoints.getMockUser()
-    console.log("LOADING MOCK")
-    console.log(theUser)
-    setUser(theUser)
-    setUserSettings(theUser);
-  }
-
+  
   function putUnsortedShelfAtBottom() {
     let newUser = user;
     let sort = user.customShelfs.filter(sh => sh.isSorted)
@@ -209,7 +182,6 @@ export function YoutubeNEW() {
       return { "videos": shelfstuff[idx], "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
     })
     return { shelfs: injectShelfTitle }
-
   }
 
   async function hackHelper() {
@@ -225,10 +197,6 @@ export function YoutubeNEW() {
       }
     }
   }
-
-
-
-
 
   const LoggedOut = () => {
     return (
@@ -277,49 +245,3 @@ export function YoutubeNEW() {
     </div>
     );
 }
-
-/*
-  function _preRenderViaActs(shelfsActs) {
-    let iData0 = injectData(true, shelfsActs)
-    setFinalShelfs(prevShs => {
-      let newS = { ...prevShs }
-      prevPage != 0 ? newS.shelfs.push(...iData0.shelfs) : newS = iData0
-      newS.isActs = true
-      return newS
-    })
-  }
-*/
-
-
-{/*
-    // not working as desired :/
-    if (user.customShelfs.length > initialPageLength) {
-      //setPageLength(res.data.customShelfs.length)
-      setPageLength(initialPageLength)
-      } else {
-      setPageLength(user.customShelfs.length)
-        }
-
-  prevPage = pageLength <= initialPageLength ? 0 : pageLength - 1 //PrevPage = 0 for initial load //After that prevPage = pageLength - 1
-
-
-
-
-    //for (let uSh of subsFromBackend.customShelfs) {
-    //  for (let sub of uSh.fewSubs) {
-    //    for (let rmS of removedSubs) {
-    //      if (rmS.channelId == sub.channelId) {
-    //        let idz = uSh.fewSubs.indexOf(sub)
-    //        console.log(idz)
-    //        console.log(sub)
-    //        uSh.fewSubs.splice(idz,1)
-    //        if (uSh.fewSubs.length === 0) {
-    //          let idz2 = subsFromBackend.customShelfs.indexOf(uSh)
-    //          subsFromBackend.customShelfs.splice(idz2,1)
-    //        }
-    //      }
-    //    }
-    //  }
-    //}
-
-*/}

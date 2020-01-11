@@ -3,11 +3,6 @@ import * as GApiAuth        from '../HttpRequests/GApiAuth'
 import * as ytLogic         from '../BusinessLogic/ytLogic'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints'
 
-async function debugUser(u) {
-  console.log(u)
-  ServerEndpoints.debugUser(u)
-}
-
 export const ButtonsAuthDebug = (props) => {
 return(
   <div>
@@ -25,7 +20,6 @@ return(
     <button onClick={GApiAuth.testWithXML} > "Ping" server with xml </button>
     <h3> More </h3>
 
-    <button onClick={props.loadMock} >Load mock user</button>
     <button onClick={() => {console.log('numVids');     console.log(props.data.numVids) }      }>  c.log numVids     </button>
     <button onClick={() => {console.log('finalShelfs'); console.log(props.data.finalShelfs) }  }>  c.log finalShelfs </button>
     <button onClick={() => {console.log('user');        console.log(props.data.user) }         }>  c.log User        </button>
@@ -35,7 +29,6 @@ return(
     <button onClick={() => {console.log('doLoginToBackend'); props.data.doLoginToBackend(); }  }> doLoginToBackend </button>
     <button onClick={() => {console.log('save user to Backend'); ServerEndpoints.saveUser(props.user); }      }> save user 2 Backend </button>
     <button onClick={() => {console.log('set Page 1');  props.data.setPageLength(1); }                    }> set Page 1 </button>
-    <button onClick={() => {console.log('debugUser');   debugUser(props.user); }    }> debugUser </button>
     <div></div>
     <button onClick={ytLogic.getAllSubs}> Get All Subs  </button> 
   </div>
