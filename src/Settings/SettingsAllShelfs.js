@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import {SettingsShelf} from '../Components/SettingsShelf';
+import {SettingsShelf} from '../Settings/SettingsShelf';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { User, CustomShelf } from '../Classes/User'
 import { rename } from 'fs';

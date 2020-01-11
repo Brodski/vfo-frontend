@@ -3,7 +3,7 @@ import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/U
 
 import * as Common                    from '../BusinessLogic/Common.js';
 
-import * as ytLogic                     from '../BusinessLogic/ytLogic.js'
+import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
 import * as youtubeApi                  from "../HttpRequests/youtubeApi";
 import * as ServerEndpoints             from '../HttpRequests/ServerEndpoints.js'
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
@@ -11,10 +11,10 @@ import { FinalShelfs, VideoRes }                 from '../Classes/FinalShelfs'
 import { CustomShelf, VidCounter, User }                       from '../Classes/User'
 
 import { Subscription }                 from '../Classes/Subscription'
-import { ShelfsMany }                   from '../Components/ShelfsMany';
+import { ShelfsMany }                   from './ShelfsMany';
 
-import { ButtonsAuthDebug }             from '../Components/ButtonsAuthDebug';
-import { LoadingMain }                  from '../Components/LoadingMain';
+import { ButtonsAuthDebug }             from '../Common/ButtonsAuthDebug';
+import { LoadingMain }                  from '../Common/LoadingMain';
 
 import axios from 'axios';
 import InfiniteScroll                 from 'react-infinite-scroller';
@@ -64,7 +64,7 @@ export function YoutubeNEW() {
     await GApiAuth.getGoogleAuth() 
     
     if (GApiAuth.isHeSignedIn() && user.isDemo) {
-      await ytLogic.loginAndSet(setUser, setUserSettings)
+      await Common.loginAndSet(setUser, setUserSettings)
     }
 
     setIsFirst(false)

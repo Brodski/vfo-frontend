@@ -48,67 +48,67 @@ export async function getActivitiesShelfs(shelfs) {
   return await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
 }
 
-export async function loginAndSet(setUser, setUserSettings) {
-  console.log("Logged in: Should be doing fetch to server")
-  let res = await ServerEndpoints.loginToBackend();
-  if (res.status > 199 && res.status < 300) {
-    console.log('Recieved user from server: ', res.status)
-    let u = await processUserFromServer(res)
-    //TODO could be better
-    setUser(prev => {
-      prev.customShelfs = u.customShelfs
-      prev.googleId = u.googleId
-      prev.pictureUrl = u.pictureUrl
-      prev.username = u.username
-      prev.isDemo = false
-      return prev
-    })
-    setUserSettings(prev => {
-      prev.customShelfs = u.customShelfs
-      prev.googleId = u.googleId
-      prev.pictureUrl = u.pictureUrl
-      prev.username = u.username
-      prev.isDemo = false
-      return prev
-    })
-    return u
-  }
-}
+//export async function loginAndSet(setUser, setUserSettings) {
+//  console.log("Logged in: Should be doing fetch to server")
+//  let res = await ServerEndpoints.loginToBackend();
+//  if (res.status > 199 && res.status < 300) {
+//    console.log('Recieved user from server: ', res.status)
+//    let u = await processUserFromServer(res)
+//    //TODO could be better
+//    setUser(prev => {
+//      prev.customShelfs = u.customShelfs
+//      prev.googleId = u.googleId
+//      prev.pictureUrl = u.pictureUrl
+//      prev.username = u.username
+//      prev.isDemo = false
+//      return prev
+//    })
+//    setUserSettings(prev => {
+//      prev.customShelfs = u.customShelfs
+//      prev.googleId = u.googleId
+//      prev.pictureUrl = u.pictureUrl
+//      prev.username = u.username
+//      prev.isDemo = false
+//      return prev
+//    })
+//    return u
+//  }
+//}
 
   
-export async function processUserFromServer(res) {
+//export async function processUserFromServer(res) {
 
-  let u = new User()
-  let subzPromise = getAllSubs()
+//  let u = new User()
+//  let subzPromise = getAllSubs()
 
-  if (res.data.customShelfs == null) { // implies new user
-    u.initNewUser(await subzPromise, res.data)
-    ServerEndpoints.saveUser(u)
-  }
-  else {
-    u.customShelfs = res.data.customShelfs
-    u.googleId = res.data.googleId
-    u.pictureUrl = res.data.pictureUrl
-    u.username = res.data.username
-    u.isDemo = false
+//  if (res.data.customShelfs == null) { // implies new user
+//    u.initNewUser(await subzPromise, res.data)
+//    ServerEndpoints.saveUser(u)
+//  }
+//  else {
+//    u.customShelfs = res.data.customShelfs
+//    u.googleId = res.data.googleId
+//    u.pictureUrl = res.data.pictureUrl
+//    u.username = res.data.username
+//    u.isDemo = false
 
-    //Below: Sync subs from the User's YT account and this app's database.
-    let newSubs = checkForNewSubs(await subzPromise, res.data)
-    let removedSubArr = checkForRemovedSubs(await subzPromise, res.data)
-    u.addArrayOfSubs(newSubs)
-    u.removeSubs(removedSubArr)
-    if (removedSubArr[0] || newSubs[0]) {
-      ServerEndpoints.saveUser(u)
-    }
+//    //Below: Sync subs from the User's YT account and this app's database.
+//    let newSubs = checkForNewSubs(await subzPromise, res.data)
+//    let removedSubArr = checkForRemovedSubs(await subzPromise, res.data)
+//    u.addArrayOfSubs(newSubs)
+//    u.removeSubs(removedSubArr)
+//    if (removedSubArr[0] || newSubs[0]) {
+//      ServerEndpoints.saveUser(u)
+//    }
     
-    console.log('newSubs')
-    console.log('remvoedSubs')
-    console.log(newSubs)
-    console.log(removedSubArr)
-  }
-  return u
-}
-
+//    console.log('newSubs')
+//    console.log('remvoedSubs')
+//    console.log(newSubs)
+//    console.log(removedSubArr)
+//  }
+//  return u
+//}
+/*
   //Goes through every sub from the backend, if a sub does not match any subs from YT, then we found a sub that was removed from YT user.
   function checkForRemovedSubs(subsFromYt, subsFromBackend) {
   
@@ -155,7 +155,7 @@ export async function processUserFromServer(res) {
     }
     return newSubs
   }
-
+*/
 export async function getAllSubs() {
   var response = await youtubeApi._getThisUsersSubs()
   if (response.status < 200 || response.status > 299) {

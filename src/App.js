@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import Home from './Pages/Home';
-import Nav from './Pages/Nav';
+import Home from './Common/Home';
+import Nav from './Common/Nav';
 
 
-import { YoutubeNEW } from './Pages/YoutubeNEW';
+import { YoutubeNEW } from './Youtube/YoutubeNEW';
 
-import { SettingsNEW } from './Pages/SettingsNEW';
+import { SettingsNEW } from './Settings/SettingsNEW';
 import { UserContext, UserSettingsContext, IsLoggedContext } from './Contexts/UserContext.js'
 
 import * as GApiAuth from './HttpRequests/GApiAuth'
 import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
 import { User } from './Classes/User'
 import * as Common                    from './BusinessLogic/Common.js';
-
 import * as ytLogic                     from './BusinessLogic/ytLogic.js'
 
 // $ npm install --save googleapis
@@ -28,21 +27,22 @@ import * as ytLogic                     from './BusinessLogic/ytLogic.js'
 // $ npm install --save react-id-generator
 // $ npm install --save env-cmd 
 // $ npm install --save react-loading
-
+// $ npm i --save react-google-button
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
 function App() {
 
   useEffect(() => {
     console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://apis.google.com/js/client.js";
-    script.async = true
-    document.body.appendChild(script)
-    script.onload = () => {
-      initGApi()
-    }
+    initGApi()
+    //const script = document.createElement("script");
+    //script.type = "text/javascript";
+    //script.src = "https://apis.google.com/js/client.js";
+    //script.async = true
+    //document.body.appendChild(script)
+    //script.onload = () => {
+    //  initGApi()
+    //}
   }, [])
       
   async function initGApi() {

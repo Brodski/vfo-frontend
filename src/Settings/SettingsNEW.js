@@ -2,15 +2,15 @@ import React, { useState, useContext, useEffect } from 'react';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js'
 import {  } from '../Contexts/UserContext.js'
-import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
+import { ButtonsAuthDebug } from '../Common/ButtonsAuthDebug';
 
-import { AllShelfs } from '../Components/SettingsAllShelfs';
+import { AllShelfs } from '../Settings/SettingsAllShelfs';
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
 import * as ytLogic                     from '../BusinessLogic/ytLogic.js'
-
-import { PostSave }                     from '../Components/PostSave';
-import { LoadingMain }                  from '../Components/LoadingMain';
+import * as Common                      from '../BusinessLogic/Common'
+import { PostSave }                     from '../Settings/PostSave';
+import { LoadingMain }                  from '../Common/LoadingMain';
 
 import Sortable2 from 'sortablejs';
 import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
@@ -31,7 +31,6 @@ import { CustomShelf } from '../Classes/User'
 export const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
-  const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
   
   const [shouldRedirect, setShouldRedirect] = useState(false)
   const [isInitFinished, setIsInitFinished] = useState(false)
@@ -46,7 +45,7 @@ async function initPage2() {
   await GApiAuth.getGoogleAuth() 
     
   if (GApiAuth.isHeSignedIn() && user.isDemo) {
-    await ytLogic.loginAndSet(setUser, setUserSettings)
+    await Common.loginAndSet(setUser, setUserSettings)
   }
   setIsInitFinished(true)
 }

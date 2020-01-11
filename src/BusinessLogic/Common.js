@@ -1,9 +1,127 @@
 import { Subscription } from '../Classes/Subscription';
 import { User, CustomShelf } from '../Classes/User';
+import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
+import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
 
 export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export async function loginAndSet(setUser, setUserSettings) {
+  console.log("Logged in: Should be doing fetch to server")
+  let res = await ServerEndpoints.loginToBackend();
+  if (res.status > 199 && res.status < 300) {
+    console.log('Recieved user from server: ', res.status)
+    let u = await processUserFromServer(res)
+    //TODO could be better
+    setUser(prev => {
+      prev.customShelfs = u.customShelfs
+      prev.googleId = u.googleId
+      prev.pictureUrl = u.pictureUrl
+      prev.username = u.username
+      prev.isDemo = false
+      return prev
+    })
+    setUserSettings(prev => {
+      prev.customShelfs = u.customShelfs
+      prev.googleId = u.googleId
+      prev.pictureUrl = u.pictureUrl
+      prev.username = u.username
+      prev.isDemo = false
+      return prev
+    })
+    return u
+  }
+}
+
+
+export async function processUserFromServer(res) {
+
+  let u = new User()
+  let subzPromise = ytLogic.getAllSubs()
+
+  if (res.data.customShelfs == null) { // implies new user
+    u.initNewUser(await subzPromise, res.data)
+    ServerEndpoints.saveUser(u)
+  }
+  else {
+    u.customShelfs = res.data.customShelfs
+    u.googleId = res.data.googleId
+    u.pictureUrl = res.data.pictureUrl
+    u.username = res.data.username
+    u.isDemo = false
+
+    //Below: Sync subs from the User's YT account and this app's database.
+    let newSubs = checkForNewSubs(await subzPromise, res.data)
+    let removedSubArr = checkForRemovedSubs(await subzPromise, res.data)
+    u.addArrayOfSubs(newSubs)
+    u.removeSubs(removedSubArr)
+    if (removedSubArr[0] || newSubs[0]) {
+      ServerEndpoints.saveUser(u)
+    }
+    
+    console.log('newSubs')
+    console.log('remvoedSubs')
+    console.log(newSubs)
+    console.log(removedSubArr)
+  }
+  return u
+}
+
+
+
+
+  //Goes through every sub from the backend, if a sub does not match any subs from YT, then we found a sub that was removed from YT user.
+  function checkForRemovedSubs(subsFromYt, subsFromBackend) {
+  
+    let removedSubs = []
+    let doesMatches = false;
+    let allBackendSubz = []
+    subsFromBackend.customShelfs.map(sh => {
+      allBackendSubz.push(...sh.fewSubs)
+    })
+    for (let backS of allBackendSubz) {
+      doesMatches = false
+      for (let ytS of subsFromYt) {
+        if (ytS.snippet.resourceId.channelId == backS.channelId) {
+          doesMatches = true
+          break
+        }
+      }
+      //if this sub from backend doesnt exist in subsFrom Yt, then it was removed
+      if (!doesMatches) {
+        removedSubs.push(backS)
+      }
+    }
+
+    return removedSubs
+  }
+
+  //TODO could be cleaner, pretty confusing.
+  //Goes through every sub from YT, if a sub does not match any subs from the backend, then we found a new sub.
+  function checkForNewSubs(subsFromYt, subsFromBackend) {     
+    let newSubs = []
+    for (let ytS of subsFromYt) {
+      let doesMatches = false;
+      for (let uSh of subsFromBackend.customShelfs) {
+        for (let sub of uSh.fewSubs) {
+          if (ytS.snippet.resourceId.channelId == sub.channelId) {
+            doesMatches = true;
+            break
+          }
+        }
+      }
+      if (doesMatches == false) {
+        newSubs.push(ytS)
+      }
+    }
+    return newSubs
+  }
+
+
+
+
+
 
 export function getMockUser() {
   let sub1 = new Subscription()
