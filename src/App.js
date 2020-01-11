@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-//import About from './Pages/About';
-import SortableComponent from './Pages/About';
+
 import Home from './Pages/Home';
 import Nav from './Pages/Nav';
-import GetServer from './Pages/GetServer';
-import PostDo from './Pages/PostDo';
-//import Youtube from './Pages/Youtube';
+
+
 import { YoutubeNEW } from './Pages/YoutubeNEW';
 
 import { SettingsNEW } from './Pages/SettingsNEW';
@@ -16,6 +14,7 @@ import * as GApiAuth from './HttpRequests/GApiAuth'
 import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
 import { User } from './Classes/User'
 import * as Common                    from './BusinessLogic/Common.js';
+
 import * as ytLogic                     from './BusinessLogic/ytLogic.js'
 
 // $ npm install --save googleapis
@@ -105,9 +104,7 @@ function App() {
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
           <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
             <Route path="/" exact component={Home} />
-            <Route path="/about" component={SortableComponent} />
-            <Route path="/getServer" component={GetServer} />
-            <Route path="/doPost" component={PostDo} />
+
             <Route path="/youtube" component={YoutubeNEW} />
         
             

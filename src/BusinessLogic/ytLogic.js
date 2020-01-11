@@ -1,45 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Link } from "react-router-dom";
-import axios from 'axios';
-import { SECRET_KEYS } from '../api-key';
-import * as Common from './Common.js';
-import * as videoJ from '../Scratch/api_video.json';
+
 import * as moment from 'moment';
 import * as youtubeApi from "../HttpRequests/youtubeApi";
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import { User } from '../Classes/User';
 
-// Github: JS Client https://github.com/google/google-api-javascript-client
-//
-//MAIN https://developers.google.com/youtube/v3/getting-started
-//       OAUTH https://developers.google.com/youtube/v3/libraries
-//       JS API https://github.com/google/google-api-javascript-client
-
-//ACTUAL JS DOCS. gapi objects & methods: https://github.com/google/google-api-javascript-client/blob/master/docs/reference.md
-// BIGGER DOCS:           https://developers.google.com/identity/sign-in/web/reference
-
-// Get profile info (id): https://developers.google.com/identity/sign-in/web/people
-
-//OAuth https://developers.google.com/youtube/v3/guides/authentication
-
-/// FIELD FILTER GAPI: https://developers.google.com/youtube/v3/getting-started
-//    URL: https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=YOUR_API_KEY
-//         &part=snippet, statistics & fields=items(id,snippet,statistics)
-///
-// Pagination: https://developers.google.com/youtube/v3/guides/implementation/pagination
-// next page token
-
-//Scope https://developers.google.com/identity/protocols/googlescopes
-// Serverside Auth https://developers.google.com/identity/protocols/OAuth2WebServer
-// Serverside Auth https://developers.google.com/identity/sign-in/web/server-side-flow
-
-//if you specify both, async takes precedence on modern browsers, while older browsers 
-// that support defer but not async will fallback to defer.
-//https://flaviocopes.com/javascript-async-defer/
-//
+/* Github: JS Client https://github.com/google/google-api-javascript-client
+* 
+* MAIN https://developers.google.com/youtube/v3/getting-started
+*        OAUTH https://developers.google.com/youtube/v3/libraries
+*        JS API https://github.com/google/google-api-javascript-client
+* 
+* ACTUAL JS DOCS. gapi objects & methods: https://github.com/google/google-api-javascript-client/blob/master/docs/reference.md
+*  BIGGER DOCS:           https://developers.google.com/identity/sign-in/web/reference
+* 
+*  Get profile info (id): https://developers.google.com/identity/sign-in/web/people
+* 
+* OAuth https://developers.google.com/youtube/v3/guides/authentication
+* 
+*  FIELD FILTER GAPI: https://developers.google.com/youtube/v3/getting-started
+*     URL: https://www.googleapis.com/youtube/v3/videos?id=7lCDEYXw3mM&key=YOUR_API_KEY
+*          &part=snippet, statistics & fields=items(id,snippet,statistics)
+* 
+*  Pagination: https://developers.google.com/youtube/v3/guides/implementation/pagination
+*  next page token
+* 
+* Scope https://developers.google.com/identity/protocols/googlescopes
+*  Serverside Auth https://developers.google.com/identity/protocols/OAuth2WebServer
+*  Serverside Auth https://developers.google.com/identity/sign-in/web/server-side-flow
+* 
+* if you specify both, async takes precedence on modern browsers, while older browsers 
+*  that support defer but not async will fallback to defer.
+* https://flaviocopes.com/javascript-async-defer/
+*/
 
 
 // Returns - shelf[x].subscription[y].activity[z]

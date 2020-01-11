@@ -1,11 +1,9 @@
 import { Subscription } from '../Classes/Subscription';
 import { User, CustomShelf } from '../Classes/User';
 
-
 export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 
 export function getMockUser() {
   let sub1 = new Subscription()
@@ -86,20 +84,16 @@ export function getMockUser() {
   uSub6.channelId = 'UC2-_WWPT_124iN6jiym4fOw';
   uSub6.filter.channelId = "UC2-_WWPT_124iN6jiym4fOw";
 
-
   let uSub7 = new Subscription()
   uSub7.channelName = 'TED'
   uSub7.channelId = 'UCAuUUnT6oDeKwE6v1NGQxug';
   uSub7.filter.channelId = "UCAuUUnT6oDeKwE6v1NGQxug";
 
-
   let u = new User()
   u.googleId = "123-UserId";
-  u.username = "Richard Simmons"
-  
+  u.username = "Richard Simmons"  
   u.isDemo = true;
   
-
   let cShelf1 = new CustomShelf()
   cShelf1.title = "News (Shelf #1)"
   cShelf1.fewSubs.push(sub1, sub1B, sub1C)
@@ -125,7 +119,6 @@ export function getMockUser() {
   cShelf6un.fewSubs.push( uSub5)
   cShelf6un.isSorted = true;
 
-
   let cShelf3unA = new CustomShelf()
   cShelf3unA.title = "Key & Peele"
   cShelf3unA.fewSubs.push( uSub1)
@@ -140,7 +133,6 @@ export function getMockUser() {
   cShelf3unC.title = "FRONTLINE PBS | Official"
   cShelf3unC.fewSubs.push( uSub3)
   cShelf3unC.isSorted = false;
-
 
   u.customShelfs.push(cShelf1)
   u.customShelfs.push(cShelf2)

@@ -3,7 +3,7 @@ import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js'
 import {  } from '../Contexts/UserContext.js'
 import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
-import { LoginLogout } from '../Components/LoginLogout'
+
 import { AllShelfs } from '../Components/SettingsAllShelfs';
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
@@ -12,14 +12,10 @@ import * as ytLogic                     from '../BusinessLogic/ytLogic.js'
 import { PostSave }                     from '../Components/PostSave';
 import { LoadingMain }                  from '../Components/LoadingMain';
 
-
 import Sortable2 from 'sortablejs';
-
-
 import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 
 import { CustomShelf } from '../Classes/User'
-import * as Common from '../BusinessLogic/Common.js';
 
 // to consider... https://www.npmjs.com/package/choices.js
 //  https://www.npmjs.com/package/react-dialog
@@ -91,22 +87,19 @@ async function initPage2() {
       auxNewCustomShelfs.push(...converted)
       newSet.customShelfs = auxNewCustomShelfs
     }
-
     if (!user.isDemo) {
       ServerEndpoints.saveUser(newSet)
     }
-
     setAndManageData(auxNewCustomShelfs)
   } 
 
   function setAndManageData(auxNewCustomShelfs) {
-    //TODO looks questionable
+    //TODO looks a bit silly
     setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
       newS.customShelfs = auxNewCustomShelfs
       return newS
     })
-
     setUser(prevUserSetting => {
       let newS = { ...prevUserSetting }
       newS.customShelfs = auxNewCustomShelfs
@@ -127,7 +120,6 @@ async function initPage2() {
 
     return (
     <div>  
-        {/*<LoginLogout user={user}/>*/}
         <button onClick={save} > Save </button>
         <div></div>
         <button onClick={logUserAndSettings} > log User & Settings </button>
@@ -137,10 +129,7 @@ async function initPage2() {
           ? <PostSave /> 
           : <LoadShelfs /> }
         </div>
-      <h1> ```````````````````````` </h1>
-        
-        {/*<MySortables.AllThisSortableStuff/>*/}
-      
+      <h1> ```````````````````````` </h1>      
     </div>
   );
 }
