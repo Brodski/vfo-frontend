@@ -94,35 +94,11 @@ export async function checkAll() {
 //////////////////////////////////////////////////////////////////
 ////////////////////   LOGIN - LOG OUT   ////////////////////////
 /////////////////////////////////////////////////////////////////
-export async function check(gapiObj, gapiString) {
-  let wait = 500;
-  while (!window.gapi.client.youtube) {
-    wait = wait * 2
-    console.log("1 check GApi: NOT EXISTS: gapi.client.youtube")
-    await Common.sleep(wait)
-  }
-  while (!window.gapi.auth2) {
-    wait = wait * 2
-    console.log("2 check GApi: NOT EXISTS: gapi.auth2 not found");
-    await Common.sleep(wait); //sleep 100 ms
-  }
-  while (!window.gapi) {
-    wait = wait * 2
-    console.log("3 check GApi: NOT EXISTS: window.gapi not found");
-    await Common.sleep(wait)
-  }
-}
 
 export function login() {
   if (GoogleAuth)
     return GoogleAuth.signIn().then(function (res) {
       console.log("Sign-in successful")
-      console.log("        IN         ")
-      console.log("        IN         ")
-      console.log("        IN         ")
-      console.log("        IN         ")
-      console.log("Sign-in successful")
-      console.log(res);
       return true
     })
       .catch(function (err) { console.error("Error signing in", err); });
@@ -131,12 +107,6 @@ export function logout() {
   if (GoogleAuth) {
     return GoogleAuth.signOut().then(function (res) { 
         console.log("Sign-out successful");
-        console.log("        OUT        ");
-        console.log("        OUT        ");
-        console.log("        OUT        ");
-        console.log("        OUT        ");
-        console.log("Sign-out successful");
-        console.log(res);
         return true 
     })
       .catch( function (err) { console.error("Error signing in", err); });
@@ -160,12 +130,11 @@ export function getToken() {
   }
 }
 
-
 //////////////////////////////////////////////////////////
 ///////////////////   helper stuff ///////////////////
 //////////////////////////////////////////////////////////
-export function printShit() {
-  console.log("print shit")
+export function printInfo() {
+  console.log("print Info")
   console.log("---------------------------------")
   if (!GoogleAuth) {
     console.log("GoogleAuth doesnt exist")
@@ -173,50 +142,17 @@ export function printShit() {
   }
   let user = GoogleAuth.currentUser.get()
   let profile = user.getBasicProfile()
-  console.log(profile.getId())
-  console.log(profile.getName()) // USE THIS!!!! for user name
-  console.log(profile.getGivenName()) //first naem
-  console.log(profile.getFamilyName()) // last name
-  console.log(profile.getImageUrl())
-  console.log(profile.getEmail())
-  console.log(profile.getId()) //dont use this
+  console.log('ID: ' + profile.getId());
+  console.log('Full Name: ' + profile.getName());
+  console.log('Given Name: ' + profile.getGivenName());
+  console.log('Family Name: ' + profile.getFamilyName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail());
+
   console.log(user.getBasicProfile())
   console.log(user.getGrantedScopes())
   console.log(user.getHostedDomain())
   console.log(user.getId())
-
-}
-
-// https://developers.google.com/identity/sign-in/web/reference#googleusergetid
-export function getProfile() {
-  console.log("getProfile")
-  if (GoogleAuth) {
-    var user = GoogleAuth.currentUser.get()
-    var profile = user.getBasicProfile();
-    return profile 
-    }
-}
-
-export function testAuthcode() {
-  console.log('testAuthcode')
-  var user = GoogleAuth.currentUser.get()
-  var profile = user.getBasicProfile();
-  var someId = user.getId();
-  if (someId) {
-    //axios.post(SPRING_BACKEND +'/userDebug', { authcode: someId }).then(res => { (console.log(res)) })
-    axios.post(SPRING_BACKEND + '/user/authorize', { authcode: someId }).then(res => { (console.log(res)) })
-    console.log("SOME ID")
-    console.log(someId)
-
-    console.log('ID: ' + profile.getId());
-    console.log('Full Name: ' + profile.getName());
-    console.log('Given Name: ' + profile.getGivenName());
-    console.log('Family Name: ' + profile.getFamilyName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail());
-
-    //var profile = auth2.currentUser.get().getBasicProfile();
-  }
 }
 
 //https://developers.google.com/identity/sign-in/web/server-side-flow
@@ -237,9 +173,6 @@ export function getAuthCodeForServerSideShit() {
     
   })
 }
-
-
-/////////////////////////////////////////////////////
 
 export function testWithXML() {
   var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance 

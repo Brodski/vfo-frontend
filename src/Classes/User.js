@@ -147,22 +147,3 @@ export class VidCounter {
     this.shelfId = '';
   }
 }
-
-
-
-    //  for (let uSh of subsFromBackend.customShelfs) {
-    //    for (let sub of uSh.fewSubs) {
-    //      for (let rmS of removedSubs) {
-    //        if (rmS.channelId == sub.channelId) {
-    //          let idz = uSh.fewSubs.indexOf(sub)
-    //          console.log(idz)
-    //          console.log(sub)
-    //          uSh.fewSubs.splice(idz,1)
-    //          if (uSh.fewSubs.length === 0) {
-    //            let idz2 = subsFromBackend.customShelfs.indexOf(uSh)
-    //            subsFromBackend.customShelfs.splice(idz2,1)
-    //          }
-    //        }
-    //      }
-    //    }
-    //}

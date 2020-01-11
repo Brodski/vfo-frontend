@@ -12,11 +12,9 @@ return(
 
     <div></div>
     <button onClick={() => { console.log(GApiAuth.isHeSignedIn()) }}> isHeSignedIn</button>
-    <button onClick={GApiAuth.printShit}> print shit</button>
-    <button onClick={GApiAuth.getProfile}> get profile</button>
+    <button onClick={GApiAuth.printInfo}> print Info</button>
 
     <div></div>
-    <button onClick={GApiAuth.testAuthcode} > get your profile from localhost </button>
     <button onClick={GApiAuth.testWithXML} > "Ping" server with xml </button>
     <h3> More </h3>
 

@@ -46,7 +46,6 @@ export async function getActivitiesShelfs(shelfs) {
     allShelfs_Promises.push(sh_Promises)
   }
   return await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
-    
 }
 
 export async function loginAndSet(setUser, setUserSettings) {

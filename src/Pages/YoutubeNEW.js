@@ -7,7 +7,7 @@ import * as ytLogic                     from '../BusinessLogic/ytLogic.js'
 import * as youtubeApi                  from "../HttpRequests/youtubeApi";
 import * as ServerEndpoints             from '../HttpRequests/ServerEndpoints.js'
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
-import { FinalShelfs }                 from '../Classes/FinalShelfs'
+import { FinalShelfs, VideoRes }                 from '../Classes/FinalShelfs'
 import { CustomShelf, VidCounter, User }                       from '../Classes/User'
 
 import { Subscription }                 from '../Classes/Subscription'
@@ -97,9 +97,14 @@ export function YoutubeNEW() {
     let shelfVids = await _fetchVideos(shelfsActs)
 
     let iData = injectData(shelfVids)
+    console.log('iData.shelfs[0].videos[0]')
+    console.log('iData.shelfs[0].videos[0]')
+    console.log('iData.shelfs[0].videos[0]')
+    console.log('iData.shelfs[0].videos[0]')
+    console.log(iData.shelfs[0].videos[0])
 
     ytLogic.beginFilter2(iData.shelfs)
-
+    
     setFinalShelfAux(iData)
     
     console.log("_____-------WE FINISHED THE FETCH & PROCESSING!-------_______")
@@ -109,10 +114,15 @@ export function YoutubeNEW() {
   }
 
   function setFinalShelfAux(iData) {
+    if (!iData.shelfs[0].videos[0]) {
+      //let emptyVid = { id: '' }
+      iData.shelfs[0].videos[0] = new VideoRes()
+      iData.shelfs[0].videos[0].id = ''
+      
+    }
     //FIXME clean this slop 
     setFinalShelfs(prevShs => {
         let newS = { ...prevShs }
-        newS.isActs = false
         if (prevPage == 0) {
           for (let i = 0; i < pageLength; i++) {
             newS.shelfs[prevPage + i] = iData.shelfs[i]
