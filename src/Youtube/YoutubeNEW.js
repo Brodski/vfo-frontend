@@ -7,8 +7,8 @@ import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
 import * as youtubeApi                  from "../HttpRequests/youtubeApi";
 import * as ServerEndpoints             from '../HttpRequests/ServerEndpoints.js'
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
-import { FinalShelfs, VideoRes }                 from '../Classes/FinalShelfs'
-import { CustomShelf, VidCounter, User }                       from '../Classes/User'
+import { FinalShelfs, VideoRes }           from '../Classes/FinalShelfs'
+import { CustomShelf, VidCounter, User }    from '../Classes/User'
 
 import { Subscription }                 from '../Classes/Subscription'
 import { ShelfsMany }                   from './ShelfsMany';

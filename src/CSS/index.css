@@ -11,26 +11,38 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
+/* 
 body {
   background-color: dimgrey;
-  text-align: center;
-}
+} */
 
-ul {
+/* ul {
   margin: 0; 
-  padding: 0; 
-}
+  padding: 0;  
+}*/
 
 .loading-main-animation {
   display: flex;
   justify-content: space-around
 }
 
-li {
+/* 
+nav {
+  height: 50px !important;
+} */
+
+/* .my-nav {
+  height: 50px;
+  background: rgba(0,0,0,0.2);
+} */
+
+ .nav-wrapper{
+  height: 50px;
+} 
+/*li {
   display: inline-block;
   margin: 10px;
-}
+}*/
 
 li.video {
   width: 250px;

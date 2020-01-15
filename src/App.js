@@ -28,6 +28,11 @@ import * as ytLogic                     from './BusinessLogic/ytLogic.js'
 // $ npm install --save env-cmd 
 // $ npm install --save react-loading
 // $ npm i --save react-google-button
+// $ npm i --save install materialize-css@next
+// $ npm install --save @material-ui/core
+// $ npm install --save @mdi/font
+// $ npm install --save @mdi/react @mdi/js
+// $ npm install --save node-sass
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
 function App() {
@@ -35,14 +40,15 @@ function App() {
   useEffect(() => {
     console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
     initGApi()
-    //const script = document.createElement("script");
-    //script.type = "text/javascript";
-    //script.src = "https://apis.google.com/js/client.js";
-    //script.async = true
-    //document.body.appendChild(script)
-    //script.onload = () => {
-    //  initGApi()
-    //}
+    //This is b/c adblock will block the googleapi script/link/cdn if its in the HTML
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://apis.google.com/js/client.js";
+    script.async = true
+    document.body.appendChild(script)
+    script.onload = () => {
+      initGApi()
+    }
   }, [])
       
   async function initGApi() {
@@ -98,11 +104,11 @@ function App() {
   const [isLogged2, setIsLogged2]       = useState(false)
   return (
     <Router>
-        <Nav />
         <Switch>
           <UserContext.Provider value={{ user, setUser }}>
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
           <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
+            <Nav />
             <Route path="/" exact component={Home} />
 
             <Route path="/youtube" component={YoutubeNEW} />

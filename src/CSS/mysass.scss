@@ -1,0 +1,50 @@
+
+body {
+  @extend .grey, .darken-2;
+
+}
+
+svg.svg-googlecolor {
+     path {
+     //fill: blue;
+     stroke-width: .3;
+     stroke: teal;
+     }
+    vertical-align: middle;
+    margin-bottom: 4px;
+    margin-right: 3px;
+  }
+  svg.svg-mygoogle2 {
+     path {
+     fill: whitesmoke;
+     }
+    vertical-align: middle;
+    margin-bottom: 4px;
+    margin-right: 3px;
+        
+  }
+  // https://github.com/Dogfalo/materialize/blob/master/sass/components/_variables.scss
+  // https://materializecss.com/sass.html
+//  @import "../../node_modules/materialize-css/sass/materialize";
+// last comment https://stackoverflow.com/questions/39785695/how-to-change-default-materialize-theme-colour-in-rails-application
+  @import "../../node_modules/materialize-css/sass/components/color-variables";
+
+  
+  $primary-color: color("blue-grey", "darken-2") !default;
+  $primary-color-light: lighten($primary-color, 15%) ;
+  $primary-color-dark: darken($primary-color, 15%) ;
+
+//  $secondary-color: color("amber", "lighten-1") !default;
+  $secondary-color: color("grey", "darken-3") !default;
+  $success-color: color("green", "base") ;
+  $error-color: color("red", "base") ;
+  $link-color: color("light-blue", "darken-1") ;
+  
+
+  @import "../../node_modules/materialize-css/sass/materialize";
+
+
+
+
+
+ // https://icons8.com/icons/set/google
