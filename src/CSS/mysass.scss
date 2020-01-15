@@ -1,7 +1,60 @@
 
-body {
-  @extend .grey, .darken-2;
 
+ $mainTextColor: whitesmoke;
+
+body {
+  @extend .grey, .darken-1;
+
+}
+
+.save-btn {
+  margin: 10px;
+}
+
+.shelf-text{
+  padding: 10px;
+  font-size: 1.4em;
+
+}
+
+// .btn{
+//   background-color: red !important;
+// }
+
+.time-icon-help{
+ 
+}
+.filt-button {
+  background-color: #474747 !important;
+}
+.shelf-title {
+  margin: 5px;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.custom-shelf {
+  /* min-width: 500px; */
+  // background-color: peru;
+  @extend .blue-grey, .darken-2;   // .grey-text, .text-lighten-5; 
+}
+
+.rename-icon{
+ color: black; 
+ margin-top: 5px;
+ margin-right: 5px;
+ &:hover{
+  cursor: pointer;
+ }
+}
+
+.timelapse-icon{
+  width: 10px;
+  margin: auto;
+  padding: 10px;
+  
+  background-color: transparent;
+  
 }
 
 svg.svg-googlecolor {
@@ -16,7 +69,7 @@ svg.svg-googlecolor {
   }
   svg.svg-mygoogle2 {
      path {
-     fill: whitesmoke;
+     fill: $mainTextColor;
      }
     vertical-align: middle;
     margin-bottom: 4px;

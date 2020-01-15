@@ -118,17 +118,19 @@ async function initPage2() {
   }
 
     return (
-    <div>  
-        <button onClick={save} > Save </button>
-        <div></div>
-        <button onClick={logUserAndSettings} > log User & Settings </button>
-        <ButtonsAuthDebug/>
-        <div >
+    <div className="container">  
+        <a class="waves-effect waves-light btn save-btn" onClick={save} >Save</a>
+        
         { shouldRedirect 
           ? <PostSave /> 
           : <LoadShelfs /> }
-        </div>
       <h1> ```````````````````````` </h1>      
+      <button onClick={logUserAndSettings} > log User & Settings </button>
+      
+      <button onClick={() => stLogic.logAllShelfs() }> log all Shelf </button>  
+      <button onClick={() => stLogic.logIds() }> log IDs Shelf </button>  
+      <ButtonsAuthDebug/>
+
     </div>
   );
 }

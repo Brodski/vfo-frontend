@@ -2,6 +2,8 @@
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 import { Filter } from '../Classes/Filter';
+import { mdiTimelapse } from '@mdi/js'; 
+import Icon from '@mdi/react'
 
 //https://github.com/reactjs/react-modal
 
@@ -30,14 +32,6 @@ export function FilterDialog(props){
   }
   const handleMaxDur = (e) => {
     setMaxDur(e.target.value)
-  }
-
-  
-  const IconHelper = () => {
-    return (
-    <i className="fas fa-info-circle infoIcon">
-      <span> Comma separated </span>
-    </i> )
   }
 
   const MaxMinDurationDropdown = (props) => {
@@ -142,8 +136,17 @@ export function FilterDialog(props){
 
 
     return (
-      <div>
-        <button onClick={() => { console.log(props); setIsOpen(true); } }>create filter</button>
+      <div className='valign-wrapper'>
+        {/* <button onClick={() => { console.log(props); setIsOpen(true); } }>create filter</button> */}
+        <a 
+          className=" btn filt-button z-depth-0"
+          onClick={() => { console.log(props); setIsOpen(true); } }
+          // class="waves-effect waves-light "
+          >
+            <i className="time-icon-help material-icons ">timelapse</i>
+            
+          </a>
+        
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={close}

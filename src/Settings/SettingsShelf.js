@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { FilterDialog } from '../Settings/FilterDialog';
 import { RenameDialog } from '../Settings/RenameDialog';
-import Sortable2 from 'sortablejs';
+import Sortable from 'sortablejs';
 import nextId  from "react-id-generator";
 
 
@@ -13,7 +13,7 @@ import nextId  from "react-id-generator";
   /////////////////////////////////////////////////////////////////////////////////////////////
   
 export const SettingsShelf = (props) => {
-  const subsDrag = 'subListWrapper'
+  const subsDrag = 'subListWrapper' //dont delte subListWrapper
   const shelfDrag = 'draggable-shelf'
   const emptySpaceDrag = 'unSortDndWrap'
 
@@ -21,7 +21,6 @@ export const SettingsShelf = (props) => {
     makeDraggableShared('.' + subsDrag, 'subscriptions') // make subs elements draggable
     makeDraggableShared('.' + shelfDrag, 'shelfsdnd')     //make shelfs draggable
     makeDraggableShared('.' + emptySpaceDrag, 'subscriptions')  // make the empty space in Your Subcriptionss draggable
-
   }, [])
 
   // forceUpdate() for functional comp workaround https://reactgo.com/react-force-update-render/
@@ -40,31 +39,24 @@ export const SettingsShelf = (props) => {
 
   function makeDraggableShared(selector, groupName) {
     var nestedShelf = [].slice.call(document.querySelectorAll(selector));
+    let optionz = {
+      group: groupName,
+      animation: 150,
+      fallbackOnBody: true,
+      swapThreshold: 0.65,
+      forceFallback: true,
+      onEnd: function (evt) {
+        saveUi2Settings()
+      }
+    }
+    if ( groupName == 'shelfsdnd') {
+      optionz = { ...optionz, handle:'.handle-shelf' }
+    }
+    
     for (let i = 0; i < nestedShelf.length; i++) {
-      new Sortable2(nestedShelf[i], {
-        group: groupName,
-        animation: 150,
-        fallbackOnBody: true,
-        swapThreshold: 0.65,
-        forceFallback: true,
-        onEnd: function (evt) {
-          saveUi2Settings()
-        }
-      });
+      new Sortable(nestedShelf[i], optionz)
     }
   }
-
-  const itemz = props.shelf.fewSubs.map((s, idx) => {
-    let id = nextId('subid-')
-    return (
-      <div key={id} id={id} className="subitem" >
-        <div data-name={s.channelName} className="sub-QHack" >
-          {s.channelName}
-        </div>
-        <FilterDialog subObj={s} bindToId={id} userSettings={props.userSettings} setUserSettings={props.setUserSettings} />
-      </div>
-    )
-  })
 
   const RenameDialogAux = () => {
     if (props.shelf.isSorted) {
@@ -82,17 +74,39 @@ export const SettingsShelf = (props) => {
     }
   }
 
-  
-  let shelfClasses = props.shelf.isSorted     ? "sh-QHack custom-shelf" : "sh-QHack unsort-shelf" 
+  //Don't delete sub-QHack
+  //Don't delete subitem
+  const itemz = props.shelf.fewSubs.map((s, idx) => {
+    let id = nextId('subid-')
+    return (
+      <div key={id} id={id} className=" valign-wrapper shelf-text subitem handle-sub" >
+        <div data-name={s.channelName} className=" sub-QHack " >
+          {s.channelName}  
+        </div>
+        <FilterDialog subObj={s} bindToId={id} userSettings={props.userSettings} setUserSettings={props.setUserSettings} />
+      </div>
+    )
+  })
+
+
+  // Don't delete sh-Qhack.
+  let shelfClasses = "sh-QHack hoverable card blue-grey darken-1 "
+  let aux_shelfClasses = props.shelf.isSorted     ? " custom-shelf" : " unsort-shelf" 
+  shelfClasses = shelfClasses + ' ' + aux_shelfClasses
   let unSortDndWrap = props.shelf.isSorted    ? ""        : emptySpaceDrag 
   let dragClass = props.shelf.isSorted        ? shelfDrag : "" 
   let title     = props.shelf.isSorted        ? props.shelf.title : "Your Subscriptions"
   return (
     <div className={ dragClass + " shContainer"} >
-      <div data-name={props.shelf.title} data-issorted={props.shelf.isSorted} className={shelfClasses} >
-        <div  id={props.bindToId}  className="shelfTitleWrap"> 
-          <h3 className="shelfText">  {title}   </h3>
-          < RenameDialogAux />
+      <div className={shelfClasses} data-name={props.shelf.title} data-issorted={props.shelf.isSorted} >
+        <div  id={props.bindToId}  className=" valign-wrapper shelf-title-wrap"> 
+          <div>
+          <h6 className=" valign-wrapper shelf-title"> 
+          <i className=" handle-shelf material-icons" >drag_handle</i>
+             {title}  
+          </h6>
+          </div>
+            < RenameDialogAux />
         </div>
         <div className={subsDrag}>
           {itemz}

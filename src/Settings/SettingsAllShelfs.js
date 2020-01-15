@@ -6,6 +6,8 @@ import { rename } from 'fs';
 import { RenameDialog } from './RenameDialog';
 import nextId  from "react-id-generator";
 
+//SortedShelfs = the containers on the right
+//UnsortedShelfs="Your Subscriptions" on the left
 export const AllShelfs = (props) => {
   
   function addShelf() {
@@ -53,27 +55,41 @@ export const AllShelfs = (props) => {
   const SortedShelfs = () => {
     let sortedSh = prepSortedShelfs()
     let sortedShelfz = sortedSh.map(sh => {
-      let id = nextId('shelfid-')
-      return (<SettingsShelf key={id} bindToId={id} shelf={sh} 
-        userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
+    let id = nextId('shelfid-')
+    return (
+    <SettingsShelf 
+      key={id} 
+      bindToId={id} 
+      shelf={sh} 
+      userSettings={props.userSettings} 
+      setUserSettings={props.setUserSettings} />)
     })
-
     return (
       <div> 
         {sortedShelfz} 
-        <button onClick={addShelf} > Add Shelf </button>
+        <a 
+          onClick={addShelf}
+          className=" waves-effect waves-light btn">  
+          <i className=" material-icons">add</i>
+          </a>
       </div>
       )
   }
   
+  //UnsortedShelfs="Your Subscriptions" on the left
   const UnSortedShelfs = () => {
     let unSortedSh = prepTheYourSubscriptionsShelf()
     
     let unSortedshelfz = unSortedSh.map( sh => {
       let id = nextId('unsortShelf-')
-      return (<SettingsShelf key={id} bindToId={id} shelf={sh} 
-        userSettings={props.userSettings} setUserSettings={props.setUserSettings} />)
-    })
+      return (
+        <SettingsShelf 
+          key={id} 
+          bindToId={id} 
+          shelf={sh} 
+          userSettings={props.userSettings} 
+          setUserSettings={props.setUserSettings} />)
+        })
     return ( 
       <div> 
         {unSortedshelfz}
@@ -82,14 +98,15 @@ export const AllShelfs = (props) => {
   }
 
   return (
-    <div id="allbloodyshelfs">
-      <button onClick={() => stLogic.logAllShelfs() }> log all Shelf </button>  
-      <button onClick={() => stLogic.logIds() }> log IDs Shelf </button>  
-      <div className="flex-subshelf-container">
-        <UnSortedShelfs/>
-        <div> some stuff </div>
+    
+      <div className="center-align row flex-subshelf-container-lolwut">
+        <div className="col m6 s12">
+          <UnSortedShelfs/>
+        </div>
+         {/* <div> some stuff </div>  */}
+        <div className="col m6 s12">
         <SortedShelfs/>
+        </div>
       </div>
-    </div>
     )
   }

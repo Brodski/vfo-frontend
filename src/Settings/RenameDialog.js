@@ -33,7 +33,11 @@ export function RenameDialog(props) {
 
    return (
       <div>
-       <button  className={"shelfEditBtn"} onClick={() => setIsOpen(true)}>Rename</button>
+        <a >
+        <i onClick={() => setIsOpen(true)}
+          className=" rename-icon material-icons">edit</i>
+          </a>
+       {/* <button  className={"shelfEditBtn"} onClick={() => setIsOpen(true)}>Rename</button> */}
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={() => setIsOpen(false)}
@@ -41,7 +45,7 @@ export function RenameDialog(props) {
           className="Modal"
           overlayClassName="Overlay"
         >
-         <h2>Rename {props.shelfObj.title} to...</h2>
+         <h4>Rename {props.shelfObj.title} to...?</h4>
           <form>
             <input value={newName} type="text" placeholder="Rename" onChange={changeHandler} />
             <div> </div>

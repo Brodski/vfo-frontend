@@ -109,12 +109,12 @@ function App() {
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
           <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
             <Nav />
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact component={YoutubeNEW} />
 
-            <Route path="/youtube" component={YoutubeNEW} />
+            <Route path="/about" component={Home} />
         
             
-            <Route path="/settings2" component={SettingsNEW} />
+            <Route path="/customize" component={SettingsNEW} />
           </IsLoggedContext.Provider>
           </UserSettingsContext.Provider>     
           </UserContext.Provider>

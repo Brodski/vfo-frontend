@@ -11,15 +11,6 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-/* 
-body {
-  background-color: dimgrey;
-} */
-
-/* ul {
-  margin: 0; 
-  padding: 0;  
-}*/
 
 .loading-main-animation {
   display: flex;
@@ -39,10 +30,7 @@ nav {
  .nav-wrapper{
   height: 50px;
 } 
-/*li {
-  display: inline-block;
-  margin: 10px;
-}*/
+
 
 li.video {
   width: 250px;
@@ -60,18 +48,18 @@ ul.shelf {
   border-color: lightblue;
   border-style: solid;
 }
-
+/* 
 li.myget {
   display: table;
-}
-
+} */
+/* 
 .block-list {
   margin: 10px;
   max-width: 360px;
   background-color: #1d5358;
   border: 1px solid #eee;
   /* display: inline-block; kinda solves left align prob*/
-  cursor: move;
+  /* cursor: move;
   cursor: -webkit-grabbing;
   cursor: grab;
   cursor: -moz-grab;
@@ -79,7 +67,7 @@ li.myget {
 }
 
 li.block {
-}
+} */ 
 
 .sortable-chosen {
   color: #fff;
@@ -94,16 +82,18 @@ div.block {
   border-bottom: 1px solid #5a1616;
   
 }
-
+/* Dont delte, used by SettingLogic.logIds() */
 .subitem {
   margin: 0;
-  height: 40px;
+  height: 60px;
   border-top: 1px solid #5a1616;
   border-bottom: 1px solid #5a1616;
   display: flex;
   justify-content: space-between;
   background-color: steelblue;
 }
+
+/* DONT delete this, used by SettingsLogic.logAllShelfs() & SettingsLogc.logIds() */
 
 div.subListWrapper {
   /*border: 3px solid purple;*/
@@ -120,49 +110,46 @@ body {
   overflow: auto;
 }
 
-.custom-shelf {
-  min-width: 500px;
-  background-color: peru;
-}
+
 
 .unsort-shelf {
-  width: 300px;
+   /* width: 300px;  */
   background-color: lightgoldenrodyellow;
-  height:100%;
+  /* height:100%; */
 }
 
 .unSortDndWrap {
   background-color: darkslategrey;
   height: 100%;
-  min-height: 40px;
+  /* min-height: 40px; */
 }
 
-.flex-subshelf-container {
+ /* .flex-subshelf-container {
   display: flex;
+}  */
+
+
+
+.shelf-title-wrap{
+  display: flex;
+  justify-content: space-between;
 }
 
-.shelfTitleWrap{
-  display: inline-flex;
-}
-
-h3.shelfText {
+/* .shelfText {  cehck sass
   margin: 5px;
-}
+} */
+
 .shelfEditBtn {
   height: 25px;
   margin: auto;
 }
 
 .shContainer {
-  border: solid pink;
-  min-height: 60px;
-}
-.super-body-wrap {
+   /* border: solid black;  */
+   /* max-width: 500px; */
 }
 
-
-.auxSort {
-  
+.auxSort { 
   border: solid red;
 }
 
@@ -179,7 +166,16 @@ i.block {
   padding: 5px;
 }
 
-.handle {
+.handle-sub{
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.handle-shelf {
+  margin-left: 0.5em;
   cursor: move;
   cursor: -webkit-grabbing;
   cursor: grab;
@@ -229,6 +225,7 @@ i.block {
   background-color: #fff;
   overflow: auto;
   padding: 20px;
+  z-index: 100;
 }
 
 .Overlay {
