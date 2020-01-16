@@ -5,10 +5,18 @@ import { User, CustomShelf } from '../Classes/User'
 import { rename } from 'fs';
 import { RenameDialog } from './RenameDialog';
 import nextId  from "react-id-generator";
+import M from 'materialize-css'
 
 //SortedShelfs = the containers on the right
 //UnsortedShelfs="Your Subscriptions" on the left
 export const AllShelfs = (props) => {
+
+  useEffect( () => {
+    let elems = document.querySelectorAll('select');
+    let instances = M.FormSelect.init(elems, {});
+
+  },[])
+
   
   function addShelf() {
     // This is preserve changes the user made to the drag n drop
@@ -107,6 +115,8 @@ export const AllShelfs = (props) => {
         <div className="col m6 s12">
         <SortedShelfs/>
         </div>
+
+
       </div>
     )
   }

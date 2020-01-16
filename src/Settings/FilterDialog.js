@@ -4,9 +4,10 @@ import Modal from 'react-modal';
 import { Filter } from '../Classes/Filter';
 import { mdiTimelapse } from '@mdi/js'; 
 import Icon from '@mdi/react'
-
+//import Pic from './clock.png'
+import Pic from './cogs.png'
 //https://github.com/reactjs/react-modal
-
+import M from 'materialize-css'
 
 
 export function FilterDialog(props){
@@ -20,10 +21,15 @@ export function FilterDialog(props){
     // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
     //ReactDOM.render(<Example />, document.getElementById('settings-main'));
     if (!document.querySelectorAll('#' + props.bindToId)[1]) {
-      Modal.setAppElement('#' + props.bindToId)
+      Modal.setAppElement('#' + props.bindToId) //TODO, this seems like the if is no longer needed
     }
     setMinDur(props.subObj.filter.minDuration)
     setMaxDur(props.subObj.filter.maxDuration)
+    let elems = document.querySelectorAll('select');
+    let elems2 = document.querySelectorAll('h5');
+    console.log('useeffect elems2')
+    console.log(elems2)
+    let instances = M.FormSelect.init(elems, {});
     } ,[props.userSettings])
 
 
@@ -36,6 +42,7 @@ export function FilterDialog(props){
 
   const MaxMinDurationDropdown = (props) => {
     return (
+      <div> wtf
       <select value={props.maxOrMinState} onChange={props.maxOrMinHandler} >
         <option value={props.firstValue} > Off  </option>
         <option value="0.5"> 30 seconds </option>
@@ -54,6 +61,7 @@ export function FilterDialog(props){
         <option value="45" > 45 minutes</option>
         <option value="60" > 60 minutes</option>
     </select>
+    </div>
     )
   }
 
@@ -102,25 +110,12 @@ export function FilterDialog(props){
 
     props.setUserSettings(prevSettings => {
       let newU = prevSettings
-      //console.log('newU')
-      //console.log('newU')
-      //console.log('newU')
-      //console.log('newU')
-      //console.log('newU')
-      //console.log(newU)
       let newFilter = new Filter()
       newFilter.channelId = prevSettings.customShelfs[shelfIndex].fewSubs[subIndex].filter.channelId 
       newFilter.maxDuration = maxDur
       newFilter.minDuration = minDur
       newU.customShelfs[shelfIndex].fewSubs[subIndex].filter = newFilter
-      //console.log('newFilter')
-      //console.log(newFilter)
-      //console.log('newU')
-      //console.log(newU)
-      //console.log('shelfIndex')
-      //console.log(shelfIndex)
-      //console.log('subIndex')
-      //console.log(subIndex)
+      
       return newU
 
     })
@@ -131,7 +126,19 @@ export function FilterDialog(props){
     e.preventDefault();
     setMinDur(props.subObj.filter.minDuration)
     setMaxDur(props.subObj.filter.maxDuration)
+    
+    let elems = document.querySelectorAll('select');
+    console.log('elems')
+    console.log(elems)
     setIsOpen(false)
+  }
+
+  function initHack(){
+    let elems = document.querySelectorAll('select');
+    console.log('inithack  elems')
+    console.log(elems)
+    let instances = M.FormSelect.init(elems, {});
+
   }
 
 
@@ -140,7 +147,7 @@ export function FilterDialog(props){
         {/* <button onClick={() => { console.log(props); setIsOpen(true); } }>create filter</button> */}
         <a 
           className=" btn filt-button z-depth-0"
-          onClick={() => { console.log(props); setIsOpen(true); } }
+          onClick={() => { console.log(props); setIsOpen(true);  } }
           // class="waves-effect waves-light "
           >
             <i className="time-icon-help material-icons ">timelapse</i>
@@ -151,29 +158,35 @@ export function FilterDialog(props){
           isOpen={modalIsOpen}
           onRequestClose={close}
           shouldCloseOnEsc={ true}
-          className="Modal"
+          className="Modal card horizontal "
           overlayClassName="Overlay"
+          onAfterOpen={initHack}
         >
-
-          <h2>Customize {props.subObj.channelName}</h2>
-          <h3>Only show videos that are ... </h3>
-          <form>
-            <div>(Min) Longer than: </div>
-            {/*<MinDurationDropdown />*/}
-              <MaxMinDurationDropdown maxOrMinState={minDur} maxOrMinHandler={handleMinDur} firstValue={"0"} />
-            <div> (Max) Shorter than: </div>
-              <MaxMinDurationDropdown maxOrMinState={maxDur} maxOrMinHandler={handleMaxDur} firstValue={"Infinity"} />
-            {/*<MaxDurationDropdown />*/}
-
-            {/*<div id={props.bindToId + reqIdSuffix}>Title must contain:
-                <Tags settings={tagSettings} /> 
-                <IconHelper />
-               </div>
-            */}
-          <div> </div>
-            <button onClick={save}>Save</button>
-            <button onClick={close}>Close</button>
-          </form>
+          <div className="card-image filter-image hide-on-small-only">
+            <img  src={Pic} />   
+          </div>
+          <div className="rename-content">
+              <h5> {props.subObj.channelName}</h5>
+              <h5> Only show videos that are ... </h5>
+            
+              <div></div>
+                <MaxMinDurationDropdown 
+                  maxOrMinState={minDur} 
+                  maxOrMinHandler={handleMinDur} 
+                  firstValue={"0"} 
+                />
+              <label>(Min) Longer than: </label>
+              <div> (Max) Shorter than: </div>
+                <MaxMinDurationDropdown 
+                  maxOrMinState={maxDur} 
+                  maxOrMinHandler={handleMaxDur} 
+                  firstValue={"Infinity"} 
+                />
+            <div className="rename-mod-btn">
+              <a onClick={save} className=" btn">Save</a>
+              <a onClick={close} className=" btn">Close</a>
+            </div>
+          </div>
         </Modal>
       </div>
     );

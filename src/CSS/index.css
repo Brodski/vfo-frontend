@@ -189,9 +189,9 @@ i.block {
 
 .customLook{ 
   display: block;
-  display: block;
 
 }
+
 
 .tagify {
   --tags-bg: #ff0000;
@@ -214,19 +214,19 @@ i.block {
 }
 
 .Modal {
-  position: absolute;
+  position: absolute !important;
   top: 50%;
   left: 50%;
   right: auto;
   bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   background-color: #fff;
   overflow: auto;
-  padding: 20px;
-  z-index: 100;
+  /* padding: 20px; */
 }
+
 
 .Overlay {
   position: fixed;

@@ -83,7 +83,12 @@ export const SettingsShelf = (props) => {
         <div data-name={s.channelName} className=" sub-QHack " >
           {s.channelName}  
         </div>
-        <FilterDialog subObj={s} bindToId={id} userSettings={props.userSettings} setUserSettings={props.setUserSettings} />
+        <FilterDialog 
+          subObj={s} 
+          bindToId={id} 
+          userSettings={props.userSettings}
+          setUserSettings={props.setUserSettings} 
+        />
       </div>
     )
   })
