@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import Pic from './pen2.png'
+import Pic from './pen3.png'
 
 export function RenameDialog(props) {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ export function RenameDialog(props) {
         </div>
         <div className=" rename-content">
           <h5> Rename </h5>
-          
+          <div>
             <div class="input-field">
               <i class="material-icons prefix  ">mode_edit</i>
               <input 
@@ -65,13 +65,13 @@ export function RenameDialog(props) {
                 onChange={changeHandler} 
                 // id={'txt-' + props.bindToId}
               />
-
             </div>
             <div className="rename-mod-btn">
-            <a onClick={save} className=" btn">Rename</a>
-            <a onClick={close} className=" btn">Close</a>
+              <a onClick={save} className=" btn">Rename</a>
+              <a onClick={close} className=" btn">Close</a>
             </div>
           </div>
+        </div>
           
         </Modal>
       </div>

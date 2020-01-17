@@ -29,9 +29,6 @@ body {
  
 }
 
-.filt-button {
-  background-color: #474747 !important;
-}
 .shelf-title {
   margin: 5px;
   font-size: 1.3em;
@@ -45,22 +42,21 @@ body {
 }
 
 .rename-image {
-  width: 15.0em;
+  width: 12.0em;
   height: 100%;
 }
 
-.filter-image {
-  width: 15em;
-  height: 100%;
-}
 
 .rename-mod-btn {
  display: flex;
  justify-content: space-around;
- 
+ margin-top: .5em;
 }
 
-
+.select-wrap {
+  display: inline-flex;
+  width: 100%;
+}
 
 .rename-icon{
  color: black; 
@@ -71,9 +67,128 @@ body {
   }
 }
 
-.rename-content {
+.filt-content {
   padding: 10px;
-  align-items: center;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20em;
+}
+
+
+.filt-button {
+  background-color: #474747 !important;
+}
+
+.filter-image {
+  width: 13em;
+  height: 100%;
+}
+
+
+.filt-select {
+	cursor: pointer;
+  border-radius: 10px;
+}
+
+.icon-filt-min {
+  margin-bottom: .7em;
+  font-size: 2em;
+}
+.icon-filt-max{
+  margin-top: .3em;
+  font-size: 2em;
+}
+
+
+.card {
+  background-color: #f2f2f2;
+  
+}
+
+//////////////////////////////////////////////////////////////
+//             https://codepen.io/michmy/pen/jBQQpp
+//////////////////////////////////////////////////////////////
+
+$color--white: #FFFFFF;
+$color--black: #000000;
+//$color--light-grey: #E6E6E6;
+$color--light-grey: rgba(205, 209, 211, .5);
+//$color--light-grey: #CCCCCC;
+//$color--grey: #CCCCCC;
+$color--grey: rgba(205, 209, 211, .5);
+$color--dark-grey: #7B7B7B;
+$color--primary: #2AA1C0;
+$color--secondary: #0E647D;
+
+.select {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 100%;
+
+  select {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px 15px;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    background: $color--light-grey;
+    //color: $color--dark-grey;
+    color: black;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    &:-ms-expand {
+      display: none;
+    }
+    //&:hover,
+    //&:focus {
+    &:hover {
+      color: $color--black;
+      background: $color--grey;
+    }
+  
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}
+      
+.select__arrow{
+  position: absolute;
+  top: 16px;
+  right: 15px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-style: solid;
+  border-width: 8px 5px 0 5px;
+  border-color: $color--dark-grey transparent transparent transparent;
+  
+  // .select select:hover ~ &
+  // .select select:focus ~ & {
+  .select select:hover ~ & {
+    border-top-color: $color--black;
+  }
+}
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+
+.rename-content {
+  padding: 1em;
+  //align-items: center;
+  width: 20em;
+
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20em;
+  
 }
 
 .timelapse-icon{

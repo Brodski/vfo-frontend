@@ -119,7 +119,7 @@ async function initPage2() {
 
     return (
     <div className="container">  
-        <a class="waves-effect waves-light btn save-btn" onClick={save} >Save</a>
+        <a class=" btn save-btn" onClick={save} >Save</a>
         
         { shouldRedirect 
           ? <PostSave /> 
