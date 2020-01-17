@@ -38,14 +38,13 @@ export function YoutubeNEW() {
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
 
   const [pageLength, setPageLength] = useState(1);
-  const [hasMoreShelfs, setHasMoreShelfs] = useState(false); //At start, there are no shelfs, thus we have no more shelfs
+  const [isMoreShelfs, setIsMoreShelfs] = useState(false); //At start, there are no shelfs, thus we have no more shelfs
 
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
   const [numVids, setNumVids] = useState([new VidCounter()]) // {vids: 0, shelfId: '' 
   const [chillBro, setChillBro] = useState(0)
   const [isFirst, setIsFirst] = useState(true)
   
-
   // This is the finalShelf:
   // finalShelfs  = [ shelf, shelf, shelf ]
   // shelf        = [ vid, vid, vid, vid ]
@@ -54,6 +53,16 @@ export function YoutubeNEW() {
   useEffect(() => {
     console.log('---------------useEffect top ----------------------')
     initPage()
+    moment.updateLocale('en', {
+      relativeTime: {
+        m: "1 minute",
+        h: "1 hour",
+        d: "1 day",
+        M: "1 month",
+        y: "1 year",
+      }
+    });
+
     console.log('---------------useEffect bot----------------------')
   }, [])
 
@@ -78,7 +87,7 @@ export function YoutubeNEW() {
       putUnsortedShelfAtBottom() 
     }
     // instantly halt any possible room for multi fetches
-    setHasMoreShelfs(false) 
+    setIsMoreShelfs(false) 
     prevPage = pageLength - 1
     await hackHelper()
   }
@@ -120,7 +129,8 @@ export function YoutubeNEW() {
       iData.shelfs[0].videos[0].id = ''
       
     }
-    //FIXME clean this slop 
+
+    //TODO clean this slop 
     setFinalShelfs(prevShs => {
         let newS = { ...prevShs }
         if (prevPage == 0) {
@@ -136,7 +146,7 @@ export function YoutubeNEW() {
       })
       setPageLength(pageLength + 1)
       spamCount = spamCount + 1;
-      setHasMoreShelfs(true) 
+      setIsMoreShelfs(true) 
   }
 
   async function _fetchActivities() {
@@ -212,8 +222,8 @@ export function YoutubeNEW() {
   const LoggedOut = () => {
     return (
       <div>
-        <h2> Log in to customize your homepage </h2>
-        <h2> Currently using a demo profile </h2>
+        <h5> Log in to customize your homepage </h5>
+        <h5> Currently using a demo profile </h5>
       </div>
     )
   }
@@ -221,7 +231,7 @@ export function YoutubeNEW() {
   const LoggedIn = () => {
     return(
       <div>
-        <h2> Hi {user.username} </h2>
+        <h5> Hi {user.username} </h5>
       </div>
       )
   }
@@ -230,7 +240,7 @@ export function YoutubeNEW() {
     return (
       <InfiniteScroll key={nextId('infScroll-')}
         loadMore={() => fetchMoreSubs() }
-        hasMore={hasMoreShelfs}
+        hasMore={isMoreShelfs}
         loader={(<div key={nextId('loader-')}>Loading ...</div>)}
         threshold={200}
        >
@@ -245,13 +255,12 @@ export function YoutubeNEW() {
   }
 
   return(
-    <div>
-      <ButtonsAuthDebug data={{ numVids, finalShelfs, user, isLogged2, pageLength, setPageLength, user }}/>
-      <h1>Youtube</h1>
-      
+    <div className="yt-body-wrapper" >
       {isLogged2 === true && !user.isDemo ? <LoggedIn /> : <LoggedOut />}
-      
       {finalShelfs.shelfs[0].videos[0].id == null ? <LoadingMain /> : <Shelfs />}
+      
+      {/* JUNK BELOW */}
+      <ButtonsAuthDebug data={{ numVids, finalShelfs, user, isLogged2, pageLength, setPageLength, user }}/>
       
     </div>
     );

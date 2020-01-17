@@ -40,8 +40,9 @@ async function checkIfInitFinished(){
               <Link to='/'> <Logo /> </Link>
             </div>
             <ul className="right">
-              <li> <Link to='/about'> About </Link> </li>
+              <li> <Link to='/'> Home </Link> </li>
               <li> <Link to='/customize'> Customize </Link> </li>
+              <li> <Link to='/about'> About </Link> </li>
               <li> 
                 {isInitFinished  ? <LoginButton /> : null }
               </li>

@@ -17,57 +17,60 @@ code {
   justify-content: space-around
 }
 
-/* 
-nav {
-  height: 50px !important;
-} */
-
-/* .my-nav {
-  height: 50px;
-  background: rgba(0,0,0,0.2);
-} */
-
- .nav-wrapper{
+.nav-wrapper{
   height: 50px;
 } 
 
-
 li.video {
-  width: 250px;
+  width: 17em;
   overflow: hidden;
+  margin-bottom: .6em;
+  margin-left: .3em;
+  margin-right: .3em;
+  padding-bottom: .3em;
+  
+}
+
+.vid-info {
+  line-height: 1.1em;
+}
+
+.vid-timestamp {
+ position: absolute;
+ background-color: rgba(0, 0, 0, 1);
+ bottom: .7em;
+ right: .5em;
+ color: white;
+ font-size: .8em;
+ font-weight: 600;
+ font-family: Arial, Helvetica, sans-serif;
+ line-height: 1.1em;
+ padding-left: .1em;
+ padding-right: .1em;
+  
+}
+
+.thumbnail-wrap {
+  position: relative;
+}
+
+.vid-title{
+ font-weight: 700;
+ padding-top: .1em;
+ padding-bottom: .1em;
+}
+
+.thumnail {
+  width: 100%;
 }
 
 ul.shelf {
   white-space: nowrap;
-  display: flex;
-  flex-wrap: wrap;
-  /*justify-content: center;*/
+  display: inline-flex;
+  flex-wrap: wrap; 
+  
+  /* justify-content: center; */
 }
-
-.ytShelfWrap {
-  border-color: lightblue;
-  border-style: solid;
-}
-/* 
-li.myget {
-  display: table;
-} */
-/* 
-.block-list {
-  margin: 10px;
-  max-width: 360px;
-  background-color: #1d5358;
-  border: 1px solid #eee;
-  /* display: inline-block; kinda solves left align prob*/
-  /* cursor: move;
-  cursor: -webkit-grabbing;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-}
-
-li.block {
-} */ 
 
 .sortable-chosen {
   color: #fff;
@@ -101,16 +104,10 @@ div.subListWrapper {
 
 }
 
-div.shelf {
-}
-
-
 body {
   height: 100%;
   overflow: auto;
 }
-
-
 
 .unsort-shelf {
    /* width: 300px;  */
@@ -135,9 +132,7 @@ body {
   justify-content: space-between;
 }
 
-/* .shelfText {  cehck sass
-  margin: 5px;
-} */
+
 
 .shelfEditBtn {
   height: 25px;

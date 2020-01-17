@@ -16,8 +16,13 @@ export const ShelfsMany = props => {
     <div> 
     {props.shelfs.map( (sh, idx) => {
       return (
-        <div  key={nextId('shelfid-')} className="ytShelfWrap">
-          <Shelf shelf={sh} numVids={props.numVids} setNumVids={props.setNumVids} _setIdx={idx} />
+        <div  key={nextId('shelfid-')} className=" yt-shelf-outer-wrap ">
+          <Shelf 
+            shelf={sh} 
+            numVids={props.numVids} 
+            setNumVids={props.setNumVids} 
+            _setIdx={idx} 
+          />
         </div>
         )
       })}

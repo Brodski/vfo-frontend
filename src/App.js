@@ -33,6 +33,8 @@ import * as ytLogic                     from './BusinessLogic/ytLogic.js'
 // $ npm install --save @mdi/font
 // $ npm install --save @mdi/react @mdi/js
 // $ npm install --save node-sass
+// $ npm install --save human-format
+
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
 function App() {
@@ -56,13 +58,15 @@ function App() {
     console.time("initGApi()")
     let GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
     console.timeEnd("initGApi()")
-
+    
     setIsLogged2(GApiAuth.isHeSignedIn())
 
     // solution to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
     while (GoogleAuth == null) {
       console.log("Shits null af ", GoogleAuth)
       await Common.sleep(500)
+      initGApi()
+      return;
     }
 
     GoogleAuth.isSignedIn.listen( function (val) {
