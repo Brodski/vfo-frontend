@@ -1,5 +1,5 @@
 import React,  { useState, useContext, useEffect } from 'react';
-import { IsLoggedContext } from '../Contexts/UserContext.js';
+import { IsLoggedContext, UserSettingsContext, UserContext } from '../Contexts/UserContext.js';
 import { Link } from 'react-router-dom'
 import * as Common from  '../BusinessLogic/Common';
 import GoogleButton from 'react-google-button'
@@ -19,20 +19,29 @@ import LoginButton2 from './LoginButton2'
 
 const Nav = () => {
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
+  const { user, setUser } = useContext(UserContext);
+  const { userSetings, setUserSettings } = useContext(UserSettingsContext);
   const [isInitFinished, setIsInitFinished] = useState(false)
   useEffect( () => {
     checkIfInitFinished()
   })
-  
+
+  const ProfileImg = () => { 
+    return(
+      <div className="center-align nav-profile-icon">
+        <img className="profile-pic" src={user.pictureUrl} />
+      </div>
+    )
+  }
+
 async function checkIfInitFinished(){
   await GApiAuth.getGoogleAuth() 
+  if (GApiAuth.isHeSignedIn() && user.isDemo) {
+    await Common.loginAndSet(setUser, setUserSettings)
+  }
   setIsInitFinished(true)
 }
 
-    
-//if (GApiAuth.isHeSignedIn() && user.isDemo) {
-  
-  //render() {
     return (
         <nav className="my-nav" >
           <div className="nav-wrapper ">
@@ -48,6 +57,9 @@ async function checkIfInitFinished(){
               </li>
               <li>
                 {isInitFinished  ? <LoginButton2 /> : null }
+              </li>
+              <li>
+              {isInitFinished  ? <ProfileImg/>  : null }
               </li>
             </ul>
           </div>

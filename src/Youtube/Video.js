@@ -9,7 +9,7 @@ export const Video = (props) => {
   //YT uses a 1 to 1.787 ratio for all their vids. The medium.url is 1 to 1.777
   thumbnail   = props.video.snippet.thumbnails.medium.url
   id          = props.video.id 
-  title       = props.video.snippet.title 
+  title       = props.video.snippet.title
   channelName = props.video.snippet.channelTitle
   fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
   viewCount   = humanFormat(parseInt(props.video.statistics.viewCount),{ decimals: 1 } ).replace(/\s/g,''); //https://github.com/JsCommunity/human-format
@@ -18,17 +18,19 @@ export const Video = (props) => {
   
   if (props.video.id) {
     return (
-      <li className="video">
+      <li className="video col s12 m4 l3 xl3">
         <div className="thumbnail-wrap">
           <a href={"https://www.youtube.com/watch?v=" + id} >
             <img className="thumnail" src={thumbnail} />
           </a>
           <span className="vid-timestamp"> {vidDuration} </span>
         </div>
-        <div className="vid-title"> {title} </div>
-        <div className="vid-info">
-          <div> {channelName} </div>
-          <div> {fromNowDate} • {viewCount} views </div>
+        <div className="vid-all-text-wrap">
+          <div className="vid-title"> {title}  </div>
+          <div className="vid-info">
+            <div> {channelName} </div>
+            <div> {fromNowDate} • {viewCount} views </div>
+          </div>
         </div>
 
       </li>

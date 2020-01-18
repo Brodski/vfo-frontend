@@ -15,7 +15,7 @@ import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
 import { User } from './Classes/User'
 import * as Common                    from './BusinessLogic/Common.js';
 import * as ytLogic                     from './BusinessLogic/ytLogic.js'
-
+import moment from 'moment';
 // $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
 // $ npm install --save react-sortablejs
@@ -34,9 +34,12 @@ import * as ytLogic                     from './BusinessLogic/ytLogic.js'
 // $ npm install --save @mdi/react @mdi/js
 // $ npm install --save node-sass
 // $ npm install --save human-format
+// $ npm install react-responsive-carousel --save
+//
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
+
 function App() {
 
   useEffect(() => {
@@ -51,6 +54,16 @@ function App() {
     script.onload = () => {
       initGApi()
     }
+    
+    moment.updateLocale('en', {
+      relativeTime: {
+        m: "1 minute",
+        h: "1 hour",
+        d: "1 day",
+        M: "1 month",
+        y: "1 year",
+      }
+    });
   }, [])
       
   async function initGApi() {

@@ -3,7 +3,7 @@ import { Video } from './Video'
 import { Shelf } from './Shelf'
 import { Shelf2 } from './Shelf'
 import nextId  from "react-id-generator";
-
+import { LoadingMain }   from '../Common/LoadingMain';
 export const ShelfsMany = props => {
 
 /*
@@ -26,6 +26,8 @@ export const ShelfsMany = props => {
         </div>
         )
       })}
+      {props.hasMore ? null : <LoadingMain/> }
   </div>
+  
   )
 }

@@ -16,7 +16,12 @@ import Sortable2 from 'sortablejs';
 import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 
 import { CustomShelf } from '../Classes/User'
-
+import {HowTo} from './HowTo'
+import Pic1 from './action1.jpg'
+import Pic2 from './action2.jpg'
+import Pic3 from './action3.webp'
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 // to consider... https://www.npmjs.com/package/choices.js
 //  https://www.npmjs.com/package/react-dialog
 //  https://github.com/SortableJS/react-sortablejs
@@ -120,16 +125,43 @@ async function initPage2() {
     return (
     <div className="container">  
         <a class=" btn save-btn" onClick={save} >Save</a>
+        <div>   </div>
+        <HowTo />
         
+      <div className="carousel-wrap">
+        <Carousel 
+          showArrows={true} 
+          showStatus={false}
+          showThumbs={false}
+          //width=69
+          dynamicHeight={true}
+          useKeyboardArrows={true}
+          infiniteLoop={true}
+          >
+          <div>
+              <img src={Pic1} />
+              <p className="legend">Legend 1</p>
+          </div>
+          <div>
+              <img src={Pic2} />
+              <p className="legend">Legend 2</p>
+          </div>
+          <div>
+            <img src={Pic3} />
+              <p className="legend">Legend 3</p>
+          </div>
+        </Carousel>
+      </div>
         { shouldRedirect 
           ? <PostSave /> 
           : <LoadShelfs /> }
-      <h1> ```````````````````````` </h1>      
+           
+{/*      <h1> ```````````````````````` </h1>      
       <button onClick={logUserAndSettings} > log User & Settings </button>
       
       <button onClick={() => stLogic.logAllShelfs() }> log all Shelf </button>  
       <button onClick={() => stLogic.logIds() }> log IDs Shelf </button>  
-      <ButtonsAuthDebug/>
+      <ButtonsAuthDebug/> */}
 
     </div>
   );

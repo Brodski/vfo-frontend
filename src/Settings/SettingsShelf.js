@@ -21,9 +21,7 @@ export const SettingsShelf = (props) => {
     makeDraggableShared('.' + subsDrag, 'subscriptions') // make subs elements draggable
     makeDraggableShared('.' + shelfDrag, 'shelfsdnd')     //make shelfs draggable
     makeDraggableShared('.' + emptySpaceDrag, 'subscriptions')  // make the empty space in Your Subcriptionss draggable
-    let selectElems = document.querySelectorAll('select');
-    console.log("selectElems")
-    console.log(selectElems)
+    
   }, [])
 
   // forceUpdate() for functional comp workaround https://reactgo.com/react-force-update-render/

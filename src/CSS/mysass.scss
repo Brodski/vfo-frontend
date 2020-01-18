@@ -10,8 +10,16 @@ body {
   @extend .grey, .darken-1;
 }
 
+.carousel-wrap{
+  padding: 0;
+}
+
+.carousel {
+  width: 100% !important;
+}
+
 .yt-body-wrapper{
-  display: inline;
+  // display: inline;
 }
 .yt-shelf-outer-wrap{
   padding: 1em;
@@ -33,7 +41,9 @@ body {
 .yt-shelf-title {
   font-size: 1.8em;
   font-weight: 600;
-  margin-left: .7em;
+  margin-left: .1em;
+  
+
   // border-style: none none solid none;
   // border-width: 2px;
   // width: 200px;
@@ -41,6 +51,35 @@ body {
 
 .yt-loadmore-btn {
   margin-bottom: .5em;
+}
+
+.demo-greeting-wrap{
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+.nav-profile-icon {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.profile-greeting-wrap {
+  display: inline-flex;
+  margin-left: 1em; //see .demo-greeting-wrap
+  margin-top: 1em;
+  
+}
+.profile-msg {
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.profile-pic {
+  border-radius: 50%;
+  height: 2.5em;
+  margin: auto;
+  margin-left: .5em;
+  margin-right: .5em;
 }
 
 .save-btn {

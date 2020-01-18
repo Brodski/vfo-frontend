@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, { useState, useEffect, useContext, createContext, Fragment } from 'react';
 import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js';
 
 import * as Common                    from '../BusinessLogic/Common.js';
@@ -22,6 +22,8 @@ import nextId  from "react-id-generator";
 import ReactLoading from 'react-loading';
 
 import * as moment from 'moment';
+import { mdiProgressUpload } from '@mdi/js';
+import M from 'materialize-css'
 
 //UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 // react infinite scroll https://github.com/CassetteRocks/react-infinite-scroller#readme
@@ -53,19 +55,24 @@ export function YoutubeNEW() {
   useEffect(() => {
     console.log('---------------useEffect top ----------------------')
     initPage()
-    moment.updateLocale('en', {
-      relativeTime: {
-        m: "1 minute",
-        h: "1 hour",
-        d: "1 day",
-        M: "1 month",
-        y: "1 year",
-      }
-    });
+    
+    // let elems = document.querySelectorAll('.dropdown-trigger');
+    // console.log('elems')
+    // console.log('elems')
+    // console.log('elems')
+    // console.log('elems')
+    // console.log('elems')
+    // console.log('elems')
+    // console.log(elems)
 
+    // let instances = M.Dropdown.init(elems, {});
+    
     console.log('---------------useEffect bot----------------------')
   }, [])
 
+  function lol(){
+    console.log("lol clicked")
+  }
 
   //Set up login/logout handlers, get user, then fetch data from youtube
   //TODO could abstract initPage() and initPage2() (in settings) probably
@@ -75,7 +82,6 @@ export function YoutubeNEW() {
     if (GApiAuth.isHeSignedIn() && user.isDemo) {
       await Common.loginAndSet(setUser, setUserSettings)
     }
-
     setIsFirst(false)
     setNumVids(user.customShelfs.map(() => new VidCounter()))
     await fetchMoreSubs()
@@ -106,11 +112,6 @@ export function YoutubeNEW() {
     let shelfVids = await _fetchVideos(shelfsActs)
 
     let iData = injectData(shelfVids)
-    console.log('iData.shelfs[0].videos[0]')
-    console.log('iData.shelfs[0].videos[0]')
-    console.log('iData.shelfs[0].videos[0]')
-    console.log('iData.shelfs[0].videos[0]')
-    console.log(iData.shelfs[0].videos[0])
 
     ytLogic.beginFilter2(iData.shelfs)
     
@@ -221,19 +222,34 @@ export function YoutubeNEW() {
 
   const LoggedOut = () => {
     return (
-      <div>
-        <h5> Log in to customize your homepage </h5>
-        <h5> Currently using a demo profile </h5>
+      <div className="center-align demo-greeting-wrap">
+        <div className="flow-text">
+           Log in to customize your homepage <br/>  Currently using a demo profile </div>
       </div>
     )
   }
 
   const LoggedIn = () => {
+    console.log('logged af')
     return(
-      <div>
-        <h5> Hi {user.username} </h5>
+      <Fragment>
+      <div className="center-align profile-greeting-wrap">
+        {/* <img className="profile-pic" src={user.pictureUrl}></img> */}
+        <div className="profile-msg"> Hi {user.username} </div> 
       </div>
+          <a className='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
+        
+          <ul id='dropdown1' className='dropdown-content'>
+            <li><a href="#!">one</a></li>
+            <li><a href="#!">two</a></li>
+            
+            <li><a href="#!">three</a></li>
+            <li><a href="#!"><i className="material-icons">view_module</i>four</a></li>
+            <li><a href="#!"><i className="material-icons">cloud</i>five</a></li>
+          </ul>
+          </Fragment>
       )
+//    return ( <div></div>)
   }
 
   const Shelfs = () => {
@@ -242,13 +258,15 @@ export function YoutubeNEW() {
         loadMore={() => fetchMoreSubs() }
         hasMore={isMoreShelfs}
         loader={(<div key={nextId('loader-')}>Loading ...</div>)}
-        threshold={200}
+        threshold={10}
+        
        >
           <ShelfsMany 
             key={nextId('manyShelfsid-')} 
             shelfs={finalShelfs.shelfs.slice(0, pageLength)} 
             numVids={numVids} 
             setNumVids={setNumVids} 
+            hasMore={isMoreShelfs}
           /> 
        </InfiniteScroll>
       )
@@ -260,7 +278,7 @@ export function YoutubeNEW() {
       {finalShelfs.shelfs[0].videos[0].id == null ? <LoadingMain /> : <Shelfs />}
       
       {/* JUNK BELOW */}
-      <ButtonsAuthDebug data={{ numVids, finalShelfs, user, isLogged2, pageLength, setPageLength, user }}/>
+      {/* <ButtonsAuthDebug data={{ numVids, finalShelfs, user, isLogged2, pageLength, setPageLength, user }}/> */}
       
     </div>
     );

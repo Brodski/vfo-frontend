@@ -13,13 +13,16 @@ export const Shelf = props => {
   console.log(props._setIdx)
   console.log(props.numVids[props._setIdx])
   */
+
+  const renderMoreNum = 6
+
   function loadMoreVids() {
-    if (props.shelf.videos.length < props.numVids[props._setIdx].numVids  ) { //isMoreVidsAvailable(){    
-      console.log('All vids rendered')
-    }
+    // if (props.shelf.videos.length < props.numVids[props._setIdx].numVids  ) { //isMoreVidsAvailable(){    
+    //   console.log('All vids rendered')
+    // }
     props.setNumVids(prev => { 
       let newNumVids = { ...prev}
-      newNumVids[props._setIdx].numVids += 5 // Render 5 more vids after clicking "More"
+      newNumVids[props._setIdx].numVids += renderMoreNum // Render 6 more vids after clicking "More"
       return newNumVids
     })
   }
@@ -40,7 +43,7 @@ export const Shelf = props => {
     <div className=" yt-shelf-inner-wrap">
       <div className=" yt-shelf-title"> {props.shelf.title} </div>
       {/* <div className=" yt-videos-wrap" > */}
-        <ul className=" shelf">
+        <ul className="yt-shelf row">
           {videos}
         </ul>
       {/* </div> */}

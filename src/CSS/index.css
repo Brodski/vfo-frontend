@@ -7,9 +7,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+body {
+  height: 100%;
+  overflow: auto;
 }
 
 .loading-main-animation {
@@ -23,16 +23,35 @@ code {
 
 li.video {
   width: 17em;
+  height: 100%;
   overflow: hidden;
-  margin-bottom: .6em;
+   /* margin-bottom: .6em;
   margin-left: .3em;
-  margin-right: .3em;
-  padding-bottom: .3em;
+  margin-right: .3em; */
+  padding-top: 0px !important;
+  padding-left: .3em !important;
+  padding-right: .3em !important;
+  padding-bottom: .3em !important;
+
+  margin-top: 0px !important;
+  margin-left: .0em !important;
+  margin-right: .0em !important;
+  margin-bottom: .0em !important;
   
+}
+
+.vid-all-text-wrap {
+  min-height: 5.3em;
+  max-height: 5.3em;
 }
 
 .vid-info {
   line-height: 1.1em;
+  padding-top: .3em;
+  font-family: Arial, Helvetica, sans-serif;  
+  /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+   /* font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;  */
+   /* font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;  */
 }
 
 .vid-timestamp {
@@ -58,16 +77,24 @@ li.video {
  font-weight: 700;
  padding-top: .1em;
  padding-bottom: .1em;
+  line-height: 1.1em; /* see vid-info  */
+ 
+ overflow: hidden;
+ text-overflow: ellipsis;
+ display: -webkit-box;
+ -webkit-line-clamp: 2; /* number of lines to show */
+ -webkit-box-orient: vertical;
+ 
 }
 
 .thumnail {
   width: 100%;
 }
 
-ul.shelf {
-  white-space: nowrap;
+.yt-shelf {
+  /* white-space: nowrap;
   display: inline-flex;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;  */
   
   /* justify-content: center; */
 }
@@ -77,14 +104,7 @@ ul.shelf {
   background-color: #ba4747;
 }
 
-div.block {
-  margin: 0;
-  height: 40px;
-  
-  border-top: 1px solid #5a1616;
-  border-bottom: 1px solid #5a1616;
-  
-}
+
 /* Dont delte, used by SettingLogic.logIds() */
 .subitem {
   margin: 0;
@@ -97,16 +117,10 @@ div.block {
 }
 
 /* DONT delete this, used by SettingsLogic.logAllShelfs() & SettingsLogc.logIds() */
-
 div.subListWrapper {
   /*border: 3px solid purple;*/
   background-color: cadetblue;
 
-}
-
-body {
-  height: 100%;
-  overflow: auto;
 }
 
 .unsort-shelf {
@@ -125,14 +139,10 @@ body {
   display: flex;
 }  */
 
-
-
 .shelf-title-wrap{
   display: flex;
   justify-content: space-between;
 }
-
-
 
 .shelfEditBtn {
   height: 25px;
@@ -144,22 +154,6 @@ body {
    /* max-width: 500px; */
 }
 
-.auxSort { 
-  border: solid red;
-}
-
-.auxUnsort {
-  
-  border: solid blue;
-}
-
-
-
-
-i.block {
-  margin: 10px;
-  padding: 5px;
-}
 
 .handle-sub{
   cursor: move;
@@ -182,42 +176,7 @@ i.block {
   padding: 5px;
 }
 
-.customLook{ 
-  display: block;
-
-}
-
-
-.tagify {
-  --tags-bg: #ff0000;
-  --tag--min-width: 10px;
-}
-
-.tagify__input {
-  min-width: 10px !important;
-}
-
-
-.myTagify__input {
-  display: block;
-  margin: 5px;
-  padding: .3em .5em;
-  padding: var(--tag-pad,.3em .5em);
-  line-height: inherit;
-  position: relative;
-  white-space: pre-line;
-}
-
-.filter-mod-help {
-
-  transform: translate(-50%, -50%) !important;
-  margin-right: -50% !important;
-  top: 50% !important;
-  left: 50% !important;
-  right: auto !important;
-  bottom: auto !important;
-}
-
+/* /////////////////////////////// */
 .modal {
   /* background-color: none; */
 }
