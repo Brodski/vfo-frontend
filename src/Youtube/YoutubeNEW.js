@@ -230,26 +230,13 @@ export function YoutubeNEW() {
   }
 
   const LoggedIn = () => {
-    console.log('logged af')
     return(
-      <Fragment>
-      <div className="center-align profile-greeting-wrap">
+      <div className=" profile-greeting-wrap">
         {/* <img className="profile-pic" src={user.pictureUrl}></img> */}
-        <div className="profile-msg"> Hi {user.username} </div> 
+        <div className="profile-msg"> Hi, {user.username} </div> 
+        <div className="divider"></div>
       </div>
-          <a className='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
-        
-          <ul id='dropdown1' className='dropdown-content'>
-            <li><a href="#!">one</a></li>
-            <li><a href="#!">two</a></li>
-            
-            <li><a href="#!">three</a></li>
-            <li><a href="#!"><i className="material-icons">view_module</i>four</a></li>
-            <li><a href="#!"><i className="material-icons">cloud</i>five</a></li>
-          </ul>
-          </Fragment>
       )
-//    return ( <div></div>)
   }
 
   const Shelfs = () => {
@@ -259,7 +246,6 @@ export function YoutubeNEW() {
         hasMore={isMoreShelfs}
         loader={(<div key={nextId('loader-')}>Loading ...</div>)}
         threshold={10}
-        
        >
           <ShelfsMany 
             key={nextId('manyShelfsid-')} 

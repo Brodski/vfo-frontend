@@ -125,7 +125,7 @@ div.subListWrapper {
 
 .unsort-shelf {
    /* width: 300px;  */
-  background-color: lightgoldenrodyellow;
+   /* background-color: lightgoldenrodyellow; */
   /* height:100%; */
 }
 
@@ -142,6 +142,8 @@ div.subListWrapper {
 .shelf-title-wrap{
   display: flex;
   justify-content: space-between;
+  min-height: 2.5em;
+  
 }
 
 .shelfEditBtn {
@@ -154,6 +156,10 @@ div.subListWrapper {
    /* max-width: 500px; */
 }
 
+.set-sh-unsort-pad{
+  margin-left: 1.5em;
+  
+}
 
 .handle-sub{
   cursor: move;
@@ -164,7 +170,8 @@ div.subListWrapper {
 }
 
 .handle-shelf {
-  margin-left: 0.5em;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
   cursor: move;
   cursor: -webkit-grabbing;
   cursor: grab;
@@ -172,14 +179,22 @@ div.subListWrapper {
   cursor: -webkit-grab;
 }
 
-.infoIcon{
-  padding: 5px;
-}
 
 /* /////////////////////////////// */
 .modal {
   /* background-color: none; */
 }
+
+
+.carousel-wrap{
+    
+}
+
+
+.carousel {
+  height: 100% !important;
+}
+
 
 .Modal {
   position: absolute !important;
@@ -190,9 +205,10 @@ div.subListWrapper {
   margin-right: -50%;
   transform: translate(-50%, -50%);
   /* border: 1px solid #ccc; */
-  background-color: #fff;
+   /* background-color: #fff;  */
   overflow: auto;
   /* padding: 20px; */
+  max-width: 80%;
 }
 
 

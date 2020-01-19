@@ -18,27 +18,24 @@ export const HowTo = () => {
   })
   const TheCarousel = () => {
     return(
-      <div className="carousel-wrap">
+      <div className="carousel-wrap ">
         <Carousel 
           showArrows={true} 
           showStatus={false}
           showThumbs={false}
-          //width=69
+          
           dynamicHeight={true}
           useKeyboardArrows={true}
           infiniteLoop={true}
           >
           <div>
               <img src={Pic1} />
-              <p className="legend">Legend 1</p>
           </div>
           <div>
               <img src={Pic2} />
-              <p className="legend">Legend 2</p>
           </div>
           <div>
             <img src={Pic3} />
-              <p className="legend">Legend 3</p>
           </div>
         </Carousel>
       </div>
@@ -48,13 +45,16 @@ export const HowTo = () => {
   return(
     <Fragment>
         {/* Modal Trigger */}
-      <div className='valign-wrapper'> 
-        <a
+      <div className='set-howto2 valign-wrapper'> 
+       <i className="set-howto-aux  z-depth-0 material-icons"
+          onClick={() => { setIsModalOpen(true);  }}>info_outline</i>
+        
+        {/* <a
           className="btn filt-button z-depth-0"
-          onClick={() => { console.log("HI!!!"); setIsModalOpen(true);  } }
+          onClick={() => { setIsModalOpen(true);  } }
         >
           How to
-        </a>
+        </a> */}
       </div>
 
       {/* Modal Content */}

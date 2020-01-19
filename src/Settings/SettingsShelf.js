@@ -81,7 +81,7 @@ export const SettingsShelf = (props) => {
     let id = nextId('subid-')
     return (
       <div key={id} id={id} className=" valign-wrapper shelf-text subitem handle-sub" >
-        <div data-name={s.channelName} className=" sub-QHack " >
+        <div data-name={s.channelName} className="set-sh-textaux sub-QHack " >
           {s.channelName}  
         </div>
         <FilterDialog 
@@ -93,7 +93,6 @@ export const SettingsShelf = (props) => {
       </div>
     )
   })
-
 
   // Don't delete sh-Qhack.
   let shelfClasses = "sh-QHack hoverable card blue-grey darken-1 "
@@ -108,8 +107,11 @@ export const SettingsShelf = (props) => {
         <div  id={props.bindToId}  className=" valign-wrapper shelf-title-wrap"> 
           <div>
           <h6 className=" valign-wrapper shelf-title"> 
-          <i className=" handle-shelf material-icons" >drag_handle</i>
-             {title}  
+          { props.shelf.isSorted 
+            ? <i className=" handle-shelf material-icons" >drag_handle</i> 
+            : <span className="set-sh-unsort-pad"/> 
+          }
+            <div className="shelf-title2"> {title}   </div>
           </h6>
           </div>
             < RenameDialogAux />

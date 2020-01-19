@@ -47,19 +47,22 @@ export function RenameDialog(props) {
           overlayClassName="Overlay"
         >
         {/* TODO Test this on phone */}
-        <div className="card-image rename-image hide-on-small-only">
+        <div className="card-image valign-wrapper rename-image hide-on-small-only">
           {/* <img src="https://www.webfuturestudio.com/wp-content/uploads/2018/11/website-product4-1.jpg"></img> */}
           {/* <img src="https://i.pinimg.com/564x/01/38/9b/01389bbde0ce8bd30104ec154a8b53b0.jpg"></img> */}
           {/* <img src="https://www.webfuturestudio.com/wp-content/uploads/2018/11/website-product7.jpg"></img>  */}
-          <img src={Pic}></img> 
+          <img className="rename-image2 " src={Pic}></img> 
         </div>
         <div className=" rename-content">
-          <h5> Rename </h5>
           <div>
-            <div class="input-field">
-              <i class="material-icons prefix  ">mode_edit</i>
+            <h5 className="flow-text"> Rename </h5>
+            <div className="divider" />
+          </div>
+          <div >
+            <div className="input-field">
+              <i className="material-icons prefix  ">mode_edit</i>
               <input 
-                className="validate" 
+                className="rename-text" 
                 value={newName} 
                 type="text" 
                 onChange={changeHandler} 

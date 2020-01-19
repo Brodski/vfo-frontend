@@ -38,7 +38,7 @@ export function FilterDialog(props){
   const MaxMinDurationDropdown = (props) => {
     return (
       <div className="select">
-        <select className="hoverable browser-default" value={props.maxOrMinState} onChange={props.maxOrMinHandler} >
+        <select className=" browser-default" value={props.maxOrMinState} onChange={props.maxOrMinHandler} >
           <option value={props.firstValue} > Off  </option>
           <option value="0.5"> 30 seconds </option>
           <option value="1" >  1 minutes </option>
@@ -126,19 +126,20 @@ export function FilterDialog(props){
         <div className="  filt-content">  
           {/* ONE */}
           <div>
-            <h5> {props.subObj.channelName}</h5>
+            <h5 className="flow-text" > {props.subObj.channelName}</h5>
             <div className="divider" />
           </div>
            
            {/* {TWO} */}
           <div>
-            <div > 
-              Only show videos that are longer than: 
-            </div>
-            <div className="valign-wrapper select-wrap"> 
-              <i className="icon-filt-min material-icons ">
+            <div className="filt-drop-wrap" > 
+              <i className="icon-filt-min hide-on-small-only material-icons ">
                 vertical_align_top
               </i>
+            <div>Only show videos that are longer than: </div>
+            </div>
+            <div className="valign-wrapper select-wrap"> 
+              
               <MaxMinDurationDropdown 
                 maxOrMinState={minDur} 
                 maxOrMinHandler={handleMinDur} 
@@ -148,13 +149,14 @@ export function FilterDialog(props){
           {/* </div>
            {THREE} 
           <div> */}
-            <div> 
-              Only show videos that are shorter than: 
-            </div>
-            <div className="select-wrap"> 
-              <i class=" icon-filt-max material-icons ">
+            <div className="filt-drop-wrap"> 
+              <i class=" icon-filt-max hide-on-small-only material-icons ">
                 vertical_align_bottom
               </i>
+              <div>Only show videos that are shorter than: </div>
+            </div>
+            <div className="select-wrap"> 
+              
               <MaxMinDurationDropdown 
                 maxOrMinState={maxDur} 
                 maxOrMinHandler={handleMaxDur} 
@@ -173,43 +175,3 @@ export function FilterDialog(props){
 
     )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //////////////////////////////////////////////
-
-            // return (
-            //   //  Modal Trigger
-            //   <div>
-            //     {/* <div className='valign-wrapper'> */}
-            //       <a 
-            //         href={'#mdl-'+props.bindToId}
-            //         className="modal-trigger btn filt-button z-depth-0"
-            //         onClick={() => { console.log(props); setIsOpen(true);  } }
-            //       >
-            //         <i className="time-icon-help material-icons ">timelapse</i>
-            //       </a>
-            //     {/* </div> */}
-        
-            //     {/* // Modal Structure */}
-            //     <div id={'mdl-'+props.bindToId} className="modal filter-mod-help">
-            //       <div class="card">
-            //         <div class="card-content">
-            //           <h4>Modal Header</h4>
-            //           <p>A bunch of text</p>
-            //         </div>
-            //       </div>
-            //     </div>
-            //   </div>
-            // );

@@ -75,11 +75,13 @@ export const AllShelfs = (props) => {
     return (
       <div> 
         {sortedShelfz} 
+        <div className="center-align">
         <a 
           onClick={addShelf}
-          className=" waves-effect waves-light btn">  
+          className=" btn">  
           <i className=" material-icons">add</i>
           </a>
+          </div>
       </div>
       )
   }
@@ -107,7 +109,7 @@ export const AllShelfs = (props) => {
 
   return (
     
-      <div className="center-align row flex-subshelf-container-lolwut">
+      <div className="row flex-subshelf-container-lolwut">
         <div className="col m6 s12">
           <UnSortedShelfs/>
         </div>

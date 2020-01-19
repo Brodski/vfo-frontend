@@ -124,45 +124,26 @@ async function initPage2() {
 
     return (
     <div className="container">  
-        <a class=" btn save-btn" onClick={save} >Save</a>
-        <div>   </div>
-        <HowTo />
-        
-      <div className="carousel-wrap">
-        <Carousel 
-          showArrows={true} 
-          showStatus={false}
-          showThumbs={false}
-          //width=69
-          dynamicHeight={true}
-          useKeyboardArrows={true}
-          infiniteLoop={true}
-          >
-          <div>
-              <img src={Pic1} />
-              <p className="legend">Legend 1</p>
-          </div>
-          <div>
-              <img src={Pic2} />
-              <p className="legend">Legend 2</p>
-          </div>
-          <div>
-            <img src={Pic3} />
-              <p className="legend">Legend 3</p>
-          </div>
-        </Carousel>
+      <div className="set-topbody">
+        <div className="set-top-tophalf ">
+          <h4 className="set-top-title"> Customize </h4>
+          <HowTo />
+        </div>
+        <div className="divider" />
+        <div className="set-top-bothalf">
+          <a className=" btn save-btn" onClick={save} >Save</a>
+        </div>
       </div>
         { shouldRedirect 
           ? <PostSave /> 
-          : <LoadShelfs /> }
-           
-{/*      <h1> ```````````````````````` </h1>      
+          : <LoadShelfs /> 
+        }
+      {/*<h1> ```````````````````````` </h1>      
       <button onClick={logUserAndSettings} > log User & Settings </button>
       
       <button onClick={() => stLogic.logAllShelfs() }> log all Shelf </button>  
       <button onClick={() => stLogic.logIds() }> log IDs Shelf </button>  
       <ButtonsAuthDebug/> */}
-
     </div>
   );
 }

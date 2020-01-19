@@ -8,7 +8,7 @@ const LoginButton = () => {
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
 
   return(    
-  <a className="waves-effect waves-light btn "
+  <a className=" btn "
     onClick={()=> {  isLogged2 ? GApiAuth.logout() : GApiAuth.login() }} 
     >
     <Icon path={mdiGoogle}
