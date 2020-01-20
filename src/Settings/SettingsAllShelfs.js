@@ -109,7 +109,7 @@ export const AllShelfs = (props) => {
 
   return (
     
-      <div className="row flex-subshelf-container-lolwut">
+      <div className="row ">
         <div className="col m6 s12">
           <UnSortedShelfs/>
         </div>

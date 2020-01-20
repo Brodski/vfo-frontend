@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import humanFormat from 'human-format';
+//https://github.com/JsCommunity/human-format
 
 export const Video = (props) => {
 
@@ -12,16 +13,21 @@ export const Video = (props) => {
   title       = props.video.snippet.title
   channelName = props.video.snippet.channelTitle
   fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
-  viewCount   = humanFormat(parseInt(props.video.statistics.viewCount),{ decimals: 1 } ).replace(/\s/g,''); //https://github.com/JsCommunity/human-format
+  //solution to Premium yt vids
+  if (props.video.statistics.viewCount) { 
+    viewCount   = humanFormat(parseInt(props.video.statistics.viewCount),{ decimals: 1 } ).replace(/\s/g,''); 
+  } else {
+    viewCount =""
+  }
   vd_aux      = moment.duration(props.video.contentDetails.duration) //Convert iso8601 string to object
   vidDuration = vd_aux.minutes() + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"
   
   if (props.video.id) {
     return (
       <li className="video col s12 m4 l3 xl3">
-        <div className="thumbnail-wrap">
+        <div className="vid-thumbnail-wrap">
           <a href={"https://www.youtube.com/watch?v=" + id} >
-            <img className="thumnail" src={thumbnail} />
+            <img className="vid-thumnail" src={thumbnail} />
           </a>
           <span className="vid-timestamp"> {vidDuration} </span>
         </div>

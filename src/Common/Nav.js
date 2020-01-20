@@ -43,7 +43,7 @@ async function checkIfInitFinished(){
 }
 
     return (
-        <nav className="my-nav" >
+        <nav >
           <div className="nav-wrapper ">
             <div className="left brand-logo  hide-on-small-only">
               <Link to='/'> <Logo /> </Link>

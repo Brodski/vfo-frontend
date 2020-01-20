@@ -96,13 +96,16 @@ export const SettingsShelf = (props) => {
 
   // Don't delete sh-Qhack.
   let shelfClasses = "sh-QHack hoverable card blue-grey darken-1 "
-  let aux_shelfClasses = props.shelf.isSorted     ? " custom-shelf" : " unsort-shelf" 
+  let aux_shelfClasses = props.shelf.isSorted     ? " set-custom-shelf" : " unsort-shelf" 
   shelfClasses = shelfClasses + ' ' + aux_shelfClasses
   let unSortDndWrap = props.shelf.isSorted    ? ""        : emptySpaceDrag 
   let dragClass = props.shelf.isSorted        ? shelfDrag : "" 
   let title     = props.shelf.isSorted        ? props.shelf.title : "Your Subscriptions"
+  //TODO we dont need shContainer I pretty srue
+  //TODO we dont need unsort-shelf
+  //
   return (
-    <div className={ dragClass + " shContainer"} >
+    <div className={ dragClass + " shContainer"} > 
       <div className={shelfClasses} data-name={props.shelf.title} data-issorted={props.shelf.isSorted} >
         <div  id={props.bindToId}  className=" valign-wrapper shelf-title-wrap"> 
           <div>

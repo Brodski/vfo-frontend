@@ -1,319 +1,50 @@
- $mainTextColor: whitesmoke;
+
+
+
+
+$mainTextColor: whitesmoke;
  $mainGrey: grey;
- 
+// last comment https://stackoverflow.com/questions/39785695/how-to-change-default-materialize-theme-colour-in-rails-application
+@import "../../node_modules/materialize-css/sass/components/color-variables";
+
+  
+$primary-color: color("blue-grey", "darken-2") !default;
+$primary-color-light: lighten($primary-color, 15%) ;
+$primary-color-dark: darken($primary-color, 15%) ;
+
+//  $secondary-color: color("amber", "lighten-1") !default;
+$secondary-color: color("grey", "darken-3") !default;
+$success-color: color("green", "base") ;
+$error-color: color("red", "base") ;
+$link-color: color("light-blue", "darken-1") ;
+
+
+@import "../../node_modules/materialize-css/sass/materialize";
+
+//$mainSoftTeal: @extend .blue-grey, .darken-2; 
+@import './variables'; //must be at top
+
+@import './rename-modal';
+@import './youtube';
+@import './selectbox';
+@import './video-thumbnail';
+@import './settings';
+
  //$mainSoftTeal: @extend .grey, .darken-1;
  
 body {
   @extend .grey, .darken-1;
 }
 
-.yt-body-wrapper{
-  // padding-left: 1em;
-  // padding-right: 1em;
-  padding: 1em;
-}
-.yt-shelf-outer-wrap{
-  
-}
 
-.yt-shelf-inner-wrap {
-  // border-color: lightblue;
-  // border-style: solid;
-   border-style: none none solid none;
-   border-width: .2em;
-  //  border-color: rgba($color: #000000, $alpha: 1.0);
-   border-color: rgba(40, 41, 41, 0.657);
-}
 
-.yt-videos-wrap {
-  
-}
-
-.yt-shelf-title {
-  font-size: 1.8em;
-  font-weight: 700;
-  margin-left: .5em;
-  // border-style: none none solid none;
-  // border-width: 2px;
-  // width: 200px;
-}
-
-.yt-loadmore-btn {
-  margin-bottom: .5em;
-}
-
-.demo-greeting-wrap{
-  margin-left: 1em;
-  margin-top: 1em;
+.card {
+  background-color: #f2f2f2; 
 }
 
 .nav-profile-icon {
   display: inline-flex;
   vertical-align: middle;
-}
-
-.profile-greeting-wrap {
-  //display: inline-flex;
-  margin-left: .5em; //see .demo-greeting-wrap
-  //margin-top: 1em;
-  
-}
-.profile-msg { // see yt-shelf-inner-wrap for border
-  font-size: 1.8em;
-  font-weight: 700;
-
-  // border-style: none none solid none;
-  // border-width: .2em;
-  // border-color: rgba(40, 41, 41, 0.657);
-}
-
-.profile-pic {
-  border-radius: 50%;
-  height: 2.5em;
-  margin: auto;
-  margin-left: .5em;
-  margin-right: .5em;
-}
-
-.save-btn {
-  //margin: 10px;
-}
-
-.set-howto{
-  position: relative;
-  bottom: 0em;
-}
-
-.set-howto2 {
-  margin-left: .6em;
-  margin-top: .5em;
-}
-
-.set-howto-aux {
-  &:hover{
-    cursor: pointer;
-   }
-}
-
-.shelf-text{
-  padding: 10px;
-  font-size: 1.4em;
-}
-.set-top-tophalf{
-  display: flex;
-}
-.set-top-bothalf {
-  margin-top: 1em;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.shelf-title {
-  margin: 5px;
-  font-size: 1.3em;
-  font-weight: 600;
-}
-.shelf-title2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* number of lines to show */
-  -webkit-box-orient: vertical;
-
-}
-
-.set-topbody {
-  margin: 1em;
-}
-
-.set-sh-textaux { 
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1; /* number of lines to show */
-  -webkit-box-orient: vertical;
-}
-
-.sub-QHack{
- 
-}
-
-
-.custom-shelf {
-  @extend .blue-grey, .darken-2;   // .grey-text, .text-lighten-5; 
-}
-
-.rename-image {
-//   min-height: 10.0em;
-//   height: 100%;
-}
-
-.rename-image2 {
-  max-height: 15em;
-  min-height: 10.0em;
-  height: 100%;
-
-}
-
-
-.rename-mod-btn {
- display: flex;
- justify-content: space-around;
- margin-top: .5em;
-}
-
-.select-wrap {
-  display: inline-flex;
-  width: 100%;
-}
-
-.rename-icon{
- color: black; 
- margin-top: 5px;
- margin-right: 5px;
- &:hover{
-   cursor: pointer;
-  }
-}
-
-.filt-content {
-  padding: 10px;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 23em;
-}
-
-.filt-drop-wrap{
-  display: ruby;
-  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
-}
-
-.filt-button {
-  background-color: #474747 !important;
-}
-
-.filter-image {
-  width: 13em;
-  height: 100%;
-}
-
-
-.filt-select {
-	cursor: pointer;
-  border-radius: 10px;
-}
-
-.icon-filt-min {
-  font-size: 2em;
-}
-.icon-filt-max{
-  font-size: 2em;
-}
-
-
-.card {
-  background-color: #f2f2f2;
-  
-}
-
-//////////////////////////////////////////////////////////////
-//             https://codepen.io/michmy/pen/jBQQpp
-//////////////////////////////////////////////////////////////
-
-$color--white: #FFFFFF;
-$color--black: #000000;
-//$color--light-grey: #E6E6E6;
-$color--light-grey: rgba(205, 209, 211, .5);
-//$color--light-grey: #CCCCCC;
-//$color--grey: #CCCCCC;
-$color--grey: rgba(205, 209, 211, .5);
-$color--dark-grey: #7B7B7B;
-$color--primary: #2AA1C0;
-$color--secondary: #0E647D;
-
-.select {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 15px;
-  width: 100%;
-
-  select {
-    display: inline-block;
-    width: 100%;
-    cursor: pointer;
-    padding: 10px 15px;
-    outline: 0;
-    border: 0;
-    border-radius: 0;
-    background: $color--light-grey;
-    //color: $color--dark-grey;
-    color: black;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    
-    &:-ms-expand {
-      display: none;
-    }
-    //&:hover,
-    //&:focus {
-    &:hover {
-      color: $color--black;
-      background: $color--grey;
-    }
-  
-    &:disabled {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-  }
-}
-      
-.select__arrow{
-  position: absolute;
-  top: 16px;
-  right: 15px;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-  border-style: solid;
-  border-width: 8px 5px 0 5px;
-  border-color: $color--dark-grey transparent transparent transparent;
-  
-  // .select select:hover ~ &
-  // .select select:focus ~ & {
-  .select select:hover ~ & {
-    border-top-color: $color--black;
-  }
-}
-//////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
-
-.rename-content {
-  padding: 1em;
-  //align-items: center;
-  width: 20em;
-
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 20em;
-}
-
-.rename-text {
-
-}
-
-
-
-.timelapse-icon{
-  width: 10px;
-  margin: auto;
-  padding: 10px;
-  
-  background-color: transparent;
-  
 }
 
 svg.svg-googlecolor {
@@ -338,21 +69,3 @@ svg.svg-googlecolor {
   // https://github.com/Dogfalo/materialize/blob/master/sass/components/_variables.scss
   // https://materializecss.com/sass.html
 //  @import "../../node_modules/materialize-css/sass/materialize";
-// last comment https://stackoverflow.com/questions/39785695/how-to-change-default-materialize-theme-colour-in-rails-application
-  @import "../../node_modules/materialize-css/sass/components/color-variables";
-
-  
-  $primary-color: color("blue-grey", "darken-2") !default;
-  $primary-color-light: lighten($primary-color, 15%) ;
-  $primary-color-dark: darken($primary-color, 15%) ;
-
-//  $secondary-color: color("amber", "lighten-1") !default;
-  $secondary-color: color("grey", "darken-3") !default;
-  $success-color: color("green", "base") ;
-  $error-color: color("red", "base") ;
-  $link-color: color("light-blue", "darken-1") ;
-  
-
-  @import "../../node_modules/materialize-css/sass/materialize";
-
-//$mainSoftTeal: @extend .blue-grey, .darken-2;

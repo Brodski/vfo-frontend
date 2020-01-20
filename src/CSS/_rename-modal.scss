@@ -1,0 +1,46 @@
+
+.rename-content {
+  padding: 1em;
+  //align-items: center;
+  width: 20em;
+
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20em;
+}
+
+.rename-text {
+
+}
+
+
+.rename-icon{
+  color: black; 
+  margin-top: 5px;
+  margin-right: 5px;
+  &:hover{
+    cursor: pointer;
+   }
+ }
+
+
+ 
+.rename-image {
+  //   min-height: 10.0em;
+  //   height: 100%;
+  }
+  
+  .rename-image2 {
+    max-height: 15em;
+    min-height: 10.0em;
+    height: 100%;
+  
+  }
+  
+  
+  .rename-mod-btn {
+   display: flex;
+   justify-content: space-around;
+   margin-top: .5em;
+  }

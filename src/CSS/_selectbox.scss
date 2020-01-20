@@ -1,0 +1,71 @@
+
+//////////////////////////////////////////////////////////////
+//             https://codepen.io/michmy/pen/jBQQpp
+//////////////////////////////////////////////////////////////
+
+$color--white: #FFFFFF;
+$color--black: #000000;
+//$color--light-grey: #E6E6E6;
+$color--light-grey: rgba(205, 209, 211, .5);
+//$color--light-grey: #CCCCCC;
+//$color--grey: #CCCCCC;
+$color--grey: rgba(205, 209, 211, .5);
+$color--dark-grey: #7B7B7B;
+$color--primary: #2AA1C0;
+$color--secondary: #0E647D;
+
+.select {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 15px;
+  width: 100%;
+
+  select {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    padding: 10px 15px;
+    outline: 0;
+    border: 0;
+    border-radius: 0;
+    background: $color--light-grey;
+    //color: $color--dark-grey;
+    color: black;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    
+    &:-ms-expand {
+      display: none;
+    }
+    //&:hover,
+    //&:focus {
+    &:hover {
+      color: $color--black;
+      background: $color--grey;
+    }
+  
+    &:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+}
+      
+.select__arrow{
+  position: absolute;
+  top: 16px;
+  right: 15px;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-style: solid;
+  border-width: 8px 5px 0 5px;
+  border-color: $color--dark-grey transparent transparent transparent;
+  
+  // .select select:hover ~ &
+  // .select select:focus ~ & {
+  .select select:hover ~ & {
+    border-top-color: $color--black;
+  }
+}

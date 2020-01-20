@@ -1,0 +1,17 @@
+@mixin truncate-aux {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  
+}
+
+@mixin truncate2 {
+  @include truncate-aux();
+  -webkit-line-clamp: 2; /* number of lines to show */  
+} 
+
+@mixin truncate1 {  
+  @include truncate-aux();
+  -webkit-line-clamp: 1; /* number of lines to show */
+}

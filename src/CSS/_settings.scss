@@ -1,0 +1,110 @@
+
+@mixin handle-cursor {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;  
+}
+
+.set-topbody {
+  margin: 1em;
+}
+
+.set-sh-textaux { 
+  @include truncate1();
+}
+
+.set-sh-unsort-pad{
+  margin-left: 1.5em;  
+}
+
+.handle-sub {
+  @include handle-cursor()
+}
+
+.handle-shelf {
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+  @include handle-cursor()
+}
+
+.timelapse-icon {
+  width: 10px;
+  margin: auto;
+  padding: 10px;
+  background-color: transparent;
+}
+
+/* Dont delte, used by SettingLogic.logIds() */
+.subitem {
+  margin: 0;
+  height: 60px;
+  border-top: 1px solid #5a1616;
+  border-bottom: 1px solid #5a1616;
+  display: flex;
+  justify-content: space-between;
+  background-color: steelblue;
+}
+
+/* DONT delete this, used by SettingsLogic.logAllShelfs() & SettingsLogc.logIds() */
+div.subListWrapper {
+  /*border: 3px solid purple;*/
+  background-color: cadetblue;
+}
+
+.unsort-shelf {
+   /* width: 300px;  */
+   /* background-color: lightgoldenrodyellow; */
+  /* height:100%; */
+}
+
+.set-howto{
+  position: relative;
+  bottom: 0em;
+}
+
+.set-howto2 {
+  margin-left: .6em;
+  margin-top: .5em;
+}
+
+.set-howto-aux {
+  &:hover{
+    cursor: pointer;
+   }
+}
+
+.set-top-tophalf{
+  display: flex;
+}
+
+.set-top-bothalf {
+  margin-top: 1em;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shelf-title {
+  margin: 5px;
+  font-size: 1.3em;
+  font-weight: 600;
+}
+
+.shelf-title2 {  
+  @include truncate2();
+}
+
+.shelf-text{
+  padding: 10px;
+  font-size: 1.4em;
+}
+
+
+.set-custom-shelf {
+  @extend .blue-grey, .darken-2;   // .grey-text, .text-lighten-5; 
+}
+
+.sub-QHack{
+ 
+}

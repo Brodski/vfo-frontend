@@ -40,93 +40,10 @@ li.video {
   
 }
 
-.vid-all-text-wrap {
-  min-height: 5.3em;
-  max-height: 5.3em;
-}
-
-.vid-info {
-  line-height: 1.1em;
-  padding-top: .3em;
-  font-family: Arial, Helvetica, sans-serif;  
-  /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
-   /* font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;  */
-   /* font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;  */
-}
-
-.vid-timestamp {
- position: absolute;
- background-color: rgba(0, 0, 0, 1);
- bottom: .7em;
- right: .5em;
- color: white;
- font-size: .8em;
- font-weight: 600;
- font-family: Arial, Helvetica, sans-serif;
- line-height: 1.1em;
- padding-left: .1em;
- padding-right: .1em;
-  
-}
-
-.thumbnail-wrap {
-  position: relative;
-}
-
-.vid-title{
- font-weight: 700;
- padding-top: .1em;
- padding-bottom: .1em;
-  line-height: 1.1em; /* see vid-info  */
- 
- overflow: hidden;
- text-overflow: ellipsis;
- display: -webkit-box;
- -webkit-line-clamp: 2; /* number of lines to show */
- -webkit-box-orient: vertical;
- 
-}
-
-.thumnail {
-  width: 100%;
-}
-
-.yt-shelf {
-  /* white-space: nowrap;
-  display: inline-flex;
-  flex-wrap: wrap;  */
-  
-  /* justify-content: center; */
-}
 
 .sortable-chosen {
   color: #fff;
   background-color: #ba4747;
-}
-
-
-/* Dont delte, used by SettingLogic.logIds() */
-.subitem {
-  margin: 0;
-  height: 60px;
-  border-top: 1px solid #5a1616;
-  border-bottom: 1px solid #5a1616;
-  display: flex;
-  justify-content: space-between;
-  background-color: steelblue;
-}
-
-/* DONT delete this, used by SettingsLogic.logAllShelfs() & SettingsLogc.logIds() */
-div.subListWrapper {
-  /*border: 3px solid purple;*/
-  background-color: cadetblue;
-
-}
-
-.unsort-shelf {
-   /* width: 300px;  */
-   /* background-color: lightgoldenrodyellow; */
-  /* height:100%; */
 }
 
 .unSortDndWrap {
@@ -135,10 +52,6 @@ div.subListWrapper {
   /* min-height: 40px; */
 }
 
- /* .flex-subshelf-container {
-  display: flex;
-}  */
-
 .shelf-title-wrap{
   display: flex;
   justify-content: space-between;
@@ -146,43 +59,9 @@ div.subListWrapper {
   
 }
 
-.shelfEditBtn {
-  height: 25px;
-  margin: auto;
-}
-
 .shContainer {
    /* border: solid black;  */
    /* max-width: 500px; */
-}
-
-.set-sh-unsort-pad{
-  margin-left: 1.5em;
-  
-}
-
-.handle-sub{
-  cursor: move;
-  cursor: -webkit-grabbing;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-}
-
-.handle-shelf {
-  margin-left: 0.3em;
-  margin-right: 0.3em;
-  cursor: move;
-  cursor: -webkit-grabbing;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
-}
-
-
-/* /////////////////////////////// */
-.modal {
-  /* background-color: none; */
 }
 
 
@@ -209,6 +88,7 @@ div.subListWrapper {
   overflow: auto;
   /* padding: 20px; */
   max-width: 80%;
+  max-height: 40em;
 }
 
 

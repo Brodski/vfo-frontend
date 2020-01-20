@@ -11,11 +11,7 @@ import Modal from 'react-modal';
 export const HowTo = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  useEffect(() => {
-    return () => {
-    }
-
-  })
+  
   const TheCarousel = () => {
     return(
       <div className="carousel-wrap ">

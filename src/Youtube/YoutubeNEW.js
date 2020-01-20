@@ -244,7 +244,7 @@ export function YoutubeNEW() {
       <InfiniteScroll key={nextId('infScroll-')}
         loadMore={() => fetchMoreSubs() }
         hasMore={isMoreShelfs}
-        loader={(<div key={nextId('loader-')}>Loading ...</div>)}
+        loader={(<div key={nextId('loader-')}> </div>)}
         threshold={10}
        >
           <ShelfsMany 

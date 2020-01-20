@@ -1,0 +1,74 @@
+
+.yt-body-wrapper{
+  // padding-left: 1em;
+  // padding-right: 1em;
+  padding: 1em;
+}
+.yt-shelf-outer-wrap{
+  
+}
+
+.yt-shelf-inner-wrap {
+  // border-color: lightblue;
+  // border-style: solid;
+   border-style: none none solid none;
+   border-width: .2em;
+  //  border-color: rgba($color: #000000, $alpha: 1.0);
+   border-color: rgba(40, 41, 41, 0.657);
+}
+
+.yt-videos-wrap {
+  
+}
+
+.yt-shelf-title {
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-left: .5em;
+  // border-style: none none solid none;
+  // border-width: 2px;
+  // width: 200px;
+}
+
+.yt-loadmore-btn {
+  margin-bottom: .5em;
+}
+
+.demo-greeting-wrap{
+  margin-left: 1em;
+  margin-top: 1em;
+  margin-bottom: .5em;  
+}
+
+.profile-greeting-wrap {
+  //display: inline-flex;
+  margin-left: .5em; //see .demo-greeting-wrap
+  //margin-top: 1em;
+  
+}
+.profile-msg { // see yt-shelf-inner-wrap for border
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-bottom: 1em;
+  margin-left: .2em;
+  // border-style: none none solid none;
+  // border-width: .2em;
+  // border-color: rgba(40, 41, 41, 0.657);
+}
+
+.profile-pic {
+  border-radius: 50%;
+  height: 2.5em;
+  margin: auto;
+  margin-left: .5em;
+  margin-right: .5em;
+}
+
+
+.yt-shelf {
+  /* white-space: nowrap;
+  display: inline-flex;
+  flex-wrap: wrap;  */
+  
+  /* justify-content: center; */
+}

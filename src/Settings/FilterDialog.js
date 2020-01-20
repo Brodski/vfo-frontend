@@ -155,7 +155,7 @@ export function FilterDialog(props){
               </i>
               <div>Only show videos that are shorter than: </div>
             </div>
-            <div className="select-wrap"> 
+            <div className="filt-select-wrap"> 
               
               <MaxMinDurationDropdown 
                 maxOrMinState={maxDur} 

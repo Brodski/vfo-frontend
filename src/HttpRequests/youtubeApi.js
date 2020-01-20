@@ -47,7 +47,6 @@ await check()
 
 export async function getSomeVideos(vidIdList = [""]) {
 await check()
-//console.log(vidIdList.toString())
   return await window.gapi.client.youtube.videos.list({
     "part": "snippet, contentDetails, statistics",
     "id": vidIdList.toString(),
