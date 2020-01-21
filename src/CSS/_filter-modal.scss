@@ -1,4 +1,7 @@
 
+$btn-color: #474747;
+$icon-size: 2em;
+
 .filt-content {
   padding: 10px;
   display: inline-flex;
@@ -14,7 +17,7 @@
 }
 
 .filt-button {
-  background-color: #474747 !important;
+  background-color: $btn-color !important;
 }
 
 .filter-image {
@@ -22,19 +25,17 @@
   height: 100%;
 }
 
-
 .filt-select {
 	cursor: pointer;
   border-radius: 10px;
 }
 
 .icon-filt-min {
-  font-size: 2em;
+  font-size: $icon-size;
 }
 .icon-filt-max{
-  font-size: 2em;
+  font-size: $icon-size;
 }
-
 
 .filt-select-wrap {
   display: inline-flex;

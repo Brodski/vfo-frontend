@@ -24,17 +24,17 @@ export const Video = (props) => {
   
   if (props.video.id) {
     return (
-      <li className="video col s12 m4 l3 xl3">
-        <div className="vid-thumbnail-wrap">
-          <a href={"https://www.youtube.com/watch?v=" + id} >
+      <li className="collection-item video col s12 m4 l3 xl3">
+        <a href={"https://www.youtube.com/watch?v=" + id} >
+          <div className="vid-thumbnail-wrap">
             <img className="vid-thumnail" src={thumbnail} />
-          </a>
-          <span className="vid-timestamp"> {vidDuration} </span>
-        </div>
+            <span className="vid-timestamp"> {vidDuration} </span>
+          </div>
+        </a>
         <div className="vid-all-text-wrap">
-          <div className="vid-title"> {title}  </div>
+          <div className="vid-title"> {title} </div>
           <div className="vid-info">
-            <div> {channelName} </div>
+            <div className="vid-ch-txt"> {channelName} </div>
             <div> {fromNowDate} • {viewCount} views </div>
           </div>
         </div>

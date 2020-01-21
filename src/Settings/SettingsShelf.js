@@ -44,7 +44,7 @@ export const SettingsShelf = (props) => {
       group: groupName,
       animation: 150,
       fallbackOnBody: true,
-      swapThreshold: 0.65,
+      swapThreshold: 1,
       forceFallback: true,
       onEnd: function (evt) {
         saveUi2Settings()
@@ -95,7 +95,7 @@ export const SettingsShelf = (props) => {
   })
 
   // Don't delete sh-Qhack.
-  let shelfClasses = "sh-QHack hoverable card blue-grey darken-1 "
+  let shelfClasses = "sh-QHack hoverable card "
   let aux_shelfClasses = props.shelf.isSorted     ? " set-custom-shelf" : " unsort-shelf" 
   shelfClasses = shelfClasses + ' ' + aux_shelfClasses
   let unSortDndWrap = props.shelf.isSorted    ? ""        : emptySpaceDrag 

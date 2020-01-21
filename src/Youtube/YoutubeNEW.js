@@ -233,8 +233,13 @@ export function YoutubeNEW() {
     return(
       <div className=" profile-greeting-wrap">
         {/* <img className="profile-pic" src={user.pictureUrl}></img> */}
-        <div className="profile-msg"> Hi, {user.username} </div> 
-        <div className="divider"></div>
+
+
+        
+        {/* <div className="profile-msg"> Hi, {user.username} </div>  */}
+        <h4 className="profile-msg2"> Hi, {user.username} </h4> 
+        {/* <div className="divider"></div> */}
+        <div className='div-aux' />
       </div>
       )
   }

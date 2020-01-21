@@ -55,9 +55,9 @@ async function checkIfInitFinished(){
               <li> 
                 {isInitFinished  ? <LoginButton /> : null }
               </li>
-              <li>
+              {/* <li>
                 {isInitFinished  ? <LoginButton2 /> : null }
-              </li>
+              </li> */}
               <li>
               {isInitFinished  ? <ProfileImg/>  : null }
               </li>

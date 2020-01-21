@@ -43,7 +43,9 @@ export const Shelf = props => {
     <div className=" yt-shelf-inner-wrap">
       <div className=" yt-shelf-title"> {props.shelf.title} </div>
       {/* <div className=" yt-videos-wrap" > */}
-        <ul className="yt-shelf row">
+    {/* TODO NOTICE THIS!!! COLLECTION UI DIFF */}
+         {/* <ul className="collection yt-shelf row">  */}
+         <ul className=" yt-shelf row">  
           {videos}
         </ul>
       {/* </div> */}
@@ -53,7 +55,7 @@ export const Shelf = props => {
           className=" waves-effect waves-light btn">  
           <i className=" material-icons">expand_more</i>
         </a> : null }
-      </div>
+      </div>      
     </div>
   )
 }

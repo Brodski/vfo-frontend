@@ -1,71 +1,88 @@
 
+//@import "../../node_modules/materialize-css/sass/components/color-variables";
 
+//@import "../../node_modules/materialize-css/sass/materialize";
 
+// $nav-text: whitesmoke;
+// $primary-color: color("blue-grey", "darken-2") !default;
+// $primary-color-light: lighten($primary-color, 15%) ;
+// $primary-color-dark: darken($primary-color, 15%) ;
 
-$mainTextColor: whitesmoke;
- $mainGrey: grey;
-// last comment https://stackoverflow.com/questions/39785695/how-to-change-default-materialize-theme-colour-in-rails-application
-@import "../../node_modules/materialize-css/sass/components/color-variables";
+// //  $secondary-color: color("amber", "lighten-1") !default;
+// $secondary-color: color("deep-orange", "darken-3") !default;
+// //$secondary-color: color("grey", "darken-3") !default;
 
-  
-$primary-color: color("blue-grey", "darken-2") !default;
-$primary-color-light: lighten($primary-color, 15%) ;
-$primary-color-dark: darken($primary-color, 15%) ;
+// $success-color: color("green", "base") ;
+// $error-color: color("red", "base") ;
+// $link-color: color("light-blue", "darken-1") ;
 
-//  $secondary-color: color("amber", "lighten-1") !default;
-$secondary-color: color("grey", "darken-3") !default;
-$success-color: color("green", "base") ;
-$error-color: color("red", "base") ;
-$link-color: color("light-blue", "darken-1") ;
-
-
-@import "../../node_modules/materialize-css/sass/materialize";
 
 //$mainSoftTeal: @extend .blue-grey, .darken-2; 
-@import './variables'; //must be at top
 
+
+@import './variables'; //must be at top
+@import './modal-shared';
+@import './filter-modal';
 @import './rename-modal';
 @import './youtube';
 @import './selectbox';
-@import './video-thumbnail';
+@import './video';
 @import './settings';
-
+@import './navbar';
  //$mainSoftTeal: @extend .grey, .darken-1;
+
+ // last comment https://stackoverflow.com/questions/39785695/how-to-change-default-materialize-theme-colour-in-rails-application
  
 body {
-  @extend .grey, .darken-1;
+  
+}
+
+body {
+  background-color: $body-color;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
+}
+
+.divider {
+
+}
+
+.loading-main-animation {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}
+
+.shContainer {
+   /* border: solid black;  
+   /* max-width: 500px; */
+   @extend .z-depth-2;
+}
+
+.carousel-wrap{
+    
+}
+
+
+.carousel {
+  height: 100% !important;
 }
 
 
 
-.card {
-  background-color: #f2f2f2; 
-}
 
-.nav-profile-icon {
-  display: inline-flex;
-  vertical-align: middle;
-}
 
-svg.svg-googlecolor {
-     path {
-     //fill: blue;
-     stroke-width: .3;
-     stroke: teal;
-     }
-    vertical-align: middle;
-    margin-bottom: 4px;
-    margin-right: 3px;
-  }
-  svg.svg-mygoogle2 {
-     path {
-     fill: $mainTextColor;
-     }
-    vertical-align: middle;
-    margin-bottom: 4px;
-    margin-right: 3px;
-        
-  }
+
   // https://github.com/Dogfalo/materialize/blob/master/sass/components/_variables.scss
   // https://materializecss.com/sass.html
 //  @import "../../node_modules/materialize-css/sass/materialize";

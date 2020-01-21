@@ -1,33 +1,50 @@
 
-@mixin handle-cursor {
-  cursor: move;
-  cursor: -webkit-grabbing;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;  
+
+
+/* Dont delte, used by SettingLogic.logIds() */
+.subitem {
+  margin: 0;
+  height: 60px;
+  border-top: 1px solid $collection-border;
+  border-bottom: 1px solid $collection-border;
+  // border-left: 1px solid $collection-border;
+  // border-right: 1px solid $collection-border;
+  display: flex;
+  justify-content: space-between;
+  background-color: $collection-bg-main;
+   &:hover{
+     background-color: $collection-bg-hover-c; 
+    }
 }
 
+
+.shelf-title-wrap{
+  display: flex;
+  justify-content: space-between;
+  min-height: 2.5em;
+  background-color: $collection-title-color;
+  color: $collection-title-txt-c;
+  //border-radius: 10px 10px 0 0;
+  
+}
+
+/* DONT delete this, used by SettingsLogic.logAllShelfs() & SettingsLogc.logIds() */
+div.subListWrapper {
+  background-color: $collection-bg-under;
+ // background-color: transparent;
+}
 .set-topbody {
-  margin: 1em;
+  // margin: 1em;
 }
 
 .set-sh-textaux { 
-  @include truncate1();
+  @include truncate(1);
 }
 
 .set-sh-unsort-pad{
   margin-left: 1.5em;  
 }
 
-.handle-sub {
-  @include handle-cursor()
-}
-
-.handle-shelf {
-  margin-left: 0.3em;
-  margin-right: 0.3em;
-  @include handle-cursor()
-}
 
 .timelapse-icon {
   width: 10px;
@@ -36,22 +53,6 @@
   background-color: transparent;
 }
 
-/* Dont delte, used by SettingLogic.logIds() */
-.subitem {
-  margin: 0;
-  height: 60px;
-  border-top: 1px solid #5a1616;
-  border-bottom: 1px solid #5a1616;
-  display: flex;
-  justify-content: space-between;
-  background-color: steelblue;
-}
-
-/* DONT delete this, used by SettingsLogic.logAllShelfs() & SettingsLogc.logIds() */
-div.subListWrapper {
-  /*border: 3px solid purple;*/
-  background-color: cadetblue;
-}
 
 .unsort-shelf {
    /* width: 300px;  */
@@ -75,7 +76,7 @@ div.subListWrapper {
    }
 }
 
-.set-top-tophalf{
+.set-top-tophalf {
   display: flex;
 }
 
@@ -92,19 +93,47 @@ div.subListWrapper {
 }
 
 .shelf-title2 {  
-  @include truncate2();
+  @include truncate(2);
 }
 
 .shelf-text{
   padding: 10px;
   font-size: 1.4em;
+  color: #000
 }
 
 
 .set-custom-shelf {
-  @extend .blue-grey, .darken-2;   // .grey-text, .text-lighten-5; 
+  //@extend .blue-grey, .darken-2;   // .grey-text, .text-lighten-5; 
+  //@extend .red, .darken-2;   // .grey-text, .text-lighten-5; 
 }
 
 .sub-QHack{
  
+}
+
+.unSortDndWrap {
+  //background-color: darkslategrey;
+  height: 100%;
+  /* min-height: 40px; */
+}
+
+
+
+@mixin handle-cursor {
+  cursor: move;
+  cursor: -webkit-grabbing;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;  
+}
+
+.handle-sub {
+  @include handle-cursor()
+}
+
+.handle-shelf {
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+  @include handle-cursor()
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import Home from './Common/Home';
+import About from './Common/Home';
 import Nav from './Common/Nav';
 
 
@@ -12,7 +12,8 @@ import { UserContext, UserSettingsContext, IsLoggedContext } from './Contexts/Us
 
 import * as GApiAuth from './HttpRequests/GApiAuth'
 import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
-import { User } from './Classes/User'
+import { User } from './Classes/User';
+
 import * as Common                    from './BusinessLogic/Common.js';
 import * as ytLogic                     from './BusinessLogic/ytLogic.js'
 import moment from 'moment';
@@ -128,14 +129,14 @@ function App() {
             <Nav />
             <Route path="/" exact component={YoutubeNEW} />
 
-            <Route path="/about" component={Home} />
+            <Route path="/about" component={About} />
         
             
             <Route path="/customize" component={SettingsNEW} />
+            
           </IsLoggedContext.Provider>
           </UserSettingsContext.Provider>     
           </UserContext.Provider>
-
         </Switch>
     </Router> 
   );

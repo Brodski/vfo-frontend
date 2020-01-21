@@ -5,7 +5,7 @@ import nextId  from "react-id-generator";
   export const LoadingMain = props => {
     return (
       <div key={nextId('loaderid-')} className="loading-main-animation">
-        <ReactLoading type={'spinningBubbles'} />
+        <ReactLoading type={'spinningBubbles'} color={'black'} />
       </div>
     )
   }

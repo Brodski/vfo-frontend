@@ -23,6 +23,7 @@ export const ShelfsMany = props => {
             setNumVids={props.setNumVids} 
             _setIdx={idx} 
           />
+          <div className='div-aux' />
         </div>
         )
       })}

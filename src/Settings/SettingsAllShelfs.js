@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
 import {SettingsShelf} from '../Settings/SettingsShelf';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { User, CustomShelf } from '../Classes/User'
@@ -108,17 +108,18 @@ export const AllShelfs = (props) => {
   }
 
   return (
-    
+    <Fragment>
+      <div className="set-top-bothalf">
+         <a className=" btn save-btn" onClick={props.save} >Save</a> 
+      </div>
       <div className="row ">
         <div className="col m6 s12">
           <UnSortedShelfs/>
         </div>
-         {/* <div> some stuff </div>  */}
         <div className="col m6 s12">
-        <SortedShelfs/>
+          <SortedShelfs/>
         </div>
-
-
       </div>
+      </Fragment>
     )
   }

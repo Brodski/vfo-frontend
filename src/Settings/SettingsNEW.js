@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, Fragment } from 'react';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js'
 import {  } from '../Contexts/UserContext.js'
 import { ButtonsAuthDebug } from '../Common/ButtonsAuthDebug';
-
+import {Footer} from '../Common/Footer';
 import { AllShelfs } from '../Settings/SettingsAllShelfs';
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
@@ -114,7 +114,7 @@ async function initPage2() {
 
   const LoadShelfs = () => {
     if (isInitFinished) {
-      return ( <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} /> )
+      return ( <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} save={save} /> )
     }
     else {
       return ( <LoadingMain /> )
@@ -123,27 +123,30 @@ async function initPage2() {
   }
 
     return (
-    <div className="container">  
-      <div className="set-topbody">
-        <div className="set-top-tophalf ">
-          <h4 className="set-top-title"> Customize </h4>
-          <HowTo />
+      <Fragment>
+        <div className="container">  
+          <div className="set-topbody">
+            <div className="set-top-tophalf ">
+              <h4 className="set-top-title"> Customize </h4>
+              <HowTo />
+            </div>
+            {/* <div className="divider" /> */}
+            <div className='div-aux' />
+          </div>
+            { shouldRedirect 
+              ? <PostSave /> 
+              : <LoadShelfs /> 
+            }
+          {/*<h1> ```````````````````````` </h1>      
+          <button onClick={logUserAndSettings} > log User & Settings </button>
+          
+          <button onClick={() => stLogic.logAllShelfs() }> log all Shelf </button>  
+          <button onClick={() => stLogic.logIds() }> log IDs Shelf </button>  
+          <ButtonsAuthDebug/> */}
+          <div className='div-aux' />
         </div>
-        <div className="divider" />
-        <div className="set-top-bothalf">
-          <a className=" btn save-btn" onClick={save} >Save</a>
-        </div>
-      </div>
-        { shouldRedirect 
-          ? <PostSave /> 
-          : <LoadShelfs /> 
-        }
-      {/*<h1> ```````````````````````` </h1>      
-      <button onClick={logUserAndSettings} > log User & Settings </button>
-      
-      <button onClick={() => stLogic.logAllShelfs() }> log all Shelf </button>  
-      <button onClick={() => stLogic.logIds() }> log IDs Shelf </button>  
-      <ButtonsAuthDebug/> */}
-    </div>
+        
+      {isInitFinished? <Footer /> : null }
+    </Fragment>
   );
 }
