@@ -13,8 +13,8 @@ const [doIt, setDoIt] = useState(false)
       
   })
 return (
-  <div>
-    {doIt ? <Redirect to='/' /> : <div> THANK YOU </div>}
+  <div className='align-center'>
+    {doIt ? <Redirect to='/' /> : <div className='flow-text'> THANK YOU </div>}
   </div>
   )
 }

@@ -3,7 +3,7 @@
 
 $nav-text: whitesmoke;
 $nav-bg: color("indigo", "darken-2") !default;
-$btn-color: #9c27b0; // = purple
+$nav-btn-color: #9c27b0; // = purple
 
 //$nav-bg: color("blue-grey", "darken-2") !default;
 //$btn-color: color("grey", "darken-3");
@@ -13,7 +13,7 @@ $body-color: color('grey' , 'lighten-4');
 $body-secondary: color('grey' , 'lighten-4');
 ////////////////////////////////////////////////////////////////////////////////
 $primary-color: $nav-bg !default;
-$secondary-color: $btn-color !default;
+$secondary-color: $nav-bg !default;
 $primary-color-light: lighten($primary-color, 15%) ;
 $primary-color-dark: darken($primary-color, 15%) ;
 ////////////////////////////////////////////////////////////////////////////////
@@ -24,12 +24,9 @@ $vid-txt-title-color: color('grey', 'darken-4');
 $vid-txt-info-color:color('grey', 'darken-4');
 $yt-shelf-txt-color: $vid-txt-title-color;
 $yt-greeting-color: black;
- 
 
+////////////////////// Collection ///////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////
-////////////////////// Collection               ///////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
 
 //
 // Nice Grey Combo
@@ -40,7 +37,8 @@ $yt-greeting-color: black;
 //
 // Nice Blue Feel
 //
-$collection-title-color: #2539c0;
+//$collection-title-color: #2539c0;
+$collection-title-color: $primary-color;
 $collection-title-txt-c: whitesmoke;
 $collection-bg-main: #f5f5f5;
 $collection-bg-text-c: #3e4fc1;

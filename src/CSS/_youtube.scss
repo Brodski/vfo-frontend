@@ -53,6 +53,10 @@
   color: $yt-shelf-divider;
 }
 
+.about-div-padding{
+  margin-bottom: 5em;
+}
+
 .yt-videos-wrap {
   
 }
@@ -69,9 +73,6 @@
 
 .yt-loadmore-btn {
   margin-bottom: .5em;
-  .btn {
-    background-color: $nav-bg;
-  }
 }
 
 .demo-greeting-wrap{

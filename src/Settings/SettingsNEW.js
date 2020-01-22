@@ -17,9 +17,9 @@ import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 
 import { CustomShelf } from '../Classes/User'
 import {HowTo} from './HowTo'
-import Pic1 from './action1.jpg'
-import Pic2 from './action2.jpg'
-import Pic3 from './action3.webp'
+// import Pic1 from './action1.jpg'
+// import Pic2 from './action2.jpg'
+// import Pic3 from './action3.webp'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 // to consider... https://www.npmjs.com/package/choices.js
@@ -124,7 +124,7 @@ async function initPage2() {
 
     return (
       <Fragment>
-        <div className="container">  
+        <div className="container" >  
           <div className="set-topbody">
             <div className="set-top-tophalf ">
               <h4 className="set-top-title"> Customize </h4>
@@ -143,7 +143,7 @@ async function initPage2() {
           <button onClick={() => stLogic.logAllShelfs() }> log all Shelf </button>  
           <button onClick={() => stLogic.logIds() }> log IDs Shelf </button>  
           <ButtonsAuthDebug/> */}
-          <div className='div-aux' />
+          <div className='div-aux about-div-padding' />
         </div>
         
       {isInitFinished? <Footer /> : null }

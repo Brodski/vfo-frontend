@@ -14,17 +14,31 @@ export const Video = (props) => {
   channelName = props.video.snippet.channelTitle
   fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
   //solution to Premium yt vids
-  if (props.video.statistics.viewCount) { 
-    viewCount   = humanFormat(parseInt(props.video.statistics.viewCount),{ decimals: 1 } ).replace(/\s/g,''); 
-  } else {
-    viewCount =""
+  viewCount = formatViewCount()
+  vidDuration = formatVidLength()
+
+  function formatViewCount() {
+    if (props.video.statistics.viewCount) { 
+      viewCount   = humanFormat(parseInt(props.video.statistics.viewCount),{ decimals: 1 } ).replace(/\s/g,''); 
+    } else {
+      viewCount =""
+    }
+    return viewCount
   }
-  vd_aux      = moment.duration(props.video.contentDetails.duration) //Convert iso8601 string to object
-  vidDuration = vd_aux.minutes() + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"
+
+  function formatVidLength() {
+    vd_aux      = moment.duration(props.video.contentDetails.duration) //Convert iso8601 string to object
+    if (vd_aux.hours() > 0) {
+      vidDuration = vd_aux.hours() + ':' + vd_aux.minutes().toString().padStart(2,0) + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"   
+    } else {
+      vidDuration = vd_aux.minutes() + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"
+    }
+    return vidDuration
+  }
   
   if (props.video.id) {
     return (
-      <li className="collection-item video col s12 m4 l3 xl3">
+      <li className="collection-item video col s12 m4 l3 xl2">
         <a href={"https://www.youtube.com/watch?v=" + id} >
           <div className="vid-thumbnail-wrap">
             <img className="vid-thumnail" src={thumbnail} />

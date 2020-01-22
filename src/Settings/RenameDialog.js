@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import Pic from './pen3.png'
+import Pic from '../Images/pen3.png'
 
 export function RenameDialog(props) {
   const [modalIsOpen, setIsOpen] = useState(false);

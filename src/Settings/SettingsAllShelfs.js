@@ -77,6 +77,7 @@ export const AllShelfs = (props) => {
         {sortedShelfz} 
         <div className="center-align">
         <a 
+          id="add-more-btn"
           onClick={addShelf}
           className=" btn">  
           <i className=" material-icons">add</i>
@@ -103,6 +104,7 @@ export const AllShelfs = (props) => {
     return ( 
       <div> 
         {unSortedshelfz}
+        <div className='div-aux'/>
       </div>
       )
   }
@@ -110,7 +112,7 @@ export const AllShelfs = (props) => {
   return (
     <Fragment>
       <div className="set-top-bothalf">
-         <a className=" btn save-btn" onClick={props.save} >Save</a> 
+         <a className=" btn " onClick={props.save} >Save</a> 
       </div>
       <div className="row ">
         <div className="col m6 s12">

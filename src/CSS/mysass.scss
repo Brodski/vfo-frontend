@@ -1,25 +1,3 @@
-
-//@import "../../node_modules/materialize-css/sass/components/color-variables";
-
-//@import "../../node_modules/materialize-css/sass/materialize";
-
-// $nav-text: whitesmoke;
-// $primary-color: color("blue-grey", "darken-2") !default;
-// $primary-color-light: lighten($primary-color, 15%) ;
-// $primary-color-dark: darken($primary-color, 15%) ;
-
-// //  $secondary-color: color("amber", "lighten-1") !default;
-// $secondary-color: color("deep-orange", "darken-3") !default;
-// //$secondary-color: color("grey", "darken-3") !default;
-
-// $success-color: color("green", "base") ;
-// $error-color: color("red", "base") ;
-// $link-color: color("light-blue", "darken-1") ;
-
-
-//$mainSoftTeal: @extend .blue-grey, .darken-2; 
-
-
 @import './variables'; //must be at top
 @import './modal-shared';
 @import './filter-modal';
@@ -33,9 +11,6 @@
 
  // last comment https://stackoverflow.com/questions/39785695/how-to-change-default-materialize-theme-colour-in-rails-application
  
-body {
-  
-}
 
 body {
   background-color: $body-color;
@@ -46,6 +21,15 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+
+  li {
+    .btn {
+  background-color: $nav-btn-color !important;
+    }
+  }
+
+
 
 body {
   height: 100%;
@@ -69,15 +53,34 @@ body {
    @extend .z-depth-2;
 }
 
-.carousel-wrap{
-    
+.dot {
+  //background: $nav-btn-color !important;
+  background: rgba(0,0,0,1) !important;
 }
 
+.legend {
+  //purplish
+  //background: rgba(68, 31, 78, 0.7) !important; 
+  background: rgba(0,0,0,0.7) !important;
+  font-size: 1em !important;
+  font-weight: 600;
+  //color: black !important;
+}
+
+.carousel-wrap{
+  //width: 80% !important; 
+  //height: 100% !important; 
+}
+
+.slider-wrapper{
+ //height: 80% !important;
+ 
+}
 
 .carousel {
   height: 100% !important;
+  //width: 100% !important;
 }
-
 
 
 

@@ -264,13 +264,13 @@ export function YoutubeNEW() {
   }
 
   return(
-    <div className="yt-body-wrapper" >
-      {isLogged2 === true && !user.isDemo ? <LoggedIn /> : <LoggedOut />}
-      {finalShelfs.shelfs[0].videos[0].id == null ? <LoadingMain /> : <Shelfs />}
-      
-      {/* JUNK BELOW */}
-      {/* <ButtonsAuthDebug data={{ numVids, finalShelfs, user, isLogged2, pageLength, setPageLength, user }}/> */}
-      
-    </div>
+      <div className="yt-body-wrapper" >
+        {isLogged2 === true && !user.isDemo ? <LoggedIn /> : <LoggedOut />}
+        {finalShelfs.shelfs[0].videos[0].id == null ? <LoadingMain /> : <Shelfs />}
+        
+        {/* JUNK BELOW */}
+        {/* <ButtonsAuthDebug data={{ numVids, finalShelfs, user, isLogged2, pageLength, setPageLength, user }}/> */}
+        
+      </div>
     );
 }

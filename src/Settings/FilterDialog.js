@@ -5,7 +5,7 @@ import { Filter } from '../Classes/Filter';
 import { mdiTimelapse } from '@mdi/js'; 
 import Icon from '@mdi/react'
 //import Pic from './clock.png'
-import Pic from './cogs2.png'
+import Pic from '../Images/cogs2.png'
 //https://github.com/reactjs/react-modal
 import M from 'materialize-css'
 
@@ -56,7 +56,7 @@ export function FilterDialog(props){
           <option value="45" > 45 minutes</option>
           <option value="60" > 60 minutes</option>
        </select>
-      <div class="select__arrow"></div>
+      <div className="select__arrow"></div>
       </div>
     )
   }
@@ -150,7 +150,7 @@ export function FilterDialog(props){
            {THREE} 
           <div> */}
             <div className="filt-drop-wrap"> 
-              <i class=" icon-filt-max hide-on-small-only material-icons ">
+              <i className=" icon-filt-max hide-on-small-only material-icons ">
                 vertical_align_bottom
               </i>
               <div>Only show videos that are shorter than: </div>
