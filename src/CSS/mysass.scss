@@ -68,18 +68,30 @@ body {
 }
 
 .carousel-wrap{
-  //width: 80% !important; 
   //height: 100% !important; 
+  //max-height: 45em !important;
+}
+
+.axis-horizontal {
+  //max-height: 45em !important;
 }
 
 .slider-wrapper{
  //height: 80% !important;
- 
+ //max-height: 45em !important;
+ //object-fit: contain !important;
 }
-
+.carousel-slider {
+  //object-fit: contain !important;
+}
 .carousel {
   height: 100% !important;
+  //max-height: 45em !important;
+  //object-fit: contain;
+
+/* Set up proportionate scaling */
   //width: 100% !important;
+//height: 45em;
 }
 
 
