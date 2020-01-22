@@ -417,32 +417,32 @@ export function getMockUser() {
   ////////////             Hot Babes              /////////////
   /////////////////////////////////////////////////////////////
 
-  let subHot = new Subscription()
-  subHot.channelName = "Video Box"
-  subHot.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw";
-  subHot.filter.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw"
+  // let subHot = new Subscription()
+  // subHot.channelName = "Video Box"
+  // subHot.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw";
+  // subHot.filter.channelId = "UCeMFHOzX9MDWbr-pu2WdmVw"
 
-  let subHot2 = new Subscription()
-  subHot2.channelName = "mineralblue"
-  subHot2.channelId = "UC3IngBBUGFUduHp-7haK1lw";
-  subHot2.filter.channelId = "UC3IngBBUGFUduHp-7haK1lw"
+  // let subHot2 = new Subscription()
+  // subHot2.channelName = "mineralblue"
+  // subHot2.channelId = "UC3IngBBUGFUduHp-7haK1lw";
+  // subHot2.filter.channelId = "UC3IngBBUGFUduHp-7haK1lw"
 
 
-  let subHot3 = new Subscription()
-  subHot3.channelName = "Twitche"
-  subHot3.channelId = "UC97czRRaA5w-THZFIL-uk3Q"
-  subHot3.filter.channelId = "UC97czRRaA5w-THZFIL-uk3Q"
+  // let subHot3 = new Subscription()
+  // subHot3.channelName = "Twitche"
+  // subHot3.channelId = "UC97czRRaA5w-THZFIL-uk3Q"
+  // subHot3.filter.channelId = "UC97czRRaA5w-THZFIL-uk3Q"
 
-  let subHot4 = new Subscription()
-  subHot4.channelName = "Perfect Beauty"
-  subHot4.channelId = "UCJ7sCYUdt15io_cyUX8zsLA"
-  subHot4.filter.channelId = "UCJ7sCYUdt15io_cyUX8zsLA"
+  // let subHot4 = new Subscription()
+  // subHot4.channelName = "Perfect Beauty"
+  // subHot4.channelId = "UCJ7sCYUdt15io_cyUX8zsLA"
+  // subHot4.filter.channelId = "UCJ7sCYUdt15io_cyUX8zsLA"
 
-  let cShelfHot = new CustomShelf()
-  cShelfHot.title = "Hot Babes"
-  cShelfHot.fewSubs.push(subHot, subHot2, subHot3, subHot4)
-  cShelfHot.isSorted = true;
-  u.customShelfs.push(cShelfHot)
+  // let cShelfHot = new CustomShelf()
+  // cShelfHot.title = "Hot Babes"
+  // cShelfHot.fewSubs.push(subHot, subHot2, subHot3, subHot4)
+  // cShelfHot.isSorted = true;
+  // u.customShelfs.push(cShelfHot)
 
 
     
