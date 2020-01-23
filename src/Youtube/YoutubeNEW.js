@@ -225,6 +225,7 @@ export function YoutubeNEW() {
       <div className="center-align demo-greeting-wrap">
         <div className="flow-text">
            Log in to customize your homepage <br/>  Currently using a demo profile </div>
+          <div className='div-aux' />
       </div>
     )
   }
@@ -238,8 +239,9 @@ export function YoutubeNEW() {
         
         {/* <div className="profile-msg"> Hi, {user.username} </div>  */}
         <h4 className="profile-msg2"> Hi, {user.username} </h4> 
-        {/* <div className="divider"></div> */}
         <div className='div-aux' />
+        {/* <div className="divider"></div> */}
+        
       </div>
       )
   }

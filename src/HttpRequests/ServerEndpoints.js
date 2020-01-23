@@ -7,22 +7,22 @@ const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localh
 
 axios.defaults.baseURL = SPRING_BACKEND;
 
-// axios.interceptors.request.use( (config) => {
-//   //console.log(`Request was made to ${config.url}`)  
-//   return config
-// }, error => {
-//   console.log("Request error")
-//   return Promise.reject(error)
+axios.interceptors.request.use( (config) => {
+  //console.log(`Request was made to ${config.url}`)  
+  return config
+}, error => {
+  console.log("Request error")
+  return Promise.reject(error)
 
-// })
+})
 
-// axios.interceptors.response.use( (res) => {
-//   //console.log(`Response recieved with status ${res.status} `)  
-//   return res
-// }, error => {
-//   console.log('Response error')
-//   return Promise.reject(error)
-// })
+axios.interceptors.response.use( (res) => {
+  //console.log(`Response recieved with status ${res.status} `)  
+  return res
+}, error => {
+  console.log('Response error')
+  return Promise.reject(error)
+})
 
 
 export async function loginToBackend() {

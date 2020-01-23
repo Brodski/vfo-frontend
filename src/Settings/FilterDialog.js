@@ -38,7 +38,7 @@ export function FilterDialog(props){
   const MaxMinDurationDropdown = (props) => {
     return (
       <div className="select">
-        <select className=" browser-default" value={props.maxOrMinState} onChange={props.maxOrMinHandler} >
+        <select className="  browser-default" value={props.maxOrMinState} onChange={props.maxOrMinHandler} >
           <option value={props.firstValue} > Off  </option>
           <option value="0.5"> 30 seconds </option>
           <option value="1" >  1 minutes </option>
@@ -113,6 +113,7 @@ export function FilterDialog(props){
           </a>
         </div>
         {/* Modal Content */}
+        {/* TODO No idea why submitting via Enter key is not working (form, input, ect) */}
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={close}
@@ -120,16 +121,16 @@ export function FilterDialog(props){
           className="Modal card horizontal "
           overlayClassName="Overlay"
         >
+          
         <div className="card-image filter-image hide-on-small-only">
           <img src={Pic} />   
         </div>
-        <div className="  filt-content">  
+        <div className="  filt-content">          
           {/* ONE */}
           <div>
             <h5 className="flow-text" > {props.subObj.channelName}</h5>
             <div className="divider" />
           </div>
-           
            {/* {TWO} */}
           <div>
             <div className="filt-drop-wrap" > 
@@ -139,34 +140,32 @@ export function FilterDialog(props){
             <div>Only show videos that are longer than: </div>
             </div>
             <div className="valign-wrapper select-wrap"> 
-              
               <MaxMinDurationDropdown 
                 maxOrMinState={minDur} 
                 maxOrMinHandler={handleMinDur} 
                 firstValue={"0"} 
               />
             </div>
-          {/* </div>
-           {THREE} 
-          <div> */}
+          {/* {THREE} */}
+          
             <div className="filt-drop-wrap"> 
               <i className=" icon-filt-max hide-on-small-only material-icons ">
                 vertical_align_bottom
               </i>
               <div>Only show videos that are shorter than: </div>
             </div>
-            <div className="filt-select-wrap"> 
-              
+            <div className="filt-select-wrap">     
               <MaxMinDurationDropdown 
                 maxOrMinState={maxDur} 
                 maxOrMinHandler={handleMaxDur} 
                 firstValue={"Infinity"} 
               />
             </div>
+            
             <div className="rename-mod-btn">
-              <a onClick={save} className=" btn">Save</a>
+              <a type="submit" onClick={save} className=" btn">Save</a>
               <a onClick={close} className=" btn">Close</a>
-            </div>
+            </div>    
           </div>
         </div>
       </Modal>

@@ -20,7 +20,7 @@ function About() {
           <br/><br/> Organize your subscriptions into groups and control the minimun/maximun duration required for a video to show up in your feed</p>
           <div className='divider'/>
         <h5 className='text-flow'> This environment is for: {process.env.REACT_APP_ENV_NAME} </h5>
-        <h5 className='text-flow'> DB, HTTP Server, and backend server at: {process.env.REACT_APP_SPRINGB_DOMAIN} </h5>
+        <h5 className='text-flow'> DB, HTTP Server, and server at: {process.env.REACT_APP_SPRINGB_DOMAIN.slice(0,-5)} </h5>
 
         {/*<h4> Testing spin animation: </h4>
          <div key={'test-spiner'} className="loading-main-animation">

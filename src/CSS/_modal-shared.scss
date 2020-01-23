@@ -1,5 +1,7 @@
 $card-color: #f2f2f2;
 
+$height-modal: 45em;
+
 .card {
   background-color: $card-color;
 }
@@ -17,7 +19,7 @@ $card-color: #f2f2f2;
   overflow: auto;
   /* padding: 20px; */
   max-width: 80%;
-  max-height: 45em;
+  max-height: $height-modal;
 }
 
 .Overlay {

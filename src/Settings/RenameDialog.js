@@ -54,6 +54,7 @@ export function RenameDialog(props) {
           <img className="rename-image2 " src={Pic}></img> 
         </div>
         <div className=" rename-content">
+        <form onSubmit={save}>
           <div>
             <h5 className="flow-text"> Rename </h5>
             <div className="divider" />
@@ -70,10 +71,11 @@ export function RenameDialog(props) {
               />
             </div>
             <div className="rename-mod-btn">
-              <a onClick={save} className=" btn">Rename</a>
+              <a type="submit" onClick={save} className=" btn">Rename</a>
               <a onClick={close} className=" btn">Close</a>
             </div>
           </div>
+        </form>
         </div>
           
         </Modal>

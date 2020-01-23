@@ -6,7 +6,9 @@ import { Carousel } from 'react-responsive-carousel';
 // import Pic3 from './action3.webp'
 import Modal from 'react-modal';
 import Filt2 from '../Images/Tutorial/tut-filt-2red.png';
-import Filt4 from '../Images/Tutorial/tut-filt-3best.png';
+//import Filt4 from '../Images/Tutorial/tut-filt-3best.png';
+import Filt5 from '../Images/Tutorial/tut-filt-4best.png';
+import Filt6 from '../Images/Tutorial/tut-filt-combo2.png';
 import Drag1 from '../Images/Tutorial/drag3.png';
 import Drag2 from '../Images/Tutorial/drag-sub2.png';
 import Order1 from '../Images/Tutorial/order2.png';
@@ -19,7 +21,7 @@ export const HowTo = () => {
 
   const TheCarousel = () => {
     return(
-      <div className="carousel-wrap ">
+      // <div className="carousel-wrap ">
         <Carousel 
           showArrows={true} 
           showStatus={false}
@@ -30,34 +32,37 @@ export const HowTo = () => {
           infiniteLoop={true}
           >
           <div>
-            <img src={Drag2} />            
+            <img  className="cara-help" src={Drag2} />            
             <p className="legend">Categorize & order your subscriptions</p>
           </div>
           <div>
-          <img src={Drag1} />
+          <img  className="cara-help" src={Drag1} />
             <p className="legend">Categorize & order your subscriptions</p>
           </div>
           <div>
-            <img src={Filt2} />
-            <p className="legend">Choose the min or max of a subscription's videos</p>
-          </div>
-          {/* <div>
-            <img src={Filt1} />
-          </div> */}
-          <div>
-            <img src={Filt4} />
+            {/* <img  className="cara-help" src={Filt2} />
             <p className="legend">Choose the min or max of a subscription's videos</p>
           </div>
           <div>
-            <img src={Order1} />
+            
+            <img  className="cara-help" src={Filt5} />
+            <p className="legend">Choose the min or max of a subscription's videos</p>
+          </div>
+          <div> */}
+            {/* <img  className="cara-help" src={Filt4} /> */}
+            <img  className="cara-help" src={Filt6} />
+            <p className="legend">Choose the min or max of a subscription's videos</p>
+          </div>
+          <div>
+            <img  className="cara-help" src={Order1} />
             <p className="legend">Loading order - right side first</p>
           </div>
           <div>
-            <img src={Order2} />
+            <img  className="cara-help" src={Order2} />
             <p className="legend">Loading order </p>
           </div>
         </Carousel>
-      </div>
+      // </div>
     )
   }
 

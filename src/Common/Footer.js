@@ -19,7 +19,7 @@ export const Footer = () => {
       <div className="row">
         <div className="col l6 s12">
           <h5 className="white-text">Better Youtube</h5>
-          <p className="grey-text text-lighten-4">Created by Brodski</p>
+          <p className="grey-text text-lighten-4">by Chris Brodski</p>
         </div>
         <div className="col l4 offset-l2 s12">
           <h6 className="white-text">Info</h6>
