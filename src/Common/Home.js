@@ -15,7 +15,7 @@ function About() {
         <h1>About</h1>
         {/* <button className="btn " onClick={() => console.log(user)}> log user </button>
         <button className="btn " onClick={() => console.log(userSettings)}> log userSettings </button> */}
-        <p className="flow-text">Tired of Youtube being a disorganized mess? Tired of your subscribed channels that upload 30 second trailer vids when you only care about the full length video? 
+        <p className="flow-text">Tired of Youtube being a disorganized mess? Tired of channels that upload 30 second trailer vids when you only care about the full length video? 
         <br/><br/> Better Youtube solves that and lets you control your feed. 
           <br/><br/> Organize your subscriptions into groups and control the minimun/maximun duration required for a video to show up in your feed</p>
           <div className='divider'/>

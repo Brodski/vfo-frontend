@@ -87,8 +87,8 @@ const Contents = () => {
   <ul className="right sidenav hide-on-med-and-up" id="mobile-demo">
     {/* Show at top */}
     <li>
-      <div class="user-view">
-        <div class="background">
+      <div className="user-view">
+        <div className="background">
           {/* multi colors heavy shadow
           <img src={"https://www.vactualpapers.com/web/wallpapers/modern-material-design-full-hd-wallpaper-no-581/thumbnail/lg.png"} /> */}
           {/* Green depth  */}
@@ -99,9 +99,9 @@ const Contents = () => {
           {/* multi colors
           <img src={"https://lh6.ggpht.com/DTvbl6rnAQDxQFV38WfUrl70SwBXZLyAxAwe4lb01-OZlBGLYcVKn8WrMHe5Z6XjYACN=h900"} /> */}
         </div>
-        <div><img class="circle" src={user.pictureUrl}/> </div>
-        <div><span class="white-text email"> </span></div>
-        <div><span class="white-text email"> {user.username} </span></div>
+        <div><img className="circle" src={user.pictureUrl}/> </div>
+        <div><span className="white-text email"> </span></div>
+        <div><span className="white-text email"> {user.username} </span></div>
         
     
       </div>

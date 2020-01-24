@@ -5,7 +5,7 @@ import About from './Common/Home';
 import Nav from './Common/Nav';
 
 
-import { YoutubeNEW } from './Youtube/YoutubeNEW';
+import YoutubeNEW from './Youtube/YoutubeNEW';
 
 import { SettingsNEW } from './Settings/SettingsNEW';
 import { UserContext, UserSettingsContext, IsLoggedContext } from './Contexts/UserContext.js'
@@ -36,16 +36,22 @@ import moment from 'moment';
 // $ npm install --save node-sass
 // $ npm install --save human-format
 // $ npm install react-responsive-carousel --save
-//
+// $ npm install --save prop-types
+
+
+// linter
+// https://www.youtube.com/watch?v=SydnKbGc7W8 + https://stackoverflow.com/questions/46201647/prettier-airbnbs-eslint-config
+// Optionally: https://gist.github.com/bradtraversy/aab26d1e8983d9f8d79be1a9ca894ab4
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
+// 
 
 function App() {
 
   useEffect(() => {
     console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
-    initGApi()
+    //initGApi()
     //This is b/c adblock will block the googleapi script/link/cdn if its in the HTML
     const script = document.createElement("script");
     script.type = "text/javascript";
@@ -66,11 +72,11 @@ function App() {
       }
     });
   }, [])
-      
+       
   async function initGApi() {
   
     console.time("initGApi()")
-    let GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
+    const GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
     console.timeEnd("initGApi()")
     
     setIsLogged2(GApiAuth.isHeSignedIn())
@@ -89,7 +95,7 @@ function App() {
       window.location.reload(true);
     });
     
-    //if (GApiAuth.isHeSignedIn() && user.isDemo) {
+    // if (GApiAuth.isHeSignedIn() && user.isDemo) {
     //  console.log("Logged in: Should be doing fetch to server")
     //  //await ytLogic.loginAndSet(setUser, setUserSettings)
     //  let res = await ServerEndpoints.loginToBackend();
@@ -116,29 +122,30 @@ function App() {
     
 
   }
+
+ 
   
   const [user, setUser]                 = useState(Common.getMockUser())
   const [userSettings, setUserSettings] = useState(Common.getMockUser())
-  const [isLogged2, setIsLogged2]       = useState(false)
+  const [isLogged2, setIsLogged2] = useState(false)
   return (
     <Router>
-        <Switch>
-          <UserContext.Provider value={{ user, setUser }}>
+      <Switch>
+        <UserContext.Provider value={{ user, setUser }}>
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
-          <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
-            <Nav />
-            <Route path="/" exact component={YoutubeNEW} />
+            <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
+              <Nav />
+              <Route path="/" exact component={YoutubeNEW} />
 
-            <Route path="/about" component={About} />
-        
-            
-            <Route path="/customize" component={SettingsNEW} />
-            
-          </IsLoggedContext.Provider>
-          </UserSettingsContext.Provider>     
-          </UserContext.Provider>
-        </Switch>
-    </Router> 
+              <Route path="/about" component={About} />
+
+              <Route path="/customize" component={SettingsNEW} />
+
+            </IsLoggedContext.Provider>
+          </UserSettingsContext.Provider>
+        </UserContext.Provider>
+      </Switch>
+    </Router>
   );
 }
 

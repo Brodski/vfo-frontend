@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 
 import * as Common from '../BusinessLogic/Common';
 
@@ -34,7 +35,7 @@ export async function _getActivities(channel) {
 
 
 export async function _getThisUsersSubs(pageToken) {
-await check()
+  await check()
   return window.gapi.client.youtube.subscriptions.list({
     "part": "snippet",
     "maxResults": 50,

@@ -1,25 +1,17 @@
 import React from 'react';
 import moment from 'moment';
 import humanFormat from 'human-format';
+import PropTypes from 'prop-types';
+import {VideoRes} from '../Classes/FinalShelfs';
+
 //https://github.com/JsCommunity/human-format
 
-export const Video = (props) => {
-
-  let thumbnail, id, title, pubAt, viewCount, channelName, fromNowDate, vd_aux, vidDuration;
-  
-  //YT uses a 1 to 1.787 ratio for all their vids. The medium.url is 1 to 1.777
-  thumbnail   = props.video.snippet.thumbnails.medium.url
-  id          = props.video.id 
-  title       = props.video.snippet.title
-  channelName = props.video.snippet.channelTitle
-  fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
-  //solution to Premium yt vids
-  viewCount = formatViewCount()
-  vidDuration = formatVidLength()
+const Video = (props) => {
 
   function formatViewCount() {
+    let viewCount;
     if (props.video.statistics.viewCount) { 
-      viewCount   = humanFormat(parseInt(props.video.statistics.viewCount),{ decimals: 1 } ).replace(/\s/g,''); 
+      viewCount   = humanFormat(parseInt(props.video.statistics.viewCount, 10),{ decimals: 1 } ).replace(/\s/g,''); 
     } else {
       viewCount =""
     }
@@ -27,21 +19,38 @@ export const Video = (props) => {
   }
 
   function formatVidLength() {
-    vd_aux      = moment.duration(props.video.contentDetails.duration) //Convert iso8601 string to object
-    if (vd_aux.hours() > 0) {
-      vidDuration = vd_aux.hours() + ':' + vd_aux.minutes().toString().padStart(2,0) + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"   
+    let vDurAux        = moment.duration(props.video.contentDetails.duration) //Convert iso8601 string to object
+    let vidDuration;
+    if (vDurAux.hours() > 0) {
+      vidDuration = `${vDurAux.hours()}:${vDurAux.minutes().toString().padStart(2,0)}:${vDurAux.seconds().toString().padStart(2, 0)}` // if seconds == 3, then "03"   
+      // vidDuration = vDurAux.hours() + ':' + vDurAux.minutes().toString().padStart(2,0) + ':' + vDurAux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"   
     } else {
-      vidDuration = vd_aux.minutes() + ':' + vd_aux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"
+      vidDuration = `${vDurAux.minutes()}:${  vDurAux.seconds().toString().padStart(2, 0)}` // if seconds == 3, then "03"
     }
     return vidDuration
   }
+
+  Video.propTypes = {
+    video: PropTypes.isRequired,
+  }
   
+
+  let thumbnail   = props.video.snippet.thumbnails.medium.url
+  let id          = props.video.id 
+  let title       = props.video.snippet.title
+  
+  let channelName = props.video.snippet.channelTitle
+  let fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
+  // solution to Premium yt vids
+  let viewCount = formatViewCount()
+  let vidDuration = formatVidLength()
+
   if (props.video.id) {
     return (
       <li className="collection-item video col s12 m4 l3 xl2">
-        <a href={"https://www.youtube.com/watch?v=" + id} >
+        <a href={`https://www.youtube.com/watch?v=${id}`}>
           <div className="vid-thumbnail-wrap">
-            <img className="vid-thumnail" src={thumbnail} />
+            <img className="vid-thumnail" alt="video-thumbnail" src={thumbnail} />
             <span className="vid-timestamp"> {vidDuration} </span>
           </div>
         </a>
@@ -57,9 +66,8 @@ export const Video = (props) => {
 
     );
   }
-  else {
-    return (
+  return (
     <h4>  </h4>
-    )
-  }
+  )
 }
+export default Video

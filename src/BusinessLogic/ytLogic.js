@@ -7,6 +7,7 @@ import * as youtubeApi from "../HttpRequests/youtubeApi";
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import { User } from '../Classes/User';
+import * as Common from '../BusinessLogic/Common.js';
 
 /* Github: JS Client https://github.com/google/google-api-javascript-client
 * 
@@ -40,15 +41,35 @@ import { User } from '../Classes/User';
 
 // Returns - shelf[x].subscription[y].activity[z]
 export async function getActivitiesShelfs(shelfs) {
-  let allShelfs_Promises =[]
-  for (let sh of shelfs) {
-    const sh_Promises = sh.fewSubs.map(sub => youtubeApi._getActivities(sub.channelId))
-    allShelfs_Promises.push(sh_Promises)
-  }
-  return await Promise.all( allShelfs_Promises.map( shProm => Promise.all(shProm)) )  //https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
+  const allShelfsPromises =[]
+  shelfs.forEach( sh => {
+    const shPromises = sh.fewSubs.map(sub => youtubeApi._getActivities(sub.channelId))
+    allShelfsPromises.push(shPromises)
+  })
+  // for (let sh of shelfs) {
+  //   const shPromises = sh.fewSubs.map(sub => youtubeApi._getActivities(sub.channelId))
+  //   allShelfsPromises.push(shPromises)
+  // }
+  // return await Promise.all( allShelfsPromises.map( shProm => Promise.all(shProm)) )  // https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
+  return Promise.all( allShelfsPromises.map( shProm => Promise.all(shProm)) )  // https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
 }
 
-//export async function loginAndSet(setUser, setUserSettings) {
+ 
+export async function hackHelper() {
+  let count = 1
+  let isReady  = !GApiAuth.checkAll();
+  while ( isReady ) {
+    console.log('Hack Helper: Logged out?: ' + isReady + ' - ' + count)
+    await Common.sleep(100 * count)
+    count = count + 1
+    if (count > 40) {
+      count = count * 2
+      console.log("Hack Helper: Something went wrong :(  " + count)
+    }
+    isReady = !GApiAuth.checkAll()
+  }
+}
+// export async function loginAndSet(setUser, setUserSettings) {
 //  console.log("Logged in: Should be doing fetch to server")
 //  let res = await ServerEndpoints.loginToBackend();
 //  if (res.status > 199 && res.status < 300) {
@@ -73,10 +94,10 @@ export async function getActivitiesShelfs(shelfs) {
 //    })
 //    return u
 //  }
-//}
+// }
 
   
-//export async function processUserFromServer(res) {
+// export async function processUserFromServer(res) {
 
 //  let u = new User()
 //  let subzPromise = getAllSubs()
@@ -107,7 +128,7 @@ export async function getActivitiesShelfs(shelfs) {
 //    console.log(removedSubArr)
 //  }
 //  return u
-//}
+// }
 /*
   //Goes through every sub from the backend, if a sub does not match any subs from YT, then we found a sub that was removed from YT user.
   function checkForRemovedSubs(subsFromYt, subsFromBackend) {
@@ -157,13 +178,15 @@ export async function getActivitiesShelfs(shelfs) {
   }
 */
 export async function getAllSubs() {
-  var response = await youtubeApi._getThisUsersSubs()
+  let response = await youtubeApi._getThisUsersSubs()
   if (response.status < 200 || response.status > 299) {
     console.log("Error in response :( Status code: ", response.status)
     return
   }
   let allSubs = response.result.items
   while (response.result.nextPageToken) {
+    // Intended await. yt api can only get 50 subs per request
+    // eslint-disable-next-line no-await-in-loop
     response = await youtubeApi._getThisUsersSubs(response.result.nextPageToken)
     allSubs = !allSubs ? response.result.items : allSubs.concat(response.result.items)
   }
@@ -199,21 +222,30 @@ export async function getAllSubs() {
 // TODO Remove the double loop, use map and filter
 export function removeNonVideos(eachShelfsActs) {
 
-  let filteredShelfs = []
-  for (let shelf of eachShelfsActs) {
-    let fShelf = []
-    for (let act of shelf) {
-      if (act.status < 200 || act.status > 299 ) {
-          console.log("Not 200 for activity: " + act)
-          continue
-        }
-      const result = act.result.items.filter((item) => { 
+  const filteredShelfs = []
+  eachShelfsActs.forEach( shelf => {
+    const fShelf = []
+    shelf.forEach( act => {
+      if (act.status < 200 || act.status > 299 ) { 
+        return 
+      }
+      const result = act.result.items.filter( item => { 
         return item.contentDetails.upload 
       })
       fShelf.push(result)
-    }
+    })
     filteredShelfs.push(fShelf)
-  }
+  })
+  // for (let shelf of eachShelfsActs) {
+  //   let fShelf = []
+  //   for (let act of shelf) {
+  //     const result = act.result.items.filter((item) => { 
+  //       return item.contentDetails.upload 
+  //     })
+  //     fShelf.push(result)
+  //   }
+  //   filteredShelfs.push(fShelf)
+  // }
   return filteredShelfs
 
 }
@@ -258,43 +290,55 @@ function checkDurations(filt, vidDuration) {
   return false
 }
 
-//I'm sorry for this. I messed up ealier :(
+// I'm sorry for this. I messed up ealier :(
 export function beginFilter2(fShelfs) {
-  //console.log('+++++++++++ BEGIN FILTER ++++++++++++++')
-  //console.log('fShelfs')
-  //console.log(fShelfs)
-  //Go through every shelf's vid and find it's filter then apply it
-    for (let sh of fShelfs) {
-      for (let vid of sh.videos) {
-        for (let f of sh.filters) {
-          if (f.channelId == vid.snippet.channelId) {
-            let duration = moment.duration(vid.contentDetails.duration)
-            let isPass = checkDurations(f, duration.asMinutes())
+  // console.log('+++++++++++ BEGIN FILTER ++++++++++++++')
+  // console.log('fShelfs')
+  // console.log(fShelfs)
+  // Go through every shelf's vid and find it's filter then apply it
+  fShelfs.forEach( sh => {
+    sh.videos.forEach( vid => {
+      sh.filters.forEach( f => {
+          if (f.channelId === vid.snippet.channelId) {
+            const duration = moment.duration(vid.contentDetails.duration)
+            const isPass = checkDurations(f, duration.asMinutes())
             if (!isPass) {
-              /*
-              console.log('+++++++++++++++++')
-              console.log(vid.snippet.channelTitle + ' ' + vid.snippet.title)
-              console.log(vid.id)
-              console.log(vid)
-              
-              console.log("duration: " + duration.asMinutes())
-              console.log('min ', f.minDuration )
-              console.log('max ', f.maxDuration )
-              console.log('pass? ', isPass )
-              console.log('+++++++++++++++++') 
-              */
-              sh.videos = sh.videos.filter( v => v.id != vid.id)
-              
-              break
-            
+              sh.videos = sh.videos.filter( v => v.id !== vid.id)
+              return            
             }
           }
-        }
-      }
-  }
+        })
+      })
+  })
+  //   for (let sh of fShelfs) {
+  //     for (let vid of sh.videos) {
+  //       for (let f of sh.filters) {
+  //         if (f.channelId == vid.snippet.channelId) {
+  //           let duration = moment.duration(vid.contentDetails.duration)
+  //           let isPass = checkDurations(f, duration.asMinutes())
+  //           if (!isPass) {
+  //             /*
+  //             console.log('+++++++++++++++++')
+  //             console.log(vid.snippet.channelTitle + ' ' + vid.snippet.title)
+  //             console.log(vid.id)
+  //             console.log(vid)
+              
+  //             console.log("duration: " + duration.asMinutes())
+  //             console.log('min ', f.minDuration )
+  //             console.log('max ', f.maxDuration )
+  //             console.log('pass? ', isPass )
+  //             console.log('+++++++++++++++++') 
+  //             */
+  //             sh.videos = sh.videos.filter( v => v.id != vid.id)
+              
+  //             break
+            
+  //           }
+  //         }
+  //       }
+  //     }
+  // }
 }
-
-
 
 function orderdAndSplice(shelfsActs) {
     let orderedActs = shelfsActs.map(sh => {
@@ -315,23 +359,8 @@ function orderdAndSplice(shelfsActs) {
     return orderedActs
   }
 
-  
-function printShelfs(shelfsActs) {
-  let ilol = 0
-  for (let sh of shelfsActs) {
-    console.log('FETCH: ACTS SHELF ', ilol)
-    for (let s of sh) {
-      console.log(s.snippet.channelTitle + ' - ' + s.snippet.title)
-    }
-    ilol++
-  }
-}
 
-
-
-
-
-//export function getDemoSubs(user) {
+// export function getDemoSubs(user) {
 //  let isRecent = isUsedRecently(user)
 //  let shelfz;
 //  if (isRecent) {

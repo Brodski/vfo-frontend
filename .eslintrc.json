@@ -1,0 +1,50 @@
+//npx eslint src/App.js
+//npx eslint src/App.js
+//npx eslint src/App.js
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",        
+        "airbnb",
+        "prettier"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": { 
+        //TODO, this also
+        "no-console": "off",
+        //TODO, fix
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+
+        // "Use of operator assignment shorthand is a stylistic choice." https://eslint.org/docs/rules/operator-assignment
+        "operator-assignment": ["error", "never"],
+        // " [...] dangling underscores in identifiers is purely a convention and has no effect on performance, readability, or complexity. It's purely a preference."  https://eslint.org/docs/rules/no-underscore-dangle
+        //"no-underscore-dangle": ["error",  { "allow": ["_fetchActivities" ] }],
+        "no-underscore-dangle": ["error",  { "enforceInMethodNames": false }],
+
+        //"react/jsx-one-expression-per-line": ["error", {"allow": "single-child"}],
+        "react/jsx-one-expression-per-line": "off",
+        "jsx-a11y/click-events-have-key-events": "off",
+        "jsx-a11y/anchor-is-valid": "off",
+        "jsx-a11y/no-static-element-interactions": "off",
+
+        // momentjs documentation has lower case 'm'. I'll keep it consistent.
+        "new-cap": ["error", {"newIsCapExceptions": ["moment"]} ]
+    }
+}
