@@ -8,9 +8,9 @@ const SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
 const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localhost:8080
 
 
-//////////////////////////////////////////////////////////////////
-//////////////////     INITIALIZE CLIENT     /////////////////////
-//////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////
+// ////////////////     INITIALIZE CLIENT     /////////////////////
+// ////////////////////////////////////////////////////////////////
 /* Google Sign In For Web
  * https://developers.google.com/identity/sign-in/web/reference
  * 
@@ -20,7 +20,7 @@ const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localh
  * a Google account, get the user's current sign-in status, get specific data from the user's 
  * Google profile, request additional scopes, and sign out from the current account.
  */
-////////////////////////////////////////////////////////////////
+// //////////////////////////////////////////////////////////////
 
 export async function initGoogleAPI() {
   // Wait until googleApi is loaded: "script.src = "https://apis.google.com/js/client.js"
@@ -31,11 +31,11 @@ export async function initGoogleAPI() {
   console.log('=== 2 ===')
   await window.gapi.load("client:auth2", _initClient) 
     
-  //Wait until client is authenticated  
+  // Wait until client is authenticated  
   console.log('=== 3 ===')
   await waitForAuthLoad()
 
-  //Wait until GoogleAuth object is loaded
+  // Wait until GoogleAuth object is loaded
   console.log('=== 4 ===')
   
   GoogleAuth = await window.gapi.auth2.getAuthInstance(); 
@@ -44,6 +44,8 @@ export async function initGoogleAPI() {
 
 // "You can also now use gapi.client to perform authenticated requests."  instead of auth.init
 // https://developers.google.com/identity/sign-in/web/reference#example
+
+// eslint-disable-next-line no-underscore-dangle
 async function _initClient() {
   let discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
   await window.gapi.client.init({
@@ -96,16 +98,18 @@ export async function checkAll() {
 /////////////////////////////////////////////////////////////////
 
 export function login() {
-  if (GoogleAuth)
-    return GoogleAuth.signIn().then(function (res) {
+  if (GoogleAuth) {
+    return GoogleAuth.signIn().then( res => {
       console.log("Sign-in successful")
       return true
     })
       .catch(function (err) { console.error("Error signing in", err); });
+  }
 }
+
 export function logout() {
   if (GoogleAuth) {
-    return GoogleAuth.signOut().then(function (res) { 
+    return GoogleAuth.signOut().then( res => { 
         console.log("Sign-out successful");
         return true 
     })
@@ -117,10 +121,8 @@ export function isHeSignedIn() {
   if (GoogleAuth) {
     return GoogleAuth.isSignedIn.get()
   }
-  else {
-    console.log("GoogleAuth doesnt exist")
-    return false
-  }
+  console.log("GoogleAuth doesnt exist")
+  return false
 }
 
 export function getToken() {
@@ -130,9 +132,10 @@ export function getToken() {
   }
 }
 
-//////////////////////////////////////////////////////////
-///////////////////   helper stuff ///////////////////
-//////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////
+// /////////////////   helper stuff ///////////////////
+// ////////////////////////////////////////////////////////
+
 export function printInfo() {
   console.log("print Info")
   console.log("---------------------------------")
@@ -155,7 +158,7 @@ export function printInfo() {
   console.log(user.getId())
 }
 
-//https://developers.google.com/identity/sign-in/web/server-side-flow
+// https://developers.google.com/identity/sign-in/web/server-side-flow
 export function getAuthCodeForServerSideShit() {
   var user = GoogleAuth.currentUser.get()
   user.grantOfflineAccess({

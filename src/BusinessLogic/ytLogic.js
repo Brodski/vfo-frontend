@@ -340,6 +340,8 @@ export function beginFilter2(fShelfs) {
   // }
 }
 
+
+
 function orderdAndSplice(shelfsActs) {
     let orderedActs = shelfsActs.map(sh => {
       return sh.map(sub => {
@@ -360,7 +362,10 @@ function orderdAndSplice(shelfsActs) {
   }
 
 
-// export function getDemoSubs(user) {
+
+
+
+//export function getDemoSubs(user) {
 //  let isRecent = isUsedRecently(user)
 //  let shelfz;
 //  if (isRecent) {

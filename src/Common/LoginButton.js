@@ -8,13 +8,17 @@ const LoginButton = () => {
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
 
   return(    
-  <a className=" btn "
-    onClick={()=> {  isLogged2 ? GApiAuth.logout() : GApiAuth.login() }} 
-    >
-    <Icon path={mdiGoogle}
-      className="svg-mygoogle2"
-      size={1}/>
+    <a 
+      className=" btn "
+      onClick={()=> { isLogged2 ? GApiAuth.logout() : GApiAuth.login() }} 
+      >
+      <Icon
+        path={mdiGoogle}
+        className="svg-mygoogle2"
+        size={1}
+      />
       {isLogged2 ? "Logout": "Login"}
-  </a>) 
+    </a>
+) 
 }
 export default LoginButton

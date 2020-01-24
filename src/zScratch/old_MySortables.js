@@ -3,7 +3,7 @@ import { UserContext } from '../Contexts/UserContext.js'
 import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
 
 import * as GApiAuth from '../HttpRequests/GApiAuth'
-import { User } from '../Classes/User'
+//import { User } from '../Classes/User'
 import { Subscription } from '../Classes/Subscription'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 

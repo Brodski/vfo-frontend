@@ -1,7 +1,7 @@
 ﻿import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
-import { Filter } from '../Classes/Filter';
+import Filter from '../Classes/Filter';
 import { mdiTimelapse } from '@mdi/js'; 
 import Icon from '@mdi/react'
 //import Pic from './clock.png'

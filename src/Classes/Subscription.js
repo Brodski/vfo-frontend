@@ -1,9 +1,10 @@
-import { Filter } from './Filter'
+import Filter from './Filter'
 
-export class Subscription {
+class Subscription {
   constructor() {
     this.channelId = null;
     this.channelName = null;
     this.filter = new Filter();   
   }
 }
+export default Subscription

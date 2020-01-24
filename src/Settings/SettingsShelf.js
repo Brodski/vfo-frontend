@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
-import { FilterDialog } from '../Settings/FilterDialog';
+ import { FilterDialog } from '../Settings/FilterDialog';
 import { RenameDialog } from '../Settings/RenameDialog';
 import Sortable from 'sortablejs';
 import nextId  from "react-id-generator";

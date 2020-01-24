@@ -12,7 +12,7 @@ import { UserContext, UserSettingsContext, IsLoggedContext } from './Contexts/Us
 
 import * as GApiAuth from './HttpRequests/GApiAuth'
 import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
-import { User } from './Classes/User';
+import  User from './Classes/User';
 
 import * as Common                    from './BusinessLogic/Common.js';
 import * as ytLogic                     from './BusinessLogic/ytLogic.js'
@@ -51,8 +51,8 @@ function App() {
 
   useEffect(() => {
     console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
-    //initGApi()
-    //This is b/c adblock will block the googleapi script/link/cdn if its in the HTML
+    // initGApi()
+    // This is b/c adblock will block the googleapi script/link/cdn if its in the HTML
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://apis.google.com/js/client.js";

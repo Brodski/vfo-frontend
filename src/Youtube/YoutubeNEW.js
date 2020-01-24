@@ -7,14 +7,17 @@ import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
 import * as youtubeApi                  from "../HttpRequests/youtubeApi";
 import * as ServerEndpoints             from '../HttpRequests/ServerEndpoints.js'
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
-import { FinalShelfs, VideoRes }           from '../Classes/FinalShelfs'
-import { CustomShelf, VidCounter, User }    from '../Classes/User'
+import FinalShelfs           from '../Classes/FinalShelfs'
+import VideoResponse           from '../Classes/VideoResponse'
+//import { User }    from '../Classes/User'
+import VidCounter     from '../Classes/VidCounter'
+import CustomShelf    from '../Classes/CustomShelf'
 
-import { Subscription }                 from '../Classes/Subscription'
+import Subscription                 from '../Classes/Subscription'
 import  ShelfsMany                    from './ShelfsMany';
 
 import { ButtonsAuthDebug }             from '../Common/ButtonsAuthDebug';
-import { LoadingMain }                  from '../Common/LoadingMain';
+import LoadingMain                  from '../Common/LoadingMain';
 
 import axios from 'axios';
 import InfiniteScroll                 from 'react-infinite-scroller';
@@ -105,7 +108,7 @@ function YoutubeNEW() {
   function setFinalShelfAux(iData) {
     // if (!iData.shelfs[0].videos[0]) {
     //   // let emptyVid = { id: '' }
-    //   iData.shelfs[0].videos[0] = new VideoRes()
+    //   iData.shelfs[0].videos[0] = new VideoResponse()
     //   iData.shelfs[0].videos[0].id = ''
     // }
 
@@ -133,7 +136,7 @@ function YoutubeNEW() {
       return { "videos": shelfstuff[idx], "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
     })
     if (!injectShelfTitle[0].videos[0]) {
-      injectShelfTitle[0].videos[0] = new VideoRes()
+      injectShelfTitle[0].videos[0] = new VideoResponse()
       injectShelfTitle[0].videos[0].id = ''
     }
     return { shelfs: injectShelfTitle }

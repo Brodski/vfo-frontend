@@ -3,19 +3,19 @@ import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js'
 import {  } from '../Contexts/UserContext.js'
 import { ButtonsAuthDebug } from '../Common/ButtonsAuthDebug';
-import {Footer} from '../Common/Footer';
+import Footer from '../Common/Footer';
 import { AllShelfs } from '../Settings/SettingsAllShelfs';
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
 import * as ytLogic                     from '../BusinessLogic/ytLogic.js'
 import * as Common                      from '../BusinessLogic/Common'
 import { PostSave }                     from '../Settings/PostSave';
-import { LoadingMain }                  from '../Common/LoadingMain';
+import LoadingMain                  from '../Common/LoadingMain';
 
 import Sortable2 from 'sortablejs';
 import * as SettingsLogic from '../BusinessLogic/SettingsLogic'
 
-import { CustomShelf } from '../Classes/User'
+// import { CustomShelf } from '../Classes/User'
 import {HowTo} from './HowTo'
 // import Pic1 from './action1.jpg'
 // import Pic2 from './action2.jpg'

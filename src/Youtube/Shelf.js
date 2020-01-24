@@ -14,9 +14,9 @@ const Shelf = props => {
     numVids: PropTypes.arrayOf(PropTypes.object).isRequired,
     shelf: PropTypes.shape({
 
-      filters: PropTypes.object.isRequired,
+      filters: PropTypes.array.isRequired,
       title: PropTypes.string.isRequired,
-      videos: PropTypes.object.isRequired,
+      videos: PropTypes.array.isRequired,
 
     }).isRequired,
 

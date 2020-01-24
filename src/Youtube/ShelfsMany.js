@@ -2,7 +2,9 @@ import React from 'react'
 import { Video } from './Video'
 import Shelf from './Shelf'
 import nextId  from "react-id-generator";
-import { LoadingMain }   from '../Common/LoadingMain';
+import LoadingMain   from '../Common/LoadingMain';
+import PropTypes from 'prop-types';
+
 
 const ShelfsMany = props => {
 
@@ -12,22 +14,33 @@ const ShelfsMany = props => {
   console.log(props)
   console.log('%%%%%%%%%%%%%%%%%% END ALL SHELFS %%%%%%%%%%%%%%%%%%')
   
+  ShelfsMany.propTypes = {
+    setNumVids: PropTypes.func.isRequired,
+    numVids: PropTypes.arrayOf(PropTypes.object).isRequired,
+    shelfs: PropTypes.arrayOf(PropTypes.object).isRequired,
+    hasMore: PropTypes.bool.isRequired,
+
+  }
+
+  const {shelfs, numVids, setNumVids, hasMore} = props
+
+
   return (
     <div> 
-      {props.shelfs.map( (sh, idx) => {
+      {shelfs.map( (sh, idx) => {
         return (
           <div key={nextId('shelfid-')} className=" yt-shelf-outer-wrap ">
             <Shelf 
               shelf={sh} 
-              numVids={props.numVids} 
-              setNumVids={props.setNumVids} 
+              numVids={numVids} 
+              setNumVids={setNumVids} 
               shelfIdx={idx} 
             />
             <div className='div-aux' />
           </div>
           )
         })}
-        {props.hasMore ? null : <LoadingMain/> }
+      {hasMore ? null : <LoadingMain />}
     </div>
   
   )

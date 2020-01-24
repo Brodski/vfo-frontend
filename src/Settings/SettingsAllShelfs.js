@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, Fragment } from 'react';
 import {SettingsShelf} from '../Settings/SettingsShelf';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
-import { User, CustomShelf } from '../Classes/User'
+import CustomShelf  from '../Classes/CustomShelf'
 import { rename } from 'fs';
 import { RenameDialog } from './RenameDialog';
 import nextId  from "react-id-generator";

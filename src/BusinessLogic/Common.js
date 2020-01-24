@@ -1,5 +1,6 @@
-import { Subscription } from '../Classes/Subscription';
-import { User, CustomShelf } from '../Classes/User';
+import Subscription from '../Classes/Subscription';
+import User from '../Classes/User';
+import CustomShelf from '../Classes/CustomShelf'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
 
@@ -51,7 +52,7 @@ export async function processUserFromServer(res) {
     u.username = res.data.username
     u.isDemo = false
 
-    //Below: Sync subs from the User's YT account and this app's database.
+    // Below: Sync subs from the User's YT account and this app's database.
     let newSubs = checkForNewSubs(await subzPromise, res.data)
     let removedSubArr = checkForRemovedSubs(await subzPromise, res.data)
     u.addArrayOfSubs(newSubs)
@@ -71,7 +72,7 @@ export async function processUserFromServer(res) {
 
 
 
-  //Goes through every sub from the backend, if a sub does not match any subs from YT, then we found a sub that was removed from YT user.
+  // Goes through every sub from the backend, if a sub does not match any subs from YT, then we found a sub that was removed from YT user.
   function checkForRemovedSubs(subsFromYt, subsFromBackend) {
   
     let removedSubs = []
@@ -80,43 +81,70 @@ export async function processUserFromServer(res) {
     subsFromBackend.customShelfs.map(sh => {
       allBackendSubz.push(...sh.fewSubs)
     })
-    for (let backS of allBackendSubz) {
+    allBackendSubz.forEach( backS => {
       doesMatches = false
-      for (let ytS of subsFromYt) {
-        if (ytS.snippet.resourceId.channelId == backS.channelId) {
+      subsFromYt.forEach( ytS => {
+        if (ytS.snippet.resourceId.channelId === backS.channelId) {
           doesMatches = true
-          break
+          return
         }
-      }
-      //if this sub from backend doesnt exist in subsFrom Yt, then it was removed
+      })
+      // if this sub from backend doesnt exist in subsFrom Yt, then it was removed
       if (!doesMatches) {
         removedSubs.push(backS)
       }
-    }
+    } )
+    // for (let backS of allBackendSubz) {
+    //   doesMatches = false
+    //   for (let ytS of subsFromYt) {
+    //     if (ytS.snippet.resourceId.channelId == backS.channelId) {
+    //       doesMatches = true
+    //       break
+    //     }
+    //   }
+    //   //if this sub from backend doesnt exist in subsFrom Yt, then it was removed
+    //   if (!doesMatches) {
+    //     removedSubs.push(backS)
+    //   }
+    // }
 
     return removedSubs
   }
 
-  //TODO could be cleaner, pretty confusing.
-  //Goes through every sub from YT, if a sub does not match any subs from the backend, then we found a new sub.
+  // TODO could be cleaner, pretty confusing.
+  // Goes through every sub from YT, if a sub does not match any subs from the backend, then we found a new sub.
   function checkForNewSubs(subsFromYt, subsFromBackend) {     
     let newSubs = []
-    for (let ytS of subsFromYt) {
+    subsFromYt.forEach( ytS => {
       let doesMatches = false;
-      for (let uSh of subsFromBackend.customShelfs) {
-        for (let sub of uSh.fewSubs) {
-          if (ytS.snippet.resourceId.channelId == sub.channelId) {
+      subsFromBackend.customShelfs.forEach( uSh => {
+        uSh.fewSubs.forEach( sub => {
+          if (ytS.snippet.resourceId.channelId === sub.channelId) {
             doesMatches = true;
-            break
+            return
           }
-        }
-      }
-      if (doesMatches == false) {
+        })
+      })
+      if (!doesMatches ) {
         newSubs.push(ytS)
       }
-    }
+      })
     return newSubs
   }
+  // for (let ytS of subsFromYt) {
+  //   let doesMatches = false;
+  //   for (let uSh of subsFromBackend.customShelfs) {
+  //     for (let sub of uSh.fewSubs) {
+  //       if (ytS.snippet.resourceId.channelId == sub.channelId) {
+  //         doesMatches = true;
+  //         break
+  //       }
+  //     }
+  //   }
+  //   if (doesMatches == false) {
+  //     newSubs.push(ytS)
+  //   }
+  // }
 
 
 export function getMockUser() {
@@ -127,9 +155,9 @@ export function getMockUser() {
   u.isDemo = true;
   
   
-  /////////////////////////////////////////////////////////////
-  ////////////             Movies & Stiff             /////////////
-  /////////////////////////////////////////////////////////////
+  //  /////////////////////////////////////////////////////////////
+  //  ////////////             Movies & Stiff             /////////
+  //  /////////////////////////////////////////////////////////////
 
 
   let uSubM = new Subscription()
@@ -158,9 +186,9 @@ export function getMockUser() {
   cShelfM.isSorted = true;
   u.customShelfs.push(cShelfM)
 
-  /////////////////////////////////////////////////////////////
-  ////////////             KPOP              /////////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             KPOP              /////////////
+  // ///////////////////////////////////////////////////////////
 
   let uSubKpop = new Subscription()
   uSubKpop.channelName = "jypentertainment"
@@ -192,9 +220,9 @@ export function getMockUser() {
   cShelfK.isSorted = true;
   u.customShelfs.push(cShelfK)
   
-  /////////////////////////////////////////////////////////////
-  ////////////             Music             /////////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             Music             /////////////
+  // ///////////////////////////////////////////////////////////
   
   // let uSubMusic = new Subscription()
   // uSubMusic.channelName = 'Jhené Aiko'
@@ -224,9 +252,9 @@ export function getMockUser() {
   // cShelfMusic.isSorted = true;
   // u.customShelfs.push(cShelfMusic)  
 
-  /////////////////////////////////////////////////////////////
-  ////////////             More Music              /////////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             More Music              /////////////
+  // ///////////////////////////////////////////////////////////
 
   
   // let uSubMusic5 = new Subscription()
@@ -289,9 +317,9 @@ export function getMockUser() {
   // uSubMusic4.filter.channelId = "UC4eYXhJI4-7wSWc8UNRwD4A";
   // uSubMusic4.filter.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
 
-  /////////////////////////////////////////////////////////////
-  ////////////             Cool stuff             /////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             Cool stuff             /////////////
+  // ///////////////////////////////////////////////////////////
 
   let uSubStuff = new Subscription()
   uSubStuff.channelName = 'The Atlantic'
@@ -309,9 +337,9 @@ export function getMockUser() {
   cShelfCool.isSorted = true;
   u.customShelfs.push(cShelfCool)
   
-  /////////////////////////////////////////////////////////////
-  ////////////             Late Night             /////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             Late Night             /////////
+  // ///////////////////////////////////////////////////////////
 
   let uSubNight = new Subscription()
   uSubNight.channelName = 'LastWeekTonight'
@@ -336,9 +364,9 @@ export function getMockUser() {
 
   u.customShelfs.push(cShelfNight)
   
-  /////////////////////////////////////////////////////////////
-  ////////////             Scince N stuff             /////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             Scince N stuff             /////////
+  // ///////////////////////////////////////////////////////////
 
   let uSubSci = new Subscription()
   uSubSci.channelName = '3Blue1Brown'
@@ -372,9 +400,9 @@ export function getMockUser() {
   cShelfSci.isSorted = true;
   u.customShelfs.push(cShelfSci)
   
-  /////////////////////////////////////////////////////////////
-  ////////////             Longer stuff              /////////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             Longer stuff              /////////////
+  // ///////////////////////////////////////////////////////////
   
     
   let subTalk = new Subscription()
@@ -414,9 +442,9 @@ export function getMockUser() {
   u.customShelfs.push(cShelfTalk)
 
   
-  /////////////////////////////////////////////////////////////
-  ////////////             new & politics             /////////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             new & politics             /////////////
+  // ///////////////////////////////////////////////////////////
 
   // let sub1 = new Subscription()
   // sub1.channelName = "The Hill"
@@ -453,9 +481,9 @@ export function getMockUser() {
   
 
 
-  /////////////////////////////////////////////////////////////
-  ////////////             Hot Babes              /////////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             Hot Babes              /////////////
+  // ///////////////////////////////////////////////////////////
 
   // let subHot = new Subscription()
   // subHot.channelName = "Video Box"
@@ -486,9 +514,9 @@ export function getMockUser() {
 
 
     
-  /////////////////////////////////////////////////////////////
-  ////////////             ??????????????             /////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             ??????????????             /////////
+  // ///////////////////////////////////////////////////////////
 
   let uSubx = new Subscription()
   uSubx.channelName = 'Google Developers'
@@ -531,9 +559,9 @@ export function getMockUser() {
 
   return u;
   
-  /////////////////////////////////////////////////////////////
-  ////////////             Playlist              /////////////
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
+  // //////////             Playlist              /////////////
+  // ///////////////////////////////////////////////////////////
 
   // let uSubStuff = new Subscription()
   // uSubStuff.channelName = 'RnB Motion'
@@ -556,7 +584,7 @@ export function getMockUser() {
   // sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";
   // sub3.filter.channelId = "UC0CeYMTh57zSsbUKhsyOPfw"
 
-  /////////////////////////////////////////////////////////////
+  // ///////////////////////////////////////////////////////////
 
 
   // let cShelf2 = new CustomShelf()

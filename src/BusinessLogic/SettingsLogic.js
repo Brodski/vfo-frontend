@@ -1,25 +1,25 @@
-import { CustomShelf } from '../Classes/User'
+import CustomShelf from '../Classes/CustomShelf'
 
-//Debug button
+// Debug button
 export function logAllShelfs() {
-  var shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
+  let shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
   console.log('-----------shelfs-----------')
   console.log(shelfs)
 
-  for (let i = 0; i < shelfs.length; i++) {
+  for (let i = 0; i < shelfs.length; i = i + 1) {
     console.log(`${i} ++ Shelf ++`)
     for (let sub of shelfs[i].querySelectorAll('.sub-QHack')) {
-    console.log(sub)
-    console.log(sub.dataset)
-    console.log(sub.id)
-    console.log(sub.textContent)
+      console.log(sub)
+      console.log(sub.dataset)
+      console.log(sub.id)
+      console.log(sub.textContent)
     }
   } 
 }
 
 //Debug button
 export function logIds() { 
-  var shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
+  let shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
   console.log('----------- I D S -----------')
   console.log(shelfs)
   for (let i = 0; i < shelfs.length; i++) {
@@ -35,16 +35,19 @@ export function queryShelfs(userSettings, allowEmpty = false) {
   //Loop though each shelf and each item on shelf
   
   let newCustomShelfs = []
-  let shelfsQ = [].slice.call(document.querySelectorAll('.sh-QHack'));
-  for (let i = 0; i < shelfsQ.length; i++) {
+  let shelfsQ = [].slice.call(document.querySelectorAll('.sh-QHack')); 
+  for (let i = 0; i < shelfsQ.length; i = i + 1) {
     let tempShelf = new CustomShelf()
     tempShelf.title = shelfsQ[i].dataset.name
 
     tempShelf.isSorted = (shelfsQ[i].dataset.issorted == 'true')
 
-    for (let sub of shelfsQ[i].querySelectorAll('.sub-QHack')) {
+     
+     // eslint-disable-next-line no-restricted-syntax
+     for (let sub of shelfsQ[i].querySelectorAll('.sub-QHack')) {
+    //shelfsQ[i].querySelectorAll('.sub-QHack').array.forEach( sub => {
       let idxs = _findSubIndex(sub.dataset.name, userSettings)
-      let tempSub = userSettings.customShelfs[idxs.shelf_Index].fewSubs[idxs.sub_Index]
+      let tempSub = userSettings.customShelfs[idxs.shelfIndex].fewSubs[idxs.subIndex]
       tempShelf.fewSubs.push(tempSub)
     }
     if (allowEmpty) { 
@@ -57,12 +60,16 @@ export function queryShelfs(userSettings, allowEmpty = false) {
   return newCustomShelfs
 }
 
+// eslint-disable-next-line no-underscore-dangle
 function _findSubIndex(chName, userSettings) {
-  let sub_Index, shelf_Index = 0;
-  for (let sh of userSettings.customShelfs) {
-    sub_Index = sh.fewSubs.findIndex(s => s.channelName == chName) 
-    if (sub_Index > -1) { break }
-    shelf_Index += 1;
+  let subIndex;
+  let shelfIndex = 0;
+   // eslint-disable-next-line no-restricted-syntax
+   for (let sh of userSettings.customShelfs) {
+  // userSettings.customShelfs.forEach( sh => {
+    subIndex = sh.fewSubs.findIndex(s => s.channelName === chName) 
+    if (subIndex > -1) { break }
+    shelfIndex = shelfIndex + 1;
   }
-  return { shelf_Index, sub_Index }
+  return { shelfIndex, subIndex }
 }

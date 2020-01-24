@@ -1,10 +1,12 @@
+/* eslint-disable prefer-destructuring */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import moment from 'moment';
 import humanFormat from 'human-format';
 import PropTypes from 'prop-types';
-import {VideoRes} from '../Classes/FinalShelfs';
+//import VideoResponse from '../Classes/FinalShelfs';
 
-//https://github.com/JsCommunity/human-format
+// https://github.com/JsCommunity/human-format
 
 const Video = (props) => {
 
@@ -31,10 +33,27 @@ const Video = (props) => {
   }
 
   Video.propTypes = {
-    video: PropTypes.isRequired,
+    video: PropTypes.shape({
+     contentDetails: PropTypes.object.isRequired,
+     id: PropTypes.string.isRequired,
+     snippet: PropTypes.object.isRequired,
+     statistics: PropTypes.object.isRequired, 
+    }).isRequired
   }
-  
+  // const { video: {
+  //         id,
+  //         snippet: {  
+  //           title,
+  //           thumbnail: {
+  //               medium: {
+  //                 url: thumbnail
+  //               }
+  //             }
+  //           }
+  //         }             
+  //       } = props
 
+  // The destructuring of 3 variables (thumbnail, id, and title) is above. No way is that more readable. The performance gained is negligible. Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
   let thumbnail   = props.video.snippet.thumbnails.medium.url
   let id          = props.video.id 
   let title       = props.video.snippet.title
@@ -45,7 +64,7 @@ const Video = (props) => {
   let viewCount = formatViewCount()
   let vidDuration = formatVidLength()
 
-  if (props.video.id) {
+  if (id) {
     return (
       <li className="collection-item video col s12 m4 l3 xl2">
         <a href={`https://www.youtube.com/watch?v=${id}`}>

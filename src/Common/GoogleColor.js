@@ -3,7 +3,8 @@ import React from 'react';
 const GoogleColor = () => {
 
   return(
-    <svg className="svg-googlecolor" 
+    <svg
+      className="svg-googlecolor" 
       xmlns="http://www.w3.org/2000/svg"  
       viewBox="0 0 48 48" 
       height="70%">
