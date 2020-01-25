@@ -36,7 +36,7 @@
         "operator-assignment": ["error", "never"],
         // " [...] dangling underscores in identifiers is purely a convention and has no effect on performance, readability, or complexity. It's purely a preference."  https://eslint.org/docs/rules/no-underscore-dangle
         //"no-underscore-dangle": ["error",  { "allow": ["_fetchActivities" ] }],
-        "no-underscore-dangle": ["error",  { "enforceInMethodNames": false }],
+        "no-underscore-dangle": "off",
 
         //"react/jsx-one-expression-per-line": ["error", {"allow": "single-child"}],
         "react/jsx-one-expression-per-line": "off",
@@ -50,6 +50,10 @@
         "react/jsx-fragments": ["error", "element"],
 
         // momentjs documentation has lower case 'm'. I'll keep it consistent.
-        "new-cap": ["error", {"newIsCapExceptions": ["moment"]} ]
+        "new-cap": ["error", {"newIsCapExceptions": ["moment"]} ],
+
+        //
+        "no-await-in-loop": "off"
+
     }
 }

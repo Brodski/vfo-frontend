@@ -11,13 +11,17 @@ const Shelf = props => {
   Shelf.propTypes = {
     shelfIdx: PropTypes.number.isRequired,
     setNumVids: PropTypes.func.isRequired,
-    numVids: PropTypes.arrayOf(PropTypes.object).isRequired,
-    shelf: PropTypes.shape({
+    //numVids: PropTypes.arrayOf(PropTypes.object).isRequired,
 
+    numVids: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.arrayOf(PropTypes.object)
+    ]).isRequired,
+
+    shelf: PropTypes.shape({
       filters: PropTypes.array.isRequired,
       title: PropTypes.string.isRequired,
       videos: PropTypes.array.isRequired,
-
     }).isRequired,
 
   }

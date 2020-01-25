@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, createContext, Fragment } from 'react';
 import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js';
 
-import * as Common                    from '../BusinessLogic/Common.js';
+// import * as Common                    from '../BusinessLogic/Common.js';
 
 import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
 import * as youtubeApi                  from "../HttpRequests/youtubeApi";
@@ -18,7 +18,8 @@ import  ShelfsMany                    from './ShelfsMany';
 
 import { ButtonsAuthDebug }             from '../Common/ButtonsAuthDebug';
 import LoadingMain                  from '../Common/LoadingMain';
-
+//import Common                    from '../BusinessLogic/Common.js';
+import * as Common                    from '../BusinessLogic/Common.js';
 import axios from 'axios';
 import InfiniteScroll                 from 'react-infinite-scroller';
 import nextId  from "react-id-generator";
@@ -90,16 +91,13 @@ function YoutubeNEW() {
   async function _fetchActivities() {
 
     let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, pageLength))
+
     shelfsActs = ytLogic.removeNonVideos(shelfsActs)
     // TODO: follow up logic for orderdAndSplice(shelfsActs)
 
     // Returns - shelf[x].Activity[z]
     shelfsActs = shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
-    
-    // Arbitrary number (max 50) (see youtube's Video api)
-    const fetchThisManyVideosPerShelf = 35 
-    shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
 
     return shelfsActs
 
@@ -145,6 +143,10 @@ function YoutubeNEW() {
   // eslint-disable-next-line no-underscore-dangle
   async function _fetchVideos(shelfsActs) {
 
+    // Arbitrary number (max 50) (see youtube's Video api)
+    const fetchThisManyVideosPerShelf = 35 
+    shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
+
     let shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
 
@@ -155,7 +157,8 @@ function YoutubeNEW() {
   }
 
   const fetchMoreSubs = async () => {
-    console.log(" xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
+
+    console.log("xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
     console.log(user)
 
     if (isEndReached()) { 

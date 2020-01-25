@@ -1,6 +1,7 @@
  /* eslint-disable no-underscore-dangle */
 
 import * as Common from '../BusinessLogic/Common';
+// import Common                    from '../BusinessLogic/Common.js';
 
 
 export async function check(gapiObj, gapiString) {

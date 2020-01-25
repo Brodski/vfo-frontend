@@ -7,7 +7,9 @@ import * as youtubeApi from "../HttpRequests/youtubeApi";
 import  * as GApiAuth from '../HttpRequests/GApiAuth';
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import { User } from '../Classes/User';
-import * as Common from '../BusinessLogic/Common.js';
+ import * as Common from '../BusinessLogic/Common.js';
+// import Common                    from '../BusinessLogic/Common.js';
+
 
 /* Github: JS Client https://github.com/google/google-api-javascript-client
 * 
@@ -257,10 +259,10 @@ export function extractIds(shelf) {
 }
 
 export async function fetchVideos(shelfsVidIds) {
-    const vidIdShelf_Promise = shelfsVidIds.map(sh => {
+    const vidIdShelfPromise = shelfsVidIds.map(sh => {
       return youtubeApi.getSomeVideos(sh)
     })
-    return await Promise.all(vidIdShelf_Promise)
+    return Promise.all(vidIdShelfPromise)
 }
 
 // Returns all the activies in a single array (shelf)

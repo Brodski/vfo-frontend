@@ -1,4 +1,6 @@
-import * as Common from '../BusinessLogic/Common';
+// import * as Common from '../BusinessLogic/Common';
+//import Common                    from '../BusinessLogic/Common.js';
+import * as Common                    from '../BusinessLogic/Common.js';
 
 import { SECRET_KEYS } from '../api-key';
 import axios from 'axios';
@@ -62,6 +64,7 @@ async function waitForGApiLoad() {
   while (!window.gapi) {
     wait = wait * 2
     console.log("GApi 1 :( GApi NOT EXISTS ");
+    
     await Common.sleep(wait)
   }
   console.log("GApi 1 :) GApi EXISTS ");
