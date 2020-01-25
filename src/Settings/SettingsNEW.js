@@ -34,6 +34,7 @@ import { Carousel } from 'react-responsive-carousel';
 /////////////////////////////////////////////////////////////////////////////////////////////
 
 
+// eslint-disable-next-line import/prefer-default-export
 export const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
@@ -87,12 +88,25 @@ async function initPage2() {
     let auxNewCustomShelfs = newCustomShelfs.filter( sh => sh.isSorted)
     let yourSubscriptionsShelf = newCustomShelfs.filter( sh => !sh.isSorted)[0]
 
+    // push all the subs (converted to shelfs) on the left container to the end of all the other of the shelfs on the right
     if (yourSubscriptionsShelf) {
       let converted = yourSubscriptionsShelf.convertAllSubsToShelfs()
       auxNewCustomShelfs.push(...converted)
       newSet.customShelfs = auxNewCustomShelfs
     }
     if (!user.isDemo) {
+      console.log("SAVING THIS NEW SETTING TO BACKEND!!! ")
+
+      console.log('newSet')
+      console.log(newSet)
+      console.log('auxNewCustomShelfs')
+      console.log(auxNewCustomShelfs)
+      console.log('yourSubscriptionsShelf')
+      console.log(yourSubscriptionsShelf)
+      newSet.customShelfs = newSet.customShelfs.filter( sh =>  sh.fewSubs[0] )
+      console.log('poopy')
+      console.log(newSet)
+
       ServerEndpoints.saveUser(newSet)
     }
     setAndManageData(auxNewCustomShelfs)

@@ -9,10 +9,10 @@ import PropTypes from 'prop-types';
 const ShelfsMany = props => {
 
 
-  console.log('%%%%%%%%%%%%%%%%%% TOP ALL SHELFS %%%%%%%%%%%%%%%%%%')
-  console.log("PROPS.SHELFS")
-  console.log(props)
-  console.log('%%%%%%%%%%%%%%%%%% END ALL SHELFS %%%%%%%%%%%%%%%%%%')
+  // console.log('%%%%%%%%%%%%%%%%%% TOP ALL SHELFS %%%%%%%%%%%%%%%%%%')
+  // console.log("PROPS.SHELFS")
+  // console.log(props)
+  // console.log('%%%%%%%%%%%%%%%%%% END ALL SHELFS %%%%%%%%%%%%%%%%%%')
   
   ShelfsMany.propTypes = {
     setNumVids: PropTypes.func.isRequired,

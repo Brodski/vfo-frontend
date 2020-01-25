@@ -36,7 +36,14 @@ export function queryShelfs(userSettings, allowEmpty = false) {
   
   let newCustomShelfs = []
   let shelfsQ = [].slice.call(document.querySelectorAll('.sh-QHack')); 
+  console.log('shelfsQ')
+  console.log('shelfsQ')
+  console.log('shelfsQ')
+  console.log('shelfsQ')
+  console.log(shelfsQ)
   for (let i = 0; i < shelfsQ.length; i = i + 1) {
+    console.log('shelfsQ[i].dataset.name')
+    console.log(shelfsQ[i].dataset.name)
     let tempShelf = new CustomShelf()
     tempShelf.title = shelfsQ[i].dataset.name
 
@@ -46,6 +53,8 @@ export function queryShelfs(userSettings, allowEmpty = false) {
      // eslint-disable-next-line no-restricted-syntax
      for (let sub of shelfsQ[i].querySelectorAll('.sub-QHack')) {
     //shelfsQ[i].querySelectorAll('.sub-QHack').array.forEach( sub => {
+      console.log('sub-qhack sub ' + i)
+      console.log(sub)
       let idxs = _findSubIndex(sub.dataset.name, userSettings)
       let tempSub = userSettings.customShelfs[idxs.shelfIndex].fewSubs[idxs.subIndex]
       tempShelf.fewSubs.push(tempSub)

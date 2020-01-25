@@ -29,21 +29,27 @@ import * as moment from 'moment';
 import { mdiProgressUpload } from '@mdi/js';
 import M from 'materialize-css'
 
-//UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
+// UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 // react infinite scroll https://github.com/CassetteRocks/react-infinite-scroller#readme
-// simpe react pagation https://codepen.io/grantdotlocal/pen/zReNgE
+// simple react pagation https://codepen.io/grantdotlocal/pen/zReNgE
 function YoutubeNEW() {
 
   let prevPage;
   const spamLimit = 25;
   let spamCount = 0;
-  
+  const PAGE_GROWTH = 4;
+  const INITIAL_PAGE_LENGTH = 3
+
+  // fuction setPrevPage(x){
+  //   prevPage = x
+  // }
   // At start, there are no shelfs, thus we have no more shelfs
   const [isMoreShelfs, setIsMoreShelfs] = useState(false); 
   const { user, setUser } = useContext(UserContext);
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
-  const [pageLength, setPageLength] = useState(1);
+  const [pageLength, setPageLength] = useState(INITIAL_PAGE_LENGTH);
+  const [prevPage2, setPrevPage2] = useState(0);
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
   const [numVids, setNumVids] = useState([new VidCounter()]) // {vids: 0, shelfId: '' 
   const [isFirst, setIsFirst] = useState(true)
@@ -57,10 +63,27 @@ function YoutubeNEW() {
   
   function isEndReached() {
     let isEnd = false;
-    if (spamCount > spamLimit || pageLength > user.customShelfs.length) {
+    if (isFirst){
+      console.log("FIRST!!!!!!")
+      console.log("FIRST!!!!!!")
+      console.log("FIRST!!!!!!")
+      console.log("FIRST!!!!!!")
+      return isEnd
+    }
+    console.log("IS END REACHED???")
+    console.log("IS END REACHED???")
+    console.log("IS END REACHED???")
+    console.log("IS END REACHED???")
+    console.log(pageLength > user.customShelfs.length)
+    console.log( prevPage2 === user.customShelfs.length)
+    if ( spamCount > spamLimit 
+        || pageLength > user.customShelfs.length 
+        || prevPage2 >= user.customShelfs.length) {
       console.log('\n\n\n\nbro you reached the limit\n\n\n')
+      console.log('prevPage2: ', prevPage2)
       console.log('pageLength : ', pageLength)
       console.log('user.customShelfs.length: ', user.customShelfs.length)
+      
       isEnd = true
     }
     return isEnd
@@ -79,18 +102,33 @@ function YoutubeNEW() {
 
     if (isFirst) {  
       putUnsortedShelfAtBottom() 
+      //prevPage = 0
     }
     // instantly halt any possible room for multi fetches
     setIsMoreShelfs(false) 
-    prevPage = pageLength - 1
+    //prevPage = pageLength < PAGE_GROWTH ? 0 : pageLength - PAGE_GROWTH
+    //prevPage = pageLength - PAGE_GROWTH
+
     await ytLogic.hackHelper()
   }
 
   
-  // eslint-disable-next-line no-underscore-dangle
+  
   async function _fetchActivities() {
 
-    let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, pageLength))
+    let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, calcShelfSlice() ))
+    
+    // if ( user.customShelfs.length <= pageLength ) {
+    //   console.log("FETCH ACTIVITES TRUE: " )
+    //   console.log(user.customShelfs.length)
+    //   console.log(pageLength)
+    //   shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, user.customShelfs.length  + 1))
+    // } else {
+    //   console.log("FETCH ACTIVITES FALSE: " )
+    //   console.log(user.customShelfs.length)
+    //   console.log(pageLength)
+    //   shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, pageLength))
+    // }
 
     shelfsActs = ytLogic.removeNonVideos(shelfsActs)
     // TODO: follow up logic for orderdAndSplice(shelfsActs)
@@ -103,34 +141,68 @@ function YoutubeNEW() {
 
   }
   
+  function isNothingLoadedYet(){
+    return (finalShelfs.shelfs[0].videos[0].id == null)
+  }
+  
   function setFinalShelfAux(iData) {
-    // if (!iData.shelfs[0].videos[0]) {
-    //   // let emptyVid = { id: '' }
-    //   iData.shelfs[0].videos[0] = new VideoResponse()
-    //   iData.shelfs[0].videos[0].id = ''
-    // }
-
     // TODO clean this slop 
-    setFinalShelfs(prevShs => {
+    // setFinalShelfs(prevShs => {
+    //     let newS = { ...prevShs }
+    //     if (prevPage === 0) {
+    //       for (let i = 0; i < pageLength; i = i + 1) {
+    //         newS.shelfs[prevPage + i] = iData.shelfs[i]
+    //       }
+    //     } else { 
+    //       // when we reach the bottom of page, new data gets pushed onto the shelfs
+    //       console.log("Pushing data to finalshelfs")
+    //       newS.shelfs.push(iData.shelfs[0])
+    //     }
+    //     return newS
+    //   })
+      setFinalShelfs(prevShs => {
         let newS = { ...prevShs }
-        if (prevPage === 0) {
-          for (let i = 0; i < pageLength; i = i + 1) {
-            newS.shelfs[prevPage + i] = iData.shelfs[i]
-          }
-        } else { 
-          // when we reach the bottom of page, new data gets pushed onto the shelfs
-          console.log("Pushing data to finalshelfs")
-          newS.shelfs.push(iData.shelfs[0])
+        if (isNothingLoadedYet()) {
+          // newS.shelfs[0] = iData.shelfs[0]
+          newS.shelfs[0] = iData.shelfs.shift()
         }
-        return newS
+        iData.shelfs.forEach(sh => {
+          newS.shelfs.push(sh)
+        });
+        return newS;
       })
-      setPageLength(pageLength + 1)
-      spamCount = spamCount + 1;
+      //prevPage = pageLength
+      setPrevPage2(pageLength)
+
+      if (pageLength + PAGE_GROWTH > user.customShelfs.length) {
+        setPageLength(user.customShelfs.length)
+      } else {
+        setPageLength(pageLength + PAGE_GROWTH)
+      }
+      spamCount = spamCount + PAGE_GROWTH;
       setIsMoreShelfs(true) 
   }
 
+  function calcShelfSlice(){
+    let sliceVal;
+    if ( user.customShelfs.length <= pageLength ) {
+      sliceVal = user.customShelfs.length
+    } else {
+      sliceVal = pageLength
+    }
+    console.log("SLICE VALUCE: ", sliceVal)
+    return sliceVal
+
+  }
+
   function injectData( shelfstuff) {
-    let injectShelfTitle = user.customShelfs.slice(prevPage, pageLength).map((sh, idx) => {
+    console.log('prevPage2, pageLength')
+    console.log('prevPage2, pageLength')
+    console.log('prevPage2, pageLength')
+    console.log('prevPage2, pageLength')
+    console.log(prevPage2, pageLength)
+    
+    let injectShelfTitle = user.customShelfs.slice(prevPage2, calcShelfSlice() ).map((sh, idx) => {
       return { "videos": shelfstuff[idx], "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
     })
     if (!injectShelfTitle[0].videos[0]) {
@@ -159,25 +231,31 @@ function YoutubeNEW() {
   const fetchMoreSubs = async () => {
 
     console.log("xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
+    
     console.log(user)
 
     if (isEndReached()) { 
       return
     }
     await preFetchMoreSubs()
-
+    console.log("__TOP___ {prevPage, pageLength} ", prevPage2, ', ', pageLength)
     let shelfsActs = await _fetchActivities()    
 
     let shelfVids = await _fetchVideos(shelfsActs)
 
     let iData = injectData(shelfVids)
+    console.log('iData')
+    console.log('iData')
+    console.log('iData')
+    console.log('iData')
+    console.log(iData)
 
     ytLogic.beginFilter2(iData.shelfs)
     
     setFinalShelfAux(iData)
     
     console.log("_____-------WE FINISHED THE FETCH & PROCESSING!-------_______")
-    console.log("_____ {prevPage, pageLength} ", prevPage, ', ', pageLength)
+    console.log("__BOT___ {prevPage, pageLength} ", prevPage2, ', ', pageLength)
     console.log('finalShelfs')
     console.log(finalShelfs)
   }
@@ -251,7 +329,7 @@ function YoutubeNEW() {
   return(
     <div className="yt-body-wrapper">
       {isLogged2 === true && !user.isDemo ? <LoggedIn /> : <LoggedOut />}
-      {finalShelfs.shelfs[0].videos[0].id == null ? <LoadingMain /> : <Shelfs />}
+      { isNothingLoadedYet() ? <LoadingMain /> : <Shelfs />}
       
       {/* JUNK BELOW */}
       {/* <ButtonsAuthDebug data={{ numVids, finalShelfs, user, isLogged2, pageLength, setPageLength, user }}/> */}
