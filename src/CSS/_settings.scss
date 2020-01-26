@@ -82,8 +82,9 @@ div.subListWrapper {
 }
 
 .set-howto2 {
-  margin-left: .6em;
-  margin-top: .5em;
+  // margin-left: .6em;
+  // margin-right: .6em;
+  // margin-top: .5em;
 }
 
 .set-howto-aux {
@@ -92,8 +93,15 @@ div.subListWrapper {
    }
 }
 
+.set-top-title {
+  display: flex;
+  margin-right: .5em;
+  
+}
+
 .set-top-tophalf {
   display: flex;
+  justify-content: space-between;
 }
 
 .shelf-title {

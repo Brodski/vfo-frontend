@@ -3,7 +3,8 @@ import User from '../Classes/User';
 import CustomShelf from '../Classes/CustomShelf'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
-
+import Pic from "../Images/navbar/profile-pic.png"
+// https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/
 export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -153,6 +154,7 @@ export function sleep(ms) {
   let u = new User()
   u.googleId = "123-UserId";
   u.username = "Richard Simmons"  
+  u.pictureUrl = Pic
   u.isDemo = true;
   
   

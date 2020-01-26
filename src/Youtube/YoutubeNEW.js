@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext, createContext, Fragment } from 'react';
-import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js';
+import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from '../Contexts/UserContext.js';
 
 // import * as Common                    from '../BusinessLogic/Common.js';
-
+import GreetingsMsg from '../Common/GreetingsMsg'
 import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
 import * as youtubeApi                  from "../HttpRequests/youtubeApi";
 import * as ServerEndpoints             from '../HttpRequests/ServerEndpoints.js'
@@ -34,7 +34,6 @@ import M from 'materialize-css'
 // simple react pagation https://codepen.io/grantdotlocal/pen/zReNgE
 function YoutubeNEW() {
 
-  let prevPage;
   const spamLimit = 25;
   let spamCount = 0;
   const PAGE_GROWTH = 4;
@@ -48,6 +47,8 @@ function YoutubeNEW() {
   const { user, setUser } = useContext(UserContext);
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
+  const { isInitFinished2, setIsInitFinished2 } = useContext(IsInitFinishedContext);
+
   const [pageLength, setPageLength] = useState(INITIAL_PAGE_LENGTH);
   const [prevPage2, setPrevPage2] = useState(0);
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
@@ -64,18 +65,8 @@ function YoutubeNEW() {
   function isEndReached() {
     let isEnd = false;
     if (isFirst){
-      console.log("FIRST!!!!!!")
-      console.log("FIRST!!!!!!")
-      console.log("FIRST!!!!!!")
-      console.log("FIRST!!!!!!")
-      return isEnd
+      return false
     }
-    console.log("IS END REACHED???")
-    console.log("IS END REACHED???")
-    console.log("IS END REACHED???")
-    console.log("IS END REACHED???")
-    console.log(pageLength > user.customShelfs.length)
-    console.log( prevPage2 === user.customShelfs.length)
     if ( spamCount > spamLimit 
         || pageLength > user.customShelfs.length 
         || prevPage2 >= user.customShelfs.length) {
@@ -102,13 +93,9 @@ function YoutubeNEW() {
 
     if (isFirst) {  
       putUnsortedShelfAtBottom() 
-      //prevPage = 0
     }
     // instantly halt any possible room for multi fetches
     setIsMoreShelfs(false) 
-    //prevPage = pageLength < PAGE_GROWTH ? 0 : pageLength - PAGE_GROWTH
-    //prevPage = pageLength - PAGE_GROWTH
-
     await ytLogic.hackHelper()
   }
 
@@ -279,32 +266,7 @@ function YoutubeNEW() {
     initPage()
     console.log('---------------useEffect bot----------------------')
   }, [])
-  
-  const LoggedOut = () => {
-    return (
-      <div className="center-align demo-greeting-wrap">
-        <div className="flow-text">
-          Log in to customize your homepage 
-          <br />  
-           Currently using a demo profile 
-        </div>
-        <div className='div-aux' />
-      </div>
-    )
-  }
 
-  const LoggedIn = () => {
-    return(
-      <div className=" profile-greeting-wrap">
-        {/* <img className="profile-pic" src={user.pictureUrl}></img> */}
-        <h4 className="profile-msg2"> 
-          Hi, {user.username} 
-        </h4> 
-        <div className='div-aux' />
-        {/* <div className="divider"></div> */}
-      </div>
-      )
-  }
 
   const Shelfs = () => {
     return (
@@ -328,7 +290,8 @@ function YoutubeNEW() {
 
   return(
     <div className="yt-body-wrapper">
-      {isLogged2 === true && !user.isDemo ? <LoggedIn /> : <LoggedOut />}
+      { isInitFinished2 ? <GreetingsMsg /> : null}
+      
       { isNothingLoadedYet() ? <LoadingMain /> : <Shelfs />}
       
       {/* JUNK BELOW */}

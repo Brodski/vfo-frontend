@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, Fragment } from 'react';
+import GreetingsMsg from '../Common/GreetingsMsg'
 import * as stLogic from '../BusinessLogic/SettingsLogic';
-import { UserContext, UserSettingsContext, IsLoggedContext } from '../Contexts/UserContext.js'
+import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from '../Contexts/UserContext.js'
 import {  } from '../Contexts/UserContext.js'
 import { ButtonsAuthDebug } from '../Common/ButtonsAuthDebug';
 import Footer from '../Common/Footer';
@@ -38,6 +39,7 @@ import { Carousel } from 'react-responsive-carousel';
 export const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+  const { isInitFinished2, setIsInitFinished2 } = useContext(IsInitFinishedContext);
   
   const [shouldRedirect, setShouldRedirect] = useState(false)
   const [isInitFinished, setIsInitFinished] = useState(false)
@@ -49,20 +51,22 @@ export const SettingsNEW = () => {
   }, []);
   
 async function initPage2() {
-  await GApiAuth.getGoogleAuth() 
+  // console.log('isInitFinished2')
+  // console.log('isInitFinished2')
+  // console.log('isInitFinished2')
+  // console.log('isInitFinished2')
+  // console.log(isInitFinished2)
+  // await GApiAuth.getGoogleAuth() 
     
-  if (GApiAuth.isHeSignedIn() && user.isDemo) {
-    await Common.loginAndSet(setUser, setUserSettings)
-  }
-  setIsInitFinished(true)
-}
-
-  async function logUserAndSettings() {
-
-    console.log('user')  
-    console.log(user)  
-    console.log('\n\n\nuserSettings')
-    console.log(userSettings)
+  // if (GApiAuth.isHeSignedIn() && user.isDemo) {
+  //   await Common.loginAndSet(setUser, setUserSettings)
+  // }
+  // setIsInitFinished(true)
+  // while( isInitFinished2) {
+  //   console.log('LOOP isInitFinished2')
+  //   console.log(isInitFinished2)
+  //   await Common.sleep(500)
+  // }
 }
 
   /////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,7 +132,8 @@ async function initPage2() {
   }
 
   const LoadShelfs = () => {
-    if (isInitFinished) {
+    //if (isInitFinished) {
+    if (isInitFinished2) {
       return ( <AllShelfs userSettings={userSettings} setUserSettings={setUserSettings} save={save} /> )
     }
     else {
@@ -137,14 +142,28 @@ async function initPage2() {
       
   }
 
+  const Customize = () => {
+    return (
+      <div>
+        <h4 className="set-top-title"> Customize <HowTo /> </h4>
+      </div>
+    )
+  }
+
     return (
       <Fragment>
+        
         <div className="container" >  
+          
           <div className="set-topbody">
             <div className="set-top-tophalf ">
-              <h4 className="set-top-title"> Customize </h4>
-              <HowTo />
+              { isInitFinished2 ? <GreetingsMsg isSettingsPage={true} /> : null}    
+              { isInitFinished2 ? <Customize /> : null}    
+           
+              
             </div>
+           
+            {/* { isInitFinished2 ? <div>This is a demo profile</div> : null}      */}
             {/* <div className="divider" /> */}
             <div className='div-aux' />
           </div>
@@ -161,7 +180,8 @@ async function initPage2() {
           <div className='div-aux about-div-padding' />
         </div>
         
-      {isInitFinished? <Footer /> : null }
+      {/* {isInitFinished ? <Footer /> : null } */}
+      {isInitFinished2 ? <Footer /> : null }
     </Fragment>
   );
 }

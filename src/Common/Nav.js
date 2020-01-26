@@ -13,6 +13,7 @@ import LoginButton from './LoginButton'
 import LoginButtonColor from './LoginButtonColor'
 import M from 'materialize-css';
 import NavImage from "../Images/navbar/green-depth.jpg";
+import Pic from "../Images/navbar/profile-pic.png"
 
 //class Nav extends React.Component {
 //const Nav = async () => {
@@ -56,6 +57,10 @@ const Nav = () => {
     return(
       <div className="center-align nav-profile-icon">
         <img className="profile-pic" src={user.pictureUrl} alt="profile img" />
+        {/* <img className="profile-pic" src={Pic} alt="profile img" /> */}
+        {/* { isLogged2 
+          ? <img className="profile-pic" src={user.pictureUrl} alt="profile img" /> 
+          : <img className="profile-pic" src={Pic} alt="profile img" /> } */}
       </div>
     )
   }
@@ -95,6 +100,10 @@ const Nav = () => {
                 <img src={"https://lh6.ggpht.com/DTvbl6rnAQDxQFV38WfUrl70SwBXZLyAxAwe4lb01-OZlBGLYcVKn8WrMHe5Z6XjYACN=h900"} /> */}
               </div>
               <div><img className="circle" src={user.pictureUrl} alt="profile pic" /> </div>
+              {/* { isLogged2 
+                ? <div><img className="circle" src={user.pictureUrl} alt="profile pic" /> </div>
+                : <div><img className="circle" src={Pic} alt="profile pic" /> </div>
+              } */}
               <div><span className="white-text email"> </span></div>
               <div><span className="white-text email"> {user.username} </span></div>
             </div>

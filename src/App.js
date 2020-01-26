@@ -8,7 +8,7 @@ import Nav from './Common/Nav';
 import YoutubeNEW from './Youtube/YoutubeNEW';
 
 import { SettingsNEW } from './Settings/SettingsNEW';
-import { UserContext, UserSettingsContext, IsLoggedContext } from './Contexts/UserContext.js'
+import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from './Contexts/UserContext.js'
 
 import * as GApiAuth from './HttpRequests/GApiAuth'
 import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
@@ -49,37 +49,25 @@ import moment from 'moment';
 // 
 
 function App() {
-
-  useEffect(() => {
-    console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
-    // initGApi()
-    // This is b/c adblock will block the googleapi script/link/cdn if its in the HTML
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://apis.google.com/js/client.js";
-    script.async = true
-    document.body.appendChild(script)
-    script.onload = () => {
-      initGApi()
-    }
-    
-    moment.updateLocale('en', {
-      relativeTime: {
-        m: "1 minute",
-        h: "1 hour",
-        d: "1 day",
-        M: "1 month",
-        y: "1 year",
-      }
-    });
-  }, [])
-       
-  async function initGApi() {
   
-    console.time("initGApi()")
+  const [user, setUser]                 = useState(Common.getMockUser())
+  const [userSettings, setUserSettings] = useState(Common.getMockUser())
+  const [isLogged2, setIsLogged2] = useState(false)
+  const [isInitFinished2, setIsInitFinished2] = useState(false)
+
+    // console.time("initGApi()")  
+  // console.timeEnd("initGApi()")   
+  async function initGApi() {
+   console.time("initGApi()")  
     const GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
-    console.timeEnd("initGApi()")
     
+    if (GApiAuth.isHeSignedIn() && user.isDemo) {
+      await Common.loginAndSet(setUser, setUserSettings)
+    }
+    console.timeEnd("initGApi()")   
+
+    setIsInitFinished2(true)
+    console.log(isInitFinished2)
     setIsLogged2(GApiAuth.isHeSignedIn())
 
     // solution to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
@@ -120,28 +108,47 @@ function App() {
     //      return prev
     //    } 
     //  }
-    
-
   }
 
+  useEffect(() => {
+    console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
+    // initGApi()
+    // This is b/c adblock will block the googleapi script/link/cdn if its in the HTML
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://apis.google.com/js/client.js";
+    script.async = true
+    document.body.appendChild(script)
+    script.onload = () => {
+      initGApi()
+    }
+    
+    moment.updateLocale('en', {
+      relativeTime: {
+        m: "1 minute",
+        h: "1 hour",
+        d: "1 day",
+        M: "1 month",
+        y: "1 year",
+      }
+    });
+  }, [])
  
-  
-  const [user, setUser]                 = useState(Common.getMockUser())
-  const [userSettings, setUserSettings] = useState(Common.getMockUser())
-  const [isLogged2, setIsLogged2] = useState(false)
   return (
     <Router>
       <Switch>
         <UserContext.Provider value={{ user, setUser }}>
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
             <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
-              <Nav />
-              <Route path="/" exact component={YoutubeNEW} />
+              <IsInitFinishedContext.Provider value={{ isInitFinished2, setIsInitFinished2 }}>
+                
+                <Nav />
+                <Route path="/" exact component={YoutubeNEW} />
 
-              <Route path="/about" component={About} />
+                <Route path="/about" component={About} />
 
-              <Route path="/customize" component={SettingsNEW} />
-
+                <Route path="/customize" component={SettingsNEW} />
+              </IsInitFinishedContext.Provider>
             </IsLoggedContext.Provider>
           </UserSettingsContext.Provider>
         </UserContext.Provider>

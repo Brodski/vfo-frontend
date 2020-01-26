@@ -81,12 +81,7 @@
   margin-bottom: .5em;  
 }
 
-.profile-greeting-wrap {
-  //display: inline-flex;
-  //margin-left: .5em; //see .demo-greeting-wrap
-  //margin-top: 1em;
-  
-}
+
 .profile-msg { // see yt-shelf-inner-wrap for border
   color: $yt-greeting-color;
   font-size: 1.8em;
@@ -101,8 +96,13 @@
 
 .profile-greeting-wrap{
   margin-left: 1.5em;
-  margin-right: 1.5em;
+  // margin-right: 1.5em;
   
+}
+.profile-greeting-wrap {
+  //display: inline-flex;
+  //margin-left: .5em; //see .demo-greeting-wrap
+  //margin-top: 1em;
 }
 
 .profile-msg2 { // see yt-shelf-inner-wrap for border

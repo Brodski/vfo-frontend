@@ -1,6 +1,7 @@
 //npx eslint src/App.js
 //npx eslint src/App.js
 //npx eslint src/App.js
+// https://gist.github.com/bradtraversy/aab26d1e8983d9f8d79be1a9ca894ab4
 {
     "env": {
         "browser": true,
@@ -54,6 +55,12 @@
 
         //
         "no-await-in-loop": "off"
+
+        // export is not convincing.
+        // https://github.com/airbnb/javascript/issues/1365
+        // https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad
+        // https://humanwhocodes.com/blog/2019/01/stop-using-default-exports-javascript-module/        
+        // https://medium.com/@etherealm/named-export-vs-default-export-in-es6-affb483a0910
 
     }
 }
