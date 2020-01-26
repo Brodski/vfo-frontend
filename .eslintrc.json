@@ -1,7 +1,10 @@
+//npx eslint src/App.jsx
 //npx eslint src/App.js
-//npx eslint src/App.js
-//npx eslint src/App.js
-// https://gist.github.com/bradtraversy/aab26d1e8983d9f8d79be1a9ca894ab4
+//
+// linter
+// https://www.youtube.com/watch?v=SydnKbGc7W8 + https://stackoverflow.com/questions/46201647/prettier-airbnbs-eslint-config
+// Optionally: https://gist.github.com/bradtraversy/aab26d1e8983d9f8d79be1a9ca894ab4
+// run with npx eslint src/App.js
 {
     "env": {
         "browser": true,
@@ -38,18 +41,23 @@
 
         //TODO, this also
         "no-console": "off",
-        //TODO, fix
-        //"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-        
-        //import/extensions from eslint seems to be confusing jsx-filename-ext from react
-        //"import/extensions": "off",
+
+        //import/extensions from eslint seems to be confusing jsx-filename-ext from react, even if I have "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        "import/extensions": "off",
+
         // "Use of operator assignment shorthand is a stylistic choice." https://eslint.org/docs/rules/operator-assignment
         "operator-assignment": ["error", "never"],
+        
+        // Cannot find any justification for "syntax" vs "element" mode. Choosing syntax.
+        "react/jsx-fragments": ["error", "element"],
+        
+        // momentjs documentation has lower case 'm'. I'll keep it consistent.
+        "new-cap": ["error", {"newIsCapExceptions": ["moment"]} ],
+
         // " [...] dangling underscores in identifiers is purely a convention and has no effect on performance, readability, or complexity. It's purely a preference."  https://eslint.org/docs/rules/no-underscore-dangle
         //"no-underscore-dangle": ["error",  { "allow": ["_fetchActivities" ] }],
         "no-underscore-dangle": "off",
 
-        //"react/jsx-one-expression-per-line": ["error", {"allow": "single-child"}],
         "react/jsx-boolean-value": "off",
         "react/jsx-one-expression-per-line": "off",
         "jsx-a11y/alt-text": "off",
@@ -58,14 +66,6 @@
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/control-has-associated-label": "off",
         "jsx-a11y/anchor-has-content": "off",
-        //"react/destructuring-assignment":  ["error", "always", { "ignoreClassFields": <boolean> }]
-        // Cannot find any justification for "syntax" vs "element" mode. Choosing syntax.
-        "react/jsx-fragments": ["error", "element"],
-
-        // momentjs documentation has lower case 'm'. I'll keep it consistent.
-        "new-cap": ["error", {"newIsCapExceptions": ["moment"]} ],
-
-        //
         "no-await-in-loop": "off"
 
         // export is not convincing.

@@ -9,7 +9,6 @@ import * as GApiAuth from '../HttpRequests/GApiAuth';
 import * as ytLogic from '../BusinessLogic/YtLogic.js';
 import { 
   IsInitFinishedContext, 
-  IsLoggedContext, 
   UserContext, 
   UserSettingsContext } from '../Contexts/UserContext.js';
 import FinalShelfs from '../Classes/FinalShelfs'
@@ -37,7 +36,6 @@ function YoutubeNEW() {
   const [isMoreShelfs, setIsMoreShelfs] = useState(false); 
   const { user, setUser } = useContext(UserContext);
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
-  const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
   const { isInitFinished2, setIsInitFinished2 } = useContext(IsInitFinishedContext);
 
   const [pageLength, setPageLength] = useState(INITIAL_PAGE_LENGTH);

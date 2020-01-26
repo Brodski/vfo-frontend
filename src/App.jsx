@@ -2,7 +2,6 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 
-
 import * as Common from './BusinessLogic/Common';
 import * as GApiAuth from './HttpRequests/GApiAuth'
 import { 
@@ -15,32 +14,21 @@ import Nav from './Common/Nav.jsx';
 import SettingsNEW from './Settings/SettingsMain.jsx';
 import YoutubeNEW from './Youtube/YoutubeMain.jsx';
 
-// $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
-// $ npm install --save react-sortablejs
 // $ npm install --save sortablejs 
 // $ npm install --save react-modal
-
 // $ npm install --save react-infinite-scroller
-// $ npm install --save array-move
 // $ npm install --save react-id-generator
 // $ npm install --save env-cmd 
 // $ npm install --save react-loading
-// $ npm i --save react-google-button
 // $ npm i --save install materialize-css@next
-// $ npm install --save @material-ui/core
 // $ npm install --save @mdi/font
 // $ npm install --save @mdi/react @mdi/js
 // $ npm install --save node-sass
 // $ npm install --save human-format
 // $ npm install react-responsive-carousel --save
 // $ npm install --save prop-types
-// $ npm i googleapis
 // $ npm i --save-dev eslint-plugin-sort-imports-es6-autofix
-
-// linter
-// https://www.youtube.com/watch?v=SydnKbGc7W8 + https://stackoverflow.com/questions/46201647/prettier-airbnbs-eslint-config
-// Optionally: https://gist.github.com/bradtraversy/aab26d1e8983d9f8d79be1a9ca894ab4
 
 // get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
 // useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
@@ -83,7 +71,8 @@ function App() {
   useEffect(() => {
     console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
 
-    // This is b/c adblock will block the googleapi script/link/cdn if its in the HTML
+    // adblock will block the googleapi script/link/cdn if its in the HTML
+    // TODO, npm googleapis
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://apis.google.com/js/client.js";
