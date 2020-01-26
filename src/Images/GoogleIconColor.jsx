@@ -1,6 +1,6 @@
 import React from 'react';
 
-const GoogleColor = () => {
+const GoogleIconColor = () => {
 
   return(
     <svg
@@ -13,4 +13,4 @@ const GoogleColor = () => {
     </svg>
     )
 }
-export default GoogleColor
+export default GoogleIconColor

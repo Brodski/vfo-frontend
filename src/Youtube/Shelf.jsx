@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
-import * as youtubeApi from '../HttpRequests/youtubeApi';
-import Video from './Video'
-import moment from 'moment'
+import Video from './Video.jsx'
 import PropTypes from 'prop-types';
 // Pagination / Load More
 // https://codepen.io/grantdotlocal/pen/zReNgE

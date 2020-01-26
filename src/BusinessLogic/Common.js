@@ -153,7 +153,7 @@ export function sleep(ms) {
   
   let u = new User()
   u.googleId = "123-UserId";
-  u.username = "Richard Simmons"  
+  u.username = "Demo Profile"  
   u.pictureUrl = Pic
   u.isDemo = true;
   

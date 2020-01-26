@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import About from './Common/Home';
-import Nav from './Common/Nav';
+import About from './Common/Home.jsx';
+import Nav from './Common/Nav.jsx';
 
 
-import YoutubeNEW from './Youtube/YoutubeNEW';
+import YoutubeNEW from './Youtube/YoutubeMain.jsx';
 
-import { SettingsNEW } from './Settings/SettingsNEW';
+import SettingsNEW from './Settings/SettingsMain.jsx';
 import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from './Contexts/UserContext.js'
 
 import * as GApiAuth from './HttpRequests/GApiAuth'
-import * as ServerEndpoints from './HttpRequests/ServerEndpoints'
-import  User from './Classes/User';
 
 import * as Common                    from './BusinessLogic/Common.js';
-// import  Common                    from './BusinessLogic/Common.js';
-import * as ytLogic                     from './BusinessLogic/ytLogic.js'
 import moment from 'moment';
 // $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
@@ -55,8 +51,6 @@ function App() {
   const [isLogged2, setIsLogged2] = useState(false)
   const [isInitFinished2, setIsInitFinished2] = useState(false)
 
-    // console.time("initGApi()")  
-  // console.timeEnd("initGApi()")   
   async function initGApi() {
    console.time("initGApi()")  
     const GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
@@ -83,36 +77,11 @@ function App() {
       setIsLogged2(GApiAuth.isHeSignedIn())
       window.location.reload(true);
     });
-    
-    // if (GApiAuth.isHeSignedIn() && user.isDemo) {
-    //  console.log("Logged in: Should be doing fetch to server")
-    //  //await ytLogic.loginAndSet(setUser, setUserSettings)
-    //  let res = await ServerEndpoints.loginToBackend();
-    //  if (res.status > 199 && res.status < 300) {
-    //    console.log('Recieved user from server: ', res.status)
-    //    let u = await ytLogic.processUserFromServer(res)
-    //    setUser(prev => {
-    //      prev.customShelfs = u.customShelfs
-    //      prev.googleId = u.googleId
-    //      prev.pictureUrl = u.pictureUrl
-    //      prev.username = u.username
-    //      prev.isDemo = false
-    //      return prev
-    //    })
-    //    setUserSettings(prev => {
-    //      prev.customShelfs = u.customShelfs
-    //      prev.googleId = u.googleId
-    //      prev.pictureUrl = u.pictureUrl
-    //      prev.username = u.username
-    //      prev.isDemo = false
-    //      return prev
-    //    } 
-    //  }
   }
 
   useEffect(() => {
     console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
-    // initGApi()
+    
     // This is b/c adblock will block the googleapi script/link/cdn if its in the HTML
     const script = document.createElement("script");
     script.type = "text/javascript";

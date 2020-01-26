@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState, Fragment } from 'react';
 import ReactLoading from 'react-loading';
 import { UserContext } from '../Contexts/UserContext.js'
 import { UserSettingsContext } from '../Contexts/UserContext.js'
-import Footer from './Footer';
+import Footer from './Footer.jsx';
 
 function About() {
   const { user, setUser } = useContext(UserContext);

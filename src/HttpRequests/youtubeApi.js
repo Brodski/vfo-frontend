@@ -49,11 +49,11 @@ export async function _getThisUsersSubs(pageToken) {
 
 export async function getSomeVideos(vidIdList = [""]) {
 await check()
-  return await window.gapi.client.youtube.videos.list({
+  //return await window.gapi.client.youtube.videos.list({
+  return window.gapi.client.youtube.videos.list({
     "part": "snippet, contentDetails, statistics",
     "id": vidIdList.toString(),
     "fields": "items(id, kind, contentDetails/duration, snippet/publishedAt, snippet/channelId, snippet/title, snippet/description, snippet/thumbnails/*, snippet/channelTitle, statistics)",
-    
   })
 }
 

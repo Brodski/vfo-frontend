@@ -32,7 +32,9 @@
         "no-console": "off",
         //TODO, fix
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-
+        
+        //import/extensions from eslint seems to be confusing jsx-filename-ext from react
+        "import/extensions": "off",
         // "Use of operator assignment shorthand is a stylistic choice." https://eslint.org/docs/rules/operator-assignment
         "operator-assignment": ["error", "never"],
         // " [...] dangling underscores in identifiers is purely a convention and has no effect on performance, readability, or complexity. It's purely a preference."  https://eslint.org/docs/rules/no-underscore-dangle
@@ -40,14 +42,16 @@
         "no-underscore-dangle": "off",
 
         //"react/jsx-one-expression-per-line": ["error", {"allow": "single-child"}],
+        "react/jsx-boolean-value": "off",
         "react/jsx-one-expression-per-line": "off",
+        "jsx-a11y/alt-text": "off",
         "jsx-a11y/click-events-have-key-events": "off",
         "jsx-a11y/anchor-is-valid": "off",
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/control-has-associated-label": "off",
         "jsx-a11y/anchor-has-content": "off",
         //"react/destructuring-assignment":  ["error", "always", { "ignoreClassFields": <boolean> }]
-        // Cannot find any justification for "syntax" vs "error" mode. Choosing syntax.
+        // Cannot find any justification for "syntax" vs "element" mode. Choosing syntax.
         "react/jsx-fragments": ["error", "element"],
 
         // momentjs documentation has lower case 'm'. I'll keep it consistent.

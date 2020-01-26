@@ -1,33 +1,22 @@
-import React, { useState, useEffect, useContext, createContext, Fragment } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from '../Contexts/UserContext.js';
 
-// import * as Common                    from '../BusinessLogic/Common.js';
-import GreetingsMsg from '../Common/GreetingsMsg'
-import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
-import * as youtubeApi                  from "../HttpRequests/youtubeApi";
-import * as ServerEndpoints             from '../HttpRequests/ServerEndpoints.js'
-import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
-import FinalShelfs           from '../Classes/FinalShelfs'
-import VideoResponse           from '../Classes/VideoResponse'
-//import { User }    from '../Classes/User'
-import VidCounter     from '../Classes/VidCounter'
-import CustomShelf    from '../Classes/CustomShelf'
+import GreetingsMsg from '../Common/GreetingsMsg.jsx'
+import * as ytLogic from '../BusinessLogic/ytLogic.js';
+import * as GApiAuth from '../HttpRequests/GApiAuth';
+import FinalShelfs from '../Classes/FinalShelfs'
+import VideoResponse from '../Classes/VideoResponse'
 
-import Subscription                 from '../Classes/Subscription'
-import  ShelfsMany                    from './ShelfsMany';
+import VidCounter from '../Classes/VidCounter'
 
-import { ButtonsAuthDebug }             from '../Common/ButtonsAuthDebug';
-import LoadingMain                  from '../Common/LoadingMain';
-//import Common                    from '../BusinessLogic/Common.js';
-import * as Common                    from '../BusinessLogic/Common.js';
-import axios from 'axios';
-import InfiniteScroll                 from 'react-infinite-scroller';
-import nextId  from "react-id-generator";
-import ReactLoading from 'react-loading';
+import ShelfsMany from './ShelfsMany.jsx';
 
-import * as moment from 'moment';
-import { mdiProgressUpload } from '@mdi/js';
-import M from 'materialize-css'
+import LoadingMain from '../Common/LoadingMain.jsx';
+
+import * as Common from '../BusinessLogic/Common.js';
+
+import InfiniteScroll from 'react-infinite-scroller';
+import nextId from "react-id-generator";
 
 // UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 // react infinite scroll https://github.com/CassetteRocks/react-infinite-scroller#readme

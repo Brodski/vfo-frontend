@@ -1,10 +1,11 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/destructuring-assignment */
+/* See not below */
+
 import React from 'react';
 import moment from 'moment';
 import humanFormat from 'human-format';
 import PropTypes from 'prop-types';
-//import VideoResponse from '../Classes/FinalShelfs';
 
 // https://github.com/JsCommunity/human-format
 
@@ -52,7 +53,7 @@ const Video = (props) => {
   //           }
   //         }             
   //       } = props
-
+  //
   // The destructuring of 3 variables (thumbnail, id, and title) is above. No way is that more readable. The performance gained is negligible. Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
   let thumbnail   = props.video.snippet.thumbnails.medium.url
   let id          = props.video.id 

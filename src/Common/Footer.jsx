@@ -1,12 +1,5 @@
 import React,  { useState, useContext, useEffect } from 'react';
 import { IsLoggedContext, UserSettingsContext, UserContext } from '../Contexts/UserContext.js';
-import { Link } from 'react-router-dom'
-import * as Common from  '../BusinessLogic/Common';
-import GoogleButton from 'react-google-button'
-import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
-import { mdiGoogle  } from '@mdi/js';
-import Icon from '@mdi/react'
-
 
 
 const Footer = () => {

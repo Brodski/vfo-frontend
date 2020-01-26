@@ -3,14 +3,13 @@ import { IsLoggedContext, UserSettingsContext, UserContext } from '../Contexts/U
 import { Link } from 'react-router-dom'
 //import Common                    from '../BusinessLogic/Common.js';
 import * as Common                    from '../BusinessLogic/Common.js';
-import GoogleButton from 'react-google-button'
+
 import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
-import { mdiGoogle  } from '@mdi/js';
-import Icon from '@mdi/react'
-import Logo from './Logo'
-import GoogleColor from './GoogleColor'
+
+
+import Logo from './Logo.jsx'
+
 import LoginButton from './LoginButton'
-import LoginButtonColor from './LoginButtonColor'
 import M from 'materialize-css';
 import NavImage from "../Images/navbar/green-depth.jpg";
 import Pic from "../Images/navbar/profile-pic.png"

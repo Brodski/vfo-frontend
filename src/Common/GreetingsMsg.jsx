@@ -5,18 +5,22 @@ import PropTypes from 'prop-types';
 const GreetingsMsg = (props) => {
 
   GreetingsMsg.propTypes = {
-     isSettingsPage: PropTypes.bool.isRequired
+     isSettingsPage: PropTypes.bool,
   }
+
+  GreetingsMsg.defaultProps = {
+    isSettingsPage: false,
+  };
 
   const { isSettingsPage} = props
   
-  console.log("GREETINGS!!!!!!")
-  console.log("GREETINGS!!!!!!")
-  console.log("GREETINGS!!!!!!")
-  console.log("GREETINGS!!!!!!")
-  console.log("GREETINGS!!!!!!")
-  console.log(props)
-  console.log(isSettingsPage)
+  // console.log("GREETINGS!!!!!!")
+  // console.log("GREETINGS!!!!!!")
+  // console.log("GREETINGS!!!!!!")
+  // console.log("GREETINGS!!!!!!")
+  // console.log("GREETINGS!!!!!!")
+  // console.log(props)
+  // console.log(isSettingsPage)
 
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
 
@@ -44,7 +48,7 @@ const GreetingsMsg = (props) => {
     let extraClasses =  isSettingsPage ? "left" : "";
     return(
       // <div className=" profile-greeting-wrap">
-      <div className= {`  profile-greeting-wrap  ${extraClasses}`}>
+      <div className= {`profile-greeting-wrap  ${extraClasses}`}>
         {/* <img className="profile-pic" src={user.pictureUrl}></img> */}
         <h4 className="profile-msg2 "> 
           Hi, {user.username}   

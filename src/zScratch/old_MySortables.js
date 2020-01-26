@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../Contexts/UserContext.js'
-import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug';
+import { ButtonsAuthDebug } from '../Components/ButtonsAuthDebug.jsx';
 
 import * as GApiAuth from '../HttpRequests/GApiAuth'
 //import { User } from '../Classes/User'

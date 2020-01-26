@@ -1,8 +1,7 @@
 import React from 'react'
-import { Video } from './Video'
 import Shelf from './Shelf'
 import nextId  from "react-id-generator";
-import LoadingMain   from '../Common/LoadingMain';
+import LoadingMain   from '../Common/LoadingMain.jsx';
 import PropTypes from 'prop-types';
 
 

@@ -22,7 +22,7 @@ export function logIds() {
   let shelfs = [].slice.call(document.querySelectorAll('.subListWrapper'));
   console.log('----------- I D S -----------')
   console.log(shelfs)
-  for (let i = 0; i < shelfs.length; i++) {
+  for (let i = 0; i < shelfs.length; i = i + 1 ) {
     console.log(`${i} ++ Shelf ++`)
     for (let sub of shelfs[i].querySelectorAll('.subitem')) {
       console.log(sub)

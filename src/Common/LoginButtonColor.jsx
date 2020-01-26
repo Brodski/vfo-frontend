@@ -1,7 +1,7 @@
 import React,  { useState, useContext, useEffect }  from 'react';
 import * as GApiAuth        from '../HttpRequests/GApiAuth'
 import { IsLoggedContext } from '../Contexts/UserContext.js';
-import GoogleColor from './GoogleColor'
+import GoogleIconColor from '../Images/GoogleIconColor'
 
 const LoginButtonColor = () => {
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
@@ -11,7 +11,7 @@ const LoginButtonColor = () => {
       className=" btn "
       onClick={()=> { isLogged2 ? GApiAuth.logout() : GApiAuth.login() }}
     > 
-      <GoogleColor />
+      <GoogleIconColor />
       {isLogged2 ? "Logout": "Login"}
     </a>
   ) 
