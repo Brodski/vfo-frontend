@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+
 import Modal from 'react-modal';
-import Pic from '../Images/pen3.png'
 import PropTypes from 'prop-types'
 
-
 import { UserContext, UserSettingsContext } from '../Contexts/UserContext.js'
+import Pic from '../Images/pen3.png'
+
 function RenameDialog(props) {
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
@@ -20,15 +21,6 @@ function RenameDialog(props) {
        isSorted: PropTypes.bool.isRequired,
        title: PropTypes.string.isRequired
      }).isRequired
-
-    // })
-    // subObj: PropTypes.shape({
-    //   channelId: PropTypes.string.isRequired,
-    //   channelName: PropTypes.string.isRequired,
-    //   filter: PropTypes.object.isRequired,
-    // }).isRequired
-    
-
   }
   useEffect(() => {
     // Modal.setAppElement('#' + props.bindToId)

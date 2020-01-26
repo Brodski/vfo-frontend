@@ -1,8 +1,10 @@
 import React from 'react'
-import Shelf from './Shelf'
 import nextId  from "react-id-generator";
-import LoadingMain   from '../Common/LoadingMain.jsx';
+
 import PropTypes from 'prop-types';
+
+import LoadingMain   from '../Common/LoadingMain.jsx';
+import Shelf from './Shelf'
 
 
 const ShelfsMany = props => {

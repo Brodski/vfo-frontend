@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
 
+
+import * as Common from './BusinessLogic/Common';
+import * as GApiAuth from './HttpRequests/GApiAuth'
+import { 
+  IsInitFinishedContext, 
+  IsLoggedContext, 
+  UserContext, 
+  UserSettingsContext } from './Contexts/UserContext'
 import About from './Common/Home.jsx';
 import Nav from './Common/Nav.jsx';
-
-
+import SettingsNEW from './Settings/SettingsMain.jsx';
 import YoutubeNEW from './Youtube/YoutubeMain.jsx';
 
-import SettingsNEW from './Settings/SettingsMain.jsx';
-import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from './Contexts/UserContext.js'
-
-import * as GApiAuth from './HttpRequests/GApiAuth'
-
-import * as Common                    from './BusinessLogic/Common.js';
-import moment from 'moment';
 // $ npm install --save googleapis
 // $ npm install --save moment <------For iso 8601 duration conversion
 // $ npm install --save react-sortablejs
@@ -35,6 +36,7 @@ import moment from 'moment';
 // $ npm install react-responsive-carousel --save
 // $ npm install --save prop-types
 // $ npm i googleapis
+// $ npm i --save-dev eslint-plugin-sort-imports-es6-autofix
 
 // linter
 // https://www.youtube.com/watch?v=SydnKbGc7W8 + https://stackoverflow.com/questions/46201647/prettier-airbnbs-eslint-config
@@ -45,20 +47,20 @@ import moment from 'moment';
 // 
 
 function App() {
-  
-  const [user, setUser]                 = useState(Common.getMockUser())
+
+  const [user, setUser] = useState(Common.getMockUser())
   const [userSettings, setUserSettings] = useState(Common.getMockUser())
   const [isLogged2, setIsLogged2] = useState(false)
   const [isInitFinished2, setIsInitFinished2] = useState(false)
 
   async function initGApi() {
-   console.time("initGApi()")  
-    const GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
     
+    const GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
+
     if (GApiAuth.isHeSignedIn() && user.isDemo) {
       await Common.loginAndSet(setUser, setUserSettings)
     }
-    console.timeEnd("initGApi()")   
+    
 
     setIsInitFinished2(true)
     setIsLogged2(GApiAuth.isHeSignedIn())
@@ -71,7 +73,7 @@ function App() {
       return;
     }
 
-    GoogleAuth.isSignedIn.listen( function (val) {
+    GoogleAuth.isSignedIn.listen(function (val) {
       console.log('Signin state changed to ', val, "\nSetting to: ", GApiAuth.isHeSignedIn());
       setIsLogged2(GApiAuth.isHeSignedIn())
       window.location.reload(true);
@@ -80,7 +82,7 @@ function App() {
 
   useEffect(() => {
     console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
-    
+
     // This is b/c adblock will block the googleapi script/link/cdn if its in the HTML
     const script = document.createElement("script");
     script.type = "text/javascript";
@@ -90,7 +92,7 @@ function App() {
     script.onload = () => {
       initGApi()
     }
-    
+
     moment.updateLocale('en', {
       relativeTime: {
         m: "1 minute",
@@ -101,7 +103,7 @@ function App() {
       }
     });
   }, [])
- 
+
   return (
     <Router>
       <Switch>
@@ -109,7 +111,7 @@ function App() {
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
             <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
               <IsInitFinishedContext.Provider value={{ isInitFinished2, setIsInitFinished2 }}>
-                
+
                 <Nav />
                 <Route path="/" exact component={YoutubeNEW} />
 

@@ -1,10 +1,5 @@
 import * as moment from 'moment';
 import * as youtubeApi from "../HttpRequests/YoutubeApi";
-// import  * as GApiAuth from '../HttpRequests/GApiAuth'; //hack helper
-
- //import * as Common from './Common.js'; //hack helper
-// import Common                    from '../BusinessLogic/Common.js';
-
 
 /* Github: JS Client https://github.com/google/google-api-javascript-client
 * 

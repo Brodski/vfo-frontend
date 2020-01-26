@@ -1,6 +1,9 @@
-import React, { useState, useEffect, useContext, createContext, Fragment } from 'react';
-import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from '../Contexts/UserContext.js';
+import React, { Fragment, useContext } from 'react';
+
 import PropTypes from 'prop-types';
+
+import { IsLoggedContext, UserContext } from '../Contexts/UserContext.js';
+
 
 const GreetingsMsg = (props) => {
 
@@ -25,8 +28,6 @@ const GreetingsMsg = (props) => {
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
 
   const { user, setUser } = useContext(UserContext);
-  const { userSetings, setUserSettings } = useContext(UserSettingsContext);
-  const { isInitFinished2, setIsInitFinished2 } = useContext(IsInitFinishedContext);
 
   const LoggedOut = () => {
     let extraClasses =  isSettingsPage ? "left" : "center-align";

@@ -1,10 +1,11 @@
-import React,  { useState, useContext, useEffect }  from 'react';
+import React,  { useContext }  from 'react';
+
 import * as GApiAuth        from '../HttpRequests/GApiAuth'
 import { IsLoggedContext } from '../Contexts/UserContext.js';
 import GoogleIconColor from '../Images/GoogleIconColor'
 
 const LoginButtonColor = () => {
-  const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
+  const { isLogged2 } = useContext(IsLoggedContext);
   
   return(    
     <a

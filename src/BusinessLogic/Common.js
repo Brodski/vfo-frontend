@@ -1,10 +1,10 @@
-import Subscription from '../Classes/Subscription';
-import User from '../Classes/User';
-import CustomShelf from '../Classes/CustomShelf'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import * as ytLogic from "./YtLogic.js";
-
+import CustomShelf from '../Classes/CustomShelf'
 import Pic from "../Images/navbar/profile-pic.png"
+import Subscription from '../Classes/Subscription';
+import User from '../Classes/User';
+
 // https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/
 
 

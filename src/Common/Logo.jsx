@@ -1,5 +1,5 @@
-import React,  { useState, useContext, useEffect } from 'react';
-//import Logo from './combo2Remake.svg'
+import React from 'react';
+
 
 const Logo = () => {
 

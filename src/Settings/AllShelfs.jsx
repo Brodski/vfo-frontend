@@ -1,15 +1,17 @@
-import React, { useState, useContext, useEffect, Fragment } from 'react';
-import ShelfSetting from './ShelfSetting.jsx';
-import * as stLogic from '../BusinessLogic/SettingsLogic';
-import CustomShelf  from '../Classes/CustomShelf'
-import nextId  from "react-id-generator";
-import M from 'materialize-css'
-import { UserContext, UserSettingsContext } from '../Contexts/UserContext.js'
+import React, { Fragment, useContext, useEffect } from 'react';
 
-//SortedShelfs = the containers on the right
-//UnsortedShelfs="Your Subscriptions" on the left
+import M from 'materialize-css'
+import nextId  from "react-id-generator";
+
+import * as stLogic from '../BusinessLogic/SettingsLogic';
+import { UserSettingsContext } from '../Contexts/UserContext.js'
+import CustomShelf  from '../Classes/CustomShelf'
+import ShelfSetting from './ShelfSetting.jsx';
+
+// SortedShelfs = the containers on the right
+// UnsortedShelfs="Your Subscriptions" on the left
 const AllShelfs = (props) => {
-  const { user, setUser } = useContext(UserContext);
+  
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
 
   useEffect( () => {

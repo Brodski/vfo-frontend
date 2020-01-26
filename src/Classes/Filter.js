@@ -5,7 +5,6 @@ class Filter {
     this.minDuration = 0;
     this.maxDuration = "Infinity";
     this.channelId = id;
-  
   }
   // checkDurations(vidDuration) {
   //  let max = this.maxDuration == "Infinity" ? Infinity : this.maxDuration

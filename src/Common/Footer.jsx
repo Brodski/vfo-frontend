@@ -1,6 +1,4 @@
-import React,  { useState, useContext, useEffect } from 'react';
-import { IsLoggedContext, UserSettingsContext, UserContext } from '../Contexts/UserContext.js';
-
+import React from 'react';
 
 const Footer = () => {
   return(

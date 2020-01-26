@@ -1,19 +1,14 @@
-import React, {useState, Fragment} from 'react';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
+import React, {Fragment, useState} from 'react';
+
 import { Carousel } from 'react-responsive-carousel';
-// import Pic1 from './action1.jpg'
-// import Pic2 from './action2.jpg'
-// import Pic3 from './action3.webp'
 import Modal from 'react-modal';
-import Filt2 from '../Images/Tutorial/tut-filt-2red.png';
-//import Filt4 from '../Images/Tutorial/tut-filt-3best.png';
-import Filt5 from '../Images/Tutorial/tut-filt-4best.png';
-import Filt6 from '../Images/Tutorial/tut-filt-combo2.png';
+
 import Drag1 from '../Images/Tutorial/drag3.png';
 import Drag2 from '../Images/Tutorial/drag-sub2.png';
+import Filt6 from '../Images/Tutorial/tut-filt-combo2.png';
 import Order1 from '../Images/Tutorial/order2.png';
 import Order2 from '../Images/Tutorial/notice-with-arrow.png';
-//var Carousel = require('react-responsive-carousel').Carousel;
+
 
 const HowTo = () => {
 
@@ -40,16 +35,6 @@ const HowTo = () => {
           <p className="legend">Click & drag to order your subscriptions</p>
         </div>
         <div>
-          {/* <img  className="cara-help" src={Filt2} />
-          <p className="legend">Choose the min or max of a subscription's videos</p>
-        </div>
-        <div>
-          
-          <img  className="cara-help" src={Filt5} />
-          <p className="legend">Choose the min or max of a subscription's videos</p>
-        </div>
-        <div> */}
-          {/* <img  className="cara-help" src={Filt4} /> */}
           <img className="cara-help" src={Filt6} />
           <p className="legend">Choose the min or max of a subscription's videos</p>
         </div>

@@ -23,18 +23,26 @@
         },
         "ecmaVersion": 2018,
         "sourceType": "module"
-    },
+    },    
     "plugins": [
-        "react"
+        "react",
+        "sort-imports-es6-autofix"
     ],
+    
     "rules": { 
+        "sort-imports-es6-autofix/sort-imports-es6": [2, {
+            "ignoreCase": false,
+            "ignoreMemberSort": false,
+            "memberSyntaxSortOrder": ["none", "all", "multiple", "single"]
+          }],
+
         //TODO, this also
         "no-console": "off",
         //TODO, fix
-        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+        //"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         
         //import/extensions from eslint seems to be confusing jsx-filename-ext from react
-        "import/extensions": "off",
+        //"import/extensions": "off",
         // "Use of operator assignment shorthand is a stylistic choice." https://eslint.org/docs/rules/operator-assignment
         "operator-assignment": ["error", "never"],
         // " [...] dangling underscores in identifiers is purely a convention and has no effect on performance, readability, or complexity. It's purely a preference."  https://eslint.org/docs/rules/no-underscore-dangle

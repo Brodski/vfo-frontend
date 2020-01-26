@@ -1,22 +1,24 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from '../Contexts/UserContext.js';
 
-import GreetingsMsg from '../Common/GreetingsMsg.jsx'
-import * as ytLogic from '../BusinessLogic/YtLogic.js';
-import * as GApiAuth from '../HttpRequests/GApiAuth';
-import FinalShelfs from '../Classes/FinalShelfs'
-import VideoResponse from '../Classes/VideoResponse'
-
-import VidCounter from '../Classes/VidCounter'
-
-import ShelfsMany from './ShelfsMany.jsx';
-
-import LoadingMain from '../Common/LoadingMain.jsx';
-
-import * as Common from '../BusinessLogic/Common.js';
+import React, { useContext, useEffect, useState } from 'react';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import nextId from "react-id-generator";
+
+import * as Common from '../BusinessLogic/Common.js';
+import * as GApiAuth from '../HttpRequests/GApiAuth';
+import * as ytLogic from '../BusinessLogic/YtLogic.js';
+import { 
+  IsInitFinishedContext, 
+  IsLoggedContext, 
+  UserContext, 
+  UserSettingsContext } from '../Contexts/UserContext.js';
+import FinalShelfs from '../Classes/FinalShelfs'
+import GreetingsMsg from '../Common/GreetingsMsg.jsx'
+import LoadingMain from '../Common/LoadingMain.jsx';
+import ShelfsMany from './ShelfsMany.jsx';
+import VidCounter from '../Classes/VidCounter'
+import VideoResponse from '../Classes/VideoResponse'
+
 
 // UseState and accessing it before api is recieved https://stackoverflow.com/questions/49101122/cant-access-objects-properties-within-object-in-react
 // react infinite scroll https://github.com/CassetteRocks/react-infinite-scroller#readme
@@ -70,9 +72,9 @@ function YoutubeNEW() {
   }
   
   function putUnsortedShelfAtBottom() {
-    let newUser = user;
+    const newUser = user;
     let sort = user.customShelfs.filter(sh => sh.isSorted)
-    let unSort = user.customShelfs.filter(sh => !sh.isSorted)
+    const unSort = user.customShelfs.filter(sh => !sh.isSorted)
     sort = sort.concat(unSort)
     newUser.customShelfs = sort
     setUser(newUser)
@@ -82,12 +84,12 @@ function YoutubeNEW() {
   let count = 1
   let isReady  = !GApiAuth.checkAll();
   while ( isReady ) {
-    console.log('Hack Helper: Logged out?: ' + isReady + ' - ' + count)
+    console.log(`Hack Helper: Logged out?: ${  isReady  } - ${  count}`)
     await Common.sleep(100 * count)
     count = count + 1
     if (count > 40) {
       count = count * 2
-      console.log("Hack Helper: Something went wrong :(  " + count)
+      console.log(`Hack Helper: Something went wrong :(  ${  count}`)
     }
     isReady = !GApiAuth.checkAll()
   }
@@ -151,7 +153,7 @@ function YoutubeNEW() {
     //     return newS
     //   })
       setFinalShelfs(prevShs => {
-        let newS = { ...prevShs }
+        const newS = { ...prevShs }
         if (isNothingLoadedYet()) {
           // newS.shelfs[0] = iData.shelfs[0]
           newS.shelfs[0] = iData.shelfs.shift()
@@ -161,7 +163,7 @@ function YoutubeNEW() {
         });
         return newS;
       })
-      //prevPage = pageLength
+      // prevPage = pageLength
       setPrevPage2(pageLength)
 
       if (pageLength + PAGE_GROWTH > user.customShelfs.length) {
@@ -192,7 +194,7 @@ function YoutubeNEW() {
     console.log('prevPage2, pageLength')
     console.log(prevPage2, pageLength)
     
-    let injectShelfTitle = user.customShelfs.slice(prevPage2, calcShelfSlice() ).map((sh, idx) => {
+    const injectShelfTitle = user.customShelfs.slice(prevPage2, calcShelfSlice() ).map((sh, idx) => {
       return { "videos": shelfstuff[idx], "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
     })
     if (!injectShelfTitle[0].videos[0]) {
@@ -209,7 +211,7 @@ function YoutubeNEW() {
     const fetchThisManyVideosPerShelf = 35 
     shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
 
-    let shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
+    const shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
 
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
@@ -229,11 +231,11 @@ function YoutubeNEW() {
     }
     await preFetchMoreSubs()
     console.log("__TOP___ {prevPage, pageLength} ", prevPage2, ', ', pageLength)
-    let shelfsActs = await _fetchActivities()    
+    const shelfsActs = await _fetchActivities()    
 
-    let shelfVids = await _fetchVideos(shelfsActs)
+    const shelfVids = await _fetchVideos(shelfsActs)
 
-    let iData = injectData(shelfVids)
+    const iData = injectData(shelfVids)
     console.log('iData')
     console.log('iData')
     console.log('iData')

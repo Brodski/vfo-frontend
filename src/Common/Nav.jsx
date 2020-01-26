@@ -1,18 +1,14 @@
-import React,  { useState, useContext, useEffect, Fragment } from 'react';
-import { IsLoggedContext, UserSettingsContext, UserContext } from '../Contexts/UserContext.js';
 import { Link } from 'react-router-dom'
-//import Common                    from '../BusinessLogic/Common.js';
-import * as Common                    from '../BusinessLogic/Common.js';
+import React,  { Fragment, useContext, useEffect, useState } from 'react';
 
-import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
-
-
-import Logo from './Logo.jsx'
-
-import LoginButton from './LoginButton'
 import M from 'materialize-css';
+
+import * as Common                    from '../BusinessLogic/Common.js';
+import  * as GApiAuth                   from '../HttpRequests/GApiAuth';
+import { IsLoggedContext, UserContext, UserSettingsContext } from '../Contexts/UserContext.js';
+import LoginButton from './LoginButton'
+import Logo from './Logo.jsx'
 import NavImage from "../Images/navbar/green-depth.jpg";
-import Pic from "../Images/navbar/profile-pic.png"
 
 //class Nav extends React.Component {
 //const Nav = async () => {

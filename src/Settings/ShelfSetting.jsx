@@ -1,11 +1,13 @@
 /* eslint-disable no-new */
-import React, { useState, useContext, useEffect } from 'react';
-import * as stLogic from '../BusinessLogic/SettingsLogic';
-import FilterDialog from './FilterDialog.jsx';
-import RenameDialog from './RenameDialog.jsx';
+import React, { useContext, useEffect, useState } from 'react';
+
 import Sortable from 'sortablejs';
 import nextId from "react-id-generator";
+
+import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { UserContext, UserSettingsContext } from '../Contexts/UserContext.js'
+import FilterDialog from './FilterDialog.jsx';
+import RenameDialog from './RenameDialog.jsx';
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////

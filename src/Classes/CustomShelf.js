@@ -1,4 +1,3 @@
-
 class CustomShelf {
   constructor() {
     this.title = null;

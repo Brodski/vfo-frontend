@@ -1,14 +1,17 @@
-import React, { useState, useContext, useEffect, Fragment } from 'react';
-import GreetingsMsg from '../Common/GreetingsMsg.jsx'
-import * as stLogic from '../BusinessLogic/SettingsLogic';
-import { UserContext, UserSettingsContext, IsInitFinishedContext } from '../Contexts/UserContext.js'
-import Footer from '../Common/Footer.jsx';
-import AllShelfs from './AllShelfs.jsx';
-import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
-import PostSave                      from './PostSave.jsx';
-import LoadingMain                  from '../Common/LoadingMain.jsx';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 
+import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
+import * as stLogic from '../BusinessLogic/SettingsLogic';
+import { 
+  IsInitFinishedContext, 
+  UserContext, 
+  UserSettingsContext } from '../Contexts/UserContext.js'
+import AllShelfs from './AllShelfs.jsx';
+import Footer from '../Common/Footer.jsx';
+import GreetingsMsg from '../Common/GreetingsMsg.jsx'
 import HowTo from './HowTo'
+import LoadingMain                  from '../Common/LoadingMain.jsx';
+import PostSave                      from './PostSave.jsx';
 
 // to consider... https://www.npmjs.com/package/choices.js
 //  https://www.npmjs.com/package/react-dialog

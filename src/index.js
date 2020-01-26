@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './CSS/index.css';
-import App from './App.jsx';
-import * as serviceWorker from './CSS/serviceWorker';
-//import 'materialize-css/dist/css/materialize.min.css'
+
 import 'materialize-css/dist/css/materialize.css'
 import 'materialize-css/dist/js/materialize.js' 
+
+import './CSS/index.css';
 import './CSS/mysass.scss'
+import * as serviceWorker from './CSS/serviceWorker';
+import App from './App.jsx';
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

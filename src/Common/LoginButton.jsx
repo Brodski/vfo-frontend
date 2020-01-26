@@ -1,11 +1,14 @@
-import React,  { useState, useContext, useEffect }  from 'react';
-import { IsLoggedContext } from '../Contexts/UserContext.js';
-import * as GApiAuth        from '../HttpRequests/GApiAuth'
+import React,  { useContext }  from 'react';
+
 import { mdiGoogle  } from '@mdi/js';
 import Icon from '@mdi/react'
 
+import * as GApiAuth        from '../HttpRequests/GApiAuth'
+import { IsLoggedContext } from '../Contexts/UserContext.js';
+
+
 const LoginButton = () => {
-  const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
+  const { isLogged2 } = useContext(IsLoggedContext);
 
   return(    
     <a 

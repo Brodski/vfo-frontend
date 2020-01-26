@@ -3,9 +3,10 @@
 /* See not below */
 
 import React from 'react';
-import moment from 'moment';
-import humanFormat from 'human-format';
+
 import PropTypes from 'prop-types';
+import humanFormat from 'human-format';
+import moment from 'moment';
 
 // https://github.com/JsCommunity/human-format
 

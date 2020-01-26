@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-// import { User, CustomShelf } from '../Classes/User';
 import  * as GApiAuth from './GApiAuth';
 
-const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localhost:8080
+const SPRING_BACKEND= `http://${process.env.REACT_APP_SPRINGB_DOMAIN}` // localhost:8080
 
 axios.defaults.baseURL = SPRING_BACKEND;
 

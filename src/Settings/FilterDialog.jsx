@@ -1,18 +1,14 @@
-﻿import React, { useEffect, useState, useContext } from 'react';
-import ReactDOM from 'react-dom';
+﻿import React, { useContext, useEffect, useState } from 'react';
+
 import Modal from 'react-modal';
-import Filter from '../Classes/Filter';
-import { mdiTimelapse } from '@mdi/js'; 
-import Icon from '@mdi/react'
-//import Pic from './clock.png'
-import Pic from '../Images/cogs2.png'
-//https://github.com/reactjs/react-modal
-import M from 'materialize-css'
 import PropTypes from 'prop-types';
-import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from '../Contexts/UserContext.js'
+
+import { UserSettingsContext } from '../Contexts/UserContext.js'
+import Filter from '../Classes/Filter';
+import Pic from '../Images/cogs2.png'
+
 
 function FilterDialog(props){
-  const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
   // console.log(" dialog props")
 //  console.log(props)
