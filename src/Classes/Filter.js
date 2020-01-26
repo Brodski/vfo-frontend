@@ -1,5 +1,3 @@
-
-
 class Filter {
   constructor(id) {
     this.minDuration = 0;
@@ -7,4 +5,4 @@ class Filter {
     this.channelId = id;
   }
 }
-export default Filter
+export default Filter;

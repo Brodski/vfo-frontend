@@ -7,9 +7,9 @@
   display: flex;
   justify-content: space-between;
   background-color: $collection-bg-main;
-   &:hover{
-     background-color: $collection-bg-hover-c; 
-    }
+  &:hover {
+    background-color: $collection-bg-hover-c;
+  }
 }
 
 .set-top-bothalf {
@@ -17,18 +17,18 @@
   margin-right: 1em;
   display: flex;
   justify-content: flex-end;
-    .btn {
-      background-color: $nav-btn-color !important;
-    }
+  .btn {
+    background-color: $nav-btn-color !important;
+  }
 }
 #add-more-btn.btn {
-      background-color: $nav-btn-color !important;   
+  background-color: $nav-btn-color !important;
 }
 #about-container {
   min-height: 50em;
 }
 
-.shelf-title-wrap{
+.shelf-title-wrap {
   display: flex;
   justify-content: space-between;
   min-height: 2.5em;
@@ -41,14 +41,13 @@ div.subListWrapper {
   background-color: $collection-bg-under;
 }
 
-.set-sh-textaux { 
+.set-sh-textaux {
   @include truncate(1);
 }
 
-.set-sh-unsort-pad{
-  margin-left: 1.5em;  
+.set-sh-unsort-pad {
+  margin-left: 1.5em;
 }
-
 
 .timelapse-icon {
   width: 10px;
@@ -57,30 +56,28 @@ div.subListWrapper {
   background-color: transparent;
 }
 
-
 .unsort-shelf {
   margin-bottom: 3em;
 }
 
-.set-howto{
+.set-howto {
   position: relative;
   bottom: 0em;
 }
 
 .set-howto2 {
-  margin-left: .1em;
+  margin-left: 0.1em;
 }
 
 .set-howto-aux {
-  &:hover{
+  &:hover {
     cursor: pointer;
-   }
+  }
 }
 
 .set-top-title {
   display: flex;
-  margin-right: .5em;
-  
+  margin-right: 0.5em;
 }
 
 .set-top-tophalf {
@@ -94,64 +91,60 @@ div.subListWrapper {
   font-weight: 600;
 }
 
-.shelf-title2 {  
+.shelf-title2 {
   @include truncate(2);
 }
 
-.shelf-text{
+.shelf-text {
   padding: 10px;
   font-size: 1.4em;
-  color: #000
+  color: #000;
 }
 
-.sub-QHack{
+.sub-QHack {
 }
 
 .unSortDndWrap {
   height: 100%;
 }
 
-
-
 @mixin handle-cursor {
   cursor: move;
   cursor: -webkit-grabbing;
   cursor: grab;
   cursor: -moz-grab;
-  cursor: -webkit-grab;  
+  cursor: -webkit-grab;
 }
 
 .handle-sub {
-  @include handle-cursor()
+  @include handle-cursor();
 }
 
 .handle-shelf {
   margin-left: 0.3em;
   margin-right: 0.3em;
-  @include handle-cursor()
+  @include handle-cursor();
 }
-
 
 .shContainer {
   @extend .z-depth-2;
 }
 
 .dot {
- background: rgba(0,0,0,1) !important;
+  background: rgba(0, 0, 0, 1) !important;
 }
 
 .legend {
- background: rgba(0,0,0,0.7) !important;
- font-size: 1em !important;
- font-weight: 600;
+  background: rgba(0, 0, 0, 0.7) !important;
+  font-size: 1em !important;
+  font-weight: 600;
 }
 
 .carousel {
- height: 100% !important;
+  height: 100% !important;
 }
 
 .cara-help {
- object-fit: contain;
- max-height: $height-modal;  
+  object-fit: contain;
+  max-height: $height-modal;
 }
-

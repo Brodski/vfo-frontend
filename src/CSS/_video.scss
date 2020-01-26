@@ -1,31 +1,27 @@
 .vid-all-text-wrap {
   min-height: 5.3em;
   max-height: 5.3em;
-  //color: $vid-text-color;
 }
 
 .vid-info {
   line-height: 1.1em;
-  padding-top: .3em;
-  font-family: Arial, Helvetica, sans-serif;  
-  color: $vid-txt-info-color
-  /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
-   /* font-family: 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;  */
-   /* font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;  */
+  padding-top: 0.3em;
+  font-family: Arial, Helvetica, sans-serif;
+  color: $vid-txt-info-color;
 }
 
 .vid-timestamp {
- position: absolute;
- background-color: rgba(0, 0, 0, 1);
- bottom: .7em;
- right: .5em;
- color: white;
- font-size: .8em;
- font-weight: 600;
- font-family: Arial, Helvetica, sans-serif;
- line-height: 1.1em;
- padding-left: .1em;
- padding-right: .1em; 
+  position: absolute;
+  background-color: rgba(0, 0, 0, 1);
+  bottom: 0.7em;
+  right: 0.5em;
+  color: white;
+  font-size: 0.8em;
+  font-weight: 600;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.1em;
+  padding-left: 0.1em;
+  padding-right: 0.1em;
 }
 
 .vid-thumbnail-wrap {
@@ -36,37 +32,25 @@
   @include truncate(1);
 }
 
-.vid-title{
- font-weight: 700;
- padding-top: .1em;
- padding-bottom: .1em;
- line-height: 1.1em; /* see vid-info  */
- @include truncate(2);
- color: $vid-txt-title-color
- 
+.vid-title {
+  font-weight: 700;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+  line-height: 1.1em;
+  @include truncate(2);
+  color: $vid-txt-title-color;
 }
 
 .vid-thumnail {
   width: 100%;
 }
 
-
 li.video {
   width: 17em;
   height: 100%;
   overflow: hidden;
-   /* margin-bottom: .6em;
-  margin-left: .3em;
-  margin-right: .3em; */
   padding-top: 0px !important;
-  padding-left: .3em !important;
-  padding-right: .3em !important;
-  padding-bottom: .3em !important;
-
-  /* margin-top: 0px !important;
-  margin-left: .0em !important;
-  margin-right: .0em !important;
-  margin-bottom: .0em !important; */
-  
+  padding-left: 0.3em !important;
+  padding-right: 0.3em !important;
+  padding-bottom: 0.3em !important;
 }
-

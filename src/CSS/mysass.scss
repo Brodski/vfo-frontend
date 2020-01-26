@@ -1,14 +1,13 @@
-@import './variables'; //must be at top
-@import './modal-shared';
-@import './filter-modal';
-@import './rename-modal';
-@import './youtube';
-@import './selectbox';
-@import './video';
-@import './settings';
-@import './navbar';
+@import "./variables"; //must be at top
+@import "./modal-shared";
+@import "./filter-modal";
+@import "./rename-modal";
+@import "./youtube";
+@import "./selectbox";
+@import "./video";
+@import "./settings";
+@import "./navbar";
 
- 
 body {
   background-color: $body-color;
   margin: 0;
@@ -20,7 +19,6 @@ body {
   height: 100%;
   overflow: auto;
 }
-
 
 li {
   .btn {

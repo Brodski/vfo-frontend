@@ -10,33 +10,29 @@ $nav-btn-color: #9c27b0; // = purple
 //$btn-color: color("grey", "darken-3");
 //$btn-color: color("purple", "lighten-2");
 
-$body-color: color('grey' , 'lighten-4');
-$body-secondary: color('grey' , 'lighten-4');
+$body-color: color("grey", "lighten-4");
+$body-secondary: color("grey", "lighten-4");
 
 $primary-color: $nav-bg !default;
 $secondary-color: $nav-bg !default;
-$primary-color-light: lighten($primary-color, 15%) ;
-$primary-color-dark: darken($primary-color, 15%) ;
-
+$primary-color-light: lighten($primary-color, 15%);
+$primary-color-dark: darken($primary-color, 15%);
 
 $yt-shelf-divider: rgba(44, 45, 87, 0.6);
 
-$vid-txt-title-color: color('grey', 'darken-4');
-$vid-txt-info-color:color('grey', 'darken-4');
+$vid-txt-title-color: color("grey", "darken-4");
+$vid-txt-info-color: color("grey", "darken-4");
 $yt-shelf-txt-color: $vid-txt-title-color;
 $yt-greeting-color: black;
 $btn-color: #474747;
 $icon-size: 2em;
 
-
-////////////////////// Collection ///////////////////////////////
-//
 // Nice Grey Combo
 // $collection-title-color: #b3b3b3;
 // $collection-bg-main: #e6e6e6;
 //
 // Nice White Feel
-// 
+//
 // $collection-title-color: #f9faff;
 // $collection-title-txt-c: black;
 // $collection-bg-main: #ffffff;
@@ -48,7 +44,7 @@ $collection-title-txt-c: whitesmoke;
 $collection-bg-main: #f5f5f5;
 $collection-bg-text-c: #3e4fc1;
 $collection-bg-hover-c: #ddd;
-$collection-bg-under: color('grey', 'lighten-1');
+$collection-bg-under: color("grey", "lighten-1");
 $collection-border: rgba(39, 6, 36, 0.6);
 @import "../../node_modules/materialize-css/sass/materialize";
 

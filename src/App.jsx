@@ -11,31 +11,16 @@ import moment from 'moment';
 
 import * as Common from './BusinessLogic/Common';
 import * as GApiAuth from './HttpRequests/GApiAuth'
-import { 
-  IsInitFinishedContext, 
-  IsLoggedContext, 
-  UserContext, 
-  UserSettingsContext } from './Contexts/UserContext'
+import {
+  IsInitFinishedContext,
+  IsLoggedContext,
+  UserContext,
+  UserSettingsContext
+} from './Contexts/UserContext'
 import About from './Common/Home.jsx';
 import Nav from './Common/Nav.jsx';
 import SettingsNEW from './Settings/SettingsMain.jsx';
 import YoutubeNEW from './Youtube/YoutubeMain.jsx';
-
-// $ npm install --save moment <------For iso 8601 duration conversion
-// $ npm install --save sortablejs 
-// $ npm install --save react-modal
-// $ npm install --save react-infinite-scroller
-// $ npm install --save react-id-generator
-// $ npm install --save env-cmd 
-// $ npm install --save react-loading
-// $ npm i --save install materialize-css@next
-// $ npm install --save @mdi/font
-// $ npm install --save @mdi/react @mdi/js
-// $ npm install --save node-sass
-// $ npm install --save human-format
-// $ npm install react-responsive-carousel --save
-// $ npm install --save prop-types
-// $ npm i --save-dev eslint-plugin-sort-imports-es6-autofix
 
 function App() {
 
@@ -45,13 +30,12 @@ function App() {
   const [isInitFinished2, setIsInitFinished2] = useState(false)
 
   async function initGApi() {
-    
-    const GoogleAuth = await GApiAuth.initGoogleAPI()  
+
+    const GoogleAuth = await GApiAuth.initGoogleAPI()
 
     if (GApiAuth.isHeSignedIn() && user.isDemo) {
       await Common.loginAndSet(setUser, setUserSettings)
     }
-    
 
     setIsInitFinished2(true)
     setIsLogged2(GApiAuth.isHeSignedIn())

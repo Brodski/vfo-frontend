@@ -4,34 +4,34 @@
 }
 
 svg.svg-googlecolor {
-    path {
-     //fill: blue;
-     stroke-width: .3;
-     stroke: teal;
-     }
-    vertical-align: middle;
-    margin-bottom: 4px;
-    margin-right: 3px;
+  path {
+    //fill: blue;
+    stroke-width: 0.3;
+    stroke: teal;
   }
-  svg.svg-mygoogle2 {
-     path {
-     fill: $nav-text;
-     }
-    vertical-align: middle;
-    margin-bottom: 4px;
-    margin-right: 3px;
+  vertical-align: middle;
+  margin-bottom: 4px;
+  margin-right: 3px;
+}
+svg.svg-mygoogle2 {
+  path {
+    fill: $nav-text;
   }
-  
-.nav-wrapper{
+  vertical-align: middle;
+  margin-bottom: 4px;
+  margin-right: 3px;
+}
+
+.nav-wrapper {
   height: 50px;
   background-color: $nav-bg;
-  @extend .z-depth-2
-} 
+  @extend .z-depth-2;
+}
 
 .profile-pic {
   border-radius: 50%;
   height: 2.5em;
   margin: auto;
-  margin-left: .5em;
-  margin-right: .5em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
 }

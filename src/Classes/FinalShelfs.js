@@ -1,16 +1,15 @@
-import Filter from './Filter';
-import VideoResponse from './VideoResponse'
+import Filter from "./Filter";
+import VideoResponse from "./VideoResponse";
 
 class FinalShelfs {
   constructor() {
     this.shelfs = [
       {
-        title: '',
+        title: "",
         filters: [new Filter()],
-          videos:
-            [new VideoResponse() ]
-        }
-      ]
+        videos: [new VideoResponse()]
+      }
+    ];
   }
-} 
-export default FinalShelfs
+}
+export default FinalShelfs;

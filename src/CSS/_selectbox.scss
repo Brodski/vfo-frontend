@@ -3,8 +3,8 @@
 //////////////////////////////////////////////////////////////
 
 $color--drop-hover: #000000;
-$color--drop-bg: rgba(205, 209, 211, .5);
-$color--drop-arrow: #7B7B7B;
+$color--drop-bg: rgba(205, 209, 211, 0.5);
+$color--drop-arrow: #7b7b7b;
 $color--text: black;
 
 .select {
@@ -26,7 +26,7 @@ $color--text: black;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    
+
     &:-ms-expand {
       display: none;
     }
@@ -34,15 +34,15 @@ $color--text: black;
       color: $color--drop-hover;
       background: $color--drop-bg;
     }
-  
+
     &:disabled {
       opacity: 0.5;
       pointer-events: none;
     }
   }
 }
-      
-.select__arrow{
+
+.select__arrow {
   position: absolute;
   top: 16px;
   right: 15px;

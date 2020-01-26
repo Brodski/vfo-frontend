@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
@@ -15,9 +15,9 @@ const HowTo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const TheCarousel = () => {
-    return(
-      <Carousel 
-        showArrows={true} 
+    return (
+      <Carousel
+        showArrows={true}
         showStatus={false}
         showThumbs={false}
         dynamicHeight={true}
@@ -25,7 +25,7 @@ const HowTo = () => {
         infiniteLoop={true}
       >
         <div>
-          <img className="cara-help" src={Drag2} />            
+          <img className="cara-help" src={Drag2} />
           <p className="legend">Click & drag to order your subscriptions</p>
         </div>
         <div>
@@ -48,29 +48,29 @@ const HowTo = () => {
     )
   }
 
-  return(
+  return (
     <Fragment>
       {/* Modal Trigger */}
-      <div className='set-howto2 valign-wrapper'> 
+      <div className='set-howto2 valign-wrapper'>
         <i
           className="set-howto-aux  z-depth-0 material-icons"
-          onClick={() => { setIsModalOpen(true);  }}
+          onClick={() => { setIsModalOpen(true); }}
         >info_outline
         </i>
       </div>
 
       {/* Modal Content */}
-      <Modal 
+      <Modal
         isOpen={isModalOpen}
-        onRequestClose={() => {setIsModalOpen(false)}}
+        onRequestClose={() => { setIsModalOpen(false) }}
         shouldCloseOnEsc={true}
         className="Modal "
         overlayClassName="Overlay"
       >
         {/* solves a mem-leak . "To fix, cancel all subscriptions and async..." */}
-        {isModalOpen ? <TheCarousel /> : null }
+        {isModalOpen ? <TheCarousel /> : null}
       </Modal>
     </Fragment>
-    );
-  }
-  export default HowTo
+  );
+}
+export default HowTo

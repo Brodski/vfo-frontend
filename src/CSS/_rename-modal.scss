@@ -1,4 +1,3 @@
-
 .rename-content {
   padding: 1em;
   width: 20em;
@@ -9,25 +8,23 @@
   width: 20em;
 }
 
-.rename-icon{
-  color: #bfbaba; 
+.rename-icon {
+  color: #bfbaba;
   margin-top: 5px;
   margin-right: 5px;
-  &:hover{
+  &:hover {
     cursor: pointer;
-   }
- }
-  
-  .rename-image2 {
-    max-height: 15em;
-    min-height: 10.0em;
-    height: 100%;
-  
   }
-  
-  
-  .rename-mod-btn {
-   display: flex;
-   justify-content: space-around;
-   margin-top: .5em;
-  }
+}
+
+.rename-image2 {
+  max-height: 15em;
+  min-height: 10em;
+  height: 100%;
+}
+
+.rename-mod-btn {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0.5em;
+}

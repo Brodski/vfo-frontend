@@ -2,29 +2,30 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
-import { 
-  IsInitFinishedContext, 
-  UserContext, 
-  UserSettingsContext } from '../Contexts/UserContext.js'
+import {
+  IsInitFinishedContext,
+  UserContext,
+  UserSettingsContext
+} from '../Contexts/UserContext.js'
 import AllShelfs from './AllShelfs.jsx';
 import Footer from '../Common/Footer.jsx';
 import GreetingsMsg from '../Common/GreetingsMsg.jsx'
 import HowTo from './HowTo'
-import LoadingMain                  from '../Common/LoadingMain.jsx';
-import PostSave                      from './PostSave.jsx';
+import LoadingMain from '../Common/LoadingMain.jsx';
+import PostSave from './PostSave.jsx';
 
 const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
   const { isInitFinished2 } = useContext(IsInitFinishedContext);
-  
+
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   useEffect(() => {
     console.log("\n\n USE EFFECT \n")
     setUserSettings(user)
   }, []);
-  
+
   function setAndManageData(auxNewCustomShelfs) {
     //TODO looks a bit silly
     setUserSettings(prevUserSetting => {
@@ -36,13 +37,13 @@ const SettingsNEW = () => {
       let newS = { ...prevUserSetting }
       newS.customShelfs = auxNewCustomShelfs
       return newS
-     })    
+    })
 
   }
 
   async function save() {
     console.log('----------- SAVING! -----------')
-    let newSet = { ...userSettings }    
+    let newSet = { ...userSettings }
     let newCustomShelfs = stLogic.queryShelfs(userSettings)
     console.log('newCustomShelfs (after query)')
     console.log('newCustomShelfs (after query)')
@@ -50,8 +51,8 @@ const SettingsNEW = () => {
     console.log('newCustomShelfs (after query)')
     console.log(newCustomShelfs)
 
-    let auxNewCustomShelfs = newCustomShelfs.filter( sh => sh.isSorted)
-    let yourSubscriptionsShelf = newCustomShelfs.filter( sh => !sh.isSorted)[0]
+    let auxNewCustomShelfs = newCustomShelfs.filter(sh => sh.isSorted)
+    let yourSubscriptionsShelf = newCustomShelfs.filter(sh => !sh.isSorted)[0]
 
     // push all the subs (converted to shelfs), which could be found on the left container, to the end of all the other of the shelfs on the right
     if (yourSubscriptionsShelf) {
@@ -60,18 +61,18 @@ const SettingsNEW = () => {
       newSet.customShelfs = auxNewCustomShelfs
     }
     if (!user.isDemo) {
-      newSet.customShelfs = newSet.customShelfs.filter( sh =>  sh.fewSubs[0] )
+      newSet.customShelfs = newSet.customShelfs.filter(sh => sh.fewSubs[0])
       ServerEndpoints.saveUser(newSet)
     }
     setAndManageData(auxNewCustomShelfs)
     setShouldRedirect(true)
-  } 
+  }
 
   const LoadShelfs = () => {
     if (isInitFinished2) {
-      return ( <AllShelfs save={save} /> )
+      return (<AllShelfs save={save} />)
     }
-    return ( <LoadingMain /> )
+    return (<LoadingMain />)
   }
 
   const Customize = () => {
@@ -84,22 +85,22 @@ const SettingsNEW = () => {
 
   return (
     <Fragment>
-      
+
       <div className="container">
         <div className="">
           <div className="set-top-tophalf ">
-            { isInitFinished2 ? <GreetingsMsg isSettingsPage={true} /> : null}    
-            { isInitFinished2 ? <Customize /> : null}    
-          </div>          
+            {isInitFinished2 ? <GreetingsMsg isSettingsPage={true} /> : null}
+            {isInitFinished2 ? <Customize /> : null}
+          </div>
           <div className='div-aux' />
         </div>
-        { shouldRedirect 
-            ? <PostSave /> 
-            : <LoadShelfs />}
+        {shouldRedirect
+          ? <PostSave />
+          : <LoadShelfs />}
         <div className='div-aux about-div-padding' />
       </div>
-      {isInitFinished2 ? <Footer /> : null }
+      {isInitFinished2 ? <Footer /> : null}
     </Fragment>
-    );
+  );
 }
 export default SettingsNEW

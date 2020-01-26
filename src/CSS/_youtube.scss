@@ -1,29 +1,14 @@
-
-.yt-body-wrapper {
-  // padding-left: 1em;
-  // padding-right: 1em;
-  //padding: 1em;
-}
-.yt-shelf-outer-wrap{
-  //@extend .z-depth-5;
+.yt-shelf-outer-wrap {
   margin-top: 1em;
   margin-bottom: 1em;
-  
 }
 
-
 .yt-shelf {
-  /* white-space: nowrap;
-  display: inline-flex;
-  flex-wrap: wrap;  */
-  background-color:  $body-secondary;
-  /* justify-content: center; */
+  background-color: $body-secondary;
 }
 
 .collection {
-  //padding-top: 1em;
   background-color: white;
-  //border-bottom: 0px !important;
 }
 
 .collection-item {
@@ -31,87 +16,54 @@
 }
 
 .yt-shelf-inner-wrap {
-  
-   background-color: $body-secondary;
-
-   
-  //  border-style: none none solid none;
-  //  border-width: .2em;
+  background-color: $body-secondary;
   padding-left: 1em;
   padding-right: 1em;
-   padding-bottom: 1em;   
+  padding-bottom: 1em;
 }
 
 .div-aux {
-  
-  // margin-top: 1em;
-  // margin-bottom: 1em;;
   margin: 1em;
   border-style: none none solid none;
-  
+
   border-width: 2px;
   color: $yt-shelf-divider;
 }
 
-.about-div-padding{
+.about-div-padding {
   margin-bottom: 5em;
-}
-
-.yt-videos-wrap {
-  
 }
 
 .yt-shelf-title {
   color: $yt-shelf-txt-color;
   font-size: 1.8em;
   font-weight: 500;
-  margin-left: .5em;
-  // border-style: none none solid none;
-  // border-width: 2px;
-  // width: 200px;
+  margin-left: 0.5em;
 }
 
 .yt-loadmore-btn {
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
 }
 
-.demo-greeting-wrap{
+.demo-greeting-wrap {
   margin-left: 1em;
   margin-top: 1em;
-  margin-bottom: .5em;  
+  margin-bottom: 0.5em;
 }
 
-
-.profile-msg { // see yt-shelf-inner-wrap for border
+.profile-msg {
   color: $yt-greeting-color;
   font-size: 1.8em;
   font-weight: 500;
   margin-bottom: 1em;
   margin-left: 1em;
-  // border-style: none none solid none;
-  // border-width: .2em;
-  // border-color: rgba(40, 41, 41, 0.657);
-
 }
 
-.profile-greeting-wrap{
-  margin-left: 1.5em;
-  // margin-right: 1.5em;
-  
-}
 .profile-greeting-wrap {
-  //display: inline-flex;
-  //margin-left: .5em; //see .demo-greeting-wrap
-  //margin-top: 1em;
+  margin-left: 1.5em;
 }
 
-.profile-msg2 { // see yt-shelf-inner-wrap for border
+.profile-msg2 {
   color: $yt-greeting-color;
-  //font-size: 1.8em;
-  //font-weight: 500;
   margin-bottom: 1em;
-
-  // border-style: none none solid none;
-  // border-width: .2em;
-  // border-color: rgba(40, 41, 41, 0.657);
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Footer = () => {
-  return(
+  return (
     <footer key='someFooter' className="page-footer">
       <div className="container">
         <div className="row">
@@ -15,7 +15,7 @@ const Footer = () => {
               <li><a className="grey-text text-lighten-3" >Contact: cbrodski@gmail.com</a></li>
               <li><a className="grey-text text-lighten-3" href="https://github.com/Brodski/"> Github</a> </li>
               <li><a className="grey-text text-lighten-3" href="https://www.linkedin.com/in/christopher-brodski/">LinkedIn</a></li>
-              
+
             </ul>
           </div>
         </div>

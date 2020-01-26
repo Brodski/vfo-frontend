@@ -13,11 +13,11 @@ import RenameDialog from './RenameDialog.jsx';
 const ShelfSetting = (props) => {
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
 
-  const { shelf: {isSorted} } = props
-  const { shelf: {fewSubs} } = props
-  const { shelf: {title}} = props
+  const { shelf: { isSorted } } = props
+  const { shelf: { fewSubs } } = props
+  const { shelf: { title } } = props
   const { bindToId } = props
-  
+
   ShelfSetting.propTypes = {
     bindToId: PropTypes.string.isRequired,
     shelf: PropTypes.shape({
@@ -27,10 +27,9 @@ const ShelfSetting = (props) => {
     }).isRequired,
   }
   // dont delete subListWrapper
-  const subsDrag = 'subListWrapper' 
+  const subsDrag = 'subListWrapper'
   const shelfDrag = 'draggable-shelf'
   const emptySpaceDrag = 'unSortDndWrap'
-
 
   // forceUpdate() for functional comp workaround https://reactgo.com/react-force-update-render/
   let [, setState] = useState();
@@ -38,7 +37,7 @@ const ShelfSetting = (props) => {
     setState({});
   }
 
-  
+
 
   const saveUi2Settings = () => {
     setUserSettings(prevUserSetting => {
@@ -60,7 +59,7 @@ const ShelfSetting = (props) => {
         saveUi2Settings()
       }
     }
-    
+
     if (groupName === 'shelfsdnd') {
       optionz = { ...optionz, handle: '.handle-shelf' }
     }
@@ -102,9 +101,9 @@ const ShelfSetting = (props) => {
 
 
   useEffect(() => {
-    makeDraggableShared(`.${subsDrag}`, 'subscriptions')  
-    makeDraggableShared(`.${shelfDrag}`, 'shelfsdnd')     
-    makeDraggableShared(`.${emptySpaceDrag}`, 'subscriptions')  
+    makeDraggableShared(`.${subsDrag}`, 'subscriptions')
+    makeDraggableShared(`.${shelfDrag}`, 'shelfsdnd')
+    makeDraggableShared(`.${emptySpaceDrag}`, 'subscriptions')
   }, [])
 
   // Don't delete sh-Qhack.

@@ -12,37 +12,37 @@ const Video = (props) => {
 
   Video.propTypes = {
     video: PropTypes.shape({
-     contentDetails: PropTypes.object.isRequired,
-     id: PropTypes.string.isRequired,
-     snippet: PropTypes.object.isRequired,
-     statistics: PropTypes.object.isRequired, 
+      contentDetails: PropTypes.object.isRequired,
+      id: PropTypes.string.isRequired,
+      snippet: PropTypes.object.isRequired,
+      statistics: PropTypes.object.isRequired,
     }).isRequired
   }
-  
-  
+
+
   function formatViewCount() {
     let viewCount;
-    if (props.video.statistics.viewCount) { 
-      viewCount   = humanFormat(parseInt(props.video.statistics.viewCount, 10),{ decimals: 1 } ).replace(/\s/g,''); 
+    if (props.video.statistics.viewCount) {
+      viewCount = humanFormat(parseInt(props.video.statistics.viewCount, 10), { decimals: 1 }).replace(/\s/g, '');
     } else {
-      viewCount =""
+      viewCount = ""
     }
     return viewCount
   }
 
   function formatVidLength() {
-    let vDurAux        = moment.duration(props.video.contentDetails.duration) //Convert iso8601 string to object
+    let vDurAux = moment.duration(props.video.contentDetails.duration) //Convert iso8601 string to object
     let vidDuration;
     if (vDurAux.hours() > 0) {
-      vidDuration = `${vDurAux.hours()}:${vDurAux.minutes().toString().padStart(2,0)}:${vDurAux.seconds().toString().padStart(2, 0)}` // if seconds == 3, then "03"   
+      vidDuration = `${vDurAux.hours()}:${vDurAux.minutes().toString().padStart(2, 0)}:${vDurAux.seconds().toString().padStart(2, 0)}` // if seconds == 3, then "03"   
       // vidDuration = vDurAux.hours() + ':' + vDurAux.minutes().toString().padStart(2,0) + ':' + vDurAux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"   
     } else {
-      vidDuration = `${vDurAux.minutes()}:${  vDurAux.seconds().toString().padStart(2, 0)}` // if seconds == 3, then "03"
+      vidDuration = `${vDurAux.minutes()}:${vDurAux.seconds().toString().padStart(2, 0)}` // if seconds == 3, then "03"
     }
     return vidDuration
   }
 
-  
+
   // const { video: {
   //         id,
   //         snippet: {  
@@ -57,10 +57,10 @@ const Video = (props) => {
   //       } = props
   //
   // The destructuring of 3 variables (thumbnail, id, and title) is above. No way is that more readable. The performance gained is negligible. Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
-  let thumbnail   = props.video.snippet.thumbnails.medium.url
-  let id          = props.video.id 
-  let title       = props.video.snippet.title
-  
+  let thumbnail = props.video.snippet.thumbnails.medium.url
+  let id = props.video.id
+  let title = props.video.snippet.title
+
   let channelName = props.video.snippet.channelTitle
   let fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
   // solution to Premium yt vids
