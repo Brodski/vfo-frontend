@@ -58,6 +58,8 @@
         //"no-underscore-dangle": ["error",  { "allow": ["_fetchActivities" ] }],
         "no-underscore-dangle": "off",
 
+        //TODO consistent-ret
+        "consistent-return": "off",
         "react/jsx-boolean-value": "off",
         "react/jsx-one-expression-per-line": "off",
         "jsx-a11y/alt-text": "off",

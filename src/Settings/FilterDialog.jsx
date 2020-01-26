@@ -10,18 +10,17 @@ import Pic from '../Images/cogs2.png'
 
 function FilterDialog(props){
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
-  // console.log(" dialog props")
-//  console.log(props)
   const [modalIsOpen,setIsOpen] = useState(false);
   const [minDur, setMinDur] = useState()
   const [maxDur, setMaxDur] = useState()
   
-  // const {userSettings, bindToId} = {props}
+  const {bindToId} = props
+  const {subObj: {channelName}} = props
 
   FilterDialog.propTypes  = {
     bindToId: PropTypes.string.isRequired,
     subObj: PropTypes.shape({
-      channelId: PropTypes.string.isRequired,
+      channelId: PropTypes.string,
       channelName: PropTypes.string.isRequired,
       filter: PropTypes.object.isRequired,
     }).isRequired
@@ -30,15 +29,12 @@ function FilterDialog(props){
   }
 
   useEffect(() => {
-    // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-    // if (!document.querySelectorAll('#' + props.bindToId)[1]) {
-    if (!document.querySelectorAll(`#${props.bindToId}`)[1] ) {
-      Modal.setAppElement(`#${props.bindToId}`) //TODO, this seems like the if is no longer needed
+    
+    if (!document.querySelectorAll(`#${bindToId}`)[1] ) {
+      Modal.setAppElement(`#${bindToId}`) 
     }
-
     setMinDur(props.subObj.filter.minDuration)
     setMaxDur(props.subObj.filter.maxDuration)
-    // let elems2 = document.querySelectorAll('h5');
     } ,[userSettings])
 
 
@@ -52,8 +48,7 @@ function FilterDialog(props){
   const MaxMinDurationDropdown = ({maxOrMinState, maxOrMinHandler, firstValue}) => {
     return (
       <div className="select">
-        {/* <select className="  browser-default" value={props.maxOrMinState} onChange={props.maxOrMinHandler} > */}
-        <select className="  browser-default" value={maxOrMinState} onChange={maxOrMinHandler} >
+        <select className="  browser-default" value={maxOrMinState} onChange={maxOrMinHandler}>
           <option value={firstValue}> Off  </option>
           <option value="0.5"> 30 seconds </option>
           <option value="1" >  1 minutes </option>
@@ -80,7 +75,7 @@ function FilterDialog(props){
   let subIndex;
   let shelfIndex = 0;
     for (let sh of userSettings.customShelfs) {
-        subIndex =  sh.fewSubs.findIndex( s => s.channelName == props.subObj.channelName)
+        subIndex =  sh.fewSubs.findIndex( s => s.channelName == channelName)
         if (subIndex > -1) { 
           break
         }
@@ -122,7 +117,7 @@ function FilterDialog(props){
         <div className='valign-wrapper'> 
           <a
             className="btn filt-button z-depth-0"
-            onClick={() => { console.log(props); setIsOpen(true);  } }
+            onClick={() => { setIsOpen(true) }}
           >
             <i className="time-icon-help material-icons ">timelapse</i>
           </a>
@@ -143,10 +138,11 @@ function FilterDialog(props){
           <div className="  filt-content">          
             {/* ONE */}
             <div>
-              <h5 className="flow-text"> {props.subObj.channelName}</h5>
+              <h5 className="flow-text"> {channelName}</h5>
               <div className="divider" />
             </div>
             {/* {TWO} */}
+            {/* TODO Could be better */}
             <div>
               <div className="filt-drop-wrap" > 
                 <i className="icon-filt-min hide-on-small-only material-icons ">
@@ -162,7 +158,6 @@ function FilterDialog(props){
                 />
               </div>
               {/* {THREE} */}
-          
               <div className="filt-drop-wrap"> 
                 <i className=" icon-filt-max hide-on-small-only material-icons ">
                 vertical_align_bottom

@@ -1,3 +1,4 @@
+// Variables: last comment https://stackoverflow.com/questions/39785695/how-to-change-default-materialize-theme-colour-in-rails-application
 
 @import "../../node_modules/materialize-css/sass/components/color-variables";
 
@@ -11,12 +12,12 @@ $nav-btn-color: #9c27b0; // = purple
 
 $body-color: color('grey' , 'lighten-4');
 $body-secondary: color('grey' , 'lighten-4');
-////////////////////////////////////////////////////////////////////////////////
+
 $primary-color: $nav-bg !default;
 $secondary-color: $nav-bg !default;
 $primary-color-light: lighten($primary-color, 15%) ;
 $primary-color-dark: darken($primary-color, 15%) ;
-////////////////////////////////////////////////////////////////////////////////
+
 
 $yt-shelf-divider: rgba(44, 45, 87, 0.6);
 
@@ -24,28 +25,15 @@ $vid-txt-title-color: color('grey', 'darken-4');
 $vid-txt-info-color:color('grey', 'darken-4');
 $yt-shelf-txt-color: $vid-txt-title-color;
 $yt-greeting-color: black;
+$btn-color: #474747;
+$icon-size: 2em;
+
 
 ////////////////////// Collection ///////////////////////////////
-
-
 //
 // Nice Grey Combo
-//
 // $collection-title-color: #b3b3b3;
 // $collection-bg-main: #e6e6e6;
-
-//
-// Nice Blue Feel
-//
-//$collection-title-color: #2539c0;
-$collection-title-color: $primary-color;
-$collection-title-txt-c: whitesmoke;
-$collection-bg-main: #f5f5f5;
-$collection-bg-text-c: #3e4fc1;
-//$collection-bg-hover-c: color('grey', 'lighten-1');
-$collection-bg-hover-c: #ddd;
-
-
 //
 // Nice White Feel
 // 
@@ -54,36 +42,15 @@ $collection-bg-hover-c: #ddd;
 // $collection-bg-main: #ffffff;
 // $collection-bg-text-c: black;
 
-
-
-//$collection-bg-under: $collection-bg-main;
+// Nice Blue
+$collection-title-color: $primary-color;
+$collection-title-txt-c: whitesmoke;
+$collection-bg-main: #f5f5f5;
+$collection-bg-text-c: #3e4fc1;
+$collection-bg-hover-c: #ddd;
 $collection-bg-under: color('grey', 'lighten-1');
-
-//$collection-bg-under: cadetblue;
-//$collection-bg-color: steelblue;
-//$collection-border: #5a1616;
 $collection-border: rgba(39, 6, 36, 0.6);
-//$collection-title-color: rgb(158, 206, 206);
-
-
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-
-// $vid-txt-title-color: color('brown', 'lighten-5');
-// $vid-txt-info-color:color('grey', 'lighten-1');
-
-//  $secondary-color: color("amber", "lighten-1") !default;
-
-//$secondary-color: color("grey", "darken-3") !default;
-
-// $success-color: color("green", "base") ;
-// $error-color: color("red", "base") ;
-// $link-color: color("light-blue", "darken-1") ;
-
 @import "../../node_modules/materialize-css/sass/materialize";
-
-////////////////////////////////////////////////////////////////
 
 @mixin truncate($lines) {
   overflow: hidden;
@@ -92,6 +59,3 @@ $collection-border: rgba(39, 6, 36, 0.6);
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $lines;
 }
-
-
-// last comment https://stackoverflow.com/questions/39785695/how-to-change-default-materialize-theme-colour-in-rails-application

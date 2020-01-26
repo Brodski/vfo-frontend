@@ -1,14 +1,9 @@
-
-
-
 /* Dont delte, used by SettingLogic.logIds() */
 .subitem {
   margin: 0;
   height: 60px;
   border-top: 1px solid $collection-border;
   border-bottom: 1px solid $collection-border;
-  // border-left: 1px solid $collection-border;
-  // border-right: 1px solid $collection-border;
   display: flex;
   justify-content: space-between;
   background-color: $collection-bg-main;
@@ -39,17 +34,11 @@
   min-height: 2.5em;
   background-color: $collection-title-color;
   color: $collection-title-txt-c;
-  //border-radius: 10px 10px 0 0;
-  
 }
 
 /* DONT delete this, used by SettingsLogic.logAllShelfs() & SettingsLogc.logIds() */
 div.subListWrapper {
   background-color: $collection-bg-under;
- // background-color: transparent;
-}
-.set-topbody {
-  // margin: 1em;
 }
 
 .set-sh-textaux { 
@@ -70,9 +59,6 @@ div.subListWrapper {
 
 
 .unsort-shelf {
-   /* width: 300px;  */
-   /* background-color: lightgoldenrodyellow; */
-  /* height:100%; */
   margin-bottom: 3em;
 }
 
@@ -83,9 +69,6 @@ div.subListWrapper {
 
 .set-howto2 {
   margin-left: .1em;
-  // margin-left: .6em;
-  // margin-right: .6em;
-  // margin-top: .5em;
 }
 
 .set-howto-aux {
@@ -121,20 +104,11 @@ div.subListWrapper {
   color: #000
 }
 
-
-.set-custom-shelf {
-  //@extend .blue-grey, .darken-2;   // .grey-text, .text-lighten-5; 
-  //@extend .red, .darken-2;   // .grey-text, .text-lighten-5; 
-}
-
 .sub-QHack{
- 
 }
 
 .unSortDndWrap {
-  //background-color: darkslategrey;
   height: 100%;
-  /* min-height: 40px; */
 }
 
 
@@ -156,3 +130,28 @@ div.subListWrapper {
   margin-right: 0.3em;
   @include handle-cursor()
 }
+
+
+.shContainer {
+  @extend .z-depth-2;
+}
+
+.dot {
+ background: rgba(0,0,0,1) !important;
+}
+
+.legend {
+ background: rgba(0,0,0,0.7) !important;
+ font-size: 1em !important;
+ font-weight: 600;
+}
+
+.carousel {
+ height: 100% !important;
+}
+
+.cara-help {
+ object-fit: contain;
+ max-height: $height-modal;  
+}
+

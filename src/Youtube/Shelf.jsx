@@ -9,6 +9,10 @@ import Video from './Video.jsx'
 
 const Shelf = props => {
 
+  const {shelfIdx, setNumVids, numVids, shelf} = props
+  const renderMoreNum = 6
+  let numVidzRendered = numVids[0] ? numVids[shelfIdx].numVids  : 0
+
   Shelf.propTypes = {
     shelfIdx: PropTypes.number.isRequired,
     setNumVids: PropTypes.func.isRequired,
@@ -24,35 +28,20 @@ const Shelf = props => {
       title: PropTypes.string.isRequired,
       videos: PropTypes.array.isRequired,
     }).isRequired,
-
   }
-   const {shelfIdx, setNumVids, numVids, shelf} = props
-
-  /*
-  console.log(' ***************** SHELF ***********************')
-  console.log('numVids')
-  console.log(numVids)
-  console.log(shelfIdx)
-  console.log(numVids[shelfIdx])
-  */
-
-  const renderMoreNum = 6
 
   function loadMoreVids() {
-    // if (shelf.videos.length < numVids[shelfIdx].numVids  ) { //isMoreVidsAvailable(){    
-    //   console.log('All vids rendered')
-    // }
+    
     setNumVids(prev => { 
       let newNumVids = { ...prev}
       newNumVids[shelfIdx].numVids = newNumVids[shelfIdx].numVids + renderMoreNum // Render 6 more vids after clicking "More"
       return newNumVids
     })
   }
+
   function isMoreVidsAvailable() { 
     return shelf.videos.length < numVids[shelfIdx].numVids
   }
-
-  let numVidzRendered = numVids[0] ? numVids[shelfIdx].numVids  : 0
 
   const videos = shelf.videos.slice(0, numVidzRendered ).map( (video) => {
     return( 
@@ -64,13 +53,9 @@ const Shelf = props => {
   return(
     <div className=" yt-shelf-inner-wrap">
       <div className=" yt-shelf-title"> {shelf.title} </div>
-      {/* <div className=" yt-videos-wrap" > */}
-      {/* TODO NOTICE THIS!!! COLLECTION UI DIFF */}
-      {/* <ul className="collection yt-shelf row">  */}
       <ul className=" yt-shelf row">  
         {videos}
       </ul>
-      {/* </div> */}
       <div className="yt-loadmore-btn center-align">
         {!isMoreVidsAvailable() ? (
           <a 

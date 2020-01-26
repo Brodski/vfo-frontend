@@ -8,8 +8,10 @@ const PostSave = () => {
   const [doIt, setDoIt] = useState(false)
 
     useEffect(() => {
+
+      // fixes mem-leak. "To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function"
       let t = setTimeout(() => { setDoIt(true) } , 1000)
-      return () => { // "To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function"
+      return () => { 
         clearTimeout(t)
       }      
     })

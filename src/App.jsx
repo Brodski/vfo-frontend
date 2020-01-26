@@ -1,3 +1,10 @@
+/*
+* The App begins by loading googles API from a CDN and soon initializes itself (client, Api-key).
+* It then checks if the user is logged in. If so it get user data from backend. If not it loads a demo profile
+* The app uses Google's OAuth to verify the user; first it sends a token to my backend server then the server verifies the user using Google's Api + that token.
+*
+*
+*/
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -30,10 +37,6 @@ import YoutubeNEW from './Youtube/YoutubeMain.jsx';
 // $ npm install --save prop-types
 // $ npm i --save-dev eslint-plugin-sort-imports-es6-autofix
 
-// get w/ useEffect & useState...... https://www.youtube.com/watch?v=bYFYF2GnMy8
-// useEffect ... forms, button https://reactjs.org/docs/hooks-effect.html 
-// 
-
 function App() {
 
   const [user, setUser] = useState(Common.getMockUser())
@@ -43,7 +46,7 @@ function App() {
 
   async function initGApi() {
     
-    const GoogleAuth = await GApiAuth.initGoogleAPI()  // Usually 500msisSignedIn.get())
+    const GoogleAuth = await GApiAuth.initGoogleAPI()  
 
     if (GApiAuth.isHeSignedIn() && user.isDemo) {
       await Common.loginAndSet(setUser, setUserSettings)
@@ -53,7 +56,7 @@ function App() {
     setIsInitFinished2(true)
     setIsLogged2(GApiAuth.isHeSignedIn())
 
-    // solution to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
+    // solution (?) to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
     while (GoogleAuth == null) {
       console.log("Shits null af ", GoogleAuth)
       await Common.sleep(500)

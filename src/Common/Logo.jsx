@@ -4,7 +4,6 @@ import React from 'react';
 const Logo = () => {
 
   return(
-     //<img src={Logo}></img>
     <svg 
       className="svg-mygoogle2"
       xmlns="http://www.w3.org/2000/svg" 

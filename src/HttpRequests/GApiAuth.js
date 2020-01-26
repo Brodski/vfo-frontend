@@ -1,12 +1,3 @@
-// import * as Common from '../BusinessLogic/Common.js';
-
-import { SECRET_KEYS } from '../api-key';
-
-const SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
-const SPRING_BACKEND = `http://${  process.env.REACT_APP_SPRINGB_DOMAIN}` 
-let GoogleAuth;
-
-
 // ////////////////////////////////////////////////////////////////
 // ////////////////     INITIALIZE CLIENT     /////////////////////
 // ////////////////////////////////////////////////////////////////
@@ -18,8 +9,27 @@ let GoogleAuth;
  * "GoogleAuth" is a singleton class that provides methods to allow the user to sign in with 
  * a Google account, get the user's current sign-in status, get specific data from the user's 
  * Google profile, request additional scopes, and sign out from the current account.
+ *
+ * Scope https://developers.google.com/identity/protocols/googlescopes
+ * Get profile info (id): https://developers.google.com/identity/sign-in/web/people
+ * Serverside Auth https://developers.google.com/identity/protocols/OAuth2WebServer
+ * Serverside Auth https://developers.google.com/identity/sign-in/web/server-side-flow <--- backend
+ * Serverside Auth https://developers.google.com/youtube/v3/guides/authentication
+ * 
+ * REFRENCES: 
+ *
+ *  Github JS API DOCS. https://github.com/google/google-api-javascript-client/blob/master/docs/reference.md
+ *  OTHER JS API DOCS:  https://developers.google.com/identity/sign-in/web/reference 
  */
+// Keeping func-names to stay consistent w/ the code from the google API ref
 // //////////////////////////////////////////////////////////////
+
+import { SECRET_KEYS } from '../api-key';
+
+const SCOPE = "https://www.googleapis.com/auth/youtube.readonly"
+const SPRING_BACKEND = `http://${process.env.REACT_APP_SPRINGB_DOMAIN}` 
+let GoogleAuth;
+
 
 // Had to get out of Dep. cycle,
 function sleep(ms) {
@@ -32,7 +42,6 @@ async function waitForGApiLoad() {
   while (!window.gapi) {
     wait = wait * 2
     console.log("GApi 1 :( GApi NOT EXISTS ");
-
     await sleep(wait)
   }
   console.log("GApi 1 :) GApi EXISTS ");
@@ -43,13 +52,11 @@ async function waitForAuthLoad() {
   while (!window.gapi.auth2) {
     wait = wait * 2
     console.log("GAPI 2 :( gapi.auth2 NOT EXISTS");
-    await sleep(wait); //sleep 100 ms
+    await sleep(wait); 
   }
   console.log("GAPI 2 :) gapi.auth2 EXISTS");
 }
 
-// "You can also now use gapi.client to perform authenticated requests."  instead of auth.init
-// https://developers.google.com/identity/sign-in/web/reference#example
 async function _initClient() {
   let discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
   await window.gapi.client.init({

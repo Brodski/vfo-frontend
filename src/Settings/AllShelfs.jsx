@@ -1,6 +1,7 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 
 import M from 'materialize-css'
+import PropTypes from 'prop-types';
 import nextId  from "react-id-generator";
 
 import * as stLogic from '../BusinessLogic/SettingsLogic';
@@ -8,11 +9,18 @@ import { UserSettingsContext } from '../Contexts/UserContext.js'
 import CustomShelf  from '../Classes/CustomShelf'
 import ShelfSetting from './ShelfSetting.jsx';
 
+
 // SortedShelfs = the containers on the right
 // UnsortedShelfs="Your Subscriptions" on the left
 const AllShelfs = (props) => {
   
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
+  const {save} = props
+
+  AllShelfs.propTypes = {
+    save: PropTypes.func.isRequired 
+  }
+  
 
   useEffect( () => {
     let elems = document.querySelectorAll('select');
@@ -22,7 +30,7 @@ const AllShelfs = (props) => {
 
   
   function addShelf() {
-    // This is preserve changes the user made to the drag n drop
+    
     // Get the current state of all shelfs, then push new shelf
     setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
@@ -43,9 +51,6 @@ const AllShelfs = (props) => {
     aux_unSortedSh.forEach( sh => {
       sh.fewSubs.forEach(sub => { unSortedSubs = unSortedSubs.concat(sub) })
     })
-    // aux_unSortedSh.map(sh => {
-    //   return sh.fewSubs.map(sub => { unSortedSubs = unSortedSubs.concat(sub) })
-    // })
     let unSortedSh = [new CustomShelf()]
     unSortedSh[0].isSorted = false
     unSortedSh[0].title = "Your Subscriptions"
@@ -75,8 +80,7 @@ const AllShelfs = (props) => {
           key={id} 
           bindToId={id} 
           shelf={sh} 
-          // userSettings={props.userSettings} 
-          // setUserSettings={props.setUserSettings}
+          
         />
         )
     })
@@ -95,7 +99,7 @@ const AllShelfs = (props) => {
       </div>
       )
   }
-  //UnsortedShelfs="Your Subscriptions" on the left
+  // UnsortedShelfs="Your Subscriptions" on the left
   const UnSortedShelfs = () => {
     let unSortedSh = prepTheYourSubscriptionsShelf()
     
@@ -106,8 +110,6 @@ const AllShelfs = (props) => {
           key={id} 
           bindToId={id} 
           shelf={sh} 
-          // userSettings={props.userSettings} 
-          // setUserSettings={props.setUserSettings}
         />
       )
     })
@@ -122,7 +124,7 @@ const AllShelfs = (props) => {
   return (
     <Fragment>
       <div className="set-top-bothalf">
-        <a className=" btn " onClick={props.save}>Save</a> 
+        <a className=" btn " onClick={save}>Save</a> 
       </div>
       <div className="row ">
         <div className="col m6 s12">

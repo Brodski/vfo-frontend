@@ -14,8 +14,7 @@ class User {
     subz.forEach(ytSub => {
       this.addSub(ytSub)
     })
-    // TODO
-    // need to update username and pic
+    // TODO need to update username and pic
     this.username = data.username
     this.pictureUrl = data.pictureUrl
     this.isDemo = false
@@ -75,21 +74,6 @@ class User {
         })
       })
     })
-    // for (let sh of this.customShelfs) {
-    //   for (let sub of sh.fewSubs) {
-    //     for (let rmS of removedSubsArr) {
-    //       if (rmS.channelId == sub.channelId) {
-    //         let idz = sh.fewSubs.indexOf(sub)
-    //         console.log(sub)
-    //         sh.fewSubs.splice(idz, 1)
-    //         if (sh.fewSubs.length === 0) {
-    //           let idz2 = this.customShelfs.indexOf(sh)
-    //           this.customShelfs.splice(idz2, 1)
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
   }
 }
 export default User

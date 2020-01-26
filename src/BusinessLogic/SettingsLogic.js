@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import CustomShelf from '../Classes/CustomShelf'
 
 // Debug button
@@ -48,11 +49,8 @@ export function queryShelfs(userSettings, allowEmpty = false) {
     tempShelf.title = shelfsQ[i].dataset.name
 
     tempShelf.isSorted = (shelfsQ[i].dataset.issorted == 'true')
-
-     
-     // eslint-disable-next-line no-restricted-syntax
+    
      for (let sub of shelfsQ[i].querySelectorAll('.sub-QHack')) {
-    //shelfsQ[i].querySelectorAll('.sub-QHack').array.forEach( sub => {
       console.log('sub-qhack sub ' + i)
       console.log(sub)
       let idxs = _findSubIndex(sub.dataset.name, userSettings)
@@ -69,15 +67,15 @@ export function queryShelfs(userSettings, allowEmpty = false) {
   return newCustomShelfs
 }
 
-// eslint-disable-next-line no-underscore-dangle
 function _findSubIndex(chName, userSettings) {
   let subIndex;
   let shelfIndex = 0;
-   // eslint-disable-next-line no-restricted-syntax
+
    for (let sh of userSettings.customShelfs) {
-  // userSettings.customShelfs.forEach( sh => {
     subIndex = sh.fewSubs.findIndex(s => s.channelName === chName) 
-    if (subIndex > -1) { break }
+    if (subIndex > -1) { 
+      break 
+    }
     shelfIndex = shelfIndex + 1;
   }
   return { shelfIndex, subIndex }

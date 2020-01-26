@@ -9,20 +9,6 @@ class FinalShelfs {
         filters: [new Filter()],
           videos:
             [new VideoResponse() ]
-            //  [{
-            //    contentDetails: {},
-            //    snippet: {
-            //      thumbnails: {
-            //        default: {},
-            //        medium: {},
-            //        high: {},
-            //        standard: {},
-            //        maxres: {},
-            //      }
-            //    },
-            //    statistics: {},
-            //  }
-            // ]
         }
       ]
   }

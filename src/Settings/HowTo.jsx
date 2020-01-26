@@ -1,5 +1,6 @@
 import React, {Fragment, useState} from 'react';
 
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import Modal from 'react-modal';
 
@@ -9,19 +10,16 @@ import Filt6 from '../Images/Tutorial/tut-filt-combo2.png';
 import Order1 from '../Images/Tutorial/order2.png';
 import Order2 from '../Images/Tutorial/notice-with-arrow.png';
 
-
 const HowTo = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const TheCarousel = () => {
     return(
-      // <div className="carousel-wrap ">
       <Carousel 
         showArrows={true} 
         showStatus={false}
         showThumbs={false}
-        
         dynamicHeight={true}
         useKeyboardArrows={true}
         infiniteLoop={true}
@@ -47,7 +45,6 @@ const HowTo = () => {
           <p className="legend">Loading order </p>
         </div>
       </Carousel>
-    // </div>
     )
   }
 
@@ -60,24 +57,17 @@ const HowTo = () => {
           onClick={() => { setIsModalOpen(true);  }}
         >info_outline
         </i>
-        
-        {/* <a
-          className="btn filt-button z-depth-0"
-          onClick={() => { setIsModalOpen(true);  } }
-        >
-          How to
-        </a> */}
       </div>
 
       {/* Modal Content */}
       <Modal 
         isOpen={isModalOpen}
-        onRequestClose={() => {setIsModalOpen(false)} }
-        shouldCloseOnEsc={ true}
+        onRequestClose={() => {setIsModalOpen(false)}}
+        shouldCloseOnEsc={true}
         className="Modal "
         overlayClassName="Overlay"
       >
-        {/* Idk if this is hacky, but solves a mem-leak . "To fix, cancel all subscriptions and async..." */}
+        {/* solves a mem-leak . "To fix, cancel all subscriptions and async..." */}
         {isModalOpen ? <TheCarousel /> : null }
       </Modal>
     </Fragment>

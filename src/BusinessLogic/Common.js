@@ -9,7 +9,7 @@ import User from '../Classes/User';
 
 
 
-// Had to get out of Dep. cycle,
+  // Had to get out of Dep. cycle,
   export function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
@@ -35,21 +35,7 @@ import User from '../Classes/User';
       if (!doesMatches) {
         removedSubs.push(backS)
       }
-    } )
-    // for (let backS of allBackendSubz) {
-    //   doesMatches = false
-    //   for (let ytS of subsFromYt) {
-    //     if (ytS.snippet.resourceId.channelId == backS.channelId) {
-    //       doesMatches = true
-    //       break
-    //     }
-    //   }
-    //   //if this sub from backend doesnt exist in subsFrom Yt, then it was removed
-    //   if (!doesMatches) {
-    //     removedSubs.push(backS)
-    //   }
-    // }
-
+    })
     return removedSubs
   }
 
@@ -63,7 +49,7 @@ import User from '../Classes/User';
         uSh.fewSubs.forEach( sub => {
           if (ytS.snippet.resourceId.channelId === sub.channelId) {
             doesMatches = true;
-            
+            return
           }
         })
       })
@@ -73,21 +59,6 @@ import User from '../Classes/User';
       })
     return newSubs
   }
-  // for (let ytS of subsFromYt) {
-  //   let doesMatches = false;
-  //   for (let uSh of subsFromBackend.customShelfs) {
-  //     for (let sub of uSh.fewSubs) {
-  //       if (ytS.snippet.resourceId.channelId == sub.channelId) {
-  //         doesMatches = true;
-  //         break
-  //       }
-  //     }
-  //   }
-  //   if (doesMatches == false) {
-  //     newSubs.push(ytS)
-  //   }
-  // }
-
 
   export async function processUserFromServer(res) {
 
@@ -527,11 +498,6 @@ import User from '../Classes/User';
   uSubx.channelName = 'Google Developers'
   uSubx.channelId = 'UC_x5XG1OV2P6uZZ5FSM9Ttw';
   uSubx.filter.channelId = "UC_x5XG1OV2P6uZZ5FSM9Ttw";
-
-  // let uSub5 = new Subscription()
-  // uSub5.channelName = 'Maddox'
-  // uSub5.channelId = 'UC_c1gdsojLxBGkgzS0NsvUw';
-  // uSub5.filter.channelId = "UC_c1gdsojLxBGkgzS0NsvUw";
  
   let uSub1 = new Subscription()
   uSub1.channelName = "Key & Peele"
@@ -589,53 +555,6 @@ import User from '../Classes/User';
   // sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";
   // sub3.filter.channelId = "UC0CeYMTh57zSsbUKhsyOPfw"
 
-  // ///////////////////////////////////////////////////////////
-
-
-  // let cShelf2 = new CustomShelf()
-  // cShelf2.title = "Music (Shelf #2)"
-  // cShelf2.fewSubs.push(sub3, sub6)
-  // cShelf2.isSorted = true;
-
-  // let cShelf4un = new CustomShelf()
-  // cShelf4un.title = "Talks & stuff (Shelf #4)"
-  // cShelf4un.fewSubs.push( uSub7, uSub4)
-  // cShelf4un.isSorted = true;
-  
-  // let cShelf5un = new CustomShelf()
-  // cShelf5un.title = "Shelf #5"
-  // cShelf5un.fewSubs.push(uSub6 )
-  // cShelf5un.isSorted = true;
-
-  // let cShelf6un = new CustomShelf()
-  // cShelf6un.title = "Shelf #6"
-  // cShelf6un.fewSubs.push( uSub5)
-  // cShelf6un.isSorted = true;
-
-  // let cShelf3unA = new CustomShelf()
-  // cShelf3unA.title = "Key & Peele"
-  // cShelf3unA.fewSubs.push( uSub1)
-  // cShelf3unA.isSorted = false;
-
-  // let cShelf3unB = new CustomShelf()
-  // cShelf3unB.title = "Tommy Boy"
-  // cShelf3unB.fewSubs.push(  uSub2)
-  // cShelf3unB.isSorted = false;
-
-  // let cShelf3unC = new CustomShelf()
-  // cShelf3unC.title = "FRONTLINE PBS | Official"
-  // cShelf3unC.fewSubs.push( uSub3)
-  // cShelf3unC.isSorted = false;
-
-  // u.customShelfs.push(cShelf1)
-  // u.customShelfs.push(cShelf2)
-  // u.customShelfs.push(cShelf3unA)
-  // u.customShelfs.push(cShelf3unB)
-  // u.customShelfs.push(cShelf3unC)
-  // u.customShelfs.push(cShelf4un)
-  // u.customShelfs.push(cShelf5un)
-  // u.customShelfs.push(cShelf6un)
-  
 }
 
 // export default {getMockUser, loginAndSet, sleep, proce3456ssUserFromServer, checkForRemovedSubs, checkForNewSubs}

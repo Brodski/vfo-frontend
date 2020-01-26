@@ -9,12 +9,6 @@ import Shelf from './Shelf'
 
 const ShelfsMany = props => {
 
-
-  // console.log('%%%%%%%%%%%%%%%%%% TOP ALL SHELFS %%%%%%%%%%%%%%%%%%')
-  // console.log("PROPS.SHELFS")
-  // console.log(props)
-  // console.log('%%%%%%%%%%%%%%%%%% END ALL SHELFS %%%%%%%%%%%%%%%%%%')
-  
   ShelfsMany.propTypes = {
     setNumVids: PropTypes.func.isRequired,
     // numVids: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -26,9 +20,8 @@ const ShelfsMany = props => {
     hasMore: PropTypes.bool.isRequired,
 
   }
-
+  
   const {shelfs, numVids, setNumVids, hasMore} = props
-
 
   return (
     <div> 

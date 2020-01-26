@@ -8,9 +8,7 @@
 @import './settings';
 @import './navbar';
 
- // last comment https://stackoverflow.com/questions/39785695/how-to-change-default-materialize-theme-colour-in-rails-application
  
-
 body {
   background-color: $body-color;
   margin: 0;
@@ -19,24 +17,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-
-  li {
-    .btn {
-  background-color: $nav-btn-color !important;
-    }
-  }
-
-
-
-body {
   height: 100%;
   overflow: auto;
 }
 
-.divider {
 
+li {
+  .btn {
+    background-color: $nav-btn-color !important;
+  }
 }
 
 .loading-main-animation {
@@ -45,64 +34,3 @@ body {
   margin-top: 3em;
   margin-bottom: 3em;
 }
-
-.shContainer {
-   /* border: solid black;  
-   /* max-width: 500px; */
-   @extend .z-depth-2;
-}
-
-.dot {
-  //background: $nav-btn-color !important;
-  background: rgba(0,0,0,1) !important;
-}
-
-.legend {
-  //purplish
-  //background: rgba(68, 31, 78, 0.7) !important; 
-  background: rgba(0,0,0,0.7) !important;
-  font-size: 1em !important;
-  font-weight: 600;
-  //color: black !important;
-}
-
-.carousel-wrap{
-  //height: 100% !important; 
-  //max-height: 45em !important;
-}
-
-.axis-horizontal {
-  //max-height: 45em !important;
-}
-
-.slider-wrapper{
- //height: 80% !important;
- //max-height: 45em !important;
- //object-fit: contain !important;
-}
-.carousel-slider {
-  //object-fit: contain !important;
-}
-.carousel {
-  height: 100% !important;
-  //max-height: 45em !important;
-  //object-fit: contain;
-
-/* Set up proportionate scaling */
-  //width: 100% !important;
-//height: 45em;
-}
-
-.cara-help {
-  //max-width: 80%;
-  object-fit: contain;
-  max-height: $height-modal;  
-}
-
-
-
-
-
-  // https://github.com/Dogfalo/materialize/blob/master/sass/components/_variables.scss
-  // https://materializecss.com/sass.html
-//  @import "../../node_modules/materialize-css/sass/materialize";

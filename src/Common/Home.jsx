@@ -7,8 +7,6 @@ function About() {
     <Fragment>
       <div className="container">
         <h1>About</h1>
-        {/* <button className="btn " onClick={() => console.log(user)}> log user </button>
-        <button className="btn " onClick={() => console.log(userSettings)}> log userSettings </button> */}
         <p className="flow-text">
           Tired of Youtube being a disorganized mess? Tired of channels that
           upload 30 second trailer vids when you only care about the full length
@@ -28,11 +26,6 @@ function About() {
           DB, HTTP Server, and server at: {" "}
           {process.env.REACT_APP_SPRINGB_DOMAIN.slice(0, -5)}
         </h5>
-
-        {/* <h4> Testing spin animation: </h4>
-         <div key={'test-spiner'} className="loading-main-animation">
-          <ReactLoading type={'spinningBubbles'} color={'black'}/>
-        </div> */}
         <div className="about-div-padding" />
       </div>
       <Footer />

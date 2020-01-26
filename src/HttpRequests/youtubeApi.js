@@ -1,5 +1,4 @@
- 
-// Had to get out of Dep. cycle,
+ // Had to get out of Dep. cycle,
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -48,28 +47,10 @@ export async function _getThisUsersSubs(pageToken) {
 
 
 export async function getSomeVideos(vidIdList = [""]) {
-await check()
-  //return await window.gapi.client.youtube.videos.list({
+await check() 
   return window.gapi.client.youtube.videos.list({
     "part": "snippet, contentDetails, statistics",
     "id": vidIdList.toString(),
     "fields": "items(id, kind, contentDetails/duration, snippet/publishedAt, snippet/channelId, snippet/title, snippet/description, snippet/thumbnails/*, snippet/channelTitle, statistics)",
   })
 }
-
-/*
-  function getUploads() {
-    return window.gapi.client.youtube.search.list({
-      "part": "snippet",
-      "channelId": "UCb--64Gl51jIEVE-GLDAVTg",
-      "maxResults": 50,
-      "order": "date",
-      "safeSearch": "none",
-      "type": "video"
-    })
-      .then(function (response) {
-        console.log("Response", response.result);
-      }).catch(function (err) { console.error("Execute error", err); });
-  }
-
-*/

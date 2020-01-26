@@ -1,6 +1,6 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/destructuring-assignment */
-/* See not below */
+/* See note below */
 
 import React from 'react';
 
@@ -8,10 +8,18 @@ import PropTypes from 'prop-types';
 import humanFormat from 'human-format';
 import moment from 'moment';
 
-// https://github.com/JsCommunity/human-format
-
 const Video = (props) => {
 
+  Video.propTypes = {
+    video: PropTypes.shape({
+     contentDetails: PropTypes.object.isRequired,
+     id: PropTypes.string.isRequired,
+     snippet: PropTypes.object.isRequired,
+     statistics: PropTypes.object.isRequired, 
+    }).isRequired
+  }
+  
+  
   function formatViewCount() {
     let viewCount;
     if (props.video.statistics.viewCount) { 
@@ -34,14 +42,7 @@ const Video = (props) => {
     return vidDuration
   }
 
-  Video.propTypes = {
-    video: PropTypes.shape({
-     contentDetails: PropTypes.object.isRequired,
-     id: PropTypes.string.isRequired,
-     snippet: PropTypes.object.isRequired,
-     statistics: PropTypes.object.isRequired, 
-    }).isRequired
-  }
+  
   // const { video: {
   //         id,
   //         snippet: {  
