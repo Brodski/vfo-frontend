@@ -39,8 +39,6 @@ function FilterDialog(props){
     if (!document.querySelectorAll(`#${props.bindToId}`)[1] ) {
       Modal.setAppElement(`#${props.bindToId}`) //TODO, this seems like the if is no longer needed
     }
-    console.log("PROPS FILTER DIALOG")
-    console.log(props)
 
     setMinDur(props.subObj.filter.minDuration)
     setMaxDur(props.subObj.filter.maxDuration)

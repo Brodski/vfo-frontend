@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext, UserSettingsContext, IsLoggedContext, IsInitFinishedContext } from '../Contexts/UserContext.js';
 
 import GreetingsMsg from '../Common/GreetingsMsg.jsx'
-import * as ytLogic from '../BusinessLogic/ytLogic.js';
+import * as ytLogic from '../BusinessLogic/YtLogic.js';
 import * as GApiAuth from '../HttpRequests/GApiAuth';
 import FinalShelfs from '../Classes/FinalShelfs'
 import VideoResponse from '../Classes/VideoResponse'
@@ -77,7 +77,21 @@ function YoutubeNEW() {
     newUser.customShelfs = sort
     setUser(newUser)
   }
-  
+   
+ async function hackHelper() {
+  let count = 1
+  let isReady  = !GApiAuth.checkAll();
+  while ( isReady ) {
+    console.log('Hack Helper: Logged out?: ' + isReady + ' - ' + count)
+    await Common.sleep(100 * count)
+    count = count + 1
+    if (count > 40) {
+      count = count * 2
+      console.log("Hack Helper: Something went wrong :(  " + count)
+    }
+    isReady = !GApiAuth.checkAll()
+  }
+}
   const preFetchMoreSubs = async () => {
 
     if (isFirst) {  
@@ -85,7 +99,7 @@ function YoutubeNEW() {
     }
     // instantly halt any possible room for multi fetches
     setIsMoreShelfs(false) 
-    await ytLogic.hackHelper()
+    await hackHelper()
   }
 
   

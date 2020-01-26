@@ -35,8 +35,6 @@ function RenameDialog(props) {
     Modal.setAppElement(`#${props.bindToId}`)
     setNewName(props.shelfObj.title)
   }, [])
-  console.log("RENAME DIALOG")
-  console.log(props)
 
   function close(e) {
     e.preventDefault();

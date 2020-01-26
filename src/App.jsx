@@ -34,7 +34,7 @@ import moment from 'moment';
 // $ npm install --save human-format
 // $ npm install react-responsive-carousel --save
 // $ npm install --save prop-types
-
+// $ npm i googleapis
 
 // linter
 // https://www.youtube.com/watch?v=SydnKbGc7W8 + https://stackoverflow.com/questions/46201647/prettier-airbnbs-eslint-config
@@ -61,7 +61,6 @@ function App() {
     console.timeEnd("initGApi()")   
 
     setIsInitFinished2(true)
-    console.log(isInitFinished2)
     setIsLogged2(GApiAuth.isHeSignedIn())
 
     // solution to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???

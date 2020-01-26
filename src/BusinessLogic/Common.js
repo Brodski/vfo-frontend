@@ -2,15 +2,17 @@ import Subscription from '../Classes/Subscription';
 import User from '../Classes/User';
 import CustomShelf from '../Classes/CustomShelf'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
-import * as ytLogic                     from '../BusinessLogic/ytLogic.js';
+import * as ytLogic from "./YtLogic.js";
+
 import Pic from "../Images/navbar/profile-pic.png"
 // https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/
-export function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 
 
+// Had to get out of Dep. cycle,
+  export function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   // Goes through every sub from the backend, if a sub does not match any subs from YT, then we found a sub that was removed from YT user.
   export function checkForRemovedSubs(subsFromYt, subsFromBackend) {
@@ -636,4 +638,4 @@ export function sleep(ms) {
   
 }
 
-// export default {getMockUser, loginAndSet, sleep, processUserFromServer, checkForRemovedSubs, checkForNewSubs}
+// export default {getMockUser, loginAndSet, sleep, proce3456ssUserFromServer, checkForRemovedSubs, checkForNewSubs}

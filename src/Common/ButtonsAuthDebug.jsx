@@ -1,6 +1,6 @@
 import React from 'react'
 import * as GApiAuth        from '../HttpRequests/GApiAuth'
-import * as ytLogic         from '../BusinessLogic/ytLogic'
+import * as ytLogic         from '../BusinessLogic/YtLogic'
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints'
 
 /*
@@ -32,7 +32,7 @@ return(
     <button type='button' onClick={() => {console.log('save user to Backend'); ServerEndpoints.saveUser(props.user); }      }> save user 2 Backend </button>
     <button type='button' onClick={() => {console.log('set Page 1');  props.data.setPageLength(1); }                    }> set Page 1 </button>
     <div />
-    <button type='button' onClick={ytLogic.getAllSubs}> Get All Subs  </button> 
+    {/* <button type='button' onClick={ytLogic.getAllSubs}> Get All Subs  </button>  */}
   </div>
 
     )

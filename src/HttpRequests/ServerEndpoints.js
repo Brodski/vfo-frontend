@@ -1,7 +1,7 @@
 import axios from 'axios';
-import  Subscription from '../Classes/Subscription';
+
 // import { User, CustomShelf } from '../Classes/User';
-import  * as GApiAuth from '../HttpRequests/GApiAuth';
+import  * as GApiAuth from './GApiAuth';
 
 const SPRING_BACKEND= 'http://' + process.env.REACT_APP_SPRINGB_DOMAIN // localhost:8080
 
