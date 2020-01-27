@@ -3,8 +3,6 @@ import * as GApiAuth from "./GApiAuth";
 
 const SPRING_BACKEND = `http://${process.env.REACT_APP_SPRINGB_DOMAIN}`;
 
-
-
 //https://www.npmjs.com/package/axios#handling-errors
 
 axios.defaults.baseURL = SPRING_BACKEND;
