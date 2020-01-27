@@ -1,7 +1,3 @@
-/* eslint-disable prefer-destructuring */
-/* eslint-disable react/destructuring-assignment */
-/* See note below */
-
 import React from 'react';
 
 import PropTypes from 'prop-types';
@@ -31,17 +27,16 @@ const Video = (props) => {
   }
 
   function formatVidLength() {
-    let vDurAux = moment.duration(props.video.contentDetails.duration) //Convert iso8601 string to object
+    let vDurAux = moment.duration(props.video.contentDetails.duration) 
     let vidDuration;
     if (vDurAux.hours() > 0) {
-      vidDuration = `${vDurAux.hours()}:${vDurAux.minutes().toString().padStart(2, 0)}:${vDurAux.seconds().toString().padStart(2, 0)}` // if seconds == 3, then "03"   
-      // vidDuration = vDurAux.hours() + ':' + vDurAux.minutes().toString().padStart(2,0) + ':' + vDurAux.seconds().toString().padStart(2, 0) // if seconds == 3, then "03"   
+      // if seconds == 3, then "03" 
+      vidDuration = `${vDurAux.hours()}:${vDurAux.minutes().toString().padStart(2, 0)}:${vDurAux.seconds().toString().padStart(2, 0)}` 
     } else {
-      vidDuration = `${vDurAux.minutes()}:${vDurAux.seconds().toString().padStart(2, 0)}` // if seconds == 3, then "03"
+      vidDuration = `${vDurAux.minutes()}:${vDurAux.seconds().toString().padStart(2, 0)}`
     }
     return vidDuration
   }
-
 
   // const { video: {
   //         id,

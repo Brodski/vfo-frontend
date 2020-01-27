@@ -24,8 +24,6 @@ function FilterDialog(props) {
       channelName: PropTypes.string.isRequired,
       filter: PropTypes.object.isRequired,
     }).isRequired
-
-
   }
 
   useEffect(() => {
@@ -110,7 +108,6 @@ function FilterDialog(props) {
     setIsOpen(false)
   }
 
-
   return (
     //  Modal Trigger
     <div>
@@ -131,7 +128,6 @@ function FilterDialog(props) {
         className="Modal card horizontal "
         overlayClassName="Overlay"
       >
-
         <div className="card-image filter-image hide-on-small-only">
           <img src={Pic} />
         </div>

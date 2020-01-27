@@ -11,7 +11,6 @@ const ShelfsMany = props => {
 
   ShelfsMany.propTypes = {
     setNumVids: PropTypes.func.isRequired,
-    // numVids: PropTypes.arrayOf(PropTypes.object).isRequired,
     numVids: PropTypes.oneOfType([
       PropTypes.object,
       PropTypes.arrayOf(PropTypes.object)

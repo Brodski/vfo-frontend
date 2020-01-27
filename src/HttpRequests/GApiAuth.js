@@ -10,13 +10,19 @@
  * a Google account, get the user's current sign-in status, get specific data from the user's
  * Google profile, request additional scopes, and sign out from the current account.
  *
+ * 
+ * Uses OAuth2 for the "client-side-flow"  https://developers.google.com/youtube/v3/guides/auth/client-side-web-apps
+ * Sign In for websites (authorization) https://developers.google.com/identity/sign-in/web/backend-auth
+ * 
+ * REFERENCES
+ * 
  * Scope https://developers.google.com/identity/protocols/googlescopes
  * Get profile info (id): https://developers.google.com/identity/sign-in/web/people
  * Serverside Auth https://developers.google.com/identity/protocols/OAuth2WebServer
  * Serverside Auth https://developers.google.com/identity/sign-in/web/server-side-flow <--- backend
  * Serverside Auth https://developers.google.com/youtube/v3/guides/authentication
  *
- * REFRENCES:
+ * DOCS:
  *
  *  Github JS API DOCS. https://github.com/google/google-api-javascript-client/blob/master/docs/reference.md
  *  OTHER JS API DOCS:  https://developers.google.com/identity/sign-in/web/reference
@@ -161,25 +167,6 @@ export function printInfo() {
   console.log(user.getHostedDomain());
   console.log(user.getId());
 }
-
-// // https://developers.google.com/identity/sign-in/web/server-side-flow
-// export function getAuthCodeForServerSideShit() {
-//   let user = GoogleAuth.currentUser.get()
-//   user.grantOfflineAccess({
-//     scope: "https://www.googleapis.com/auth/youtube.readonly"
-//   }).then(function (resp) {
-//     if (resp.code) {
-//       axios.post(SPRING_BACKEND + '/userDebug', { authcode: resp.code } ) .then(res => { (console.log(res)) })
-//       axios.post(SPRING_BACKEND + '/user/authorize', { authcode: resp.code } ) .then(res => { (console.log(res)) })
-
-//       console.log("RESPONSE AND CODE FROM AUTHCODE")
-//       console.log(resp)
-//       console.log("------------")
-//       console.log(resp.code)
-//     }
-
-//   })
-// }
 
 // export function testWithXML() {
 //   var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance

@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 
 import Video from './Video.jsx'
 
-// Pagination / Load More https://codepen.io/grantdotlocal/pen/zReNgE
-
 const Shelf = props => {
 
   const { shelfIdx, setNumVids, numVids, shelf } = props
@@ -29,6 +27,7 @@ const Shelf = props => {
 
   function loadMoreVids() {
 
+    // Pagination / Load More https://codepen.io/grantdotlocal/pen/zReNgE
     setNumVids(prev => {
       let newNumVids = { ...prev }
       newNumVids[shelfIdx].numVids = newNumVids[shelfIdx].numVids + renderMoreNum // Render 6 more vids after clicking "More"

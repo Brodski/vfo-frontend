@@ -21,12 +21,10 @@ const AllShelfs = (props) => {
     save: PropTypes.func.isRequired
   }
 
-
   useEffect(() => {
     let elems = document.querySelectorAll('select');
     M.FormSelect.init(elems, {});
   }, [])
-
 
   function addShelf() {
 
@@ -60,6 +58,7 @@ const AllShelfs = (props) => {
   }
 
   function prepSortedShelfs() {
+
     let sortedSh = userSettings.customShelfs.filter(sh => { return sh.isSorted })
     if (!sortedSh[0]) {
       let c = new CustomShelf();
@@ -72,6 +71,7 @@ const AllShelfs = (props) => {
   }
 
   const SortedShelfs = () => {
+    
     let sortedSh = prepSortedShelfs()
     let sortedShelfz = sortedSh.map(sh => {
       let id = nextId('shelfid-')

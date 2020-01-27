@@ -47,6 +47,7 @@ function App() {
       return;
     }
 
+    // Sign-in listeners: https://developers.google.com/identity/sign-in/web/listeners
     GoogleAuth.isSignedIn.listen(function (val) {
       setIsLogged2(GApiAuth.isHeSignedIn())
       window.location.reload(true);

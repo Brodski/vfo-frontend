@@ -1,34 +1,60 @@
-Getting Started:  
-  
-Get api-key.js from me.  
-Put "api-key.js" in "src/"   
-   
-Either -   
-   
-npm install   
-npm start   
-  
-Or -   
-   
-npm install npm-install-all -g  
-npm-install-all  
-npm install  
-//npm start  
-  
-npm run start-windowz  
--- OR --    
-sudo npm run start-linux  
-  
-  
-  
-//https://stackoverflow.com/questions/45082648/npm-package-json-os-specific-script
-------------------------------------------------------------------------------
+Project webpage: betteryoutube.dns-cloud.net
 
-if user subs/unsubs it will not be garuanteed to show up instantly. User must refresh page (full F5) to get changes
-  
+About  
+
+N-tier web app with Presentation, Logic, and Data layer.
+Backend using Java, Spring Boot framework, with MongoDB for data persistence.
+Frontend: React framework & materialize css framework.
+Everything is hosted on one VM; the http server, backend server, & mongoDB are all in one VM in Google's Cloud Platform.
+
+
+Authorization & Authentication
+Client
+Through OAuth2, the user authorizes the client to view his Youtube profile, ie his Youtube subscriptions. Uses OAuth2 for the [https://developers.google.com/youtube/v3/guides/auth/client-side-web-apps](client-side-flow)  
+
+Backend Server
+User authorization is based on a guide by Google( [https://developers.google.com/identity/sign-in/web/server-side-flow](Authenticate With a Backend Server, Sign In for Websites). Basicly, when the user clicks "Save" the client sents a id token to the backend. This token is sent to Google where they verify the legitamcy of the user and responds back to my server.
+
+
+
+Getting Started (for development):  
+  Start HTTP Server
+1) Get api-key.js from me.  
+2) Put "api-key.js" in "src/"   
+3) $ npm install   
+4) $ npm start   
+5) Open [http://localhost:3000](http://localhost:3000) to view it in the browser.   
+
+  Start Backend Server:
+1) Have mongodb installed and have its service running
+2) Get SecretKeyz.java from me.
+3) Put "SecretKeyz.java" in  "src/main/java/com/Brodski/restApi"
+4) $ mvn spring-boot:run
+5a) App should be listening on port 8080
+5b) Verify at [http://localhost:8080/](http://localhost:8080/) to view a message of "Hello!!!" 
+
+See deployment.txt for info on deploying this to your own VM
+
 ------------------------------------------------------------------------------
   
   
+Domain name (free) provided by [https://www.cloudns.net/](Cloud DNS) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

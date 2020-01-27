@@ -1,4 +1,3 @@
-/* eslint-disable no-new */
 import React, { useContext, useEffect, useState } from 'react';
 
 import PropTypes from 'prop-types';
@@ -36,8 +35,6 @@ const ShelfSetting = (props) => {
   function updateForce() {
     setState({});
   }
-
-
 
   const saveUi2Settings = () => {
     setUserSettings(prevUserSetting => {
@@ -82,8 +79,8 @@ const ShelfSetting = (props) => {
     return null
   }
 
-  //Don't delete sub-QHack
-  //Don't delete subitem
+  // Don't delete sub-QHack
+  // Don't delete subitem
   const itemz = fewSubs.map((s, idx) => {
     let id = nextId('subid-')
     return (
@@ -99,7 +96,6 @@ const ShelfSetting = (props) => {
     )
   })
 
-
   useEffect(() => {
     makeDraggableShared(`.${subsDrag}`, 'subscriptions')
     makeDraggableShared(`.${shelfDrag}`, 'shelfsdnd')
@@ -114,10 +110,9 @@ const ShelfSetting = (props) => {
   let dragClass = isSorted ? shelfDrag : ""
   let titleReal = isSorted ? title : "Your Subscriptions"
 
-  //TODO we dont need unsort-shelf
   return (
     <div className={`${dragClass} shContainer`}>
-      <div className={shelfClasses} data-name={title} data-issorted={isSorted} >
+      <div className={shelfClasses} data-name={title} data-issorted={isSorted}>
         <div id={bindToId} className=" valign-wrapper shelf-title-wrap">
           <div>
             <h6 className=" valign-wrapper shelf-title">

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 import { Redirect } from 'react-router-dom'
 
-
 const PostSave = () => {
 
   const [doIt, setDoIt] = useState(false)

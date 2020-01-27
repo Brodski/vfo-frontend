@@ -4,7 +4,6 @@ import * as GApiAuth from "./GApiAuth";
 const SPRING_BACKEND = `http://${process.env.REACT_APP_SPRINGB_DOMAIN}`;
 
 //https://www.npmjs.com/package/axios#handling-errors
-
 axios.defaults.baseURL = SPRING_BACKEND;
 axios.interceptors.request.use(
   config => {
@@ -34,7 +33,6 @@ export async function loginToBackend() {
     return;
   }
   let idtoken = GApiAuth.getToken();
-  // eslint-disable-next-line consistent-return
   return axios
     .post("/user/login", { idtoken: idtoken })
     .then(res => {

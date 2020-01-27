@@ -7,10 +7,10 @@ import { UserSettingsContext } from '../Contexts/UserContext.js'
 import Pic from '../Images/pen3.png'
 
 function RenameDialog(props) {
+  
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [newName, setNewName] = useState()
-
 
   RenameDialog.propTypes = {
     bindToId: PropTypes.string.isRequired,
@@ -46,7 +46,6 @@ function RenameDialog(props) {
     setNewName(props.shelfObj.title)
   }, [])
 
-
   return (
     <div>
       <a>
@@ -60,7 +59,6 @@ function RenameDialog(props) {
         isOpen={modalIsOpen}
         onRequestClose={() => setIsOpen(false)}
         shouldCloseOnEsc={true}
-        // className="Modal card-panel "
         className="Modal  card horizontal "
         overlayClassName="Overlay"
       >
