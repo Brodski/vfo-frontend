@@ -48,10 +48,8 @@ class User {
 
   addArrayOfSubs(ytSubArr) {
     if (!ytSubArr[0]) {
-      console.log("User has not subscribed from any new channels recently");
       return;
     }
-    console.log("User has subscribed to a channel since last visit");
     ytSubArr.forEach(ytSub => {
       this.addSub(ytSub);
     });
@@ -59,16 +57,13 @@ class User {
 
   removeSubs(removedSubsArr) {
     if (!removedSubsArr[0]) {
-      console.log("User has not unsubscribed from any channels recently");
       return;
     }
-    console.log("User has unsubscribed from a channel recently");
     this.customShelfs.forEach(sh => {
       sh.fewSubs.forEach(sub => {
         removedSubsArr.forEach(rmS => {
           if (rmS.channelId === sub.channelId) {
             let idz = sh.fewSubs.indexOf(sub);
-            console.log(sub);
             sh.fewSubs.splice(idz, 1);
             if (sh.fewSubs.length === 0) {
               let idz2 = this.customShelfs.indexOf(sh);

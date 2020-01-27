@@ -42,22 +42,18 @@ function App() {
 
     // solution (?) to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
     while (GoogleAuth == null) {
-      console.log("Shits null af ", GoogleAuth)
       await Common.sleep(500)
       initGApi()
       return;
     }
 
     GoogleAuth.isSignedIn.listen(function (val) {
-      console.log('Signin state changed to ', val, "\nSetting to: ", GApiAuth.isHeSignedIn());
       setIsLogged2(GApiAuth.isHeSignedIn())
       window.location.reload(true);
     });
   }
 
   useEffect(() => {
-    console.log("\n\n\n\n HELLO WELCOME TO 'APP.JS' !!!!!!!!!!!!\n\n\n\n")
-
     // adblock will block the googleapi script/link/cdn if its in the HTML
     // TODO, npm googleapis
     const script = document.createElement("script");

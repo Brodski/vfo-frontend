@@ -1,16 +1,16 @@
 import axios from "axios";
-
 import * as GApiAuth from "./GApiAuth";
 
 const SPRING_BACKEND = `http://${process.env.REACT_APP_SPRINGB_DOMAIN}`;
 
-axios.defaults.baseURL = SPRING_BACKEND;
+
 
 //https://www.npmjs.com/package/axios#handling-errors
 
+axios.defaults.baseURL = SPRING_BACKEND;
 axios.interceptors.request.use(
   config => {
-    //console.log(`Request was made to ${config.url}`)
+    // console.log(`Request was made to ${config.url}`)
     return config;
   },
   error => {
@@ -21,7 +21,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   res => {
-    //console.log(`Response recieved with status ${res.status} `)
+    // console.log(`Response recieved with status ${res.status} `)
     return res;
   },
   error => {
@@ -40,7 +40,6 @@ export async function loginToBackend() {
   return axios
     .post("/user/login", { idtoken: idtoken })
     .then(res => {
-      console.log("User login successful");
       return res;
     })
     .catch(e => {
@@ -51,14 +50,12 @@ export async function loginToBackend() {
 
 export async function saveUser(user) {
   if (!GApiAuth.isHeSignedIn()) {
-    console.log("User is not logged in. Returning");
     return;
   }
   let idtoken = GApiAuth.getToken();
   return axios
     .post(`${SPRING_BACKEND}/user/save`, { idtoken: idtoken, user: user })
     .then(res => {
-      console.log(`User has been saved with status code ${res.status}`);
       return res;
     })
     .catch(e => {

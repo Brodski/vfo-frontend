@@ -40,20 +40,16 @@ async function waitForGApiLoad() {
   let wait = 100;
   while (!window.gapi) {
     wait = wait * 2;
-    console.log("GApi 1 :( GApi NOT EXISTS ");
     await sleep(wait);
   }
-  console.log("GApi 1 :) GApi EXISTS ");
 }
 
 async function waitForAuthLoad() {
   let wait = 100;
   while (!window.gapi.auth2) {
     wait = wait * 2;
-    console.log("GAPI 2 :( gapi.auth2 NOT EXISTS");
     await sleep(wait);
   }
-  console.log("GAPI 2 :) gapi.auth2 EXISTS");
 }
 
 async function _initClient() {
@@ -69,20 +65,15 @@ async function _initClient() {
 
 export async function initGoogleAPI() {
   // Wait until googleApi is loaded: "script.src = "https://apis.google.com/js/client.js"
-  console.log("=== 1 ===");
   await waitForGApiLoad();
 
   // Wait until client is loaded
-  console.log("=== 2 ===");
   await window.gapi.load("client:auth2", _initClient);
 
   // Wait until client is authenticated
-  console.log("=== 3 ===");
   await waitForAuthLoad();
 
   // Wait until GoogleAuth object is loaded
-  console.log("=== 4 ===");
-
   GoogleAuth = await window.gapi.auth2.getAuthInstance();
   return GoogleAuth;
 }
@@ -111,7 +102,6 @@ export function login() {
   if (GoogleAuth) {
     return GoogleAuth.signIn()
       .then(res => {
-        console.log("Sign-in successful");
         return res;
       })
       .catch(function(err) {
@@ -124,7 +114,6 @@ export function logout() {
   if (GoogleAuth) {
     return GoogleAuth.signOut()
       .then(res => {
-        console.log("Sign-out successful");
         return res;
       })
       .catch(function(err) {
@@ -137,7 +126,6 @@ export function isHeSignedIn() {
   if (GoogleAuth) {
     return GoogleAuth.isSignedIn.get();
   }
-  console.log("GoogleAuth doesnt exist");
   return false;
 }
 

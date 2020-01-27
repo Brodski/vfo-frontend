@@ -32,20 +32,16 @@ function YoutubeNEW() {
   // Arbitrary number (max 50) (see youtube's Video api)
   const fetchThisManyVideosPerShelf = 35
 
-  const [isMoreShelfs, setIsMoreShelfs] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
   const { isInitFinished2, setIsInitFinished2 } = useContext(IsInitFinishedContext);
 
-  // This is "finalShelf". The variable that gets rendered:
-  // finalShelfs  = [ shelf, shelf, shelf ]
-  // shelf        = [ vid, vid, vid, vid ]
-  // vid          = { id, snippet: {}, contentDetails: {} }  
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
   const [pageLength, setPageLength] = useState(initialPageLength);
   const [prevPage2, setPrevPage2] = useState(0);
-  const [numVids, setNumVids] = useState([new VidCounter()]) // {vids: 0, shelfId: '' 
+  const [numVids, setNumVids] = useState([new VidCounter()]) 
   const [isFirst, setIsFirst] = useState(true)
+  const [isMoreShelfs, setIsMoreShelfs] = useState(false);
   let spamCount = 0;
 
   function isEndReached() {
@@ -56,11 +52,6 @@ function YoutubeNEW() {
     if (spamCount > spamLimit
       || pageLength > user.customShelfs.length
       || prevPage2 >= user.customShelfs.length) {
-      console.log('\n\n\n\nbro you reached the limit\n\n\n')
-      console.log('prevPage2: ', prevPage2)
-      console.log('pageLength : ', pageLength)
-      console.log('user.customShelfs.length: ', user.customShelfs.length)
-
       isEnd = true
     }
     return isEnd
@@ -79,12 +70,10 @@ function YoutubeNEW() {
     let count = 1
     let isReady = !GApiAuth.checkAll();
     while (isReady) {
-      console.log(`Hack Helper: Logged out?: ${isReady} - ${count}`)
       await Common.sleep(100 * count)
       count = count + 1
       if (count > 40) {
         count = count * 2
-        console.log(`Hack Helper: Something went wrong :(  ${count}`)
       }
       isReady = !GApiAuth.checkAll()
     }
@@ -106,7 +95,6 @@ function YoutubeNEW() {
     } else {
       sliceVal = pageLength
     }
-    console.log("SLICE VALUCE: ", sliceVal)
     return sliceVal
 
   }
@@ -152,11 +140,6 @@ function YoutubeNEW() {
   }
 
   function injectData(shelfstuff) {
-    console.log('prevPage2, pageLength')
-    console.log('prevPage2, pageLength')
-    console.log('prevPage2, pageLength')
-    console.log('prevPage2, pageLength')
-    console.log(prevPage2, pageLength)
 
     const injectShelfTitle = user.customShelfs.slice(prevPage2, calcShelfSlice()).map((sh, idx) => {
       return { "videos": shelfstuff[idx], "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
@@ -173,9 +156,11 @@ function YoutubeNEW() {
     shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
 
     const shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
+
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
 
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
+
     shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
 
     return shelfVids
@@ -183,34 +168,21 @@ function YoutubeNEW() {
 
   const fetchMoreSubs = async () => {
 
-    console.log("xxxxXXXXxxxx fetchMoreSubs xxxxXXXXxxxx")
-
-    console.log(user)
-
     if (isEndReached()) {
       return
     }
+
     await preFetchMoreSubs()
-    console.log("__TOP___ {prevPage, pageLength} ", prevPage2, ', ', pageLength)
+
     const shelfsActs = await _fetchActivities()
 
     const shelfVids = await _fetchVideos(shelfsActs)
 
     const iData = injectData(shelfVids)
-    console.log('iData')
-    console.log('iData')
-    console.log('iData')
-    console.log('iData')
-    console.log(iData)
 
     ytLogic.beginFilter2(iData.shelfs)
 
     setFinalShelfAux(iData)
-
-    console.log("_____-------WE FINISHED THE FETCH & PROCESSING!-------_______")
-    console.log("__BOT___ {prevPage, pageLength} ", prevPage2, ', ', pageLength)
-    console.log('finalShelfs')
-    console.log(finalShelfs)
   }
 
   async function initPage() {
@@ -225,9 +197,7 @@ function YoutubeNEW() {
   }
 
   useEffect(() => {
-    console.log('---------------useEffect top ----------------------')
     initPage()
-    console.log('---------------useEffect bot----------------------')
   }, [])
 
 
@@ -254,9 +224,7 @@ function YoutubeNEW() {
   return (
     <div>
       {isInitFinished2 ? <GreetingsMsg /> : null}
-
       {isNothingLoadedYet() ? <LoadingMain /> : <Shelfs />}
-
     </div>
   );
 }

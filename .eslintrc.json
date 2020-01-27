@@ -40,7 +40,7 @@
           }],
 
         //TODO, this also
-        "no-console": "off",
+        //"no-console": "off",
 
         //import/extensions from eslint seems to be confusing jsx-filename-ext from react, even if I have "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "import/extensions": "off",
@@ -70,7 +70,7 @@
         "jsx-a11y/anchor-has-content": "off",
         "no-await-in-loop": "off"
 
-        // export is not convincing.
+        // default export is not convincing.
         // https://github.com/airbnb/javascript/issues/1365
         // https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad
         // https://humanwhocodes.com/blog/2019/01/stop-using-default-exports-javascript-module/        

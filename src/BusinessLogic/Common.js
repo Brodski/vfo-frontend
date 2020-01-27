@@ -80,21 +80,14 @@ export async function processUserFromServer(res) {
     if (removedSubArr[0] || newSubs[0]) {
       ServerEndpoints.saveUser(u);
     }
-
-    console.log("newSubs");
-    console.log("remvoedSubs");
-    console.log(newSubs);
-    console.log(removedSubArr);
   }
   return u;
 }
 
 export async function loginAndSet(setUser, setUserSettings) {
-  console.log("Logged in: Should be doing fetch to server");
   let res = await ServerEndpoints.loginToBackend();
   let u;
   if (res.status > 199 && res.status < 300) {
-    console.log("Recieved user from server: ", res.status);
     u = await processUserFromServer(res);
     //TODO could be better
     setUser(prev => {

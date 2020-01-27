@@ -22,7 +22,6 @@ const SettingsNEW = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   useEffect(() => {
-    console.log("\n\n USE EFFECT \n")
     setUserSettings(user)
   }, []);
 
@@ -42,15 +41,8 @@ const SettingsNEW = () => {
   }
 
   async function save() {
-    console.log('----------- SAVING! -----------')
     let newSet = { ...userSettings }
     let newCustomShelfs = stLogic.queryShelfs(userSettings)
-    console.log('newCustomShelfs (after query)')
-    console.log('newCustomShelfs (after query)')
-    console.log('newCustomShelfs (after query)')
-    console.log('newCustomShelfs (after query)')
-    console.log(newCustomShelfs)
-
     let auxNewCustomShelfs = newCustomShelfs.filter(sh => sh.isSorted)
     let yourSubscriptionsShelf = newCustomShelfs.filter(sh => !sh.isSorted)[0]
 

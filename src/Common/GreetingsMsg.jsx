@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import { IsLoggedContext, UserContext } from '../Contexts/UserContext.js';
 
-
 const GreetingsMsg = (props) => {
 
   GreetingsMsg.propTypes = {

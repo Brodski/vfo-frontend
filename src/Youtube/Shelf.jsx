@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 
 import Video from './Video.jsx'
 
-// Pagination / Load More
-// https://codepen.io/grantdotlocal/pen/zReNgE
+// Pagination / Load More https://codepen.io/grantdotlocal/pen/zReNgE
 
 const Shelf = props => {
 

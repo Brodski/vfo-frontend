@@ -15,7 +15,6 @@ export async function getActivitiesShelfs(shelfs) {
 export async function getAllSubs() {
   let response = await youtubeApi._getThisUsersSubs();
   if (response.status < 200 || response.status > 299) {
-    console.log("Error in response :( Status code: ", response.status);
     return;
   }
   let allSubs = response.result.items;

@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import "materialize-css/dist/css/materialize.css";
 import "materialize-css/dist/js/materialize.js";
 
-import "./CSS/index.css";
 import "./CSS/mysass.scss";
 import * as serviceWorker from "./CSS/serviceWorker";
 import App from "./App.jsx";
