@@ -2,6 +2,7 @@ Project webpage: betteryoutube.dns-cloud.net
 
 About  
 
+(Still in development)
 N-tier web app with Presentation, Logic, and Data layer.
 Backend using Java, Spring Boot framework, with MongoDB for data persistence.
 Frontend: React framework & materialize css framework.
