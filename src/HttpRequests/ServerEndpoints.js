@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as GApiAuth from "./GApiAuth";
 
-const SPRING_BACKEND = `http://${process.env.REACT_APP_SPRINGB_DOMAIN}`;
+const SPRING_BACKEND = `http://${process.env.REACT_APP_SPRINGB_ADDRESS}`;
 
 //https://www.npmjs.com/package/axios#handling-errors
 axios.defaults.baseURL = SPRING_BACKEND;

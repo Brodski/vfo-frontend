@@ -30,7 +30,8 @@
   },
   "homepage": "https://Brodski.github.io/customyoutube-frontend",
   "scripts": {
-    "predeploy": "npm run build",
+    "old-predeploy": "npm run build",
+    "predeploy": "env-cmd -f .env.production react-scripts build",
     "deploy": "gh-pages -d build",
     "start-windowz": "env-cmd -f .env.delopment set PORT=80 && react-scripts start",
     "start-linux": "PORT=80 env-cmd -f .env.production react-scripts start",

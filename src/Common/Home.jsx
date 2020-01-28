@@ -24,7 +24,7 @@ function About() {
         </h5>
         <h5 className="text-flow">
           DB, HTTP Server, and server at: {" "}
-          {process.env.REACT_APP_SPRINGB_DOMAIN.slice(0, -5)}
+          {process.env.REACT_APP_SPRINGB_ADDRESS.slice(0, -5)}
         </h5>
         <div className="about-div-padding" />
       </div>
