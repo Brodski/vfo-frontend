@@ -55,7 +55,8 @@ $ sudo kill -9 xxxxx
 
 Start http server
 $ cd client-restApi
-$ npm install
+$ sudo chown -R $USER /home/cbrodski/customyoutube-frontend/node_modules
+$ sudo npm install
 $ sudo nohup npm run start-linux &
 
 Start backend server  
