@@ -1,0 +1,85 @@
+SSH
+
+$ ssh brodski@35.223.37.170 -i .\moreKeyz
+ (pass b------------------------0)
+
+-----------------------------------------------------------------
+
+DEPLOYMENT (Http server, mongoDB, and backend server)
+	
+  Overview
+  
+- git clone 2 repos
+- install node
+- install mongodb
+- install maven 
+- install java
+- configure basic networking
+
+
+DEPLOYMENT (Debian 9)
+
+  "Script"
+  
+$ git clone https://github.com/Brodski/customyoutube-frontend.git
+$ git clone https://github.com/Brodski/customyoutube-backend.git
+
+$ sudo apt-get install default-jdk -y
+$ sudo apt-get install maven -y
+$ sudo apt-get install git -y
+$ sudo apt-get install nodejs -y
+$ sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
+$ sudo apt-get install -y nodejs
+$ sudo apt-get install -y build-essential
+
+(MongoDB instructions can be found on their website, but they are here below)
+
+$ wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+$ echo "deb http://repo.mongodb.org/apt/debian stretch/mongodb-org/4.2 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+$ sudo apt-get update
+$ sudo apt-get install -y mongodb-org
+$ sudo service mongod start
+
+
+- In the Cloud provier (AWS, GCP) need to open port 8080 to enable client to server communication
+- In springboot, need to config @CORS w/ domain of website  
+- In Google Console, go to the API & Services section then configure the Client info & OAuth2 with domain of website   
+
+-------------------------------------------------------------------
+
+Restarting (to be improved)
+
+$ ps aux | grep java
+$ ps aux | grep node
+$ sudo kill -9 xxxxx
+
+Start http server
+$ cd client-restApi
+$ npm install
+$ sudo nohup npm run start-linux &
+
+Start backend server  
+$ cd to backend
+$ sudo mvn package && sudo nohup java -jar target/restApi-0.0.1-SNAPSHOT.jar &
+
+----------------------------------------------
+
+  Install docker jenkins
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg2 \
+    software-properties-common
+
+$ sudo apt-get remove docker docker-engine docker.io containerd runc
+$curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+$sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+   
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io -y
+$ sudo docker pull jenkins
+$ sudo docker run -p 8081:8080 -p 50000:50000 -d jenkins
+
