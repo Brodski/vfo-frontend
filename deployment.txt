@@ -47,7 +47,7 @@ $ sudo service mongod start
 
 -------------------------------------------------------------------
 
-Restarting (to be improved)
+Restarting/Starting (to be improved)
 
 $ ps aux | grep java
 $ ps aux | grep node
@@ -58,6 +58,8 @@ $ cd client-restApi
 $ sudo chown -R $USER /home/cbrodski/customyoutube-frontend/node_modules
 $ sudo npm install
 $ sudo nohup npm run start-linux &
+$ sudo npm build
+$ sudo npm run deploy
 
 Start backend server  
 $ cd to backend
