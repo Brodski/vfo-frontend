@@ -54,8 +54,9 @@ $ ps aux | grep node
 $ sudo kill -9 xxxxx
 
 Start http server
-$ cd client-restApi
+$ cd /home/cbrodski/client-restApi
 $ sudo chown -R $USER /home/cbrodski/customyoutube-frontend/node_modules
+$ sudo git pull
 $ sudo npm install
 $ sudo npm run build
 $ sudo nohup npm run deploy &
