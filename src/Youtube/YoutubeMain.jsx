@@ -208,7 +208,7 @@ function YoutubeNEW() {
         loadMore={() => fetchMoreSubs()}
         hasMore={isMoreShelfs}
         loader={(<div key={nextId('loader-')}> </div>)}
-        threshold={10}
+        threshold={200}
       >
         <ShelfsMany
           key={nextId('manyShelfsid-')}
