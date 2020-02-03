@@ -31,8 +31,8 @@ User authorization is based on a guide by Google [Authenticate With a Backend Se
 
   ### Start Backend Server:
 1) Have mongodb installed and have its service running
-2) Get SecretKeyz.java from me.
-3) Put "SecretKeyz.java" in  "src/main/java/com/Brodski/restApi"
+2) Get ActualSecretKeys.java from me.
+3) Put "ActualSecretKeys.java" in  "src/main/java/com/Brodski/restApi"
 4) $ mvn spring-boot:run
 5a) App should be listening on port 8080
 5b) Verify at [http://localhost:8080/](http://localhost:8080/) to view a message of "Hello!!!" 

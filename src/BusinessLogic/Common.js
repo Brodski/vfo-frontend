@@ -120,6 +120,11 @@ export function getMockUser() {
   //  /////////////////////////////////////////////////////////////
   //  ////////////             Movies & Stiff             /////////
   //  /////////////////////////////////////////////////////////////
+  
+  let uSubM0 = new Subscription();
+  uSubM0.channelName = "Movieclips Trailers";
+  uSubM0.channelId = "UCi8e0iOVk1fEOogdfu4YgfA";
+  uSubM0.filter.channelId = "UCi8e0iOVk1fEOogdfu4YgfA";
 
   let uSubM = new Subscription();
   uSubM.channelName = "Vanity Fair";
@@ -143,7 +148,7 @@ export function getMockUser() {
 
   let cShelfM = new CustomShelf();
   cShelfM.title = "Movies and stuff";
-  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3, uSubM4);
+  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3, uSubM4, uSubM0);
   cShelfM.isSorted = true;
   u.customShelfs.push(cShelfM);
 
@@ -395,7 +400,7 @@ export function getMockUser() {
   subTalk5.filter.channelId = "UCAuUUnT6oDeKwE6v1NGQxug";
 
   let cShelfTalk = new CustomShelf();
-  cShelfTalk.title = "Talks, podcasts, lectures that I like";
+  cShelfTalk.title = "Talks, podcasts, lectures";
   cShelfTalk.fewSubs.push(subTalk, subTalk2, subTalk3, subTalk4, subTalk5);
   cShelfTalk.isSorted = true;
   u.customShelfs.push(cShelfTalk);
