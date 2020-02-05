@@ -27,7 +27,8 @@ if (process.env.NODE_ENV === 'production') {
   };
 
   const httpsServer = https.createServer(credentials, app)
-  httpsServer.listen(process.env.NODE_APP_PORT_NUM);
+  //httpsServer.listen(process.env.NODE_APP_PORT_NUM);
+  httpsServer.listen(443);
   
   
 } else {
