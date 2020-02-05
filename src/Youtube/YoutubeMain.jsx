@@ -31,6 +31,7 @@ function YoutubeNEW() {
   const initialPageLength = 3
   // Arbitrary number (max 50) (see youtube's Video api)
   const fetchThisManyVideosPerShelf = 35
+  let isSubscribed;
 
   const { user, setUser } = useContext(UserContext);
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
@@ -128,7 +129,6 @@ function YoutubeNEW() {
     })
     setPrevPage2(pageLength)
 
-    //TODO NOTICE ME
     if (pageLength + pageGrowth > user.customShelfs.length) {
       setPageLength(user.customShelfs.length)
     } else {
@@ -182,7 +182,9 @@ function YoutubeNEW() {
 
     ytLogic.beginFilter2(iData.shelfs)
 
-    setFinalShelfAux(iData)
+    if (isSubscribed) {
+      setFinalShelfAux(iData)
+    }
   }
 
   async function initPage() {
@@ -196,8 +198,13 @@ function YoutubeNEW() {
     await fetchMoreSubs()
   }
 
+  // https://juliangaramendy.dev/use-promise-subscription/ solution to 'mem-leak'
   useEffect(() => {
+    isSubscribed = true;
     initPage()
+    return () => {
+      isSubscribed = false
+    }
   }, [])
 
 

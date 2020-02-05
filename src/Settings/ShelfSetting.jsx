@@ -81,7 +81,7 @@ const ShelfSetting = (props) => {
 
   // Don't delete sub-QHack
   // Don't delete subitem
-  const itemz = fewSubs.map((s, idx) => {
+  const itemz = fewSubs.map((s) => {
     let id = nextId('subid-')
     return (
       <div key={id} id={id} className=" valign-wrapper shelf-text subitem handle-sub">

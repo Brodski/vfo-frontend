@@ -111,11 +111,11 @@ function FilterDialog(props) {
   return (
     //  Modal Trigger
     <div>
-      <div className='valign-wrapper'>
-        <a
-          className="btn filt-button z-depth-0"
-          onClick={() => { setIsOpen(true) }}
-        >
+      <div 
+        className='valign-wrapper'
+        onClick={() => { setIsOpen(true) }}
+      >
+        <a className="btn filt-button z-depth-0">
           <i className="time-icon-help material-icons ">timelapse</i>
         </a>
       </div>
@@ -143,7 +143,7 @@ function FilterDialog(props) {
             <div className="filt-drop-wrap" >
               <i className="icon-filt-min hide-on-small-only material-icons ">
                 vertical_align_top
-                </i>
+              </i>
               <div>Only show videos that are longer than: </div>
             </div>
             <div className="valign-wrapper select-wrap">
