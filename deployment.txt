@@ -69,7 +69,12 @@ $ sudo docker run -p 8081:8080 -p 50000:50000 -d jenkins
 
 https://create-react-app.dev/docs/deployment/#other-solutions
 
+----------------------------------------------------------
+Certificates
 
+https://certbot.eff.org/lets-encrypt/debianstretch-other
+
+sudo apt-get install certbot -y 
 
 -------------------------------------------------------------------
 
