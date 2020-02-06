@@ -36,7 +36,8 @@
     "deploy-git": "gh-pages -d build",
     "deploy": "env-cmd -f .env.production node myCoolNodeServer.js",
     "start-linux": "PORT=80 env-cmd -f .env.production react-scripts start",
-    "start": "env-cmd -f .env.development react-scripts start",
+    "start": "env-cmd -f .env.development set HTTPS=true&&react-scripts start",
+    "start-lolwtuf": "env-cmd -f .env.development react-scripts start",
     "build": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

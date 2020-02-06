@@ -72,7 +72,14 @@ https://create-react-app.dev/docs/deployment/#other-solutions
 ----------------------------------------------------------
 Certificates
 
-https://certbot.eff.org/lets-encrypt/debianstretch-other
+Commands that creates certificats https://certbot.eff.org/lets-encrypt/debianstretch-other , recommened by google https://domains.google/tld/security/
+How to create an HTTPS server in Node.js? - https://stackoverflow.com/a/21809393/12654472
+Setup an HTTPS server with NodeJS and Express - https://youtu.be/8ptiZlO7ROs?t=170
+https://hackernoon.com/set-up-ssl-in-nodejs-and-express-using-openssl-f2529eab5bb
+https://nodejs.org/en/knowledge/HTTP/servers/how-to-create-a-HTTPS-server/
+Deploy Node.js app with Digital Ocean (Free SSL certificate with Certbot) - https://youtu.be/lN0oiYqenpA?t=875
+
+Make sure your cloud provider accepts https traffic
 
 sudo apt-get install certbot -y 
 

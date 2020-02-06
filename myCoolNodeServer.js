@@ -3,7 +3,7 @@ const path = require('path');
 const app = express();
 const fs = require('fs')
 const https = require('https') 
-
+const http = require('http');
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -15,7 +15,7 @@ app.get('/ping', function (req, res) {
  return res.send('pong');
 });
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_APP_ENV === 'production') {
   
   const privateKey = fs.readFileSync( '/etc/letsencrypt/live/customyoutube.com/privkey.pem', 'utf8')
   const certificate = fs.readFileSync( '/etc/letsencrypt/live/customyoutube.com/cert.pem', 'utf8')
@@ -25,12 +25,18 @@ if (process.env.NODE_ENV === 'production') {
     cert: certificate,
     ca: ca
   };
+  // const httpsServer = https.createServer(credentials, app)
+  // httpsServer.listen(443);
+  https.createServer(credentials, app).listen(443)
 
-  const httpsServer = https.createServer(credentials, app)
-  //httpsServer.listen(process.env.NODE_APP_PORT_NUM);
-  httpsServer.listen(443);
-  
-  
+  // Redirect http to https
+  http.createServer(function (req, res) {
+    res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
+    res.end();
+}).listen(80);
+
+
+
 } else {
   app.listen(process.env.NODE_APP_PORT_NUM);
 }
