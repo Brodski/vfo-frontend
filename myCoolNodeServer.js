@@ -35,31 +35,35 @@ if (process.env.NODE_APP_ENV === 'production') {
   
   // https Springboot port
   https.createServer(credentials, function (req, res){
-    console.log("-------------------2")
     const redirectedPortNum = 8080
     let urlParse = url.parse("http://" + req.headers.host + req.url);
     let redirected = "https://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
+    
+    console.log("-------------------2")
     console.log('redirected')
     console.log(redirected)
-    res.writeHead(301, { "Location": redirected });
-    res.end();
+    console.log("-\n\n req -")
+    console.log(req)
+    // res.writeHead(301, { "Location": redirected });
+    // res.end();
+    res.writeHead(200)
+    res.end("HI!!!")
 
   }).listen(7988)
 
 
   // Redirect http to https
   http.createServer(function (req, res) {
-    console.log("-------------------")
     const redirectedPortNum = 443
     let urlParse = url.parse("http://" + req.headers.host + req.url);
     let redirected = "https://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
+    
+    console.log("-------------------")
     console.log('redirected')
     console.log(redirected)
     res.writeHead(301, { "Location": redirected });
     res.end();
   }).listen(80);
-
-  console.log('I assume http (not s) is running')
 
 
 
