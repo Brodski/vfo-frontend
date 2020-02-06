@@ -36,6 +36,7 @@
     "deploy-git": "gh-pages -d build",
     "deploy": "env-cmd -f .env.production node myCoolNodeServer.js",
     "start-linux": "PORT=80 env-cmd -f .env.production react-scripts start",
+    "doit": "env-cmd -f .env.development node myCoolNodeServer.js",
     "start": "env-cmd -f .env.development react-scripts start",
     "build": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",

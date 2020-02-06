@@ -43,6 +43,7 @@
         "no-console": "off",
 
         //"no-return-assign": "off"
+        "prefer-template": "off",
 
         //import/extensions from eslint seems to be confusing jsx-filename-ext from react, even if I have "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "import/extensions": "off",

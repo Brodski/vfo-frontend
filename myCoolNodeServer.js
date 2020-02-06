@@ -1,9 +1,13 @@
+//
+// TODO PM2 for node production
+//
 const express = require('express');
 const path = require('path');
 const app = express();
-const fs = require('fs')
-const https = require('https') 
+const fs = require('fs');
+const https = require('https') ;
 const http = require('http');
+const url = require('url');
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -45,5 +49,30 @@ console.log('I assume http (not s) is running')
 
 
 } else {
-  app.listen(process.env.NODE_APP_PORT_NUM);
+  http.createServer(function (req, res) {
+    // res.writeHead(301, { "Location": "http://" + req.headers['host'] + req.url });
+    console.log("req.headers.host")
+    console.log(req.headers.host)
+    console.log('req.url')
+    console.log(req.url)
+    console.log('hostname , port , pathname')
+    console.log(req.url.hostname)
+    console.log(req.url.port)
+    console.log(req.url.pathname)
+    console.log(req.url.href)
+    console.log("http://" + req.headers.host + req.url )
+    //let poopy = url.parse(request.url, `http://${request.headers.host}`);
+    let urlParse = url.parse("http://" + req.headers.host + req.url);
+    console.log(urlParse)
+    let important = "https://" + urlParse.hostname + ":" + 6969 + urlParse.path
+    console.log('new redirect')
+    console.log(important)
+     res.writeHead(301, { "Location": important });
+    // res.redirect(301, "http://" + req.headers.host + req.url + ":" + 420);
+     res.end();
+  }).listen(7988);
+
+  // app.listen(process.env.NODE_APP_PORT_NUM);
+  app.listen(4269);
+  app.listen(4266);
 }
