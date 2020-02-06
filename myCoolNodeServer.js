@@ -15,8 +15,13 @@ app.get('/ping', function (req, res) {
  return res.send('pong');
 });
 
+  console.log('process.env.NODE_APP_ENV')
+  console.log(process.env.NODE_APP_ENV)
+
 if (process.env.NODE_APP_ENV === 'production') {
-  
+
+  console.log('WE DOING IT')
+
   const privateKey = fs.readFileSync( '/etc/letsencrypt/live/customyoutube.com/privkey.pem', 'utf8')
   const certificate = fs.readFileSync( '/etc/letsencrypt/live/customyoutube.com/cert.pem', 'utf8')
   const ca = fs.readFileSync('/etc/letsencrypt/live/customyoutube.com/chain.pem', 'utf8')
@@ -28,12 +33,14 @@ if (process.env.NODE_APP_ENV === 'production') {
   // const httpsServer = https.createServer(credentials, app)
   // httpsServer.listen(443);
   https.createServer(credentials, app).listen(443)
-
+  console.log('I assume https is running')
   // Redirect http to https
   http.createServer(function (req, res) {
     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.end();
 }).listen(80);
+
+console.log('I assume http (not s) is running')
 
 
 
