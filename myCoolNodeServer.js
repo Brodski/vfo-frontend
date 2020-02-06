@@ -51,22 +51,23 @@ console.log('I assume http (not s) is running')
 } else {
   http.createServer(function (req, res) {
     // res.writeHead(301, { "Location": "http://" + req.headers['host'] + req.url });
-    console.log("req.headers.host")
-    console.log(req.headers.host)
-    console.log('req.url')
-    console.log(req.url)
-    console.log('hostname , port , pathname')
-    console.log(req.url.hostname)
-    console.log(req.url.port)
-    console.log(req.url.pathname)
-    console.log(req.url.href)
+    console.log("-------------------")
+    console.log("req.headers.host: ", req.headers.host)
+    console.log('req.url: ', req.url)
     console.log("http://" + req.headers.host + req.url )
     //let poopy = url.parse(request.url, `http://${request.headers.host}`);
+
+    // https://nodejs.org/api/http.html#http_message_url
+    // netstat -tulpn
     let urlParse = url.parse("http://" + req.headers.host + req.url);
     console.log(urlParse)
     let important = "https://" + urlParse.hostname + ":" + 6969 + urlParse.path
-    console.log('new redirect')
+    console.log('important')
     console.log(important)
+    console.log("\n\n\n\n--------\n\n\n")
+    console.log('req.headers')
+    console.log(req.headers)
+
      res.writeHead(301, { "Location": important });
     // res.redirect(301, "http://" + req.headers.host + req.url + ":" + 420);
      res.end();
