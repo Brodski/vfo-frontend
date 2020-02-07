@@ -36,6 +36,7 @@ if (process.env.NODE_APP_ENV === 'production') {
   // httpsServer.listen(443);
   https.createServer(credentials, app).listen(443)
   
+  // redirects http on port 8080 to httpS on 8080
   https.createServer(credentials, function (req, res){
     const redirectedPortNum = 8080
     let urlParse = url.parse("http://" + req.headers.host + req.url);
@@ -49,7 +50,7 @@ if (process.env.NODE_APP_ENV === 'production') {
     res.end();
     // res.writeHead(200)
     // res.end("HI!!!")
-  }).listen(7988)
+  }).listen(8080)
 
 
   // Redirect http to https
@@ -66,7 +67,7 @@ if (process.env.NODE_APP_ENV === 'production') {
   }).listen(80);
 
 
-
+// Development
 } else {
   http.createServer(function (req, res) {
     
@@ -93,4 +94,4 @@ if (process.env.NODE_APP_ENV === 'production') {
 // cp keystore.p12 src/main/resources/keystore.p12
 // ..\restApi\moreKeyz brodski@35.223.37.170:/home/cbrodski/restApi/src/main/resources/keystore.p12 .
 
-//keytool -importcert -alias springcert -file /etc/letsencrypt/live/customyoutube.com/cert.pem -keystore keystore.jks -storepass password
+// keytool -importcert -alias springcert -file /etc/letsencrypt/live/customyoutube.com/cert.pem -keystore keystore.jks -storepass password
