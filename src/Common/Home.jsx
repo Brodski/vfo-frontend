@@ -9,18 +9,20 @@ function About() {
         <h1>About</h1>
         <p className="flow-text">
           It's a cool webiste that lets you organized your YouTube subscriptions!
+          <br />
+          <br />
           You could also define the min or max duration the videos must be, for 
           those annoying channles that upload 30 second trailer vids when you only 
           care about the full length video
-          {/* <br />
           <br />
-          Tired of Youtube being a disorganized mess? Tired of channels that
+          <br />
+          {/* Tired of Youtube being a disorganized mess? Tired of channels that
           upload 30 second trailer vids when you only care about the full length
-          video?  */}
+          video?  
           <br />
           <br /> Custom Youtube solves that and lets you control your feed.
-          <br />
-          <br /> Organize your subscriptions into groups and control the
+          <br /> */}
+          Organize your subscriptions into groups and control the
           minimun/maximun duration required for a video to show up in your feed
         </p>
         <div className="divider" />

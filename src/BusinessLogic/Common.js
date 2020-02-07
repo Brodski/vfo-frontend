@@ -141,14 +141,20 @@ export function getMockUser() {
   uSubM3.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
   uSubM3.filter.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
 
-  let uSubM4 = new Subscription();
-  uSubM4.channelName = "Flashback FM";
-  uSubM4.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
-  uSubM4.filter.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
+  // let uSubM4 = new Subscription();
+  // uSubM4.channelName = "Flashback FM";
+  // uSubM4.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
+  // uSubM4.filter.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
+
+  let uSubM4b = new Subscription();
+  uSubM4b.channelName = "ONE Media";
+  uSubM4b.channelId = "UCzcRQ3vRNr6fJ1A9rqFn7QA";
+  uSubM4b.filter.channelId = "UCzcRQ3vRNr6fJ1A9rqFn7QA";
+
 
   let cShelfM = new CustomShelf();
   cShelfM.title = "Movies and stuff";
-  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3, uSubM4, uSubM0);
+  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3, uSubM4b, uSubM0);
   cShelfM.isSorted = true;
   u.customShelfs.push(cShelfM);
 
