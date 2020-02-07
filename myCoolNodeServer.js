@@ -36,20 +36,20 @@ if (process.env.NODE_APP_ENV === 'production') {
   // httpsServer.listen(443);
   https.createServer(credentials, app).listen(443)
   
-  // https.createServer(credentials, function (req, res){
-  //   const redirectedPortNum = 8080
-  //   let urlParse = url.parse("http://" + req.headers.host + req.url);
-  //   let redirected = "http://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
+  https.createServer(credentials, function (req, res){
+    const redirectedPortNum = 8080
+    let urlParse = url.parse("http://" + req.headers.host + req.url);
+    let redirected = "http://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
     
-  //   console.log("-------------------2")
-  //   console.log('redirected')
-  //   console.log(redirected)
+    console.log("-------------------2")
+    console.log('redirected')
+    console.log(redirected)
 
-  //   res.writeHead(301, { "Location": redirected });
-  //   res.end();
-  //   // res.writeHead(200)
-  //   // res.end("HI!!!")
-  // }).listen(7988)
+    res.writeHead(301, { "Location": redirected });
+    res.end();
+    // res.writeHead(200)
+    // res.end("HI!!!")
+  }).listen(7988)
 
 
   // Redirect http to https
@@ -72,7 +72,7 @@ if (process.env.NODE_APP_ENV === 'production') {
     
     
     let urlParse = url.parse("http://" + req.headers.host + req.url);
-    let redirected = "https://" + urlParse.hostname + ":" + 6969 + urlParse.path
+    let redirected = "https://" + urlParse.hostname + ":" + 8080 + urlParse.path
     console.log("-------------------")
     console.log('redirected')
     console.log(redirected)
@@ -81,35 +81,16 @@ if (process.env.NODE_APP_ENV === 'production') {
      res.end();
   }).listen(7988);
 
-  // app.listen(process.env.NODE_APP_PORT_NUM);
-  app.listen(4269);
-  app.listen(4266);
+  app.listen(process.env.NODE_APP_PORT_NUM);
+  //app.listen(4269);
+  //app.listen(4266);
 }
-
-
-
-// http.createServer(function (req, res) {
-//   // res.writeHead(301, { "Location": "http://" + req.headers['host'] + req.url });
-//   console.log("-------------------")
-//   console.log("req.headers.host: ", req.headers.host)
-//   console.log('req.url: ', req.url)
-//   console.log("http://" + req.headers.host + req.url )
-//   //let poopy = url.parse(request.url, `http://${request.headers.host}`);
-
-//   // https://nodejs.org/api/http.html#http_message_url
-//   // netstat -tulpn
-//   let urlParse = url.parse("http://" + req.headers.host + req.url);
-//   console.log(urlParse)
-//   let important = "https://" + urlParse.hostname + ":" + 6969 + urlParse.path
-//   console.log('important')
-//   console.log(important)
-
-//    res.writeHead(301, { "Location": important });
-//   // res.redirect(301, "http://" + req.headers.host + req.url + ":" + 420);
-//    res.end();
-// }).listen(7988);
 
 
 // sudo keytool -printcert -file etc/letsencrypt/live/customyoutube.com/cert.pem 
 
 // sudo keytool -import -alias springCert -file /etc/letsencrypt/live/customyoutube.com/cert.pem -keystore keystore.p12 -storepass password
+// cp keystore.p12 src/main/resources/keystore.p12
+// ..\restApi\moreKeyz brodski@35.223.37.170:/home/cbrodski/restApi/src/main/resources/keystore.p12 .
+
+//keytool -importcert -alias springcert -file /etc/letsencrypt/live/customyoutube.com/cert.pem -keystore keystore.jks -storepass password
