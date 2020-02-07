@@ -6,6 +6,7 @@ const https = require('https') ;
 const http = require('http');
 const url = require('url');
 
+
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/*', function(req, res) {
@@ -35,8 +36,9 @@ if (process.env.NODE_APP_ENV === 'production') {
     let redirected = "https://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
     
     console.log("-------------------")
-    console.log('redirected')
+    console.log(new Date().toLocaleString() + ' - Redirected')
     console.log(redirected)
+
     res.writeHead(301, { "Location": redirected });
     res.end();
   }).listen(80);
@@ -46,3 +48,4 @@ if (process.env.NODE_APP_ENV === 'production') {
 } else {
   app.listen(80);
 }
+
