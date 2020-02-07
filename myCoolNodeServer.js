@@ -37,10 +37,10 @@ if (process.env.NODE_APP_ENV === 'production') {
   https.createServer(credentials, app).listen(443)
   
   // redirects http on port 8080 to httpS on 8080
-  https.createServer(credentials, function (req, res){
-    const redirectedPortNum = 8080
+  http.createServer(credentials, function (req, res){
+    const redirectedPortNum = 8443
     let urlParse = url.parse("http://" + req.headers.host + req.url);
-    let redirected = "http://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
+    let redirected = "https://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
     
     console.log("-------------------2")
     console.log('redirected')
