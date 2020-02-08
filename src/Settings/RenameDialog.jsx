@@ -38,7 +38,10 @@ function RenameDialog(props) {
     setUserSettings(prev => {
       let newSet = { ...prev }
       let i = userSettings.customShelfs.findIndex(findIndexForShelfObj, props.shelfObj)
-      newSet.customShelfs[i].title = newName
+      if (i > -1 ){ 
+        newSet.customShelfs[i].title = newName
+      } 
+      
       return newSet
     })
     props.updateForce()
