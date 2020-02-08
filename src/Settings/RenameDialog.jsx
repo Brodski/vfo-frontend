@@ -26,13 +26,20 @@ function RenameDialog(props) {
     setIsOpen(false)
   }
 
+  function findIndexForShelfObj(shelfIterating, idx, arr){
+    if (shelfIterating.title === this.title && shelfIterating.isSorted === this.isSorted && shelfIterating.fewSubs.length === this.fewSubs.length ) {
+      return true
+    }
+  }
+
   function save(e) {
     e.preventDefault();
     setIsOpen(false)
     setUserSettings(prev => {
-      let i = userSettings.customShelfs.indexOf(props.shelfObj)
-      prev.customShelfs[i].title = newName
-      return prev
+      let newSet = { ...prev }
+      let i = userSettings.customShelfs.findIndex(findIndexForShelfObj, props.shelfObj)
+      newSet.customShelfs[i].title = newName
+      return newSet
     })
     props.updateForce()
   }
@@ -66,7 +73,7 @@ function RenameDialog(props) {
           <img className="rename-image2 " src={Pic} />
         </div>
         <div className=" rename-content">
-          <form onSubmit={save}>
+          {/* <form onSubmit={save}> */}
             <div>
               <h5 className="flow-text"> Rename </h5>
               <div className="divider" />
@@ -81,11 +88,12 @@ function RenameDialog(props) {
                 />
               </div>
               <div className="rename-mod-btn">
-                <a type="submit" onClick={save} className=" btn">Rename</a>
+                {/* <a type="submit" onClick={save} className=" btn">Rename</a> */}
+                <a onClick={save} className=" btn">Rename</a>
                 <a onClick={close} className=" btn">Close</a>
               </div>
             </div>
-          </form>
+          {/* </form> */}
         </div>
       </Modal>
     </div>
