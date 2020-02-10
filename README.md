@@ -26,7 +26,7 @@ User authorization is based on a guide by Google [Authenticate With a Backend Se
 # Getting Started (for development):  
   
   ### Start HTTP Server
-1) Get api-key.js from me.  
+1) Get api-key.js from me. (A file with a Youtube Data API key and a Client ID, obtained via Google)  
 2) Put "api-key.js" in "src/"   
 3) $ npm install   
 4) $ npm start   
@@ -42,4 +42,4 @@ User authorization is based on a guide by Google [Authenticate With a Backend Se
 
 # Deployment  
 
-See deployment.txt for info about deploying this to your own VM
+[See deployment.txt for info about deploying this to your own VM](./deployment.txt)
