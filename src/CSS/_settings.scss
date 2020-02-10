@@ -148,3 +148,16 @@ div.subListWrapper {
   object-fit: contain;
   max-height: $height-modal;
 }
+
+.cara-helpx {
+  object-fit: contain;
+  max-height: $height-modal2;
+}
+
+.cara2 {
+  justify-content: center;
+  display: flex;
+  background-color: grey;
+  border: 3px solid black;
+  max-height: $height-modal2;
+}

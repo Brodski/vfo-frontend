@@ -11,9 +11,8 @@ function About() {
           It's a cool webiste that lets you organized your YouTube subscriptions!
           <br />
           <br />
-          You could also define the min or max duration the videos must be, for 
-          those annoying channles that upload 30 second trailer vids when you only 
-          care about the full length video
+          Organize your subscriptions into groups and control the
+          minimun/maximun duration required for a video to show up in your feed
           <br />
           <br />
           {/* Tired of Youtube being a disorganized mess? Tired of channels that
@@ -22,8 +21,14 @@ function About() {
           <br />
           <br /> Custom Youtube solves that and lets you control your feed.
           <br /> */}
-          Organize your subscriptions into groups and control the
-          minimun/maximun duration required for a video to show up in your feed
+          You could also define the min or max duration the videos must be, for 
+          those annoying channles that upload 30 second trailer vids when you only 
+          care about the full length video
+          <br />
+          <br />
+          This will only read who you're subscribed to. This will not remove any 
+          of your subscriptions, nor add any new subscriptions, nor make any 
+          modifications to your account ^.^
         </p>
         <div className="divider" />
         <h5 className="text-flow">

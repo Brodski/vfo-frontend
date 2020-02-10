@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { Fragment, useContext } from 'react';
 
 import PropTypes from 'prop-types';
@@ -18,16 +19,29 @@ const GreetingsMsg = (props) => {
   const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
   const { user, setUser } = useContext(UserContext);
 
+  const GetStarted = () => {
+    return (
+      <Fragment>
+        <div>
+          <div className="flow-text">
+            <Link to='/customize'> Click here to try it out! </Link>
+          </div>
+        </div>
+      </Fragment>
+    )
+  }
+
   const LoggedOut = () => {
     let extraClasses = isSettingsPage ? "left" : "center-align";
     return (
       <div className={` demo-greeting-wrap ${extraClasses}`}>
+        {!isSettingsPage ? <GetStarted /> : null }
         <div className="flow-text">
           Currently using a demo profile.
           <br />
-          Log in to customize your homepage
+          Log in to customize your subscriptions
         </div>
-        {!isSettingsPage ? <div className='div-aux' /> : null}
+        {!isSettingsPage ? <div className='div-aux' /> : null }
       </div>
     )
   }

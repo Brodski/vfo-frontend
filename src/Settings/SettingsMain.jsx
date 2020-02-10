@@ -11,6 +11,7 @@ import AllShelfs from './AllShelfs.jsx';
 import Footer from '../Common/Footer.jsx';
 import GreetingsMsg from '../Common/GreetingsMsg.jsx'
 import HowTo from './HowTo'
+import HowTo2 from './HowTo2'
 import LoadingMain from '../Common/LoadingMain.jsx';
 import PostSave from './PostSave.jsx';
 
@@ -83,6 +84,9 @@ const SettingsNEW = () => {
           <div className="set-top-tophalf ">
             {isInitFinished2 ? <GreetingsMsg isSettingsPage={true} /> : null}
             {isInitFinished2 ? <Customize /> : null}
+          </div>
+          <div>
+            {isInitFinished2 ? <HowTo2 /> : null}
           </div>
           <div className='div-aux' />
         </div>

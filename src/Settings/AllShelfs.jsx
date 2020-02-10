@@ -32,7 +32,6 @@ const AllShelfs = (props) => {
     setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
       newS.customShelfs = stLogic.queryShelfs(userSettings, true)
-
       let cs = new CustomShelf()
       cs.title = "New Shelf"
       cs.isSorted = true;
@@ -80,7 +79,6 @@ const AllShelfs = (props) => {
           key={id}
           bindToId={id}
           shelf={sh}
-
         />
       )
     })
