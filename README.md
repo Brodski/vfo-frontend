@@ -1,14 +1,17 @@
-Project webpage: [betteryoutube.dns-cloud.net](betteryoutube.dns-cloud.net)
+Project webpage: [customyoutube.com](https://customyoutube.com)
 
 # About  
 
 (Still in development)  
 It's a cool webiste that lets you organized your youtube subscriptions!  
 ### Tech details  
-A dynamic website based on N-tier architecture with Presentation, Logic, and Data layer.
-Backend: Java, Spring Boot framework, with MongoDB database.
-Frontend: React framework & Materialize CSS framework.
-Everything is hosted on one VM; the http server, backend server, & mongoDB are all in one VM in Google's Cloud Platform.
+A dynamic website based on N-tier architecture with Presentation, Logic, and Data layer.  
+Backend: Java, Spring Boot framework, with MongoDB database.  
+Frontend: React framework & Materialize CSS framework.  
+Everything is hosted on one VM; the frontend server is running on a Node.js server, backend server is running on a Apache
+Tomcat server through the Spring Boot framework, & mongoDB are all on one VM in Google's Cloud Platform.  
+All endpoints are https secured using Certbot.  
+[Backend project repo is here](https://github.com/Brodski/customyoutube-backend)
 
 
 ### Authorization & Authentication  
