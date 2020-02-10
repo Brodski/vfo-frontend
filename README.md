@@ -33,12 +33,13 @@ User authorization is based on a guide by Google [Authenticate With a Backend Se
 5) Open [http://localhost:3000](http://localhost:3000) to view it in the browser.   
 
   ### Start Backend Server:
-1) Have mongodb installed and have its service running
-2) Get ActualSecretKeys.java from me.
-3) Put "ActualSecretKeys.java" in  "src/main/java/com/Brodski/restApi"
-4) $ mvn spring-boot:run  
-5a) App should be listening on port 8080  
-5b) Verify at [http://localhost:8080/](http://localhost:8080/) to view a message of "Hello!!!"   
+1) Have mongodb installed and have its service running  
+2) Get ActualSecretKeys.java from me.  
+3) Put "ActualSecretKeys.java" in  "src/main/java/com/Brodski/restApi"  
+4) "application.properties" file should have this line "spring.profiles.active=dev" (not equal to prod)  
+5) $ mvn spring-boot:run  
+a) App should be listening on port 8080  
+b) Verify at [http://localhost:8080/](http://localhost:8080/) to view a message of "Hello!!!"   
 
 # Deployment  
 
