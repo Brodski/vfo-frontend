@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
 import {
@@ -7,13 +8,19 @@ import {
   UserContext,
   UserSettingsContext
 } from '../Contexts/UserContext.js'
+
 import AllShelfs from './AllShelfs.jsx';
 import Footer from '../Common/Footer.jsx';
 import GreetingsMsg from '../Common/GreetingsMsg.jsx'
 import HowTo from './HowTo'
-import HowTo2 from './HowTo2'
 import LoadingMain from '../Common/LoadingMain.jsx';
 import PostSave from './PostSave.jsx';
+import TheCarousel from './TheCarousel.jsx';
+
+
+
+
+
 
 const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
@@ -75,6 +82,16 @@ const SettingsNEW = () => {
       </div>
     )
   }
+  
+  
+const HowTo2 = () => {
+
+  return (
+    <div className="center-align cara2">
+      <TheCarousel /> 
+    </div>
+  );
+}
 
   return (
     <Fragment>

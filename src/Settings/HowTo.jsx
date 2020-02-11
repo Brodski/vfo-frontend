@@ -1,52 +1,13 @@
 import React, { Fragment, useState } from 'react';
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from 'react-responsive-carousel';
 import Modal from 'react-modal';
 
-import Drag1 from '../Images/Tutorial/drag3.png';
-import Drag2 from '../Images/Tutorial/drag-sub2.png';
-import Filt6 from '../Images/Tutorial/tut-filt-combo2.png';
-import Order1 from '../Images/Tutorial/order2.png';
-import Order2 from '../Images/Tutorial/notice-with-arrow.png';
+import TheCarousel from './TheCarousel.jsx';
 
 const HowTo = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-
-  const TheCarousel = () => {
-    return (
-      <Carousel
-        showArrows={true}
-        showStatus={false}
-        showThumbs={false}
-        dynamicHeight={true}
-        useKeyboardArrows={true}
-        infiniteLoop={true}
-      >
-        <div>
-          <img className="cara-help" src={Drag2} />
-          <p className="legend">Click & drag to order your subscriptions</p>
-        </div>
-        <div>
-          <img className="cara-help" src={Drag1} />
-          <p className="legend">Click & drag to order your subscriptions</p>
-        </div>
-        <div>
-          <img className="cara-help" src={Filt6} />
-          <p className="legend">Choose the min or max of a subscription's videos</p>
-        </div>
-        <div>
-          <img className="cara-help" src={Order1} />
-          <p className="legend">Loading order - right side first</p>
-        </div>
-        <div>
-          <img className="cara-help" src={Order2} />
-          <p className="legend">Loading order </p>
-        </div>
-      </Carousel>
-    )
-  }
 
   return (
     <Fragment>
@@ -68,7 +29,9 @@ const HowTo = () => {
         overlayClassName="Overlay"
       >
         {/* solves a mem-leak . "To fix, cancel all subscriptions and async..." */}
-        {isModalOpen ? <TheCarousel /> : null}
+        <div className="cara1">
+          {isModalOpen ? <TheCarousel /> : null}
+        </div>
       </Modal>
     </Fragment>
   );
