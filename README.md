@@ -18,7 +18,7 @@ It's a cool webiste that lets you organized your youtube subscriptions!
 Through OAuth2, the user authorizes the client to view his Youtube profile, ie his Youtube subscriptions. Uses OAuth2 for the [client-side-flow](https://developers.google.com/youtube/v3/guides/auth/client-side-web-apps)  
 
 ##### Backend Server
-User authorization is based on a guide by Google [Authenticate With a Backend Server, Sign In for Websites](https://developers.google.com/identity/sign-in/web/server-side-flow). Basicly, when the user clicks "Save" the client sents a id token to the backend. This token is sent to Google where they verify the legitamcy of the user and responds back to my server.
+User authorization is based on a guide by Google [Authenticate With a Backend Server, Sign In for Websites](https://developers.google.com/identity/sign-in/web/server-side-flow). Basicly, when the user clicks "Save" the client sents a id token to the backend. This token is sent to Google where they verify the legitamcy of the user and responds back to the server.
 
 
 
