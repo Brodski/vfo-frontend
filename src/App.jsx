@@ -17,7 +17,7 @@ import {
   UserContext,
   UserSettingsContext
 } from './Contexts/UserContext'
-import About from './Common/Home.jsx';
+import About from './Common/About.jsx';
 import Nav from './Common/Nav.jsx';
 import SettingsNEW from './Settings/SettingsMain.jsx';
 import YoutubeNEW from './Youtube/YoutubeMain.jsx';

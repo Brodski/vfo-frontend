@@ -12,8 +12,8 @@ const Footer = () => {
           <div className="col l4 offset-l2 s12">
             <h6 className="white-text">Info</h6>
             <ul>
-              <li><a className="grey-text text-lighten-3" >Contact: cbrodski@gmail.com</a></li>
-              <li><a className="grey-text text-lighten-3" href="https://github.com/Brodski/"> Github</a> </li>
+              <li><a className="grey-text text-lighten-3">Contact: cbrodski@gmail.com</a></li>
+              <li><a className="grey-text text-lighten-3" href="https://github.com/Brodski/customyoutube-frontend"> Github</a> </li>
               <li><a className="grey-text text-lighten-3" href="https://www.linkedin.com/in/christopher-brodski/">LinkedIn</a></li>
 
             </ul>
