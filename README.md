@@ -3,7 +3,7 @@ Project webpage: [customyoutube.com](https://customyoutube.com)
 # About  
 
 (Still in development)  
-It's a cool webiste that lets you organized your youtube subscriptions!  
+It's a cool webiste that lets you organize your youtube subscriptions!  
 ### Tech details  
 - A dynamic website based on N-tier architecture with Presentation, Logic, and Data layer.  
 - Backend: Java, Spring Boot framework, with MongoDB database.  
