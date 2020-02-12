@@ -25,7 +25,8 @@ User authorization is based on a guide by Google [Authenticate With a Backend Se
 
 # Getting Started (for development):  
   
-  ### Start HTTP Server
+  ### Start Node.js Server  
+  # Hosts React app (UI)
 1) Get api-key.js from me. (A file with a Youtube Data API key and a Client ID, obtained via Google)  
 2) Put "api-key.js" in "src/"   
 3) $ npm install   
@@ -33,6 +34,7 @@ User authorization is based on a guide by Google [Authenticate With a Backend Se
 5) Open [http://localhost:3000](http://localhost:3000) to view it in the browser.   
 
   ### Start Backend Server:
+  # Hosts Spring Boot app (Data)
 1) Have mongodb installed and have its service running  
 2) Get ActualSecretKeys.java from me.  
 3) Put "ActualSecretKeys.java" in  "src/main/java/com/Brodski/restApi"  
