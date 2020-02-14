@@ -33,8 +33,8 @@ User authorization is based on a guide by Google [Authenticate With a Backend Se
 4) $ npm start   
 5) Open [http://localhost:3000](http://localhost:3000) to view it in the browser.   
 
-  ### Start Backend Server:
-  ##### Hosts Spring Boot app (Data)
+  ### Start Java Server:
+  ##### Hosts Spring Boot app (Data - REST API)
 1) Have mongodb installed and have its service running  
 2) Get ActualSecretKeys.java from me.  
 3) Put "ActualSecretKeys.java" in  "src/main/java/com/Brodski/restApi"  
