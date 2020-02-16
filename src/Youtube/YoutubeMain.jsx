@@ -31,7 +31,7 @@ function YoutubeNEW() {
   const initialPageLength = 3
   // Arbitrary number (max 50) (see youtube's Video api)
   const fetchThisManyVideosPerShelf = 35
-  let isSubscribed;
+  
 
   const { user, setUser } = useContext(UserContext);
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
@@ -43,6 +43,7 @@ function YoutubeNEW() {
   const [numVids, setNumVids] = useState([new VidCounter()]) 
   const [isFirst, setIsFirst] = useState(true)
   const [isMoreShelfs, setIsMoreShelfs] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(true)
   let spamCount = 0;
 
   function isEndReached() {
@@ -90,6 +91,7 @@ function YoutubeNEW() {
   }
 
   function calcShelfSlice() {
+
     let sliceVal;
     if (user.customShelfs.length <= pageLength) {
       sliceVal = user.customShelfs.length
@@ -97,19 +99,15 @@ function YoutubeNEW() {
       sliceVal = pageLength
     }
     return sliceVal
-
   }
 
   async function _fetchActivities() {
 
     let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, calcShelfSlice()))
-
     shelfsActs = ytLogic.removeNonVideos(shelfsActs)
     shelfsActs = shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
-
     return shelfsActs
-
   }
 
   function isNothingLoadedYet() {
@@ -167,21 +165,15 @@ function YoutubeNEW() {
   }
 
   const fetchMoreSubs = async () => {
-
+    
     if (isEndReached()) {
       return
     }
-
     await preFetchMoreSubs()
-
     const shelfsActs = await _fetchActivities()
-
     const shelfVids = await _fetchVideos(shelfsActs)
-
     const iData = injectData(shelfVids)
-
     ytLogic.beginFilter2(iData.shelfs)
-
     if (isSubscribed) {
       setFinalShelfAux(iData)
     }
@@ -200,10 +192,9 @@ function YoutubeNEW() {
 
   // https://juliangaramendy.dev/use-promise-subscription/ solution to 'mem-leak'
   useEffect(() => {
-    isSubscribed = true;
     initPage()
     return () => {
-      isSubscribed = false
+      setIsSubscribed(false)
     }
   }, [])
 

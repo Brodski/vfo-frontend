@@ -329,12 +329,12 @@ export function getMockUser() {
   uSubNight3.channelId = "UCwWhs_6x42TyRM4Wstoq8HA";
   uSubNight3.filter.channelId = "UCwWhs_6x42TyRM4Wstoq8HA";
 
-  let cShelfNight = new CustomShelf();
-  cShelfNight.title = "Late night talks shows";
-  cShelfNight.fewSubs.push(uSubNight, uSubNight2, uSubNight3);
-  cShelfNight.isSorted = true;
+  // let cShelfNight = new CustomShelf();
+  // cShelfNight.title = "Late night talks shows";
+  // cShelfNight.fewSubs.push(uSubNight, uSubNight2, uSubNight3);
+  // cShelfNight.isSorted = true;
 
-  u.customShelfs.push(cShelfNight);
+  // u.customShelfs.push(cShelfNight);
 
   // ///////////////////////////////////////////////////////////
   // //////////             Scince N stuff             /////////
