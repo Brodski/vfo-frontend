@@ -140,10 +140,10 @@ function FilterDialog(props) {
           {/* {TWO} */}
           {/* TODO Could be better */}
           <div>
-            <div className="filt-drop-wrap" >
-              <i className="icon-filt-min hide-on-small-only material-icons ">
+            <div className="filt-drop-wrap">
+              {/* <i className="icon-filt-min hide-on-small-only material-icons ">
                 vertical_align_top
-              </i>
+              </i> */}
               <div>Only show videos that are longer than: </div>
             </div>
             <div className="valign-wrapper select-wrap">
@@ -155,9 +155,9 @@ function FilterDialog(props) {
             </div>
             {/* {THREE} */}
             <div className="filt-drop-wrap">
-              <i className=" icon-filt-max hide-on-small-only material-icons ">
+              {/* <i className=" icon-filt-max hide-on-small-only material-icons ">
                 vertical_align_bottom
-                </i>
+                </i> */}
               <div>Only show videos that are shorter than: </div>
             </div>
             <div className="filt-select-wrap">

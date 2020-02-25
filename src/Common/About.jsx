@@ -30,14 +30,10 @@ function About() {
           of your subscriptions, nor add any new subscriptions, nor make any 
           modifications to your account ^.^
         </p>
-        <div className="divider" />
+        {/* <div className="divider" />
         <h5 className="text-flow">
           This environment is for: {" "}
           {process.env.REACT_APP_ENV_NAME}
-        </h5>
-        {/* <h5 className="text-flow">
-          DB, HTTP Server, and server at: {" "}
-          {process.env.REACT_APP_SPRINGB_ADDRESS.slice(0, -5)}
         </h5> */}
         <div className="about-div-padding" />
       </div>

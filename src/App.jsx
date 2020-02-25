@@ -40,7 +40,7 @@ function App() {
     setIsInitFinished2(true)
     setIsLogged2(GApiAuth.isHeSignedIn())
 
-    // solution (?) to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
+    // solution(?) to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
     while (GoogleAuth == null) {
       await Common.sleep(500)
       initGApi()
@@ -84,12 +84,9 @@ function App() {
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
             <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
               <IsInitFinishedContext.Provider value={{ isInitFinished2, setIsInitFinished2 }}>
-
                 <Nav />
                 <Route path="/" exact component={YoutubeNEW} />
-
                 <Route path="/about" component={About} />
-
                 <Route path="/customize" component={SettingsNEW} />
               </IsInitFinishedContext.Provider>
             </IsLoggedContext.Provider>

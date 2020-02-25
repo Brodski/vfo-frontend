@@ -28,9 +28,9 @@ function YoutubeNEW() {
 
   const spamLimit = 25;
   const pageGrowth = 4;
-  const initialPageLength = 3
+  const initialPageLength = 3;
   // Arbitrary number (max 50) (see youtube's Video api)
-  const fetchThisManyVideosPerShelf = 35
+  const fetchThisManyVideosPerShelf = 50;
   
 
   const { user, setUser } = useContext(UserContext);

@@ -157,6 +157,99 @@ export function getMockUser() {
   cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3, uSubM4b, uSubM0);
   cShelfM.isSorted = true;
   u.customShelfs.push(cShelfM);
+  
+  // ///////////////////////////////////////////////////////////
+  // //////////             Cool stuff             /////////////
+  // ///////////////////////////////////////////////////////////
+
+  let uSubStuff = new Subscription();
+  uSubStuff.channelName = "The Atlantic";
+  uSubStuff.channelId = "UCK0z0_5uL7mb9IjntOKi5XQ";
+  uSubStuff.filter.channelId = "UCK0z0_5uL7mb9IjntOKi5XQ";
+
+  let uSubStuff2 = new Subscription();
+  uSubStuff2.channelName = "Vox";
+  uSubStuff2.channelId = "UCLXo7UDZvByw2ixzpQCufnA";
+  uSubStuff2.filter.channelId = "UCLXo7UDZvByw2ixzpQCufnA";
+
+  let uSubStuff3 = new Subscription();
+  uSubStuff3.channelName = "Dude Perfect";
+  uSubStuff3.channelId = "UCRijo3ddMTht_IHyNSNXpNQ";
+  uSubStuff3.filter.channelId = "UCRijo3ddMTht_IHyNSNXpNQ";
+
+  let cShelfCool = new CustomShelf();
+  cShelfCool.title = "Cool stuff";
+  cShelfCool.fewSubs.push(uSubStuff, uSubStuff2, uSubStuff3);
+  cShelfCool.isSorted = true;
+  u.customShelfs.push(cShelfCool);
+  
+  // ///////////////////////////////////////////////////////////
+  // //////////             Some Music              /////////////
+  // ///////////////////////////////////////////////////////////
+
+  // let uSubMusic5 = new Subscription()
+  // uSubMusic5.channelName = 'Shine Music'
+  // uSubMusic5.channelId = 'UCz24srq31kr8CyNT-oN1Dqw';
+  // uSubMusic5.filter.channelId = "UCz24srq31kr8CyNT-oN1Dqw";
+
+  // let uSubMusic6 = new Subscription()
+  // uSubMusic6.channelName = 'Clap Your Hands'
+  // uSubMusic6.channelId = 'UC5wbJ7XVrANgnq6M-Rgy8GQ';
+  // uSubMusic6.filter.channelId = "UC5wbJ7XVrANgnq6M-Rgy8GQ";
+
+  let uSubMusic3 = new Subscription();
+  uSubMusic3.channelName = "COLORS";
+  uSubMusic3.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
+  uSubMusic3.filter.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
+
+  let uSubMusicY = new Subscription();
+  uSubMusicY.channelName = "Selected.";
+  uSubMusicY.channelId = "UCFZ75Bg73NJnJgmeUX9l62g";
+  uSubMusicY.filter.channelId = "UCFZ75Bg73NJnJgmeUX9l62g";
+
+  // let uSubMusic7 = new Subscription()
+  // uSubMusic7.channelName = 'Defected Records'
+  // uSubMusic7.channelId = 'UCnOxaDXBiBXg9Nn9hKWu6aw';
+  // uSubMusic7.filter.channelId = "UCnOxaDXBiBXg9Nn9hKWu6aw";
+
+  // let uSubMusic8 = new Subscription()
+  // uSubMusic8.channelName = "Tommy Boy"
+  // uSubMusic8.channelId = "UCnSR7_Oq-MdsZxfogsfk-Ug";
+  // uSubMusic8.filter.channelId = "UCnSR7_Oq-MdsZxfogsfk-Ug";
+
+  let uSubMusicX2 = new Subscription();
+  uSubMusicX2.channelName = "Touché";
+  uSubMusicX2.channelId = "UCpSMOn2qG_smhVFhInoxaVg";
+  uSubMusicX2.filter.channelId = "UCpSMOn2qG_smhVFhInoxaVg";
+
+  let uSubMusicX3 = new Subscription();
+  uSubMusicX3.channelName = "Majestic Casual";
+  uSubMusicX3.channelId = "UCXIyz409s7bNWVcM-vjfdVA";
+  uSubMusicX3.filter.channelId = "UCXIyz409s7bNWVcM-vjfdVA";
+
+  let uSubMusicX4 = new Subscription();
+  uSubMusicX4.channelName = "MrSuicideSheep";
+  uSubMusicX4.channelId = "UC5nc_ZtjKW1htCVZVRxlQAQ";
+  uSubMusicX4.filter.channelId = "UC5nc_ZtjKW1htCVZVRxlQAQ";
+
+  let cShelfMusic2 = new CustomShelf();
+  cShelfMusic2.title = "Some music";
+  cShelfMusic2.fewSubs.push(
+    uSubMusic3,
+    uSubMusicY,
+    uSubMusicX2,
+    uSubMusicX3,
+    uSubMusicX4
+  );
+  cShelfMusic2.isSorted = true;
+  u.customShelfs.push(cShelfMusic2);
+
+  // let uSubMusic4 = new Subscription()
+  // uSubMusic4.channelName = 'NPR Music'
+  // uSubMusic4.channelId = 'UC4eYXhJI4-7wSWc8UNRwD4A';
+  // uSubMusic4.filter.channelId = "UC4eYXhJI4-7wSWc8UNRwD4A";
+  // uSubMusic4.filter.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
+
 
   // ///////////////////////////////////////////////////////////
   // //////////             KPOP              /////////////
@@ -224,110 +317,23 @@ export function getMockUser() {
   // u.customShelfs.push(cShelfMusic)
 
   // ///////////////////////////////////////////////////////////
-  // //////////             More Music              /////////////
-  // ///////////////////////////////////////////////////////////
-
-  // let uSubMusic5 = new Subscription()
-  // uSubMusic5.channelName = 'Shine Music'
-  // uSubMusic5.channelId = 'UCz24srq31kr8CyNT-oN1Dqw';
-  // uSubMusic5.filter.channelId = "UCz24srq31kr8CyNT-oN1Dqw";
-
-  // let uSubMusic6 = new Subscription()
-  // uSubMusic6.channelName = 'Clap Your Hands'
-  // uSubMusic6.channelId = 'UC5wbJ7XVrANgnq6M-Rgy8GQ';
-  // uSubMusic6.filter.channelId = "UC5wbJ7XVrANgnq6M-Rgy8GQ";
-
-  let uSubMusic3 = new Subscription();
-  uSubMusic3.channelName = "COLORS";
-  uSubMusic3.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
-  uSubMusic3.filter.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
-
-  let uSubMusicY = new Subscription();
-  uSubMusicY.channelName = "Selected.";
-  uSubMusicY.channelId = "UCFZ75Bg73NJnJgmeUX9l62g";
-  uSubMusicY.filter.channelId = "UCFZ75Bg73NJnJgmeUX9l62g";
-
-  // let uSubMusic7 = new Subscription()
-  // uSubMusic7.channelName = 'Defected Records'
-  // uSubMusic7.channelId = 'UCnOxaDXBiBXg9Nn9hKWu6aw';
-  // uSubMusic7.filter.channelId = "UCnOxaDXBiBXg9Nn9hKWu6aw";
-
-  // let uSubMusic8 = new Subscription()
-  // uSubMusic8.channelName = "Tommy Boy"
-  // uSubMusic8.channelId = "UCnSR7_Oq-MdsZxfogsfk-Ug";
-  // uSubMusic8.filter.channelId = "UCnSR7_Oq-MdsZxfogsfk-Ug";
-
-  let uSubMusicX2 = new Subscription();
-  uSubMusicX2.channelName = "Touché";
-  uSubMusicX2.channelId = "UCpSMOn2qG_smhVFhInoxaVg";
-  uSubMusicX2.filter.channelId = "UCpSMOn2qG_smhVFhInoxaVg";
-
-  let uSubMusicX3 = new Subscription();
-  uSubMusicX3.channelName = "Majestic Casual";
-  uSubMusicX3.channelId = "UCXIyz409s7bNWVcM-vjfdVA";
-  uSubMusicX3.filter.channelId = "UCXIyz409s7bNWVcM-vjfdVA";
-
-  let uSubMusicX4 = new Subscription();
-  uSubMusicX4.channelName = "MrSuicideSheep";
-  uSubMusicX4.channelId = "UC5nc_ZtjKW1htCVZVRxlQAQ";
-  uSubMusicX4.filter.channelId = "UC5nc_ZtjKW1htCVZVRxlQAQ";
-
-  let cShelfMusic2 = new CustomShelf();
-  cShelfMusic2.title = "More music";
-  cShelfMusic2.fewSubs.push(
-    uSubMusic3,
-    uSubMusicY,
-    uSubMusicX2,
-    uSubMusicX3,
-    uSubMusicX4
-  );
-  cShelfMusic2.isSorted = true;
-  u.customShelfs.push(cShelfMusic2);
-
-  // let uSubMusic4 = new Subscription()
-  // uSubMusic4.channelName = 'NPR Music'
-  // uSubMusic4.channelId = 'UC4eYXhJI4-7wSWc8UNRwD4A';
-  // uSubMusic4.filter.channelId = "UC4eYXhJI4-7wSWc8UNRwD4A";
-  // uSubMusic4.filter.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
-
-  // ///////////////////////////////////////////////////////////
-  // //////////             Cool stuff             /////////////
-  // ///////////////////////////////////////////////////////////
-
-  let uSubStuff = new Subscription();
-  uSubStuff.channelName = "The Atlantic";
-  uSubStuff.channelId = "UCK0z0_5uL7mb9IjntOKi5XQ";
-  uSubStuff.filter.channelId = "UCK0z0_5uL7mb9IjntOKi5XQ";
-
-  let uSubStuff2 = new Subscription();
-  uSubStuff2.channelName = "Vox";
-  uSubStuff2.channelId = "UCLXo7UDZvByw2ixzpQCufnA";
-  uSubStuff2.filter.channelId = "UCLXo7UDZvByw2ixzpQCufnA";
-
-  let cShelfCool = new CustomShelf();
-  cShelfCool.title = "Cool stuff";
-  cShelfCool.fewSubs.push(uSubStuff, uSubStuff2);
-  cShelfCool.isSorted = true;
-  u.customShelfs.push(cShelfCool);
-
-  // ///////////////////////////////////////////////////////////
   // //////////             Late Night             /////////
   // ///////////////////////////////////////////////////////////
 
-  let uSubNight = new Subscription();
-  uSubNight.channelName = "LastWeekTonight";
-  uSubNight.channelId = "UC3XTzVzaHQEd30rQbuvCtTQ";
-  uSubNight.filter.channelId = "UC3XTzVzaHQEd30rQbuvCtTQ";
+  // let uSubNight = new Subscription();
+  // uSubNight.channelName = "LastWeekTonight";
+  // uSubNight.channelId = "UC3XTzVzaHQEd30rQbuvCtTQ";
+  // uSubNight.filter.channelId = "UC3XTzVzaHQEd30rQbuvCtTQ";
 
-  let uSubNight2 = new Subscription();
-  uSubNight2.channelName = "Real Time with Bill Maher";
-  uSubNight2.channelId = "UCy6kyFxaMqGtpE3pQTflK8A";
-  uSubNight2.filter.channelId = "UCy6kyFxaMqGtpE3pQTflK8A";
+  // let uSubNight2 = new Subscription();
+  // uSubNight2.channelName = "Real Time with Bill Maher";
+  // uSubNight2.channelId = "UCy6kyFxaMqGtpE3pQTflK8A";
+  // uSubNight2.filter.channelId = "UCy6kyFxaMqGtpE3pQTflK8A";
 
-  let uSubNight3 = new Subscription();
-  uSubNight3.channelName = "The Daily Show with Trevor Noah";
-  uSubNight3.channelId = "UCwWhs_6x42TyRM4Wstoq8HA";
-  uSubNight3.filter.channelId = "UCwWhs_6x42TyRM4Wstoq8HA";
+  // let uSubNight3 = new Subscription();
+  // uSubNight3.channelName = "The Daily Show with Trevor Noah";
+  // uSubNight3.channelId = "UCwWhs_6x42TyRM4Wstoq8HA";
+  // uSubNight3.filter.channelId = "UCwWhs_6x42TyRM4Wstoq8HA";
 
   // let cShelfNight = new CustomShelf();
   // cShelfNight.title = "Late night talks shows";
@@ -391,9 +397,15 @@ export function getMockUser() {
   subTalk3.filter.channelId = "UCzQUP1qoWDoEbmsQxvdjxgQ";
 
   let subTalk4 = new Subscription();
-  subTalk4.channelName = "The Rubin Report";
-  subTalk4.channelId = "UCJdKr0Bgd_5saZYqLCa9mng";
-  subTalk4.filter.channelId = "UCJdKr0Bgd_5saZYqLCa9mng";
+  subTalk4.channelName = "The Ringer";
+  subTalk4.channelId = "UCT83YP07yVuaH9J19YABhlw";
+  subTalk4.filter.minDuration = "45";
+  subTalk4.filter.channelId = "UCT83YP07yVuaH9J19YABhlw";
+
+  // let subTalk4 = new Subscription();
+  // subTalk4.channelName = "The Rubin Report";
+  // subTalk4.channelId = "UCJdKr0Bgd_5saZYqLCa9mng";
+  // subTalk4.filter.channelId = "UCJdKr0Bgd_5saZYqLCa9mng";
 
   // let uSub6 = new Subscription()
   // uSub6.channelName = 'Asian Boss'

@@ -23,7 +23,7 @@ import Order2 from '../Images/Tutorial/notice-with-arrow.png';
         useKeyboardArrows={true}        
       >
         <div>
-          <img className="cara-help" src={Drag2} />
+          <img className="cara-help" src={Drag2} alt='Click & drag to order your subscriptions'/>
           {/* <p className="legend">Click & drag to order your subscriptions</p> */}
         </div>
         <div>
