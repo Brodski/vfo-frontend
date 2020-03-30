@@ -75,7 +75,7 @@ export async function initGoogleAPI() {
 
   // Wait until client is loaded
   await window.gapi.load("client:auth2", _initClient);
-
+  
   // Wait until client is authenticated
   await waitForAuthLoad();
 

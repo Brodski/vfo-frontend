@@ -37,21 +37,8 @@ const Video = (props) => {
     }
     return vidDuration
   }
-
-  // const { video: {
-  //         id,
-  //         snippet: {  
-  //           title,
-  //           thumbnail: {
-  //               medium: {
-  //                 url: thumbnail
-  //               }
-  //             }
-  //           }
-  //         }             
-  //       } = props
-  //
-  // The destructuring of 3 variables (thumbnail, id, and title) is above. No way is that more readable. The performance gained is negligible. Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
+  
+  // The performance gained is negligible. Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
   let thumbnail = props.video.snippet.thumbnails.medium.url
   let id = props.video.id
   let title = props.video.snippet.title

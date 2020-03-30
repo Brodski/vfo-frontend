@@ -4,7 +4,6 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 import M from 'materialize-css';
 
 import * as Common from '../BusinessLogic/Common.js';
-import * as GApiAuth from '../HttpRequests/GApiAuth';
 import { UserContext, UserSettingsContext } from '../Contexts/UserContext.js';
 import LoginButton from './LoginButton'
 import Logo from '../Images/Logos/Logo4.jsx'
@@ -18,10 +17,8 @@ const Nav = () => {
 
 
   async function checkIfInitFinished() {
-    await GApiAuth.getGoogleAuth()
-    if (GApiAuth.isHeSignedIn() && user.isDemo) {
-      await Common.loginAndSet(setUser, setUserSettings)
-    }
+
+    await Common.betterLogin(setUser, setUserSettings, user.isDemo)
     setIsInitFinished(true)
   }
 

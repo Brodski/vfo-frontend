@@ -17,11 +17,6 @@ import LoadingMain from '../Common/LoadingMain.jsx';
 import PostSave from './PostSave.jsx';
 import TheCarousel from './TheCarousel.jsx';
 
-
-
-
-
-
 const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
@@ -45,7 +40,6 @@ const SettingsNEW = () => {
       newS.customShelfs = auxNewCustomShelfs
       return newS
     })
-
   }
 
   async function save() {
@@ -83,21 +77,18 @@ const SettingsNEW = () => {
     )
   }
   
-  
-const HowTo2 = () => {
-
-  return (
-    <div className="center-align cara2">
-      <TheCarousel /> 
-    </div>
-  );
-}
+  const HowTo2 = () => {
+    return (
+      <div className="center-align cara2">
+        <TheCarousel /> 
+      </div>
+    );
+  }
 
   return (
     <Fragment>
-
       <div className="container">
-        <div className="">
+        <div>
           <div className="set-top-tophalf ">
             {isInitFinished2 ? <GreetingsMsg isSettingsPage={true} /> : null}
             {isInitFinished2 ? <Customize /> : null}

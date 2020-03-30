@@ -1,3 +1,4 @@
+import * as GApiAuth from '../HttpRequests/GApiAuth';
 import * as ServerEndpoints from "../HttpRequests/ServerEndpoints";
 import * as ytLogic from "./YtLogic.js";
 import CustomShelf from "../Classes/CustomShelf";
@@ -5,7 +6,8 @@ import Pic from "../Images/navbar/profile-pic.png";
 import Subscription from "../Classes/Subscription";
 import User from "../Classes/User";
 
-// https://pixabay.com/vectors/blank-profile-picture-mystery-man-973460/
+window.$isCYTLogging = false
+window.$isCYTFinshedLogging = false
 
 // Had to get out of Dep. cycle,
 export function sleep(ms) {
@@ -17,7 +19,7 @@ export function checkForRemovedSubs(subsFromYt, subsFromBackend) {
   let removedSubs = [];
   let doesMatches = false;
   let allBackendSubz = [];
-  subsFromBackend.customShelfs.map(sh => {
+  subsFromBackend.customShelfs.forEach(sh => {
     allBackendSubz.push(...sh.fewSubs);
   });
   allBackendSubz.forEach(backS => {
@@ -84,8 +86,29 @@ export async function processUserFromServer(res) {
   return u;
 }
 
+export async function betterLogin(setUser, setUserSettings, isDemo) {
+
+  await GApiAuth.getGoogleAuth() 
+  if (GApiAuth.isHeSignedIn() && isDemo && !window.$isCYTLogging) {
+    window.$isCYTLogging = true
+    console.log("!!! better login starting")
+    console.log("isLogging top")
+    console.log(window.$isCYTLogging)
+    let u = await this.loginAndSet(setUser, setUserSettings)
+    console.log(u)
+    window.$isCYTFinshedLogging = true
+    return u    
+  }
+  while ( !window.$isCYTFinshedLogging) {
+    console.log("waiting on fished logging")
+    await this.sleep(30)
+  }
+}
+
 export async function loginAndSet(setUser, setUserSettings) {
   let res = await ServerEndpoints.loginToBackend();
+  console.log("res from server")
+  console.log(res)
   let u;
   if (res.status > 199 && res.status < 300) {
     u = await processUserFromServer(res);
@@ -107,6 +130,7 @@ export async function loginAndSet(setUser, setUserSettings) {
       return prev;
     });
   }
+  console.log(u)
   return u;
 }
 

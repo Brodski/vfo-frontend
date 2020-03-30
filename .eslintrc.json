@@ -71,8 +71,9 @@
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/control-has-associated-label": "off",
         "jsx-a11y/anchor-has-content": "off",
-        "no-await-in-loop": "off"
-
+        "no-await-in-loop": "off",
+        "prefer-const": "off"
+        
         // default export is not convincing.
         // https://github.com/airbnb/javascript/issues/1365
         // https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad

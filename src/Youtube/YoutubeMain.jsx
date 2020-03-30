@@ -1,19 +1,18 @@
 /*
 * The Youtube page starts by using the user's profile data (his subscriptions) then fetches data from youtube
 * If the user is not logged in then we use a demo profile. 
-*
 */
-
 import React, { useContext, useEffect, useState } from 'react';
 
 import InfiniteScroll from 'react-infinite-scroller';
 import nextId from "react-id-generator";
 
-import * as Common from '../BusinessLogic/Common.js';
+import * as Common from '../BusinessLogic/Common';
 import * as GApiAuth from '../HttpRequests/GApiAuth';
-import * as ytLogic from '../BusinessLogic/YtLogic.js';
+import * as ytLogic from '../BusinessLogic/YtLogic';
 import {
   IsInitFinishedContext,
+  NumVidsContext,
   UserContext,
   UserSettingsContext
 } from '../Contexts/UserContext.js';
@@ -24,15 +23,14 @@ import ShelfsMany from './ShelfsMany.jsx';
 import VidCounter from '../Classes/VidCounter'
 import VideoResponse from '../Classes/VideoResponse'
 
-function YoutubeNEW() {
+function Youtube() {
 
-  const spamLimit = 25;
+  const spamLimit = 40;
   const pageGrowth = 4;
   const initialPageLength = 3;
   // Arbitrary number (max 50) (see youtube's Video api)
   const fetchThisManyVideosPerShelf = 50;
   
-
   const { user, setUser } = useContext(UserContext);
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
   const { isInitFinished2, setIsInitFinished2 } = useContext(IsInitFinishedContext);
@@ -81,7 +79,6 @@ function YoutubeNEW() {
     }
   }
   const preFetchMoreSubs = async () => {
-
     if (isFirst) {
       putUnsortedShelfAtBottom()
     }
@@ -91,7 +88,6 @@ function YoutubeNEW() {
   }
 
   function calcShelfSlice() {
-
     let sliceVal;
     if (user.customShelfs.length <= pageLength) {
       sliceVal = user.customShelfs.length
@@ -101,14 +97,6 @@ function YoutubeNEW() {
     return sliceVal
   }
 
-  async function _fetchActivities() {
-
-    let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, calcShelfSlice()))
-    shelfsActs = ytLogic.removeNonVideos(shelfsActs)
-    shelfsActs = shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
-    shelfsActs = shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
-    return shelfsActs
-  }
 
   function isNothingLoadedYet() {
     return (finalShelfs.shelfs[0].videos[0].id == null)
@@ -148,24 +136,36 @@ function YoutubeNEW() {
     }
     return { shelfs: injectShelfTitle }
   }
+  
+  async function _fetchActivities() {
+
+    let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, calcShelfSlice()))
+    shelfsActs = ytLogic.removeNonVideos(shelfsActs)
+    shelfsActs = shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
+    shelfsActs = shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
+    return shelfsActs
+  }
 
   async function _fetchVideos(shelfsActs) {
 
     shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
-
     const shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
-
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
-
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
-
     shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
 
     return shelfVids
   }
 
   const fetchMoreSubs = async () => {
-    
+
+    // console.log("USER!xxxxxxxxxxxx!!")
+    // console.log(user)
+    // console.log(numVids)
+    // if (user.customShelfs.length !== numVids.length) {
+    //   console.log('------------------------UPDATING!')
+    //   setNumVids(user.customShelfs.map(() => new VidCounter()))
+    // }
     if (isEndReached()) {
       return
     }
@@ -180,13 +180,25 @@ function YoutubeNEW() {
   }
 
   async function initPage() {
+    // debugger;
+    let u = await Common.betterLogin(setUser, setUserSettings, user.isDemo)
+    console.log("OUT! but not sure if done")
 
-    await GApiAuth.getGoogleAuth()
-    if (GApiAuth.isHeSignedIn() && user.isDemo) {
-      await Common.loginAndSet(setUser, setUserSettings)
-    }
-    setIsFirst(false)
+    // let u = 'u'
+    // await GApiAuth.getGoogleAuth()
+    // if (GApiAuth.isHeSignedIn() && user.isDemo) {
+    //   await Common.loginAndSet(setUser, setUserSettings)
+    // }
+    setIsFirst(false) // Initial render will be 'true'. Afterward render it will be set to 'false'
+    console.log("USER!!!!!!!!!!!!!!!!!")
+    console.log(user)
+    console.log(u)
+    
     setNumVids(user.customShelfs.map(() => new VidCounter()))
+    if (u) {
+      //setNumVids(user.customShelfs.map(() => new VidCounter()))
+    }
+    console.log(numVids)
     await fetchMoreSubs()
   }
 
@@ -208,13 +220,15 @@ function YoutubeNEW() {
         loader={(<div key={nextId('loader-')}> </div>)}
         threshold={200}
       >
-        <ShelfsMany
-          key={nextId('manyShelfsid-')}
-          shelfs={finalShelfs.shelfs.slice(0, pageLength)}
-          numVids={numVids}
-          setNumVids={setNumVids}
-          hasMore={isMoreShelfs}
-        />
+        <NumVidsContext.Provider value={{ numVids, setNumVids }}>
+          <ShelfsMany
+            key={nextId('manyShelfsid-')}
+            shelfs={finalShelfs.shelfs.slice(0, pageLength)}
+            // numVids={numVids}
+            // setNumVids={setNumVids}
+            hasMore={isMoreShelfs}
+          />
+        </NumVidsContext.Provider>
       </InfiniteScroll>
     )
   }
@@ -226,4 +240,4 @@ function YoutubeNEW() {
     </div>
   );
 }
-export default YoutubeNEW;
+export default Youtube;

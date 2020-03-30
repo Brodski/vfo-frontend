@@ -25,6 +25,7 @@ const ShelfSetting = (props) => {
       isSorted: PropTypes.bool.isRequired,
     }).isRequired,
   }
+  
   // dont delete subListWrapper
   const subsDrag = 'subListWrapper'
   const shelfDrag = 'draggable-shelf'

@@ -2,8 +2,6 @@
 * The App begins by loading googles API from a CDN and soon initializes itself (client, Api-key).
 * It then checks if the user is logged in. If so it get user data from backend. If not it loads a demo profile
 * The app uses Google's OAuth to verify the user; first it sends a token to my backend server then the server verifies the user using Google's Api + that token.
-*
-*
 */
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
@@ -20,7 +18,7 @@ import {
 import About from './Common/About.jsx';
 import Nav from './Common/Nav.jsx';
 import SettingsNEW from './Settings/SettingsMain.jsx';
-import YoutubeNEW from './Youtube/YoutubeMain.jsx';
+import Youtube from './Youtube/YoutubeMain.jsx';
 
 function App() {
 
@@ -32,10 +30,7 @@ function App() {
   async function initGApi() {
 
     const GoogleAuth = await GApiAuth.initGoogleAPI()
-
-    if (GApiAuth.isHeSignedIn() && user.isDemo) {
-      await Common.loginAndSet(setUser, setUserSettings)
-    }
+    await Common.betterLogin(setUser, setUserSettings, user.isDemo)
 
     setIsInitFinished2(true)
     setIsLogged2(GApiAuth.isHeSignedIn())
@@ -56,7 +51,6 @@ function App() {
 
   useEffect(() => {
     // adblock will block the googleapi script/link/cdn if its in the HTML
-    // TODO, npm googleapis
     const script = document.createElement("script");
     script.type = "text/javascript";
     script.src = "https://apis.google.com/js/client.js";
@@ -84,8 +78,8 @@ function App() {
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
             <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
               <IsInitFinishedContext.Provider value={{ isInitFinished2, setIsInitFinished2 }}>
-                <Nav />
-                <Route path="/" exact component={YoutubeNEW} />
+                <Nav key="Nav" />
+                <Route path="/" exact component={Youtube} />
                 <Route path="/about" component={About} />
                 <Route path="/customize" component={SettingsNEW} />
               </IsInitFinishedContext.Provider>
