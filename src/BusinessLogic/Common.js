@@ -144,11 +144,15 @@ export async function betterLogin(setUser, setUserSettings) {
     window.$isCYTFinshedLogging = true
     console.log("+++++++ OUT THE IF LOOP")
   }
-  while ( !window.$isCYTFinshedLogging && antiInfLoop < 15000) {
-    console.log("--- WHILE ---")
-    antiInfLoop = antiInfLoop + 200
-    await this.sleep(200)
-    if (antiInfLoop >= 15000 ) console.warn("Failure to login :(")
+  if (GApiAuth.isHeSignedIn() ) {
+    while (!window.$isCYTFinshedLogging && antiInfLoop < 15000) {
+      console.log(GApiAuth.isHeSignedIn())
+      console.log(!window.$isCYTFinshedLogging)
+      console.log("--- WHILE ---")
+      antiInfLoop = antiInfLoop + 200
+      await this.sleep(200)
+      if (antiInfLoop >= 15000 ) console.warn("Failure to login :(")
+    }
   }
 }
 
