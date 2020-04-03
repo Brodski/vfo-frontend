@@ -10,7 +10,7 @@ export function queryShelfs(userSettings, allowEmpty = false) {
   for (let i = 0; i < shelfsQ.length; i = i + 1) {
     let tempShelf = new CustomShelf();
     tempShelf.title = shelfsQ[i].dataset.name;
-    tempShelf.isSorted = shelfsQ[i].dataset.issorted == "true";
+    tempShelf.isSorted = shelfsQ[i].dataset.issorted == "true"; // keep "=="
 
     for (let sub of shelfsQ[i].querySelectorAll(".sub-QHack")) {
       let idxs = _findSubIndex(sub.dataset.name, userSettings);

@@ -125,9 +125,10 @@ function FilterDialog(props) {
         className="Modal card horizontal "
         overlayClassName="Overlay"
       >
-        <div className="card-image filter-image hide-on-small-only">
+        {/* Image of cogs */}
+        {/* <div className="card-image filter-image hide-on-small-only">
           <img src={Pic} />
-        </div>
+        </div> */}
         <div className="  filt-content">
           <div>
             <h5 className="flow-text"> {channelName}</h5>

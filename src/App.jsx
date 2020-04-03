@@ -30,8 +30,9 @@ function App() {
   async function initGApi() {
 
     const GoogleAuth = await GApiAuth.initGoogleAPI()
-    await Common.betterLogin(setUser, setUserSettings, user.isDemo)
-
+    console.log("App.jsx init finished, entering login")
+    await Common.betterLogin(setUser, setUserSettings)
+    console.log("App.jsx login finished")
     setIsInitFinished2(true)
     setIsLogged2(GApiAuth.isHeSignedIn())
 

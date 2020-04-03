@@ -63,6 +63,9 @@ const SettingsNEW = () => {
   }
 
   const LoadShelfs = () => {
+    console.log("LoadShelf go!")
+    console.log(isInitFinished2)
+    
     if (isInitFinished2) {
       return (<AllShelfs save={save} />)
     }
@@ -80,7 +83,8 @@ const SettingsNEW = () => {
   const HowTo2 = () => {
     return (
       <div className="center-align cara2">
-        <TheCarousel /> 
+        {/* <TheCarousel />  */}
+        {isInitFinished2 ? <TheCarousel /> : null}
       </div>
     );
   }

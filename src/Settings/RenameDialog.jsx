@@ -62,8 +62,8 @@ function RenameDialog(props) {
         <i
           onClick={() => setIsOpen(true)}
           className=" rename-icon material-icons"
-        >edit
-          </i>
+        >edit 
+        </i>
       </a>
       <Modal
         isOpen={modalIsOpen}
@@ -72,9 +72,10 @@ function RenameDialog(props) {
         className="Modal  card horizontal "
         overlayClassName="Overlay"
       >
-        <div className="card-image valign-wrapper hide-on-small-only">
+        {/* Image of pen */}
+        {/* <div className="card-image valign-wrapper hide-on-small-only">
           <img className="rename-image2 " src={Pic} />
-        </div>
+        </div> */}
         <div className=" rename-content">
           <form onSubmit={save}>
             <div>

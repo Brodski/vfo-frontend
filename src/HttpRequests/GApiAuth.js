@@ -31,9 +31,10 @@
 // //////////////////////////////////////////////////////////////
 
 import { SECRET_KEYS } from "../api-key";
+import { KEYS } from "../api-key";
 
 const SCOPE = "https://www.googleapis.com/auth/youtube.readonly";
-const SPRING_BACKEND = `${process.env.REACT_APP_SPRINGB_ADDRESS}`;
+// const SPRING_BACKEND = `${process.env.REACT_APP_SPRINGB_ADDRESS}`;
 let GoogleAuth;
 
 // Had to get out of Dep. cycle,
@@ -58,12 +59,21 @@ async function waitForAuthLoad() {
   }
 }
 
+function getKey() {
+  const max = 4
+  const num = Math.floor(Math.random() * Math.floor(max));
+  console.log("num", num)
+  console.log("KEY", KEYS.apiKeys[num])
+  return KEYS.apiKeys[num];
+}
+
 async function _initClient() {
   let discoveryUrl =
     "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest";
   await window.gapi.client.init({
     clientId: SECRET_KEYS.clientId,
-    apiKey: SECRET_KEYS.apiKey,
+    apiKey: getKey(),
+    //apiKey: SECRET_KEYS.apiKey,
     discoveryDocs: [discoveryUrl],
     scope: SCOPE
   });

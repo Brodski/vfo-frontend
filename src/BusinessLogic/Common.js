@@ -5,6 +5,7 @@ import CustomShelf from "../Classes/CustomShelf";
 import Pic from "../Images/navbar/profile-pic.png";
 import Subscription from "../Classes/Subscription";
 import User from "../Classes/User";
+import { IsInitFinishedContext } from '../Contexts/UserContext';
 
 window.$isCYTLogging = false
 window.$isCYTFinshedLogging = false
@@ -41,6 +42,7 @@ export function checkForRemovedSubs(subsFromYt, subsFromBackend) {
 // TODO could be cleaner, pretty confusing.
 // Goes through every sub from YT, if a sub does not match any subs from the backend, then we found a new sub.
 export function checkForNewSubs(subsFromYt, subsFromBackend) {
+  console.log("checkForNewSubs")
   let newSubs = [];
   subsFromYt.forEach(ytS => {
     let doesMatches = false;
@@ -75,39 +77,28 @@ export async function processUserFromServer(res) {
     u.isDemo = false;
 
     // Below: Sync subs from the User's YT account and this app's database.
+    console.log("going to check for new subs")
+    console.log("PROBLEM IS HERE")
     let newSubs = checkForNewSubs(await subzPromise, res.data);
+    console.log("newSubs")
+    console.log(newSubs)
     let removedSubArr = checkForRemovedSubs(await subzPromise, res.data);
+    console.log("removedSubArr")
+    console.log(removedSubArr)
     u.addArrayOfSubs(newSubs);
     u.removeSubs(removedSubArr);
     if (removedSubArr[0] || newSubs[0]) {
+      console.log("WE ARE SAVING NEW USER")
       ServerEndpoints.saveUser(u);
     }
   }
   return u;
 }
 
-export async function betterLogin(setUser, setUserSettings, isDemo) {
-
-  await GApiAuth.getGoogleAuth() 
-  if (GApiAuth.isHeSignedIn() && isDemo && !window.$isCYTLogging) {
-    window.$isCYTLogging = true
-    console.log("!!! better login starting")
-    console.log("isLogging top")
-    console.log(window.$isCYTLogging)
-    let u = await this.loginAndSet(setUser, setUserSettings)
-    console.log(u)
-    window.$isCYTFinshedLogging = true
-    return u    
-  }
-  while ( !window.$isCYTFinshedLogging) {
-    console.log("waiting on fished logging")
-    await this.sleep(30)
-  }
-}
 
 export async function loginAndSet(setUser, setUserSettings) {
   let res = await ServerEndpoints.loginToBackend();
-  console.log("res from server")
+  console.log("WE GOT THE USER")
   console.log(res)
   let u;
   if (res.status > 199 && res.status < 300) {
@@ -130,9 +121,37 @@ export async function loginAndSet(setUser, setUserSettings) {
       return prev;
     });
   }
-  console.log(u)
   return u;
 }
+
+export async function betterLogin(setUser, setUserSettings) {
+  let antiInfLoop = 0
+  console.log("Better Login")
+  console.time("getGAuth")
+  await GApiAuth.getGoogleAuth() 
+  console.timeEnd("getGAuth")
+
+  let poopy = GApiAuth.isHeSignedIn()
+  console.log("isHeSignedIn", poopy)
+  console.log("isCYTLogging", window.$isCYTLogging)
+  console.log("isCYTFished", window.$isCYTFinshedLogging)
+
+  // window.$isCYTLogging is the global to prevent multi login attempts, default is 'false'
+  if (GApiAuth.isHeSignedIn() && !window.$isCYTLogging) {
+    console.log("+++++++ WE IN THE IF LOOP")
+    window.$isCYTLogging = true
+    await loginAndSet(setUser, setUserSettings)
+    window.$isCYTFinshedLogging = true
+    console.log("+++++++ OUT THE IF LOOP")
+  }
+  while ( !window.$isCYTFinshedLogging && antiInfLoop < 15000) {
+    console.log("--- WHILE ---")
+    antiInfLoop = antiInfLoop + 200
+    await this.sleep(200)
+    if (antiInfLoop >= 15000 ) console.warn("Failure to login :(")
+  }
+}
+
 
 export function getMockUser() {
   let u = new User();
@@ -178,7 +197,7 @@ export function getMockUser() {
 
   let cShelfM = new CustomShelf();
   cShelfM.title = "Movies and stuff";
-  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3, uSubM4b, uSubM0);
+  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3);
   cShelfM.isSorted = true;
   u.customShelfs.push(cShelfM);
   

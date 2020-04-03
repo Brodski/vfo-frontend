@@ -8,22 +8,12 @@ import { NumVidsContext } from '../Contexts/UserContext.js';
 const Shelf = props => {
 
   const { numVids, setNumVids } = useContext(NumVidsContext);
-
-  //const { shelfIdx, setNumVids, numVids, shelf } = props
   const { shelfIdx, shelf } = props
   const renderMoreNum = 6
-  // console.log("numVids")
-  // console.log(numVids)
   let numVidzRendered = numVids[0] ? numVids[shelfIdx].numVids : 0
 
   Shelf.propTypes = {
     shelfIdx: PropTypes.number.isRequired,
-    // setNumVids: PropTypes.func.isRequired,
-    // numVids: PropTypes.oneOfType([
-    //   PropTypes.object,
-    //   PropTypes.arrayOf(PropTypes.object)
-    // ]).isRequired,
-
     shelf: PropTypes.shape({
       filters: PropTypes.array.isRequired,
       title: PropTypes.string.isRequired,

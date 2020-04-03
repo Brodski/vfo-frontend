@@ -30,7 +30,8 @@ function Youtube() {
   const initialPageLength = 3;
   // Arbitrary number (max 50) (see youtube's Video api)
   const fetchThisManyVideosPerShelf = 50;
-  
+  let isSubscribed = true
+
   const { user, setUser } = useContext(UserContext);
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
   const { isInitFinished2, setIsInitFinished2 } = useContext(IsInitFinishedContext);
@@ -41,7 +42,6 @@ function Youtube() {
   const [numVids, setNumVids] = useState([new VidCounter()]) 
   const [isFirst, setIsFirst] = useState(true)
   const [isMoreShelfs, setIsMoreShelfs] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(true)
   let spamCount = 0;
 
   function isEndReached() {
@@ -79,12 +79,14 @@ function Youtube() {
     }
   }
   const preFetchMoreSubs = async () => {
+    console.log("in preFetch")
     if (isFirst) {
       putUnsortedShelfAtBottom()
     }
     // instantly halt any possible room for multi fetches
     setIsMoreShelfs(false)
     await hackHelper()
+    console.log("leaving preFetch")
   }
 
   function calcShelfSlice() {
@@ -138,75 +140,90 @@ function Youtube() {
   }
   
   async function _fetchActivities() {
-
+    console.log("in _fetchActivites")
+    console.log(user)
     let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, calcShelfSlice()))
+    console.log("shelfActs")
+    console.log(shelfsActs)
     shelfsActs = ytLogic.removeNonVideos(shelfsActs)
     shelfsActs = shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
+    console.log("leaving _fetchActivites")
     return shelfsActs
   }
 
   async function _fetchVideos(shelfsActs) {
 
+    console.log("in _fetchVideos")
+    console.log("shelfActs")
+    console.log(shelfsActs)
     shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
     const shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
+    console.log("shelfVidIds")
+    console.log(shelfsVidIds)
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
+    console.log("ShelfVids")
+    console.log(shelfVids)
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
     shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
-
+    console.log("leaving _fetchVideos")
     return shelfVids
   }
 
   const fetchMoreSubs = async () => {
 
-    // console.log("USER!xxxxxxxxxxxx!!")
-    // console.log(user)
-    // console.log(numVids)
-    // if (user.customShelfs.length !== numVids.length) {
-    //   console.log('------------------------UPDATING!')
-    //   setNumVids(user.customShelfs.map(() => new VidCounter()))
-    // }
+    let shelfsActs;
+    let shelfVids;
+    let iData;
     if (isEndReached()) {
       return
     }
-    await preFetchMoreSubs()
-    const shelfsActs = await _fetchActivities()
-    const shelfVids = await _fetchVideos(shelfsActs)
-    const iData = injectData(shelfVids)
-    ytLogic.beginFilter2(iData.shelfs)
     if (isSubscribed) {
+      await preFetchMoreSubs()  
+    }
+    if (isSubscribed) {
+      shelfsActs = await _fetchActivities()
+    }
+    if (isSubscribed) {
+      shelfVids = await _fetchVideos(shelfsActs)
+    }
+    if (isSubscribed) {
+      console.log("entering injectData")
+      iData = injectData(shelfVids)
+      console.log("leaving injectData")
+      console.log("entering filter2")
+      ytLogic.beginFilter2(iData.shelfs)
+      console.log("leaving filter2")
+      console.log("isSubscribed", isSubscribed)
+    }
+    // if (isSubscribed) {
+    if (isSubscribed) {
+      console.log("SETTING FINAL SHELF")
+      console.log(isSubscribed)
       setFinalShelfAux(iData)
     }
   }
 
   async function initPage() {
-    // debugger;
-    let u = await Common.betterLogin(setUser, setUserSettings, user.isDemo)
-    console.log("OUT! but not sure if done")
-
-    // let u = 'u'
-    // await GApiAuth.getGoogleAuth()
-    // if (GApiAuth.isHeSignedIn() && user.isDemo) {
-    //   await Common.loginAndSet(setUser, setUserSettings)
-    // }
-    setIsFirst(false) // Initial render will be 'true'. Afterward render it will be set to 'false'
-    console.log("USER!!!!!!!!!!!!!!!!!")
-    console.log(user)
-    console.log(u)
     
+    await Common.betterLogin(setUser, setUserSettings, user.isDemo)
+    setIsFirst(false) // Initial render will be 'true'. Afterward render it will be set to 'false'
+
     setNumVids(user.customShelfs.map(() => new VidCounter()))
-    if (u) {
-      //setNumVids(user.customShelfs.map(() => new VidCounter()))
-    }
-    console.log(numVids)
     await fetchMoreSubs()
   }
 
   // https://juliangaramendy.dev/use-promise-subscription/ solution to 'mem-leak'
   useEffect(() => {
     initPage()
+    console.log("Is Subbed? entering")
+    console.log(isSubscribed)
     return () => {
-      setIsSubscribed(false)
+      isSubscribed = false
+      console.log("LEAVING LEAVING LEAVING LEAVING LEAVING ")      
+      console.log("Is Subbed? leave")
+      console.log(isSubscribed)
+      //setIsSubscribed(false)
     }
   }, [])
 
@@ -224,8 +241,6 @@ function Youtube() {
           <ShelfsMany
             key={nextId('manyShelfsid-')}
             shelfs={finalShelfs.shelfs.slice(0, pageLength)}
-            // numVids={numVids}
-            // setNumVids={setNumVids}
             hasMore={isMoreShelfs}
           />
         </NumVidsContext.Provider>
