@@ -39,12 +39,18 @@ const Video = (props) => {
   }
   
   // The performance gained is negligible. Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
-  let thumbnail = props.video.snippet.thumbnails.medium.url
-  let id = props.video.id
-  let title = props.video.snippet.title
-
+  let thumbnail   = props.video.snippet.thumbnails.medium.url
+  let id          = props.video.id
+  let title       = props.video.snippet.title
   let channelName = props.video.snippet.channelTitle
+
+  // Deconstruction too confusing
+  // let { video: { snippet: { thumbnails: { medium: { url: thumbnail } } } } } = props // rename url to thumbnail
+  // let { video: { id }} = props
+  // let { video: { snippet: { title }}} = props
+  // let { video: {snippet: { channelTitle :channelName }}} = props
   let fromNowDate = new moment(props.video.snippet.publishedAt).fromNow()
+  
   // solution to Premium yt vids
   let viewCount = formatViewCount()
   let vidDuration = formatVidLength()

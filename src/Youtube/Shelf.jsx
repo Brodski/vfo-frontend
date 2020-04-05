@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 
 import PropTypes from 'prop-types';
 
-import Video from './Video.jsx'
 import { NumVidsContext } from '../Contexts/UserContext.js';
+import Video from './Video.jsx'
 
 const Shelf = props => {
 
@@ -11,6 +11,7 @@ const Shelf = props => {
   const { shelfIdx, shelf } = props
   const renderMoreNum = 6
   let numVidzRendered = numVids[0] ? numVids[shelfIdx].numVids : 0
+  let isMoreVidsAvailable = () => shelf.videos.length < numVids[shelfIdx].numVids;
 
   Shelf.propTypes = {
     shelfIdx: PropTypes.number.isRequired,
@@ -22,6 +23,7 @@ const Shelf = props => {
   }
 
   function loadMoreVids() {
+    
     // Pagination / Load More https://codepen.io/grantdotlocal/pen/zReNgE
     setNumVids(prev => {
       let newNumVids = { ...prev }
@@ -29,11 +31,7 @@ const Shelf = props => {
       return newNumVids
     })
   }
-
-  function isMoreVidsAvailable() {
-    return shelf.videos.length < numVids[shelfIdx].numVids
-  }
-
+  
   const videos = shelf.videos.slice(0, numVidzRendered).map((video) => {
     return (
       <Video key={video.id || 'somevidid'} video={video} />

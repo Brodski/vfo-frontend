@@ -17,7 +17,9 @@ import {
 } from './Contexts/UserContext'
 import About from './Common/About.jsx';
 import Nav from './Common/Nav.jsx';
+import PrivacyPolicy from './Common/PrivacyPolicy.jsx'
 import SettingsNEW from './Settings/SettingsMain.jsx';
+import Terms from './Common/Terms.jsx'
 import Youtube from './Youtube/YoutubeMain.jsx';
 
 function App() {
@@ -83,6 +85,8 @@ function App() {
                 <Route path="/" exact component={Youtube} />
                 <Route path="/about" component={About} />
                 <Route path="/customize" component={SettingsNEW} />
+                <Route path="/privacy" component={PrivacyPolicy} />
+                <Route path="/terms" component={Terms} />
               </IsInitFinishedContext.Provider>
             </IsLoggedContext.Provider>
           </UserSettingsContext.Provider>

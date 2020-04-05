@@ -79,14 +79,12 @@ function Youtube() {
     }
   }
   const preFetchMoreSubs = async () => {
-    console.log("in preFetch")
     if (isFirst) {
       putUnsortedShelfAtBottom()
     }
-    // instantly halt any possible room for multi fetches
+    // halt any possible room for multi fetches
     setIsMoreShelfs(false)
     await hackHelper()
-    console.log("leaving preFetch")
   }
 
   function calcShelfSlice() {
@@ -140,33 +138,32 @@ function Youtube() {
   }
   
   async function _fetchActivities() {
-    console.log("in _fetchActivites")
-    console.log(user)
+    
+    
     let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, calcShelfSlice()))
-    console.log("shelfActs")
+    console.log("raw shelfActs")
     console.log(shelfsActs)
     shelfsActs = ytLogic.removeNonVideos(shelfsActs)
     shelfsActs = shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
-    console.log("leaving _fetchActivites")
+    console.log("shelfActs cleaner")
+    console.log(shelfsActs)
+    
     return shelfsActs
   }
 
   async function _fetchVideos(shelfsActs) {
 
-    console.log("in _fetchVideos")
-    console.log("shelfActs")
-    console.log(shelfsActs)
     shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
     const shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
-    console.log("shelfVidIds")
-    console.log(shelfsVidIds)
+    
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
+
     console.log("ShelfVids")
     console.log(shelfVids)
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
     shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
-    console.log("leaving _fetchVideos")
+    
     return shelfVids
   }
 
@@ -178,6 +175,8 @@ function Youtube() {
     if (isEndReached()) {
       return
     }
+
+    // TODO: could be better
     if (isSubscribed) {
       await preFetchMoreSubs()  
     }
@@ -188,18 +187,15 @@ function Youtube() {
       shelfVids = await _fetchVideos(shelfsActs)
     }
     if (isSubscribed) {
-      console.log("entering injectData")
       iData = injectData(shelfVids)
-      console.log("leaving injectData")
-      console.log("entering filter2")
       ytLogic.beginFilter2(iData.shelfs)
-      console.log("leaving filter2")
-      console.log("isSubscribed", isSubscribed)
     }
-    // if (isSubscribed) {
+
     if (isSubscribed) {
       console.log("SETTING FINAL SHELF")
-      console.log(isSubscribed)
+      console.log("isSubscribed", isSubscribed)
+      console.log("iData")
+      console.log(iData)
       setFinalShelfAux(iData)
     }
   }
@@ -223,7 +219,6 @@ function Youtube() {
       console.log("LEAVING LEAVING LEAVING LEAVING LEAVING ")      
       console.log("Is Subbed? leave")
       console.log(isSubscribed)
-      //setIsSubscribed(false)
     }
   }, [])
 
@@ -235,7 +230,7 @@ function Youtube() {
         loadMore={() => fetchMoreSubs()}
         hasMore={isMoreShelfs}
         loader={(<div key={nextId('loader-')}> </div>)}
-        threshold={200}
+        threshold={1000}
       >
         <NumVidsContext.Provider value={{ numVids, setNumVids }}>
           <ShelfsMany

@@ -5,6 +5,7 @@ function sleep(ms) {
 
 export async function check() {
   let wait = 500;
+
   while (!window.gapi.client.youtube) {
     wait = wait * 2;
     await sleep(wait);
@@ -31,7 +32,8 @@ export async function _getActivities(channel) {
 
 export async function _getThisUsersSubs(pageToken) {
   await check();
-  return window.gapi.client.youtube.subscriptions.list({
+  console.log("WTF")
+  let poopy = window.gapi.client.youtube.subscriptions.list({
     part: "snippet",
     maxResults: 50,
     mine: true,
@@ -39,6 +41,8 @@ export async function _getThisUsersSubs(pageToken) {
     fields:
       "pageInfo, nextPageToken, items(snippet/title, snippet/publishedAt, snippet/resourceId/channelId, snippet/thumbnails/default/url )"
   });
+  console.log(poopy)
+  return poopy
 }
 
 export async function getSomeVideos(vidIdList = [""]) {

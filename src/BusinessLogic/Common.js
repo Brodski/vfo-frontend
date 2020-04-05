@@ -63,8 +63,11 @@ export function checkForNewSubs(subsFromYt, subsFromBackend) {
 
 export async function processUserFromServer(res) {
   let u = new User();
+  console.log("processUserFromServer")
+  console.log("res")
+  console.log(res)
+  console.log("getting all subs from yt")
   let subzPromise = ytLogic.getAllSubs();
-
   if (res.data.customShelfs == null) {
     // implies new user
     u.initNewUser(await subzPromise, res.data);
@@ -77,18 +80,11 @@ export async function processUserFromServer(res) {
     u.isDemo = false;
 
     // Below: Sync subs from the User's YT account and this app's database.
-    console.log("going to check for new subs")
-    console.log("PROBLEM IS HERE")
     let newSubs = checkForNewSubs(await subzPromise, res.data);
-    console.log("newSubs")
-    console.log(newSubs)
     let removedSubArr = checkForRemovedSubs(await subzPromise, res.data);
-    console.log("removedSubArr")
-    console.log(removedSubArr)
     u.addArrayOfSubs(newSubs);
     u.removeSubs(removedSubArr);
     if (removedSubArr[0] || newSubs[0]) {
-      console.log("WE ARE SAVING NEW USER")
       ServerEndpoints.saveUser(u);
     }
   }
@@ -126,15 +122,8 @@ export async function loginAndSet(setUser, setUserSettings) {
 
 export async function betterLogin(setUser, setUserSettings) {
   let antiInfLoop = 0
-  console.log("Better Login")
-  console.time("getGAuth")
+  
   await GApiAuth.getGoogleAuth() 
-  console.timeEnd("getGAuth")
-
-  let poopy = GApiAuth.isHeSignedIn()
-  console.log("isHeSignedIn", poopy)
-  console.log("isCYTLogging", window.$isCYTLogging)
-  console.log("isCYTFished", window.$isCYTFinshedLogging)
 
   // window.$isCYTLogging is the global to prevent multi login attempts, default is 'false'
   if (GApiAuth.isHeSignedIn() && !window.$isCYTLogging) {
@@ -145,17 +134,19 @@ export async function betterLogin(setUser, setUserSettings) {
     console.log("+++++++ OUT THE IF LOOP")
   }
   if (GApiAuth.isHeSignedIn() ) {
-    while (!window.$isCYTFinshedLogging && antiInfLoop < 15000) {
-      console.log(GApiAuth.isHeSignedIn())
-      console.log(!window.$isCYTFinshedLogging)
+    while (!window.$isCYTFinshedLogging) {
+      // console.log(GApiAuth.isHeSignedIn())
+      // console.log(!window.$isCYTFinshedLogging)
       console.log("--- WHILE ---")
-      antiInfLoop = antiInfLoop + 200
-      await this.sleep(200)
-      if (antiInfLoop >= 15000 ) console.warn("Failure to login :(")
+      antiInfLoop = antiInfLoop + 500
+      await this.sleep(500)
+      if (antiInfLoop >= 3000 ) {
+        console.warn("Failure to login :(")
+        break
+      }
     }
   }
 }
-
 
 export function getMockUser() {
   let u = new User();
