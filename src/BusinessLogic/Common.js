@@ -5,7 +5,6 @@ import CustomShelf from "../Classes/CustomShelf";
 import Pic from "../Images/navbar/profile-pic.png";
 import Subscription from "../Classes/Subscription";
 import User from "../Classes/User";
-import { IsInitFinishedContext } from '../Contexts/UserContext';
 
 window.$isCYTLogging = false
 window.$isCYTFinshedLogging = false
@@ -63,13 +62,9 @@ export function checkForNewSubs(subsFromYt, subsFromBackend) {
 
 export async function processUserFromServer(res) {
   let u = new User();
-  console.log("processUserFromServer")
-  console.log("res")
-  console.log(res)
-  console.log("getting all subs from yt")
   let subzPromise = ytLogic.getAllSubs();
   if (res.data.customShelfs == null) {
-    // implies new user
+    // null implies new user
     u.initNewUser(await subzPromise, res.data);
     ServerEndpoints.saveUser(u);
   } else {
@@ -120,28 +115,25 @@ export async function loginAndSet(setUser, setUserSettings) {
   return u;
 }
 
+
+// window.$isCYTLogging is the global to prevent multi login attempts, default is 'false'
+// could be better
 export async function betterLogin(setUser, setUserSettings) {
   let antiInfLoop = 0
   
   await GApiAuth.getGoogleAuth() 
 
-  // window.$isCYTLogging is the global to prevent multi login attempts, default is 'false'
   if (GApiAuth.isHeSignedIn() && !window.$isCYTLogging) {
-    console.log("+++++++ WE IN THE IF LOOP")
     window.$isCYTLogging = true
     await loginAndSet(setUser, setUserSettings)
     window.$isCYTFinshedLogging = true
-    console.log("+++++++ OUT THE IF LOOP")
   }
   if (GApiAuth.isHeSignedIn() ) {
     while (!window.$isCYTFinshedLogging) {
-      // console.log(GApiAuth.isHeSignedIn())
-      // console.log(!window.$isCYTFinshedLogging)
-      console.log("--- WHILE ---")
       antiInfLoop = antiInfLoop + 500
       await this.sleep(500)
-      if (antiInfLoop >= 3000 ) {
-        console.warn("Failure to login :(")
+      if (antiInfLoop >= 13000 ) {
+        console.log("Failure to login :(")
         break
       }
     }

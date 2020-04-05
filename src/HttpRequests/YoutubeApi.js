@@ -32,8 +32,7 @@ export async function _getActivities(channel) {
 
 export async function _getThisUsersSubs(pageToken) {
   await check();
-  console.log("WTF")
-  let poopy = window.gapi.client.youtube.subscriptions.list({
+  return window.gapi.client.youtube.subscriptions.list({
     part: "snippet",
     maxResults: 50,
     mine: true,
@@ -41,8 +40,6 @@ export async function _getThisUsersSubs(pageToken) {
     fields:
       "pageInfo, nextPageToken, items(snippet/title, snippet/publishedAt, snippet/resourceId/channelId, snippet/thumbnails/default/url )"
   });
-  console.log(poopy)
-  return poopy
 }
 
 export async function getSomeVideos(vidIdList = [""]) {

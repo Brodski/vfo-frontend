@@ -60,13 +60,6 @@ async function waitForAuthLoad() {
 }
 
 function getKey() {
-  console.log("KEYS.apiKeys.length")
-  console.log("KEYS.apiKeys.length")
-  console.log("KEYS.apiKeys.length")
-  console.log("KEYS.apiKeys.length")
-  console.log("KEYS.apiKeys.length")
-  console.log("KEYS.apiKeys.length")
-  console.log("KEYS.apiKeys.length")
   console.log(KEYS.apiKeys.length)
   const num = Math.floor(Math.random() * Math.floor( KEYS.apiKeys.length ));
   console.log("num", num)
@@ -77,26 +70,13 @@ function getKey() {
 async function _initClient() {
   let discoveryUrl =
     "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest";
-  let shitty = window.gapi.client.init({
+    return  window.gapi.client.init({
     clientId: SECRET_KEYS.clientId,
     // apiKey: getKey(),
     apiKey: SECRET_KEYS.apiKey,
     discoveryDocs: [discoveryUrl],
     scope: SCOPE
   });
-  console.log("shitty")
-  console.log("shitty")
-  console.log("shitty")
-  console.log("shitty")
-  console.log("shitty")
-  console.log("shitty")
-  console.log("shitty")
-  console.log("shitty")
-  console.log("shitty")
-  console.log("shitty")
-  console.log("shitty")
-  console.log(shitty)
-  return shitty
 }
 
 export async function initGoogleAPI() {
@@ -111,18 +91,10 @@ export async function initGoogleAPI() {
   console.log("USING THIS API KEY")
   console.log(SECRET_KEYS.apiKey)
   await waitForGApiLoad();
-  console.log("out of wait for gapi")
 
   // Wait until client is loaded
-  let shit = await window.gapi.load("client:auth2", _initClient);
-  console.log("shit")
-  console.log("shit")
-  console.log("shit")
-  console.log("shit")
-  console.log("shit")
-  console.log("shit")
-  console.log("shit")
-  console.log(shit)
+  await window.gapi.load("client:auth2", _initClient);
+
   // Wait until client is authenticated
   await waitForAuthLoad();
 
@@ -147,9 +119,9 @@ export async function checkAll() {
   return true;
 }
 
-//////////////////////////////////////////////////////////////////
-////////////////////   LOGIN - LOG OUT   ////////////////////////
-/////////////////////////////////////////////////////////////////
+// ////////////////////////////////////////////////////////////////
+// //////////////////   LOGIN - LOG OUT   ////////////////////////
+// ///////////////////////////////////////////////////////////////
 
 export function login() {
   if (GoogleAuth) {
