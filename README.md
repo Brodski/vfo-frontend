@@ -31,7 +31,11 @@ b) Verify at [http://localhost:8080/](http://localhost:8080/) to view a message 
 #### Backend  
 - Project repo is [here](https://github.com/Brodski/customyoutube-backend)  
 
-### Tech details  
+#### Deployment  
+
+- See [deployment.txt](./deployment.txt) for info about deploying this to your own VM
+
+#### Tech details  
 - A dynamic website based on N-tier architecture with Presentation, Logic, and Data layer.  
 - Backend: Java, Spring Boot framework, with MongoDB database.  
 - Frontend: React framework, Materialize CSS framework, and SASS.  
@@ -48,6 +52,3 @@ Through OAuth2, the user authorizes the client to view his Youtube profile, ie h
 User authorization is based on a guide by Google [Authenticate With a Backend Server, Sign In for Websites](https://developers.google.com/identity/sign-in/web/server-side-flow). Basicly, when the user clicks "Save" the client sents a id token to the backend. This token is sent to Google where they verify the legitamcy of the user and responds back to the server.
 
 
-### Deployment  
-
-See [deployment.txt](./deployment.txt) for info about deploying this to your own VM
