@@ -18,7 +18,7 @@ const Nav = () => {
 
   async function checkIfInitFinished() {
 
-    await Common.betterLogin(setUser, setUserSettings, user.isDemo)
+    await Common.betterLogin(setUser, setUserSettings)
     setIsInitFinished(true)
   }
 

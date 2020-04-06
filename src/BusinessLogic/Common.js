@@ -86,9 +86,12 @@ export async function processUserFromServer(res) {
 }
 
 export async function loginAndSet(setUser, setUserSettings) {
+  console.log("Getting user from database...")
   let res = await ServerEndpoints.loginToBackend();
   let u;
+  console.log("Received user from database")
   if (res.status > 199 && res.status < 300) {
+    console.log("Received user success!")
     u = await processUserFromServer(res);
     //TODO could be better
     setUser(prev => {
@@ -108,6 +111,7 @@ export async function loginAndSet(setUser, setUserSettings) {
       return prev;
     });
   }
+  console.log("Received user FAIL!!")
   return u;
 }
 
@@ -121,7 +125,9 @@ export async function betterLogin(setUser, setUserSettings) {
 
   if (GApiAuth.isHeSignedIn() && !window.$isCYTLogging) {
     window.$isCYTLogging = true
+    console.log("Logging in... ")
     await loginAndSet(setUser, setUserSettings)
+    console.log("Logged in!")
     window.$isCYTFinshedLogging = true
   }
   if (GApiAuth.isHeSignedIn() ) {
