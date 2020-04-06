@@ -35,9 +35,9 @@ if (process.env.NODE_APP_ENV === 'production') {
     let urlParse = url.parse("http://" + req.headers.host + req.url);
     let redirected = "https://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
     
-    console.log("-------------------")
-    console.log(new Date().toLocaleString() + ' - Redirected')
-    console.log(redirected)
+    // console.log("-------------------")
+    // console.log(new Date().toLocaleString() + ' - Redirected')
+    // console.log(redirected)
 
     res.writeHead(301, { "Location": redirected });
     res.end();
