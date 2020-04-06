@@ -133,7 +133,7 @@ export async function betterLogin(setUser, setUserSettings) {
   if (GApiAuth.isHeSignedIn() ) {
     while (!window.$isCYTFinshedLogging) {
       antiInfLoop = antiInfLoop + 500
-      await this.sleep(500)
+      await sleep(500)
       if (antiInfLoop >= 13000 ) {
         console.log("Failure to login :(")
         break
