@@ -29,7 +29,7 @@ b) Verify at [http://localhost:8080/](http://localhost:8080/) to view a message 
 
 
 #### Backend  
-Project repo is [here](https://github.com/Brodski/customyoutube-backend)  
+- Project repo is [here](https://github.com/Brodski/customyoutube-backend)  
 
 ### Tech details  
 - A dynamic website based on N-tier architecture with Presentation, Logic, and Data layer.  
