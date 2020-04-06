@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { UserSettingsContext } from '../Contexts/UserContext.js'
 import Filter from '../Classes/Filter';
-import Pic from '../Images/cogs2.png'
+// import Pic from '../Images/cogs2.png'
 
 
 function FilterDialog(props) {

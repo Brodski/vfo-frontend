@@ -2,7 +2,7 @@ import * as GApiAuth from '../HttpRequests/GApiAuth';
 import * as ServerEndpoints from "../HttpRequests/ServerEndpoints";
 import * as ytLogic from "./YtLogic.js";
 import CustomShelf from "../Classes/CustomShelf";
-import Pic from "../Images/navbar/profile-pic.png";
+import Pic from "../Images/profile-pic.png";
 import Subscription from "../Classes/Subscription";
 import User from "../Classes/User";
 
@@ -41,7 +41,6 @@ export function checkForRemovedSubs(subsFromYt, subsFromBackend) {
 // TODO could be cleaner, pretty confusing.
 // Goes through every sub from YT, if a sub does not match any subs from the backend, then we found a new sub.
 export function checkForNewSubs(subsFromYt, subsFromBackend) {
-  console.log("checkForNewSubs")
   let newSubs = [];
   subsFromYt.forEach(ytS => {
     let doesMatches = false;
@@ -86,11 +85,8 @@ export async function processUserFromServer(res) {
   return u;
 }
 
-
 export async function loginAndSet(setUser, setUserSettings) {
   let res = await ServerEndpoints.loginToBackend();
-  console.log("WE GOT THE USER")
-  console.log(res)
   let u;
   if (res.status > 199 && res.status < 300) {
     u = await processUserFromServer(res);

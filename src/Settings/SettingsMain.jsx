@@ -62,10 +62,7 @@ const SettingsNEW = () => {
     setShouldRedirect(true)
   }
 
-  const LoadShelfs = () => {
-    console.log("LoadShelf go!")
-    console.log(isInitFinished2)
-    
+  const LoadShelfs = () => {    
     if (isInitFinished2) {
       return (<AllShelfs save={save} />)
     }

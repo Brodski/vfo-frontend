@@ -59,13 +59,13 @@ async function waitForAuthLoad() {
   }
 }
 
-function getKey() {
-  console.log(KEYS.apiKeys.length)
-  const num = Math.floor(Math.random() * Math.floor( KEYS.apiKeys.length ));
-  console.log("num", num)
-  console.log("KEY", KEYS.apiKeys[num])
-  return KEYS.apiKeys[num];
-}
+// function getKey() {
+//   console.log(KEYS.apiKeys.length)
+//   const num = Math.floor(Math.random() * Math.floor( KEYS.apiKeys.length ));
+//   console.log("num", num)
+//   console.log("KEY", KEYS.apiKeys[num])
+//   return KEYS.apiKeys[num];
+// }
 
 async function _initClient() {
   let discoveryUrl =
@@ -81,15 +81,6 @@ async function _initClient() {
 
 export async function initGoogleAPI() {
   // Wait until googleApi is loaded: "script.src = "https://apis.google.com/js/client.js"
-  console.log("USING THIS API KEY")
-  console.log("USING THIS API KEY")
-  console.log("USING THIS API KEY")
-  console.log("USING THIS API KEY")
-  console.log("USING THIS API KEY")
-  console.log("USING THIS API KEY")
-  console.log("USING THIS API KEY")
-  console.log("USING THIS API KEY")
-  console.log(SECRET_KEYS.apiKey)
   await waitForGApiLoad();
 
   // Wait until client is loaded

@@ -67,7 +67,7 @@ export async function fetchVideos(shelfsVidIds) {
 // Returns all the activies in a single array (shelf)
 export function flattenShelf(shelf) {
   let bigsub = [];
-  shelf.map(sub => {
+  shelf.forEach(sub => {
     bigsub = bigsub.concat(sub);
   });
   return bigsub;

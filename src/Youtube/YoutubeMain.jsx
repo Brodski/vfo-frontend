@@ -141,26 +141,24 @@ function Youtube() {
     
     
     let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, calcShelfSlice()))
-    console.log("raw shelfActs")
-    console.log(shelfsActs)
+    
     shelfsActs = ytLogic.removeNonVideos(shelfsActs)
     shelfsActs = shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
-    console.log("shelfActs cleaner")
-    console.log(shelfsActs)
-    
+    // console.log("shelfActs as only vids and sorted and 'flattened'")
+    // console.log(shelfsActs)
     return shelfsActs
   }
 
   async function _fetchVideos(shelfsActs) {
-
-    shelfsActs = shelfsActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
-    const shelfsVidIds = await shelfsActs.map(sh => ytLogic.extractIds(sh))
+    let shActs = shelfsActs
+    shActs = shActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
+    const shelfsVidIds = await shActs.map(sh => ytLogic.extractIds(sh))
     
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
 
-    console.log("ShelfVids")
-    console.log(shelfVids)
+    // console.log("ShelfVids")
+    // console.log(shelfVids)
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
     shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
     
@@ -192,10 +190,9 @@ function Youtube() {
     }
 
     if (isSubscribed) {
-      console.log("SETTING FINAL SHELF")
-      console.log("isSubscribed", isSubscribed)
-      console.log("iData")
-      console.log(iData)
+      // console.log("SETTING FINAL SHELF")
+      // console.log("iData")
+      // console.log(iData)
       setFinalShelfAux(iData)
     }
   }
@@ -212,13 +209,8 @@ function Youtube() {
   // https://juliangaramendy.dev/use-promise-subscription/ solution to 'mem-leak'
   useEffect(() => {
     initPage()
-    console.log("Is Subbed? entering")
-    console.log(isSubscribed)
     return () => {
       isSubscribed = false
-      console.log("LEAVING LEAVING LEAVING LEAVING LEAVING ")      
-      console.log("Is Subbed? leave")
-      console.log(isSubscribed)
     }
   }, [])
 

@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import PropTypes from 'prop-types'
 
 import { UserSettingsContext } from '../Contexts/UserContext.js'
-import Pic from '../Images/pen3.png'
+// import Pic from '../Images/pen3.png'
 
 function RenameDialog(props) {
   

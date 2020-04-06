@@ -6,8 +6,8 @@ import M from 'materialize-css';
 import * as Common from '../BusinessLogic/Common.js';
 import { UserContext, UserSettingsContext } from '../Contexts/UserContext.js';
 import LoginButton from './LoginButton'
-import Logo from '../Images/Logos/Logo4.jsx'
-import NavImage from "../Images/navbar/green-depth.jpg";
+import Logo from '../Images/Logo.jsx'
+import NavImage from "../Images/profile-background.jpg";
 
 const Nav = () => {
 
