@@ -16,6 +16,7 @@ import {
   UserSettingsContext
 } from './Contexts/UserContext'
 import About from './Common/About.jsx';
+import Delete from './Common/Delete.jsx';
 import Nav from './Common/Nav.jsx';
 import PrivacyPolicy from './Common/PrivacyPolicy.jsx'
 import SettingsNEW from './Settings/SettingsMain.jsx';
@@ -86,6 +87,7 @@ function App() {
                 <Route path="/customize" component={SettingsNEW} />
                 <Route path="/privacy" component={PrivacyPolicy} />
                 <Route path="/terms" component={Terms} />
+                <Route path="/delete" component={Delete} />
               </IsInitFinishedContext.Provider>
             </IsLoggedContext.Provider>
           </UserSettingsContext.Provider>

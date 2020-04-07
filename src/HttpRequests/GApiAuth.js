@@ -147,6 +147,9 @@ export function isHeSignedIn() {
 
 export function getToken() {
   if (GoogleAuth) {
+    console.log("Get Token")
+    console.log(GoogleAuth.currentUser.get())
+    console.log(GoogleAuth.currentUser.get().getAuthResponse().id_token)
     let idtoken = GoogleAuth.currentUser.get().getAuthResponse().id_token;
     return idtoken;
   }
@@ -177,18 +180,3 @@ export function printInfo() {
   console.log(user.getHostedDomain());
   console.log(user.getId());
 }
-
-// export function testWithXML() {
-//   var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-//   var theUrl = SPRING_BACKEND + "/user/authorize";
-//   xmlhttp.onreadystatechange = function () {
-//     if (xmlhttp.readyState === 4) {
-//       console.log(xmlhttp.response);
-//       console.log(xmlhttp.responseText);
-//     }
-//   }
-//   xmlhttp.open("POST", theUrl);
-//   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-//   xmlhttp.send(JSON.stringify({ "email": "hello@user.com", "response": { "name": "Tester" } }));
-
-// }

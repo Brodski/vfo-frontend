@@ -60,3 +60,26 @@ export async function saveUser(user) {
       return e;
     });
 }
+
+export async function deleteUser(user) {
+  if (!GApiAuth.isHeSignedIn()) {
+    return;
+  }
+  let idtoken = await GApiAuth.getToken();
+  console.log("idtoken")
+  console.log("idtoken")
+  console.log("idtoken")
+  console.log("idtoken")
+  console.log("idtoken")
+  console.log("idtoken")
+  console.log(idtoken)
+  return axios
+    .post(`${SPRING_BACKEND}/user/delete`, { idtoken: idtoken, user: user })
+    .then(res => {
+      return res;
+    })
+    .catch(e => {
+      console.log(`Axios request failed: save user ${e}`);
+      return e;
+    });
+}
