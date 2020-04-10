@@ -28,6 +28,15 @@ svg.svg-mygoogle2 {
   @extend .z-depth-2;
 }
 
+.side-nav  {
+  margin: 1em;
+  width: 90%;
+}
+
+.dropdown-content {
+  top: 100% !important;
+}
+
 .profile-pic {
   border-radius: 50%;
   height: 2.5em;

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 
+import { Button, Divider, Dropdown, Icon, NavItem,Navbar } from 'react-materialize';
 import M from 'materialize-css';
 
 import * as Common from '../BusinessLogic/Common.js';
@@ -25,7 +26,20 @@ const Nav = () => {
   useEffect(() => {
     checkIfInitFinished()
     let elems = document.querySelectorAll('.sidenav');
-    M.Sidenav.init(elems, {});
+    
+    let elem2 = document.querySelectorAll('.dropdown-trigger');
+   // let instances = M.Dropdown.init(elems, {});
+    // let instance = M.Dropdown.getInstance(elem2);
+    console.log("elems")
+    console.log("elems")
+    console.log(elems)
+    console.log(elem2)
+    //M.Sidenav.init(elems, {});
+    // M.Dropdown.init(elem2, {});
+    // for (let i = 0; i < elem2.length; i++){
+    //   M.Dropdown.init(elem2[i]);
+    // }
+    // M.Sidenav.init(elem2, {});
   })
 
   const Contents = () => {
@@ -41,32 +55,103 @@ const Nav = () => {
       </Fragment>
     )
   }
+  
 
-  const ProfileImg = () => {
-    return (
-      <div className="center-align nav-profile-icon">
-        <img className="profile-pic" src={user.pictureUrl} alt="profile img" />
-      </div>
-    )
-  }
-  const SmallScreenSideNav = () => (
-    <nav>
-      <div className="nav-wrapper ">
-        <div className="left brand-logo  hide-on-small-only">
-          <Link to='/'> <Logo /> </Link>
-        </div>
-        <a href="#" data-target="mobile-demo" className=" hide-on-med-and-up sidenav-trigger"><i className="material-icons">menu</i></a>
-        <ul className="right  hide-on-small-only">
-          <Contents />
-          <li>
-            {isInitFinished ? <ProfileImg /> : null}
-          </li>
-        </ul>
-      </div>
-    </nav>
+  const UserDropdown = () => (
+    <Dropdown
+      id="Dropdown_6"
+      options={{
+        alignment: "left",
+        coverTrigger: "false",
+      }}
+      trigger={<a href=""> <ProfileImg /> </a>}
+      // trigger={<Button node="button">Drop Me!</Button>}
+    >
+      <a href="#"> one </a>
+      <a href="#"> two </a>
+      <Divider />
+      <a href="#"> three </a>
+      <a href="#">
+        <Icon> view_module </Icon>
+        four
+      </a>
+      <a href="#"> 
+        <Icon> cloud </Icon>
+        {'    '}five
+      </a>
+    </Dropdown>
   )
 
+  const ProfileImg = () => {
+    if (isInitFinished){
+      return (
+        <div className="center-align nav-profile-icon">
+          <img className="profile-pic" src={user.pictureUrl} alt="profile img" />
+        </div>
+      )
+    }
+    return (null)
+  }
+
   const LargeScreenNav = () => (
+    <Fragment>
+      <nav>
+        <div className="nav-wrapper ">
+          <div className="left brand-logo  hide-on-small-only">
+            <Link to='/'> <Logo /> </Link>
+          </div>
+          <ul className="right hide-on-small-only">
+            <Contents />
+            <li>
+              <ProfileImg />
+            </li>
+            <UserDropdown />
+          </ul>
+        </div>
+      </nav>
+    </Fragment>
+  )
+
+  
+  const LargeScreenNav2 = () => (
+    // <!-- Dropdown Structure -->
+    <Fragment>
+      <Navbar
+        alignLinks="right"
+        //menuIcon={null}
+        menuIcon={<Icon>menu</Icon>}
+        options={{
+        }}
+        brand={<Link to="/" className="brand-logo "> <Logo /> </Link>}
+        sidenav={<SmallScreenSideNav2 />}
+      >
+        <Link to='/'> Home </Link>
+        <Link to='/customize'>Customize </Link>
+        <Link to='/about'> About </Link>
+        <Link to='/delete'> Privacy </Link>
+        {isInitFinished ? <LoginButton isSideNav={true}/> : null}
+        <UserDropdown />
+      </Navbar>
+    </Fragment>
+  )
+
+  const SmallScreenSideNav2 = () => (
+    <Fragment>
+      <li> 
+        <div className="user-view">
+          <div className="background">
+            <img src={NavImage} alt="pretty design" />
+          </div>
+          <div><img className="circle" src={user.pictureUrl} alt="profile pic" /> </div>
+          <div><span className="white-text email"> </span></div>
+          <div><span className="white-text email"> {user.username} </span></div>
+        </div>
+      </li>    
+      <Contents />
+    </Fragment>
+  )
+
+  const SmallScreenSideNav = () => (
     <ul className="right sidenav hide-on-med-and-up" id="mobile-demo">
       <li>
         <div className="user-view">
@@ -78,14 +163,14 @@ const Nav = () => {
           <div><span className="white-text email"> {user.username} </span></div>
         </div>
       </li>
-      <Contents />
+      {/* <Contents /> */}
     </ul>
   )
 
   return (
     <Fragment>
-      <SmallScreenSideNav />
-      <LargeScreenNav /> 
+      <LargeScreenNav2 /> 
+      {/* <SmallScreenSideNav /> */}
     </Fragment>
   );
 }

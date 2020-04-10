@@ -8,7 +8,7 @@ function About() {
       <div className="container">
         <h1>About</h1>
         <p className="flow-text">
-          This website lets you organize your YouTube subscriptions!
+          This is a third-party website that lets you organize your YouTube subscriptions!
           <br />
           <br />
           Organize your subscriptions into groups. And optionally control the
