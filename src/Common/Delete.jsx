@@ -1,15 +1,14 @@
 import React, { Fragment, useContext, useState } from "react";
 
-import { UserContext, IsLoggedContext } from '../Contexts/UserContext.js';
-
 import * as GApiAuth from '../HttpRequests/GApiAuth'
 import * as ServerEndpoints from "../HttpRequests/ServerEndpoints";
+import { IsLoggedContext, UserContext } from '../Contexts/UserContext.js';
 import Footer from "./Footer.jsx";
 
 function Delete() {
 
   const [youSure, setYouSure] = useState(false)
-  const [processing, setProcessing] = useState(false)
+  const [isProcessing, setProcessing] = useState(false)
   const { user } = useContext(UserContext);
   const { isLogged2 } = useContext(IsLoggedContext);
 
@@ -21,10 +20,13 @@ function Delete() {
 
   const Verify = () => (
     <Fragment>
-      { processing
-      // ? <LoadingMain />
-      ? <h5> Thank you! Processing request might take a couple minutes. </h5> 
-      : <h5> Continue? <a className="waves-effect waves-light btn" onClick={deleteProfile}> Yes </a> </h5>  } 
+      { isProcessing
+      ? null
+      : (
+        <Fragment>
+          <h5> Continue? <a className="waves-effect waves-light btn" onClick={deleteProfile}> Yes </a> </h5> 
+        </Fragment>
+        )}
     </Fragment>
   )
 
@@ -42,7 +44,6 @@ function Delete() {
     </Fragment>
   )
 
-
   return (
     <Fragment>
       <div className="container">
@@ -50,7 +51,6 @@ function Delete() {
         { isLogged2
         ? <DeleteSteps />
         : <h5> You need to be logged in </h5> }
-        
         <div className="about-div-padding" />
       </div>
       <Footer />

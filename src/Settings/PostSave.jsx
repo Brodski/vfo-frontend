@@ -17,7 +17,7 @@ const PostSave = () => {
 
   return (
     <div className='align-center'>
-      {doIt ? <Redirect to='/' /> : <div className='flow-text'> THANK YOU </div>}
+      {doIt ? <Redirect to='/' /> : <div className='flow-text'> Thank you! Processing request </div>}
     </div>
   )
 }

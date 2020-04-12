@@ -80,7 +80,6 @@ const SettingsNEW = () => {
   const HowTo2 = () => {
     return (
       <div className="center-align cara2">
-        {/* <TheCarousel />  */}
         {isInitFinished2 ? <TheCarousel /> : null}
       </div>
     );
