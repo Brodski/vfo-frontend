@@ -59,20 +59,11 @@ async function waitForAuthLoad() {
   }
 }
 
-// function getKey() {
-//   console.log(KEYS.apiKeys.length)
-//   const num = Math.floor(Math.random() * Math.floor( KEYS.apiKeys.length ));
-//   console.log("num", num)
-//   console.log("KEY", KEYS.apiKeys[num])
-//   return KEYS.apiKeys[num];
-// }
-
 async function _initClient() {
   let discoveryUrl =
     "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest";
     return  window.gapi.client.init({
     clientId: SECRET_KEYS.clientId,
-    // apiKey: getKey(),
     apiKey: SECRET_KEYS.apiKey,
     discoveryDocs: [discoveryUrl],
     scope: SCOPE
@@ -128,6 +119,8 @@ export function login() {
 
 export function logout() {
   if (GoogleAuth) {
+    window.$isCYTLogging = false
+    window.$isCYTFinshedLogging = false
     return GoogleAuth.signOut()
       .then(res => {
         return res;
@@ -147,11 +140,7 @@ export function isHeSignedIn() {
 
 export function getToken() {
   if (GoogleAuth) {
-    console.log("Get Token")
-    console.log(GoogleAuth.currentUser.get())
-    console.log(GoogleAuth.currentUser.get().getAuthResponse().id_token)
-    let idtoken = GoogleAuth.currentUser.get().getAuthResponse().id_token;
-    return idtoken;
+    return GoogleAuth.currentUser.get().getAuthResponse().id_token;
   }
 }
 

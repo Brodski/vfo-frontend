@@ -14,6 +14,10 @@ export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+export function logoutUser(){
+
+}
+
 // Goes through every sub from the backend, if a sub does not match any subs from YT, then we found a sub that was removed from YT user.
 export function checkForRemovedSubs(subsFromYt, subsFromBackend) {
   let removedSubs = [];
@@ -109,6 +113,11 @@ export async function loginAndSet(setUser, setUserSettings) {
     });
   }
   return u;
+}
+
+
+export async function betterLogout() {
+  GApiAuth.logout()
 }
 
 

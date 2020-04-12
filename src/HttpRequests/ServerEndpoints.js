@@ -66,13 +66,6 @@ export async function deleteUser(user) {
     return;
   }
   let idtoken = await GApiAuth.getToken();
-  console.log("idtoken")
-  console.log("idtoken")
-  console.log("idtoken")
-  console.log("idtoken")
-  console.log("idtoken")
-  console.log("idtoken")
-  console.log(idtoken)
   return axios
     .post(`${SPRING_BACKEND}/user/delete`, { idtoken: idtoken, user: user })
     .then(res => {
