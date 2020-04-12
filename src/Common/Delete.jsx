@@ -12,16 +12,16 @@ function Delete() {
   const { user } = useContext(UserContext);
   const { isLogged2 } = useContext(IsLoggedContext);
 
-  function deleteProfile() {
+  async function deleteProfile() {
     setProcessing(true)
-    ServerEndpoints.deleteUser(user)
+    await ServerEndpoints.deleteUser(user)
     GApiAuth.logout()
   }
 
   const Verify = () => (
     <Fragment>
       { isProcessing
-      ? null
+      ? <h5> Thank you. Processing request</h5>
       : (
         <Fragment>
           <h5> Continue? <a className="waves-effect waves-light btn" onClick={deleteProfile}> Yes </a> </h5> 

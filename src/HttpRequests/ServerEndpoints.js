@@ -66,13 +66,16 @@ export async function deleteUser(user) {
     return;
   }
   let idtoken = await GApiAuth.getToken();
-  return axios
-    .post(`${SPRING_BACKEND}/user/delete`, { idtoken: idtoken, user: user })
-    .then(res => {
-      return res;
+  try {
+    let res = await axios({
+      url: `${SPRING_BACKEND}/user/delete`, 
+      method: 'post',
+      data: { idtoken: idtoken, user: user }
     })
-    .catch(e => {
-      console.log(`Axios request failed: save user ${e}`);
-      return e;
-    });
+  return res
+  }
+  catch(e) {
+    console.log(`Axios request failed: save user ${e}`);
+    return e;
+  }
 }
