@@ -5,7 +5,6 @@
 
 svg.svg-googlecolor {
   path {
-    //fill: blue;
     stroke-width: 0.3;
     stroke: teal;
   }
@@ -13,13 +12,19 @@ svg.svg-googlecolor {
   margin-bottom: 4px;
   margin-right: 3px;
 }
+
 svg.svg-mygoogle2 {
-  path {
+  path.outterText {
     fill: $nav-text;
   }
+  path.innerText {
+    fill: $nav-bg;
+    stroke: midnightblue; 
+    stroke-width: .5;
+  }
+  padding-left: .25em;
   vertical-align: middle;
   margin-bottom: 4px;
-  margin-right: 3px;
 }
 
 .nav-wrapper {

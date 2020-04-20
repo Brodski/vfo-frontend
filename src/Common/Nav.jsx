@@ -7,7 +7,7 @@ import * as Common from '../BusinessLogic/Common.js';
 import * as GApiAuth from '../HttpRequests/GApiAuth';
 import { IsLoggedContext, UserContext, UserSettingsContext } from '../Contexts/UserContext.js';
 import LoginButton from './LoginButton'
-import Logo from '../Images/Logo.jsx'
+import Logo from '../Images/CYLogo.jsx'
 import NavImage from "../Images/profile-background.jpg";
 
 const Nav = () => {
