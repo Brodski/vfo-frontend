@@ -41,6 +41,7 @@ const GreetingsMsg = (props) => {
           <br />
           Log in to customize your subscriptions
         </div>
+        <div> This is a third party app not owned by Youtube </div>
         {!isSettingsPage ? <div className='div-aux' /> : null }
       </div>
     )
