@@ -115,12 +115,12 @@ function Youtube() {
   async function _fetchActivities() {
     
     if (!isSubscribed) { return }
-    console.log("Fetching activities: ")
-    console.log("prevPage, calcShelfSlice ")
-    console.log(prevPage)
-    console.log(calcShelfSlice())
-    console.log("user.customShelfs.slice(prevPage, calcShelfSlice())")
-    console.log(user.customShelfs.slice(prevPage, calcShelfSlice()))
+    // console.log("Fetching activities: ")
+    // console.log("prevPage, calcShelfSlice ")
+    // console.log(prevPage)
+    // console.log(calcShelfSlice())
+    // console.log("user.customShelfs.slice(prevPage, calcShelfSlice())")
+    // console.log(user.customShelfs.slice(prevPage, calcShelfSlice()))
     let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, calcShelfSlice()))
     
     shelfsActs = ytLogic.removeNonVideos(shelfsActs)
@@ -133,12 +133,12 @@ function Youtube() {
   async function _fetchVideos(shelfsActs) {
     
     if (!isSubscribed) { return }
-    console.log("Fetching videos: ")    
+    //console.log("Fetching videos: ")    
 
     let shActs = shelfsActs
     shActs = shActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
-    console.log("shActs")
-    console.log(shActs)
+    // console.log("shActs")
+    // console.log(shActs)
     const shelfsVidIds = await shActs.map(sh => ytLogic.extractIds(sh))
     
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
