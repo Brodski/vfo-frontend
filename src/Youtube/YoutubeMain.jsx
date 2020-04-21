@@ -8,7 +8,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 import nextId from "react-id-generator";
 
 import * as Common from '../BusinessLogic/Common';
-import * as GApiAuth from '../HttpRequests/GApiAuth';
 import * as ytLogic from '../BusinessLogic/YtLogic';
 import {
   IsInitFinishedContext,
@@ -25,7 +24,6 @@ import VideoResponse from '../Classes/VideoResponse'
 
 function Youtube() {
 
-  const spamLimit = 40;
   const pageGrowth = 4;
   const initialPageLength = 3;
   // Arbitrary number (max 50) (see youtube's Video api)
@@ -38,20 +36,20 @@ function Youtube() {
 
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
   const [pageLength, setPageLength] = useState(initialPageLength);
-  const [prevPage2, setPrevPage2] = useState(0);
+  const [prevPage, setPrevPage] = useState(0);
   const [numVids, setNumVids] = useState([new VidCounter()]) 
   const [isFirst, setIsFirst] = useState(true)
   const [isMoreShelfs, setIsMoreShelfs] = useState(false);
-  let spamCount = 0;
+  
+  const isNothingLoadedYet = () => finalShelfs.shelfs[0].videos[0].id == null
 
   function isEndReached() {
+    
     let isEnd = false;
     if (isFirst) {
       return false
     }
-    if (spamCount > spamLimit
-      || pageLength > user.customShelfs.length
-      || prevPage2 >= user.customShelfs.length) {
+    if ( pageLength > user.customShelfs.length || prevPage >= user.customShelfs.length) {
       isEnd = true
     }
     return isEnd
@@ -66,27 +64,6 @@ function Youtube() {
     setUser(newUser)
   }
 
-  async function hackHelper() {
-    let count = 1
-    let isReady = !GApiAuth.checkAll();
-    while (isReady) {
-      await Common.sleep(100 * count)
-      count = count + 1
-      if (count > 40) {
-        count = count * 2
-      }
-      isReady = !GApiAuth.checkAll()
-    }
-  }
-  const preFetchMoreSubs = async () => {
-    if (isFirst) {
-      putUnsortedShelfAtBottom()
-    }
-    // halt any possible room for multi fetches
-    setIsMoreShelfs(false)
-    await hackHelper()
-  }
-
   function calcShelfSlice() {
     let sliceVal;
     if (user.customShelfs.length <= pageLength) {
@@ -97,12 +74,10 @@ function Youtube() {
     return sliceVal
   }
 
-
-  function isNothingLoadedYet() {
-    return (finalShelfs.shelfs[0].videos[0].id == null)
-  }
-
   function setFinalShelfAux(iData) {
+    
+    if (!isSubscribed) { return }
+
     setFinalShelfs(prevShs => {
       const newS = { ...prevShs }
       if (isNothingLoadedYet()) {
@@ -113,21 +88,21 @@ function Youtube() {
       });
       return newS;
     })
-    setPrevPage2(pageLength)
+
+    setPrevPage(pageLength)
 
     if (pageLength + pageGrowth > user.customShelfs.length) {
       setPageLength(user.customShelfs.length)
     } else {
       setPageLength(pageLength + pageGrowth)
     }
-
-    spamCount = spamCount + pageGrowth;
+    
     setIsMoreShelfs(true)
   }
 
   function injectData(shelfstuff) {
 
-    const injectShelfTitle = user.customShelfs.slice(prevPage2, calcShelfSlice()).map((sh, idx) => {
+    const injectShelfTitle = user.customShelfs.slice(prevPage, calcShelfSlice()).map((sh, idx) => {
       return { "videos": shelfstuff[idx], "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
     })
     if (!injectShelfTitle[0].videos[0]) {
@@ -139,20 +114,31 @@ function Youtube() {
   
   async function _fetchActivities() {
     
-    
-    let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage2, calcShelfSlice()))
+    if (!isSubscribed) { return }
+    console.log("Fetching activities: ")
+    console.log("prevPage, calcShelfSlice ")
+    console.log(prevPage)
+    console.log(calcShelfSlice())
+    console.log("user.customShelfs.slice(prevPage, calcShelfSlice())")
+    console.log(user.customShelfs.slice(prevPage, calcShelfSlice()))
+    let shelfsActs = await ytLogic.getActivitiesShelfs(user.customShelfs.slice(prevPage, calcShelfSlice()))
     
     shelfsActs = ytLogic.removeNonVideos(shelfsActs)
     shelfsActs = shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
-    // console.log("shelfActs as only vids and sorted and 'flattened'")
-    // console.log(shelfsActs)
+    
     return shelfsActs
   }
 
   async function _fetchVideos(shelfsActs) {
+    
+    if (!isSubscribed) { return }
+    console.log("Fetching videos: ")    
+
     let shActs = shelfsActs
     shActs = shActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
+    console.log("shActs")
+    console.log(shActs)
     const shelfsVidIds = await shActs.map(sh => ytLogic.extractIds(sh))
     
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
@@ -174,34 +160,26 @@ function Youtube() {
       return
     }
 
-    // TODO: could be better
-    if (isSubscribed) {
-      await preFetchMoreSubs()  
+    // halt room for multi fetches
+    setIsMoreShelfs(false)
+    
+    if (isSubscribed && isFirst) {    
+      putUnsortedShelfAtBottom()      
     }
-    if (isSubscribed) {
-      shelfsActs = await _fetchActivities()
-    }
-    if (isSubscribed) {
-      shelfVids = await _fetchVideos(shelfsActs)
-    }
-    if (isSubscribed) {
-      iData = injectData(shelfVids)
-      ytLogic.beginFilter2(iData.shelfs)
-    }
+    
+    shelfsActs = await _fetchActivities()
+    shelfVids = await _fetchVideos(shelfsActs)
 
-    if (isSubscribed) {
-      // console.log("SETTING FINAL SHELF")
-      // console.log("iData")
-      // console.log(iData)
-      setFinalShelfAux(iData)
-    }
+    iData = injectData(shelfVids)
+    ytLogic.beginFilter2(iData.shelfs)
+
+    setFinalShelfAux(iData)
   }
 
   async function initPage() {
     
     await Common.betterLogin(setUser, setUserSettings, user.isDemo)
-    setIsFirst(false) // Initial render will be 'true'. Afterward render it will be set to 'false'
-
+    setIsFirst(false) 
     setNumVids(user.customShelfs.map(() => new VidCounter()))
     await fetchMoreSubs()
   }

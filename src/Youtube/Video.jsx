@@ -38,12 +38,12 @@ const Video = (props) => {
     return vidDuration
   }
   
-  // The performance gained is negligible. Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
   let thumbnail   = props.video.snippet.thumbnails.medium.url
   let id          = props.video.id
   let title       = props.video.snippet.title
   let channelName = props.video.snippet.channelTitle
 
+  // The performance gained is negligible. Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
   // Deconstruction too confusing
   // let { video: { snippet: { thumbnails: { medium: { url: thumbnail } } } } } = props // rename url to thumbnail
   // let { video: { id }} = props
