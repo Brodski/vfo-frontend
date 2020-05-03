@@ -7,7 +7,7 @@ import * as Common from '../BusinessLogic/Common.js';
 import * as GApiAuth from '../HttpRequests/GApiAuth';
 import { IsLoggedContext, UserContext, UserSettingsContext } from '../Contexts/UserContext.js';
 import LoginButton from './LoginButton'
-import Logo from '../Images/CYLogo.jsx'
+import Logo from '../Images/MainLogo.jsx'
 import NavImage from "../Images/profile-background.jpg";
 
 const Nav = () => {
@@ -30,8 +30,12 @@ const Nav = () => {
   const LoggedInDropdown = () => (
     <Fragment>
       <Link to='/delete'> 
-        <Icon> security </Icon>  Your Data 
+        <Icon> https </Icon>  Your Data 
       </Link>
+      <Link to='/privacy'> 
+        <Icon> security </Icon>  Privacy
+      </Link>
+      <Divider />
       <a onClick={() => { GApiAuth.logout() }}> 
         <Icon> person_outline </Icon>
         Logout
@@ -81,11 +85,13 @@ const Nav = () => {
           <div><span className="white-text email"> {user.username} </span></div>
         </div>
       </li>    
-      <li> <Link to='/'> Home </Link> </li>
-      <li> <Link to='/customize'> Customize </Link> </li>
+      <li> <Link to='/'>          <Icon> home </Icon> Home </Link> </li>
+      <li> <Link to='/organize'> <Icon> layers </Icon> Organize </Link> </li>
+      <li> <Link to='/about'>     <Icon> info </Icon> About </Link> </li>
       <Divider />
-      <li> <Link to='/about'> About </Link> </li>
-      {isLogged2 ? <li> <Link to='/delete'> Your Data </Link> </li> : null}
+      <li> <Link to='/privacy'>            <Icon> security </Icon> Privacy Policy </Link> </li> 
+      {isLogged2 ? <li> <Link to='/delete'> <Icon> https </Icon> Your Data </Link> </li> : null}
+      
       <li>
         {isInitFinished ? <LoginButton /> : null}
       </li>
@@ -100,9 +106,9 @@ const Nav = () => {
       brand={<Link to="/" className="brand-logo "> <Logo /> </Link>}
       sidenav={<SideNavBar />}
     >
-      <Link to='/'> Home </Link>
-      <Link to='/customize'>Customize </Link>
-      <Link to='/about'> About </Link>
+      <Link to='/'>           <div className="nav-text"> Home  </div>        </Link>
+      <Link to='/organize'>  <div className="nav-text"> Organize </div></Link>
+      <Link to='/about'>     <div className="nav-text"> About </div></Link>
       {isInitFinished ? <LoginButton isSideNav={true} /> : null}
       <UserDropdown />
     </Navbar>

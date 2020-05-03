@@ -94,7 +94,7 @@ const htmlString = `<style>
           style="font-size:11.0pt;line-height:115%; Arial;mso-fareast-font-family:Calibri;color:#595959;mso-themecolor:text1; mso-themetint:166;">These
           Terms of Use constitute a legally binding agreement made between you, whether personally or on behalf of an
           entity (“you”) and <bdt class="block-container question question-in-editor"
-            data-id="4ab94aa9-19d1-61e0-711e-42c7d186232b" data-type="question">Custom Youtube</bdt>
+            data-id="4ab94aa9-19d1-61e0-711e-42c7d186232b" data-type="question">Video Feed Organizer</bdt>
           <bdt class="block-component"></bdt> ("<bdt class="block-component"></bdt><strong>Company</strong>
           <bdt class="statement-end-if-in-editor"></bdt>", “<strong>we</strong>”, “<strong>us</strong>”, or
           “<strong>our</strong>”), concerning your access to and use of the <bdt
@@ -1420,7 +1420,7 @@ const htmlString = `<style>
   <div class="MsoNormal" data-custom-class="body_text" style="line-height: 1.5;"><span
       style="font-size: 15px; line-height: 115%; font-family: Arial; color: rgb(89, 89, 89);">
       <bdt class="block-container question question-in-editor" data-id="8a6919c4-2010-e7d6-2305-d74dfb08909d"
-        data-type="question"><strong>Custom Youtube</strong></bdt>
+        data-type="question"><strong>Video Feed Organizer</strong></bdt>
     </span><span style="color: rgb(89, 89, 89);"><strong><span style="font-size: 15px;">
           <bdt class="block-component"></bdt>
           <bdt class="block-component"></bdt>

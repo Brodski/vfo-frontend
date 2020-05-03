@@ -84,7 +84,7 @@ function App() {
                 <Nav key="Nav" />
                 <Route path="/" exact component={Youtube} />
                 <Route path="/about" component={About} />
-                <Route path="/customize" component={SettingsNEW} />
+                <Route path="/organize" component={SettingsNEW} />
                 <Route path="/privacy" component={PrivacyPolicy} />
                 <Route path="/terms" component={Terms} />
                 <Route path="/delete" component={Delete} />

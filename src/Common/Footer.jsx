@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container">
         <div className="row">
           <div className="col l6 s12">
-            <h5 className="white-text">Custom Youtube</h5>
+            <h5 className="white-text">Video Feed Organizer</h5>
             <ul>
               <li className="grey-text text-lighten-4">by Chris Brodski </li> 
               <li><a className="grey-text text-lighten-3" href="https://github.com/Brodski/customyoutube-frontend"> Github</a> </li>

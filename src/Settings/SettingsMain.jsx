@@ -69,10 +69,10 @@ const SettingsNEW = () => {
     return (<LoadingMain />)
   }
 
-  const Customize = () => {
+  const Organize = () => {
     return (
       <div>
-        <h4 className="set-top-title"> Customize <HowTo /> </h4>
+        <h4 className="set-top-title"> Organize <HowTo /> </h4>
       </div>
     )
   }
@@ -91,7 +91,7 @@ const SettingsNEW = () => {
         <div>
           <div className="set-top-tophalf ">
             {isInitFinished2 ? <GreetingsMsg isSettingsPage={true} /> : null}
-            {isInitFinished2 ? <Customize /> : null}
+            {isInitFinished2 ? <Organize /> : null}
           </div>
           <div>
             {isInitFinished2 ? <HowTo2 /> : null}

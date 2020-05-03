@@ -70,7 +70,7 @@ const htmlString =
         updated <bdt class="question">04/21/2020</bdt></span></strong></span></p>
 <p style="font-size: 15px; line-height: 1.5;"><br></p>
 <p style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">Thank you for
-      choosing to be part of our community at <bdt class="question">Custom Youtube</bdt>
+      choosing to be part of our community at <bdt class="question">Video Feed Organizer</bdt>
       <bdt class="block-component"></bdt> (“<bdt class="block-component"></bdt><strong>Company</strong>
       <bdt class="statement-end-if-in-editor"></bdt>”, “<strong>we</strong>”, “<strong>us</strong>”, or
       “<strong>our</strong>”). We are committed to protecting your personal information and your right to privacy. If
@@ -1230,12 +1230,12 @@ const htmlString =
                         <p style="font-size: 15px;"><span data-custom-class="body_text" style="font-size: 15px;">A
                             privacy breach occurs when there is unauthorized access to or collection, use, disclosure
                             or disposal of personal information. You will be notified about data breaches when <bdt
-                              class="question">Custom Youtube</bdt> believes you are likely to be at risk or serious
+                              class="question">Video Feed Organizer</bdt> believes you are likely to be at risk or serious
                             harm. For example, a data breach may be likely to result in serious financial harm or harm
                             to your mental or physical well-being. In the event that <bdt class="question">Custom
                               Youtube</bdt> becomes aware of a security breach which has resulted or may result in
                             unauthorized access, use or disclosure of personal information <bdt class="question">
-                              Custom Youtube</bdt> will promptly investigate the matter and notify the applicable
+                              Video Feed Organizer</bdt> will promptly investigate the matter and notify the applicable
                             Supervisory Authority not later than 72 hours after having become aware of it, unless the
                             personal data breach is unlikely to result in a risk to the rights and freedoms of natural
                             persons.</span><span style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span
@@ -1347,7 +1347,7 @@ const htmlString =
                             </span></span></p>
                         <div><span style="color: rgb(89, 89, 89);">
                             <bdt class="question"><span style="font-size: 15px;"><span
-                                  data-custom-class="body_text">Custom Youtube</span></span> </bdt><span
+                                  data-custom-class="body_text">Video Feed Organizer</span></span> </bdt><span
                               data-custom-class="body_text"><span style="font-size: 15px;"><span
                                   data-custom-class="body_text">
                                   <bdt class="block-component"></bdt>

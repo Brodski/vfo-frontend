@@ -24,7 +24,7 @@ const GreetingsMsg = (props) => {
       <Fragment>
         <div>
           <div className="flow-text">
-            <Link to='/customize'> Click here to try it out! </Link>
+            <Link to='/organize'> Click here to try it out! </Link>
           </div>
         </div>
       </Fragment>
@@ -39,7 +39,7 @@ const GreetingsMsg = (props) => {
         <div className="flow-text">
           Currently using a demo profile.
           <br />
-          Log in to customize your subscriptions
+          Log in to organize your subscriptions
         </div>
         <div> This is a third party app not owned by Youtube </div>
         {!isSettingsPage ? <div className='div-aux' /> : null }

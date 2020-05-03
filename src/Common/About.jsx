@@ -15,7 +15,8 @@ function About() {
           minimun/maximun duration required for a video.
           <br />
           <br /> 
-          This will only read who you're subscribed to. This will not remove any 
+          By loging in you will authorize this website to see who you're subscribed to. 
+          This will only view your subscriptions and will not remove any 
           of your subscriptions, nor add any new subscriptions, nor make any 
           modifications to your account ^.^
           <br />

@@ -68,7 +68,7 @@ const htmlString = `<style>
           updated <bdt class="question">April 04, 2020</bdt></span></strong></span></p>
   <p style="font-size: 15px; line-height: 1.5;"><br></p>
   <p style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">Thank you for
-        choosing to be part of our community at <bdt class="question">Custom Youtube</bdt>
+        choosing to be part of our community at <bdt class="question">Video Feed Organizer</bdt>
         <bdt class="block-component"></bdt> (“<bdt class="block-component"></bdt><strong>Company</strong>
         <bdt class="statement-end-if-in-editor"></bdt>”, “<strong>we</strong>”, “<strong>us</strong>”, or
         “<strong>our</strong>”). We are committed to protecting your personal information and your right to privacy. If
