@@ -24,18 +24,17 @@ if (process.env.NODE_APP_ENV === 'production') {
     cert: certificate,
     ca: ca
   };
-  https.createServer(credentials, app).listen(443)
-
-  http.createServer(function (req, res){
+  https.createServer(credentials, app, function (req, res){
+    console.log("In here")
     if (req.headers.host === "customyoutube.com"){
+      console.log("Redirected")
       let urlParse = url.parse("https://" + req.headers.host + req.url);
       let redirected = "https://videofeedorganizer.com" + urlParse.path
       res.writeHead(301, { "Location": redirected });
       res.end();
     }
-    
   }).listen(443)
-  
+
   // Redirect http to https
   http.createServer(function (req, res) {
     const redirectedPortNum = 443
@@ -56,3 +55,15 @@ if (process.env.NODE_APP_ENV === 'production') {
   app.listen(80);
 }
 
+
+
+
+// http.createServer(function (req, res){
+//   if (req.headers.host === "customyoutube.com"){
+//     let urlParse = url.parse("https://" + req.headers.host + req.url);
+//     let redirected = "https://videofeedorganizer.com" + urlParse.path
+//     res.writeHead(301, { "Location": redirected });
+//     res.end();
+//   }
+  
+// }).listen(443)
