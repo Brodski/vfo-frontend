@@ -25,6 +25,16 @@ if (process.env.NODE_APP_ENV === 'production') {
     ca: ca
   };
   https.createServer(credentials, app).listen(443)
+
+  http.createServer(function (req, res){
+    if (req.headers.host === "customyoutube.com"){
+      let urlParse = url.parse("https://" + req.headers.host + req.url);
+      let redirected = "https://videofeedorganizer.com" + urlParse.path
+      res.writeHead(301, { "Location": redirected });
+      res.end();
+    }
+    
+  }).listen(443)
   
   // Redirect http to https
   http.createServer(function (req, res) {
