@@ -13,9 +13,6 @@ app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.get('/ping', function (req, res) {
- return res.send('pong');
-});
 
 if (process.env.NODE_APP_ENV === 'production') {
   console.log('WE DOING IT')

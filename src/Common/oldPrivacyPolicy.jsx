@@ -79,8 +79,8 @@ const htmlString = `<style>
           class="question">cbrodski@gmail.com</bdt>.
       </span></span></p>
   <p style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">When you visit
-        our <bdt class="block-component"></bdt>website <bdt class="question"><a href="https://customyoutube.com"
-            target="_blank" data-custom-class="link">https://customyoutube.com</a></bdt>,<bdt
+        our <bdt class="block-component"></bdt>website <bdt class="question"><a href="https://videofeedorganizer.com"
+            target="_blank" data-custom-class="link">https://videofeedorganizer.com</a></bdt>,<bdt
           class="statement-end-if-in-editor"></bdt>
         <bdt class="block-component"></bdt> and use our services, you trust us with your personal information. We take
         your privacy very seriously. In this <span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">
@@ -101,8 +101,8 @@ const htmlString = `<style>
           </span>&nbsp;</span>applies to all information collected through our <bdt class="block-component"></bdt>
         <bdt class="forloop-component"></bdt>
         <bdt class="question">website</bdt>
-        <bdt class="forloop-component"></bdt> (such as <bdt class="question"><a href="https://customyoutube.com"
-            target="_blank" data-custom-class="link">https://customyoutube.com</a></bdt>), <bdt
+        <bdt class="forloop-component"></bdt> (such as <bdt class="question"><a href="https://videofeedorganizer.com"
+            target="_blank" data-custom-class="link">https://videofeedorganizer.com</a></bdt>), <bdt
           class="statement-end-if-in-editor"></bdt>
         <bdt class="block-component"></bdt> and/or any related services, sales, marketing or events (we refer to them
         collectively in this <span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">

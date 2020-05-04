@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { Fragment, useContext, useState } from "react";
 
 import * as GApiAuth from '../HttpRequests/GApiAuth'
@@ -36,6 +37,9 @@ function Delete() {
         ? <Verify />
         : <h5> Delete profile? <a className="waves-effect waves-light btn" onClick={()=> setYouSure(true)}> Delete </a> </h5> }
       <h6> 
+        <Link to="/privacy">View Privacy Policy</Link>
+        <br /> 
+        <br />
         This will delete all data that this app has stored about you.
         <br /> 
         <br />

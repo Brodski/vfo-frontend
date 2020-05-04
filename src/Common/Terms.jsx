@@ -99,8 +99,8 @@ const htmlString = `<style>
           <bdt class="statement-end-if-in-editor"></bdt>", “<strong>we</strong>”, “<strong>us</strong>”, or
           “<strong>our</strong>”), concerning your access to and use of the <bdt
             class="block-container question question-in-editor" data-id="92c3b320-1d8b-c74c-db68-d12810736807"
-            data-type="question"><a href="https://customyoutube.com" target="_blank"
-              data-custom-class="link">https://customyoutube.com</a></bdt> website as well as any other media form,
+            data-type="question"><a href="https://videofeedorganizer.com" target="_blank"
+              data-custom-class="link">https://videofeedorganizer.com</a></bdt> website as well as any other media form,
           media channel, mobile website or mobile application related, linked, or otherwise connected thereto
           (collectively, the “Site”). You agree that by accessing the Site, you have read, understood, and agreed to be
           bound by all of these Terms of Use. IF YOU DO NOT AGREE WITH ALL OF THESE TERMS OF USE, THEN YOU ARE EXPRESSLY
@@ -952,8 +952,8 @@ const htmlString = `<style>
                 style="color: rgb(89, 89, 89); font-size: 14.6667px;">Please review our Privacy Policy:</span><b
                 style="color: rgb(89, 89, 89); font-size: 14.6667px;">&nbsp;<bdt
                   class="block-container question question-in-editor" data-id="d10c7fd7-0685-12ac-c717-cbc45ff916d1"
-                  data-type="question"><a href="https://customyoutube.com/privacy" target="_blank"
-                    data-custom-class="link">https://customyoutube.com/privacy</a></bdt></b><span
+                  data-type="question"><a href="https://videofeedorganizer.com/privacy" target="_blank"
+                    data-custom-class="link">https://videofeedorganizer.com/privacy</a></bdt></b><span
                 style="color: rgb(89, 89, 89); font-size: 14.6667px;">.&nbsp;</span><span
                 style="color: rgb(89, 89, 89); font-size: 11pt;">By using the Site, you agree to be bound by our Privacy
                 Policy, which is incorporated into these Terms of Use. Please be advised the Site is hosted in <span

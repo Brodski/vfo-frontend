@@ -72,6 +72,15 @@ https://create-react-app.dev/docs/deployment/#other-solutions
 ----------------------------------------------------------
 Certificates
  
+  Creating
+    $ sudo certbot certonly --standalone
+      (enter customyoutube.com videofeedorganizer.com)
+    After completing, you'll need the keystore for Spring boot
+    $ cd /home/cbrodski/restApi/src/main/resources
+    $ sudo openssl pkcs12 -export -in /etc/letsencrypt/live/customyoutube.com/fullchain.pem -inkey /etc/letsencrypt/live/customyoutube.com/privkey.pem -out keystore.p12 -name tomcat  -CAfile /etc/letsencrypt/live/customyoutube.com/chain.pem -caname root
+    :)
+
+
 NODEJS
   Commands that creates certificats https://certbot.eff.org/lets-encrypt/debianstretch-other , recommened by google https://domains.google/tld/security/
   How to create an HTTPS server in Node.js? - https://stackoverflow.com/a/21809393/12654472
