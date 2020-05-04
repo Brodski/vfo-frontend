@@ -17,8 +17,10 @@ app.get('/*', function(req, res) {
       let redirected = "https://videofeedorganizer.com" + urlParse.path
       res.writeHead(301, { "Location": redirected });
       res.end();
+    } 
+    else {
+      res.sendFile(path.join(__dirname, 'build', 'index.html'));
     }
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 
