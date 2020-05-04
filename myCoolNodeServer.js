@@ -10,6 +10,14 @@ const url = require('url');
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/*', function(req, res) {
+  console.log("In here")
+    if (req.headers.host === "customyoutube.com"){
+      console.log("Redirected")
+      let urlParse = url.parse("https://" + req.headers.host + req.url);
+      let redirected = "https://videofeedorganizer.com" + urlParse.path
+      res.writeHead(301, { "Location": redirected });
+      res.end();
+    }
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
@@ -23,17 +31,9 @@ if (process.env.NODE_APP_ENV === 'production') {
     key: privateKey, 
     cert: certificate,
     ca: ca
-  };
-  https.createServer(credentials, app, function (req, res){
-    console.log("In here")
-    if (req.headers.host === "customyoutube.com"){
-      console.log("Redirected")
-      let urlParse = url.parse("https://" + req.headers.host + req.url);
-      let redirected = "https://videofeedorganizer.com" + urlParse.path
-      res.writeHead(301, { "Location": redirected });
-      res.end();
-    }
-  }).listen(443)
+  }
+
+  https.createServer(credentials, app).listen(443)
 
   // Redirect http to https
   http.createServer(function (req, res) {
