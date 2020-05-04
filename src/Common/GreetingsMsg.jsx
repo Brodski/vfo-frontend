@@ -39,7 +39,7 @@ const GreetingsMsg = (props) => {
         <div className="flow-text">
           Currently using a demo profile.
           <br />
-          Log in to organize your subscriptions
+          Log in with your Youtube account to organize your subscriptions
         </div>
         <div> This is a third party app not owned by Youtube </div>
         {!isSettingsPage ? <div className='div-aux' /> : null }
