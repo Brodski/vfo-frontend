@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+
 const app = express();
 const fs = require('fs');
 const https = require('https') ;
@@ -10,17 +11,7 @@ const url = require('url');
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/*', function(req, res) {
-  console.log("In here")
-    if (req.headers.host === "customyoutube.com"){
-      console.log("Redirected")
-      let urlParse = url.parse("https://" + req.headers.host + req.url);
-      let redirected = "https://videofeedorganizer.com" + urlParse.path
-      res.writeHead(301, { "Location": redirected });
-      res.end();
-    } 
-    else {
-      res.sendFile(path.join(__dirname, 'build', 'index.html'));
-    }
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 
@@ -51,21 +42,21 @@ if (process.env.NODE_APP_ENV === 'production') {
     res.end();
   }).listen(80);
 
-
 // else Development
 } else {
   app.listen(80);
 }
 
 
-
-
-// http.createServer(function (req, res){
-//   if (req.headers.host === "customyoutube.com"){
-//     let urlParse = url.parse("https://" + req.headers.host + req.url);
-//     let redirected = "https://videofeedorganizer.com" + urlParse.path
-//     res.writeHead(301, { "Location": redirected });
-//     res.end();
-//   }
-  
-// }).listen(443)
+// -- Old redirect
+// console.log("In here")
+//     if (req.headers.host === "customyoutube.com"){
+//       console.log("Redirected")
+//       let urlParse = url.parse("https://" + req.headers.host + req.url);
+//       let redirected = "https://videofeedorganizer.com" + urlParse.path
+//       res.writeHead(301, { "Location": redirected });
+//       res.end();
+//     } 
+//     else {
+//       res.sendFile(path.join(__dirname, 'build', 'index.html'));
+//     }

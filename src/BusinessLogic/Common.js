@@ -176,6 +176,9 @@ export function getMockUser() {
   uSubM3.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
   uSubM3.filter.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
 
+  
+
+
   // let uSubM4 = new Subscription();
   // uSubM4.channelName = "Flashback FM";
   // uSubM4.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
@@ -189,7 +192,7 @@ export function getMockUser() {
 
   let cShelfM = new CustomShelf();
   cShelfM.title = "Movies and stuff";
-  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3);
+  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3, uSubM0);
   cShelfM.isSorted = true;
   u.customShelfs.push(cShelfM);
   
