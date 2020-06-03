@@ -6,9 +6,9 @@ const Logo = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="logo-nav"
-      width="160px"
-      height="35px"
+      className="logo-inv"
+      width="60%"
+      viewBox="0 0 130 35"
     >
       <path
         className="outterText"

@@ -103,7 +103,7 @@ const Nav = () => {
       alignLinks="right"
       menuIcon={<Icon>menu</Icon>}
       options={{ }}
-      brand={<Link to="/" className="brand-logo "> <Logo /> </Link>}
+      brand={<Link to="/" className="brand-logo brand-logo-aux"> <Logo /> </Link>}
       sidenav={<SideNavBar />}
     >
       <Link to='/'>           <div className="nav-text"> Home  </div>        </Link>

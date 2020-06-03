@@ -73,7 +73,7 @@ function FilterDialog(props) {
     let subIndex;
     let shelfIndex = 0;
     for (let sh of userSettings.customShelfs) {
-      subIndex = sh.fewSubs.findIndex(s => s.channelName == channelName)
+      subIndex = sh.fewSubs.findIndex(s => s.channelName === channelName)
       if (subIndex > -1) {
         break
       }

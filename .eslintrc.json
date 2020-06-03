@@ -72,7 +72,8 @@
         "jsx-a11y/control-has-associated-label": "off",
         "jsx-a11y/anchor-has-content": "off",
         "no-await-in-loop": "off",
-        "prefer-const": "off"
+        "prefer-const": "off",
+        "import/prefer-default-export": "off"
         
         // default export is not convincing.
         // https://github.com/airbnb/javascript/issues/1365

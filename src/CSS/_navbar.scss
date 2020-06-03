@@ -13,7 +13,22 @@ svg.svg-googlecolor {
   margin-right: 3px;
 }
 
-svg.svg-mygoogle2 {
+
+.logo-inv {
+  path.outterText {
+    fill: $nav-bg;
+  }
+  path.innerText {
+    fill: $nav-text;
+    stroke: $primary-color-light; 
+    stroke-width: .5;
+  }
+  text-align: center;
+  left: 50%;
+  vertical-align: middle;
+}
+
+.logo-nav {
   path.outterText {
     fill: $nav-text;
   }
@@ -25,6 +40,27 @@ svg.svg-mygoogle2 {
   margin-right: .3em;
   vertical-align: middle;
   margin-bottom: 4px;
+}
+
+.dev-with-yt {
+  border-radius: 3px;
+  border-style: solid;
+  border-width: thin;
+  margin-top: .1em;
+  padding: .09em;
+  width: 16em;
+  border-color:rgba(0,0,0, 0);
+  opacity: 0.8;
+}
+
+.brand-logo-aux {
+  margin-left: .3em;
+
+}
+
+.dev-with-yt-demo {
+  @extend .dev-with-yt;
+  width: 15em;
 }
 
 .nav-wrapper {

@@ -107,6 +107,10 @@ Copying java-keystore To Local
 
 -------------------------------------------------------------------
 
+Permissions
+$ sudo chown -R $(whoami) ~/.npm
+$ sudo npm install -g --unsafe-perm node-sass
+
 Restarting/Starting (to be improved)
   (TODO PM2 for node production)
 

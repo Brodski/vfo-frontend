@@ -2,9 +2,24 @@
 import CustomShelf from "../Classes/CustomShelf";
 
 
-export function queryShelfs(userSettings, allowEmpty = false) {
-  //Loop though each shelf and each item on shelf
 
+function _findSubIndex(chName, userSettings) {
+  let subIndex;
+  let shelfIndex = 0;
+
+  for (let sh of userSettings.customShelfs) {
+    subIndex = sh.fewSubs.findIndex(s => s.channelName === chName);
+    if (subIndex > -1) {
+      break;
+    }
+    shelfIndex = shelfIndex + 1;
+  }
+  return { shelfIndex, subIndex };
+}
+
+export function queryShelfs(userSettings, allowEmpty = false) {
+  
+  // Loop though each shelf and each item on shelf
   let newCustomShelfs = [];
   let shelfsQ = [].slice.call(document.querySelectorAll(".sh-QHack"));
   for (let i = 0; i < shelfsQ.length; i = i + 1) {
@@ -24,20 +39,6 @@ export function queryShelfs(userSettings, allowEmpty = false) {
     }
   }
   return newCustomShelfs;
-}
-
-function _findSubIndex(chName, userSettings) {
-  let subIndex;
-  let shelfIndex = 0;
-
-  for (let sh of userSettings.customShelfs) {
-    subIndex = sh.fewSubs.findIndex(s => s.channelName === chName);
-    if (subIndex > -1) {
-      break;
-    }
-    shelfIndex = shelfIndex + 1;
-  }
-  return { shelfIndex, subIndex };
 }
 
 /////////////////////////////////////////////////////////////////////////

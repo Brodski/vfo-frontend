@@ -16,6 +16,7 @@ import HowTo from './HowTo'
 import LoadingMain from '../Common/LoadingMain.jsx';
 import PostSave from './PostSave.jsx';
 import TheCarousel from './TheCarousel.jsx';
+import DevWithYT from "../Images/DevWithYT-black.png"
 
 const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
@@ -73,6 +74,7 @@ const SettingsNEW = () => {
     return (
       <div>
         <h4 className="set-top-title"> Organize <HowTo /> </h4>
+        {/* <img className="dev-with-yt-demo" src={DevWithYT} /> */}
       </div>
     )
   }

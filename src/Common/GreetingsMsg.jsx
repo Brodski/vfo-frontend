@@ -4,6 +4,7 @@ import React, { Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { IsLoggedContext, UserContext } from '../Contexts/UserContext.js';
+import DevWithYT from "../Images/DevWithYT-black.png"
 
 const GreetingsMsg = (props) => {
 
@@ -41,6 +42,7 @@ const GreetingsMsg = (props) => {
           <br />
           Log in with your Youtube account to organize your subscriptions
         </div>
+        {/* {!isSettingsPage ? <img className="dev-with-yt-demo" src={DevWithYT} /> : null } */}
         <div> This is a third party app not owned by Youtube </div>
         {!isSettingsPage ? <div className='div-aux' /> : null }
       </div>
@@ -53,6 +55,8 @@ const GreetingsMsg = (props) => {
       <div className={`profile-greeting-wrap  ${extraClasses}`}>
         <h4 className="profile-msg2 ">
           Hi, {user.username}
+          <div />
+          <img className="dev-with-yt" src={DevWithYT} />
         </h4>
         {!isSettingsPage ? <div className='div-aux' /> : null}
       </div>
