@@ -48,19 +48,27 @@ svg.svg-googlecolor {
   border-width: thin;
   margin-top: .1em;
   padding: .09em;
-  width: 16em;
+  // width: 16em;
+  width: 60%;
   border-color:rgba(0,0,0, 0);
   opacity: 0.8;
 }
 
-.brand-logo-aux {
-  margin-left: .3em;
-
-}
 
 .dev-with-yt-demo {
   @extend .dev-with-yt;
   width: 15em;
+}
+
+.dev-with-yt-main {
+  @extend .dev-with-yt;
+  width: 6em;
+}
+
+
+.brand-logo-aux {
+  margin-left: .3em;
+
 }
 
 .nav-wrapper {

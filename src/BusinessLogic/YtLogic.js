@@ -31,6 +31,17 @@ export async function getAllSubs() {
   return allSubs;
 }
 
+export function removeNonVideosMicro(act) {
+  if (act.status < 200 || act.status > 299) {
+    return;
+  }
+  const result = act.result.items.filter(item => {
+    return item.contentDetails.upload;
+  });
+  return result
+  
+}
+
 // TODO Remove the double loop, use filter
 export function removeNonVideos(eachShelfsActs) {
   const filteredShelfs = [];
@@ -55,6 +66,31 @@ export function extractIds(shelf) {
   let ids = [];
   shelf.map(act => ids.push(act.contentDetails.upload.videoId));
   return ids;
+}
+
+// Should use an iterator
+export async function fetchVideos2(multiArrayOfIds) {
+  console.log('-----------------------------------')
+  let allPromises = []
+  // let vidPromise = null
+    // eslint-disable-next-line no-loop-func
+  multiArrayOfIds.map( sh => {
+    for ( let i = 0; i < sh.length ; i = i + 50) {
+      let chunk = sh.slice(i, (i+50))
+      console.log("=== chunk ===")
+      console.log(chunk)
+      console.log("going in")
+      const vidPromise = youtubeApi.getSomeVideos(chunk)
+      allPromises.push(vidPromise)
+      console.log("vidPromise")
+      console.log(vidPromise)
+      console.log("allPromises")
+      console.log(allPromises)
+    }
+  })
+  console.log("Done")
+  console.log('-----------------------------------')
+  return Promise.all(allPromises)  
 }
 
 export async function fetchVideos(shelfsVidIds) {

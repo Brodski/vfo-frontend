@@ -56,7 +56,7 @@ const GreetingsMsg = (props) => {
         <h4 className="profile-msg2 ">
           Hi, {user.username}
           <div />
-          <img className="dev-with-yt" src={DevWithYT} />
+          <img className="dev-with-yt-main" src={DevWithYT} />
         </h4>
         {!isSettingsPage ? <div className='div-aux' /> : null}
       </div>

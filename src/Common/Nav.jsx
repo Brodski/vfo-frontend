@@ -9,6 +9,7 @@ import { IsLoggedContext, UserContext, UserSettingsContext } from '../Contexts/U
 import LoginButton from './LoginButton'
 import Logo from '../Images/MainLogo.jsx'
 import NavImage from "../Images/profile-background.jpg";
+import { mdiCiscoWebex } from '@mdi/js';
 
 const Nav = () => {
 
@@ -43,12 +44,14 @@ const Nav = () => {
     </Fragment>
   )
 
-  const LoggedOutDropdown = () => (
-    <a onClick={() => { GApiAuth.login() }}> 
-      <Icon> person_outline </Icon>
-      Login
-    </a>    
+  const LoggedOutDropdown = () => {
+    return (
+      <a onClick={() => { GApiAuth.login() }}> 
+        <Icon> person_outline </Icon>
+        Login
+      </a>    
   )
+}
 
   const UserDropdown = () => (
     <Dropdown
@@ -58,7 +61,8 @@ const Nav = () => {
       }}
       trigger={<a href=""> <ProfileImg /> </a>}
     >
-      {isLogged2 ? <LoggedInDropdown /> : <LoggedOutDropdown />}
+      {/* {isLogged2 ? <LoggedInDropdown /> : <LoggedOutDropdown />} */}
+      {isLogged2 ? <LoggedInDropdown /> : null }
     </Dropdown>
   )
 
@@ -109,7 +113,7 @@ const Nav = () => {
       <Link to='/'>           <div className="nav-text"> Home  </div>        </Link>
       <Link to='/organize'>  <div className="nav-text"> Organize </div></Link>
       <Link to='/about'>     <div className="nav-text"> About </div></Link>
-      {isInitFinished ? <LoginButton isSideNav={true} /> : null}
+      {isInitFinished ? <LoginButton /> : null}
       <UserDropdown />
     </Navbar>
   );

@@ -25,7 +25,8 @@ export async function _getActivities(channel) {
   return window.gapi.client.youtube.activities.list({
     part: "snippet,contentDetails",
     channelId: channel,
-    maxResults: 35,
+    maxResults: 15,
+    // maxResults: 35,
     fields: "nextPageToken, items(contentDetails/*, snippet/*)"
   });
 }
