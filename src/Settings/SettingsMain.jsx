@@ -10,10 +10,10 @@ import {
 } from '../Contexts/UserContext.js'
 
 import AllShelfs from './AllShelfs.jsx';
-import Footer from '../Common/Footer.jsx';
-import GreetingsMsg from '../Common/GreetingsMsg.jsx'
+import Footer from '../Components/Footer.jsx';
+import GreetingsMsg from '../Components/GreetingsMsg.jsx'
 import HowTo from './HowTo'
-import LoadingMain from '../Common/LoadingMain.jsx';
+import LoadingMain from '../Components/LoadingMain.jsx';
 import PostSave from './PostSave.jsx';
 import TheCarousel from './TheCarousel.jsx';
 import DevWithYT from "../Images/DevWithYT-black.png"

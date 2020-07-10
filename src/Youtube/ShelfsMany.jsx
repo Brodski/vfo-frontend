@@ -3,7 +3,7 @@ import nextId from "react-id-generator";
 
 import PropTypes from 'prop-types';
 
-import LoadingMain from '../Common/LoadingMain.jsx';
+import LoadingMain from '../Components/LoadingMain.jsx';
 import Shelf from './Shelf'
 
 

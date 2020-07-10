@@ -15,12 +15,12 @@ import {
   UserContext,
   UserSettingsContext
 } from './Contexts/UserContext'
-import About from './Common/About.jsx';
-import Delete from './Common/Delete.jsx';
-import Nav from './Common/Nav.jsx';
-import PrivacyPolicy from './Common/PrivacyPolicy.jsx'
+import About from './Components/About.jsx';
+import Delete from './Components/Delete.jsx';
+import Nav from './Components/Nav.jsx';
+import PrivacyPolicy from './Components/PrivacyPolicy.jsx'
 import SettingsNEW from './Settings/SettingsMain.jsx';
-import Terms from './Common/Terms.jsx'
+import Terms from './Components/Terms.jsx'
 import Youtube from './Youtube/YoutubeMain.jsx';
 
 function App() {
@@ -33,17 +33,19 @@ function App() {
   async function initGApi() {
 
     const GoogleAuth = await GApiAuth.initGoogleAPI()
-    await Common.betterLogin(setUser, setUserSettings)
+    if (GApiAuth.isHeSignedIn()) {
+      await Common.betterLogin(setUser, setUserSettings)
+    }
     
     setIsInitFinished2(true)
     setIsLogged2(GApiAuth.isHeSignedIn())
 
     // solution(?) to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
-    while (GoogleAuth == null) {
-      await Common.sleep(500)
-      initGApi()
-      return;
-    }
+    // while (GoogleAuth == null) {
+    //   await Common.sleep(500)
+    //   initGApi()
+    //   return;
+    // }
 
     // Sign-in listeners: https://developers.google.com/identity/sign-in/web/listeners
     GoogleAuth.isSignedIn.listen(function (val) {
@@ -64,13 +66,7 @@ function App() {
     }
 
     moment.updateLocale('en', {
-      relativeTime: {
-        m: "1 minute",
-        h: "1 hour",
-        d: "1 day",
-        M: "1 month",
-        y: "1 year",
-      }
+      relativeTime: { m: "1 minute", h: "1 hour", d: "1 day", M: "1 month", y: "1 year",}
     });
   }, [])
 

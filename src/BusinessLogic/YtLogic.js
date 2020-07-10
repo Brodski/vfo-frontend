@@ -14,20 +14,50 @@ export async function getActivitiesShelfs(shelfs) {
 
 export async function getAllSubs() {
   let response = await youtubeApi._getThisUsersSubs();
+  console.log("Got this user's subs")
+  console.log(response)
   if (response.status < 200 || response.status > 299) {
     return;
   }
   let allSubs = response.result.items;
 
-  // Intended await in loop. yt api can only get 50 subs per request
+  // yt api can only get 50 subs per request
   while (response.result.nextPageToken) {
-    response = await youtubeApi._getThisUsersSubs(
-      response.result.nextPageToken
-    );
+    console.log("there is more nextPageToken")
+    response = await youtubeApi._getThisUsersSubs(response.result.nextPageToken);
+    console.log(response)
     allSubs = !allSubs
       ? response.result.items
       : allSubs.concat(response.result.items);
   }
+  console.log("WE got everyting")
+  console.log("allSubs")
+  console.log(allSubs)
+  
+  allSubs.sort( (a,b)  => (a.snippet.title > b.snippet.title) ? 1 : -1 )
+  let i = 1;
+  while ( i < allSubs.length ) {
+    console.log(i, allSubs[i].snippet.title)
+    if (allSubs[i].snippet.title === allSubs[i-1].snippet.title) {
+      console.log("         Removing ", allSubs[i-1].snippet.title)
+      allSubs.splice(i-1, 1)
+      continue
+    }
+    i = i + 1
+  }
+
+  
+  // allSubs.forEach( x => { 
+    
+  // })
+   i = 0
+  console.log("====================================")
+  console.log("====================================")
+  allSubs.forEach( x => { 
+    console.log(i, x.snippet.title )
+    i = i + 1
+  })
+  
   return allSubs;
 }
 

@@ -65,6 +65,7 @@ export function checkForNewSubs(subsFromYt, subsFromBackend) {
 
 export async function processUserFromServer(res) {
   let u = new User();
+  console.log("Getting new user stuff")
   let subzPromise = ytLogic.getAllSubs();
   if (res.data.customShelfs == null) {
     // null implies new user
@@ -91,6 +92,8 @@ export async function processUserFromServer(res) {
 
 export async function loginAndSet(setUser, setUserSettings) {
   let res = await ServerEndpoints.loginToBackend();
+  console.log("FROM BACKEND")
+  console.log(res)
   let u;
   if (res.status > 199 && res.status < 300) {
     u = await processUserFromServer(res);
@@ -115,14 +118,12 @@ export async function loginAndSet(setUser, setUserSettings) {
   return u;
 }
 
-
 export async function betterLogout() {
   GApiAuth.logout()
 }
 
 
-// window.$isCYTLogging is the global to prevent multi login attempts, default is 'false'
-// could be better
+// window.$isCYTLogging is the global to prevent multi login attempts
 export async function betterLogin(setUser, setUserSettings) {
   let antiInfLoop = 0
   

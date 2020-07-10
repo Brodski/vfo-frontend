@@ -17,8 +17,8 @@ import {
   UserSettingsContext
 } from '../Contexts/UserContext.js';
 import FinalShelfs from '../Classes/FinalShelfs'
-import GreetingsMsg from '../Common/GreetingsMsg.jsx'
-import LoadingMain from '../Common/LoadingMain.jsx';
+import GreetingsMsg from '../Components/GreetingsMsg.jsx'
+import LoadingMain from '../Components/LoadingMain.jsx';
 import ShelfsMany from './ShelfsMany.jsx';
 import VidCounter from '../Classes/VidCounter'
 import VideoResponse from '../Classes/VideoResponse'
@@ -41,28 +41,56 @@ function Youtube() {
 
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
   const [pageLength, setPageLength] = useState(initialPageLength);
+  let pLength = 1
   const [prevPage, setPrevPage] = useState(0);
   const [numVids, setNumVids] = useState([new VidCounter()]) 
   const [isFirst, setIsFirst] = useState(true)
+  let isFirstRun = true
   const [isMoreShelfs, setIsMoreShelfs] = useState(false);
+  let isRemainingShelfs = false
   
   const isNothingLoadedYet = () => finalShelfs.shelfs[0].videos[0].id == null
 
+
+  async function initPage() {
+    
+    await Common.betterLogin(setUser, setUserSettings, user.isDemo)
+    setIsFirst(false) 
+    isFirstRun = false
+    setNumVids(user.customShelfs.map(() => new VidCounter()))
+    await fetchMoreSubs()
+  }
+
+  // https://juliangaramendy.dev/use-promise-subscription/ solution to 'mem-leak'
+  useEffect(() => {
+    console.log("USER BEFORE")
+    console.log(user)
+    initPage()
+    return () => {
+      isSubscribed = false
+    }
+  }, [])
+
+
+  function logDebug(){
+      console.log("USER")
+      console.log(user)
+  }
   function isEndReached() {
-    let isEnd = false;
+    //if isFirstRun
     if (isFirst) {
       return false
     }
     if ( pageLength > user.customShelfs.length || prevPage >= user.customShelfs.length) {
-      isEnd = true
+      return true
     }
-    return isEnd
+    return false
   }
 
   function putUnsortedShelfAtBottom() {
     const newUser = user;
     let sort = user.customShelfs.filter(sh => sh.isSorted)
-    const unSort = user.customShelfs.filter(sh => !sh.isSorted)
+    let unSort = user.customShelfs.filter(sh => !sh.isSorted)
     sort = sort.concat(unSort)
     newUser.customShelfs = sort
     setUser(newUser)
@@ -97,14 +125,17 @@ function Youtube() {
     })
 
     setPrevPage(pageLength)
-
+    
     if (pageLength + pageGrowth > user.customShelfs.length) {
       setPageLength(user.customShelfs.length)
+      pLength = user.customShelfs.length
     } else {
       setPageLength(pageLength + pageGrowth)
     }
     
     setIsMoreShelfs(true)
+    isRemainingShelfs = true
+    
   }
 
   function injectData(shelfstuff) {
@@ -140,36 +171,6 @@ function Youtube() {
   async function _fetchVideos(shelfsActs) {
     
     if (!isSubscribed) { return }
-    //console.log("Fetching videos: ")    
-
-    
-    // BANG!!!!!
-    // BANG!!!!!
-    // BANG!!!!!
-    // BANG!!!!!
-    // let shActsAll = shelfsActs
-    // const shelfsVidIds2 = await shActsAll.map(sh => ytLogic.extractIds(sh))
-    // let shelfzzz = await ytLogic.fetchVideos2(shelfsVidIds2)
-    // console.log("shelfzzz")
-    // console.log("shelfzzz is all promisssssses form the videso")
-    // console.log(shelfzzz)
-    // let shelfzzz2 = []
-    // let resultArr = shelfzzz.map( response => {
-    //   console.log(response.status)
-    //   if (response.status > 199 && response.status < 300) {
-    //     shelfzzz2 = shelfzzz2.concat(response.result.items)
-    //     console.log("response.result.items")
-    //     console.log(response.result.items)
-    //     console.log("shelfzzz2")
-    //     console.log(shelfzzz2)
-    //     return shelfzzz2
-    //   }
-    // })
-    // console.log("resultArr")
-    // console.log(resultArr)
-    // shelfzzz = shelfzzz.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
-    // shelfzzz = shelfzzz.map(shelf => ytLogic.sortByDate(shelf))
-
     let shActs = shelfsActs
     shActs = shActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
     const shelfsVidIds = await shActs.map(sh => ytLogic.extractIds(sh))
@@ -222,6 +223,7 @@ function Youtube() {
 
     // halt room for multi fetches
     setIsMoreShelfs(false)
+    isRemainingShelfs = false
     
     if (isSubscribed && isFirst) {    
       putUnsortedShelfAtBottom()      
@@ -239,22 +241,6 @@ function Youtube() {
 
     setFinalShelfAux(iData)
   }
-
-  async function initPage() {
-    
-    await Common.betterLogin(setUser, setUserSettings, user.isDemo)
-    setIsFirst(false) 
-    setNumVids(user.customShelfs.map(() => new VidCounter()))
-    await fetchMoreSubs()
-  }
-
-  // https://juliangaramendy.dev/use-promise-subscription/ solution to 'mem-leak'
-  useEffect(() => {
-    initPage()
-    return () => {
-      isSubscribed = false
-    }
-  }, [])
 
 
   const Shelfs = () => {
@@ -279,9 +265,47 @@ function Youtube() {
 
   return (
     <div>
+      { process.env.REACT_APP_ENV_NAME === 'development' ? <button onClick={logDebug}> Debugg button</button> : null }
       {isInitFinished2 ? <GreetingsMsg /> : null}
       {isNothingLoadedYet() ? <LoadingMain /> : <Shelfs />}
     </div>
   );
 }
 export default Youtube;
+
+
+
+
+
+
+
+
+    //console.log("Fetching videos: ")    
+
+    
+    // BANG!!!!!
+    // BANG!!!!!
+    // BANG!!!!!
+    // BANG!!!!!
+    // let shActsAll = shelfsActs
+    // const shelfsVidIds2 = await shActsAll.map(sh => ytLogic.extractIds(sh))
+    // let shelfzzz = await ytLogic.fetchVideos2(shelfsVidIds2)
+    // console.log("shelfzzz")
+    // console.log("shelfzzz is all promisssssses form the videso")
+    // console.log(shelfzzz)
+    // let shelfzzz2 = []
+    // let resultArr = shelfzzz.map( response => {
+    //   console.log(response.status)
+    //   if (response.status > 199 && response.status < 300) {
+    //     shelfzzz2 = shelfzzz2.concat(response.result.items)
+    //     console.log("response.result.items")
+    //     console.log(response.result.items)
+    //     console.log("shelfzzz2")
+    //     console.log(shelfzzz2)
+    //     return shelfzzz2
+    //   }
+    // })
+    // console.log("resultArr")
+    // console.log(resultArr)
+    // shelfzzz = shelfzzz.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
+    // shelfzzz = shelfzzz.map(shelf => ytLogic.sortByDate(shelf))

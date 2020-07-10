@@ -12,8 +12,11 @@ import DevWithYT from "../Images/DevWithYT-black.png"
 import Logo from '../Images/MainLogo-inv.jsx'
 
 const LoginButton = () => {
+
   const { isLogged2 } = useContext(IsLoggedContext);
+
   const Login = () => {
+
     return (
       <Modal 
         id="Modal-0"
@@ -29,7 +32,7 @@ const LoginButton = () => {
           <h5 className="flow-text">Login through your Youtube account to get started </h5>
           <img className="dev-with-yt-main" src={DevWithYT} />
           <div className='div-aux' />
-          <ButtonAux />
+          <Logout />
           <div>
             By continuing, you agree to Video Feed Organizer's 
             <Link to="/terms"> Terms of Service, </Link> 
@@ -41,12 +44,6 @@ const LoginButton = () => {
   }
 
   const Logout = () => {
-    return (
-      <ButtonAux />
-    )
-  }
-
-  const ButtonAux = () => {
     return (
       <Button 
         node="button"

@@ -1,7 +1,6 @@
+import { Divider, Dropdown, Icon, Navbar } from 'react-materialize';
 import { Link } from 'react-router-dom'
 import React, { Fragment, useContext, useEffect, useState } from 'react';
-
-import {  Divider, Dropdown, Icon, Navbar } from 'react-materialize';
 
 import * as Common from '../BusinessLogic/Common.js';
 import * as GApiAuth from '../HttpRequests/GApiAuth';
@@ -9,7 +8,6 @@ import { IsLoggedContext, UserContext, UserSettingsContext } from '../Contexts/U
 import LoginButton from './LoginButton'
 import Logo from '../Images/MainLogo.jsx'
 import NavImage from "../Images/profile-background.jpg";
-import { mdiCiscoWebex } from '@mdi/js';
 
 const Nav = () => {
 
@@ -27,6 +25,7 @@ const Nav = () => {
   useEffect(() => {
     checkIfInitFinished()
   })
+
 
   const LoggedInDropdown = () => (
     <Fragment>
@@ -101,7 +100,7 @@ const Nav = () => {
       </li>
     </Fragment>
   )
-
+    
   return (
     <Navbar
       alignLinks="right"
@@ -114,6 +113,7 @@ const Nav = () => {
       <Link to='/organize'>  <div className="nav-text"> Organize </div></Link>
       <Link to='/about'>     <div className="nav-text"> About </div></Link>
       {isInitFinished ? <LoginButton /> : null}
+      
       <UserDropdown />
     </Navbar>
   );
