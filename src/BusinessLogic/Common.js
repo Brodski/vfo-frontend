@@ -63,9 +63,8 @@ export function checkForNewSubs(subsFromYt, subsFromBackend) {
   return newSubs;
 }
 
-export async function processUserFromServer(res) {
+export async function processUserFromServer(res, doSync) {
   let u = new User();
-  console.log("Getting new user stuff")
   let subzPromise = ytLogic.getAllSubs();
   if (res.data.customShelfs == null) {
     // null implies new user
@@ -77,26 +76,119 @@ export async function processUserFromServer(res) {
     u.pictureUrl = res.data.pictureUrl;
     u.username = res.data.username;
     u.isDemo = false;
-
-    // Below: Sync subs from the User's YT account and this app's database.
-    let newSubs = checkForNewSubs(await subzPromise, res.data);
-    let removedSubArr = checkForRemovedSubs(await subzPromise, res.data);
-    u.addArrayOfSubs(newSubs);
-    u.removeSubs(removedSubArr);
-    if (removedSubArr[0] || newSubs[0]) {
-      ServerEndpoints.saveUser(u);
+    console.log(doSync)
+    if (doSync){
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      console.log("WE GONIG IN")
+      // Below: Sync subs from the User's YT account and this app's database.
+      let newSubs = checkForNewSubs(await subzPromise, res.data);
+      let removedSubArr = checkForRemovedSubs(await subzPromise, res.data);
+      u.addArrayOfSubs(newSubs);
+      u.removeSubs(removedSubArr);
+      if (removedSubArr[0] || newSubs[0]) {
+        ServerEndpoints.saveUser(u);
+      }
     }
   }
   return u;
 }
 
-export async function loginAndSet(setUser, setUserSettings) {
+export async function loginAndSet(setUser, setUserSettings, doSync) {
+  console.log("doSync")
+  console.log(doSync)
   let res = await ServerEndpoints.loginToBackend();
-  console.log("FROM BACKEND")
+  console.log("GOT RES")
   console.log(res)
   let u;
   if (res.status > 199 && res.status < 300) {
-    u = await processUserFromServer(res);
+    u = await processUserFromServer(res, doSync);
     //TODO could be better
     setUser(prev => {
       prev.customShelfs = u.customShelfs;
@@ -118,21 +210,27 @@ export async function loginAndSet(setUser, setUserSettings) {
   return u;
 }
 
+
 export async function betterLogout() {
   GApiAuth.logout()
 }
 
 
-// window.$isCYTLogging is the global to prevent multi login attempts
-export async function betterLogin(setUser, setUserSettings) {
+// window.$isCYTLogging is the global to prevent multi login attempts, default is 'false'
+// could be better
+export async function betterLogin(setUser, setUserSettings, doSync) {
   let antiInfLoop = 0
   
   await GApiAuth.getGoogleAuth() 
 
   if (GApiAuth.isHeSignedIn() && !window.$isCYTLogging) {
     window.$isCYTLogging = true
-    await loginAndSet(setUser, setUserSettings)
+    await loginAndSet(setUser, setUserSettings, doSync)
     window.$isCYTFinshedLogging = true
+  }
+  else if ( GApiAuth.isHeSignedIn() && doSync){
+    await loginAndSet(setUser, setUserSettings, doSync)
+
   }
   if (GApiAuth.isHeSignedIn() ) {
     while (!window.$isCYTFinshedLogging) {
@@ -592,5 +690,3 @@ export function getMockUser() {
   // sub3.channelId = "UC0CeYMTh57zSsbUKhsyOPfw";
   // sub3.filter.channelId = "UC0CeYMTh57zSsbUKhsyOPfw"
 }
-
-// export default {getMockUser, loginAndSet, sleep, proce3456ssUserFromServer, checkForRemovedSubs, checkForNewSubs}

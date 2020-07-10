@@ -8,7 +8,6 @@ const SPRING_BACKEND = `${process.env.REACT_APP_SPRINGB_ADDRESS}`;
 axios.defaults.baseURL = SPRING_BACKEND;
 axios.interceptors.request.use(
   config => {
-    // console.log(`Request was made to ${config.url}`)
     return config;
   },
   error => {
@@ -19,7 +18,6 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   res => {
-    // console.log(`Response recieved with status ${res.status} `)
     return res;
   },
   error => {

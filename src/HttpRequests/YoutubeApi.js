@@ -38,6 +38,7 @@ export async function _getThisUsersSubs(pageToken) {
     maxResults: 50,
     mine: true,
     pageToken: pageToken,
+    order: "alphabetical",
     fields:
       "pageInfo, nextPageToken, items(snippet/title, snippet/publishedAt, snippet/resourceId/channelId, snippet/thumbnails/default/url )"
   });

@@ -14,8 +14,6 @@ export async function getActivitiesShelfs(shelfs) {
 
 export async function getAllSubs() {
   let response = await youtubeApi._getThisUsersSubs();
-  console.log("Got this user's subs")
-  console.log(response)
   if (response.status < 200 || response.status > 299) {
     return;
   }
@@ -23,16 +21,11 @@ export async function getAllSubs() {
 
   // yt api can only get 50 subs per request
   while (response.result.nextPageToken) {
-    console.log("there is more nextPageToken")
     response = await youtubeApi._getThisUsersSubs(response.result.nextPageToken);
-    console.log(response)
     allSubs = !allSubs
       ? response.result.items
       : allSubs.concat(response.result.items);
   }
-  console.log("WE got everyting")
-  console.log("allSubs")
-  console.log(allSubs)
   
   allSubs.sort( (a,b)  => (a.snippet.title > b.snippet.title) ? 1 : -1 )
   let i = 1;
@@ -45,11 +38,6 @@ export async function getAllSubs() {
     }
     i = i + 1
   }
-
-  
-  // allSubs.forEach( x => { 
-    
-  // })
    i = 0
   console.log("====================================")
   console.log("====================================")

@@ -3,6 +3,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import * as ServerEndpoints from '../HttpRequests/ServerEndpoints';
 import * as stLogic from '../BusinessLogic/SettingsLogic';
+import * as Common from '../BusinessLogic/Common'
 import {
   IsInitFinishedContext,
   UserContext,
@@ -17,6 +18,7 @@ import LoadingMain from '../Components/LoadingMain.jsx';
 import PostSave from './PostSave.jsx';
 import TheCarousel from './TheCarousel.jsx';
 import DevWithYT from "../Images/DevWithYT-black.png"
+import * as GApiAuth from '../HttpRequests/GApiAuth'
 
 const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
@@ -26,8 +28,60 @@ const SettingsNEW = () => {
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
   useEffect(() => {
-    setUserSettings(user)
+    initThis()
   }, []);
+
+  async function initThis() {
+    const GoogleAuth = await GApiAuth.initGoogleAPI()
+    if (GApiAuth.isHeSignedIn()) {
+        console.log("YES IS INIT FISNIEHD")
+        console.log("YES IS INIT FISNIEHD")
+        console.log("YES IS INIT FISNIEHD")
+        console.log("YES IS INIT FISNIEHD")
+        console.log("YES IS INIT FISNIEHD")
+        console.log("YES IS INIT FISNIEHD")
+        console.log("YES IS INIT FISNIEHD")
+        console.log("YES IS INIT FISNIEHD")
+        await Common.betterLogin(setUser, setUserSettings, true)
+    }
+    else {
+        console.log("NJOPE NOT FINSIEHSD INTIE")
+        console.log("NJOPE NOT FINSIEHSD INTIE")
+        console.log("NJOPE NOT FINSIEHSD INTIE")
+    }
+    //   
+    setUserSettings(user)
+
+    // if (isInitFinished2) {
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    //   console.log("YES IS INIT FISNIEHD")
+    // await Common.loginAndSet(setUser, setUserSettings, true) 
+    // }
+    // else {
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    //   console.log("NJOPE NOT FINSIEHSD INTIE")
+    // }
+  }
 
   function setAndManageData(auxNewCustomShelfs) {
     //TODO looks a bit silly

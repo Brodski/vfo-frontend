@@ -54,7 +54,8 @@ function Youtube() {
 
   async function initPage() {
     
-    await Common.betterLogin(setUser, setUserSettings, user.isDemo)
+    // await Common.betterLogin(setUser, setUserSettings, user.isDemo)
+    await Common.betterLogin(setUser, setUserSettings)
     setIsFirst(false) 
     isFirstRun = false
     setNumVids(user.customShelfs.map(() => new VidCounter()))

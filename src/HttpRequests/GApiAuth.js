@@ -31,7 +31,6 @@
 // //////////////////////////////////////////////////////////////
 
 import { SECRET_KEYS } from "../api-key";
-import { KEYS } from "../api-key";
 
 const SCOPE = "https://www.googleapis.com/auth/youtube.readonly";
 // const SPRING_BACKEND = `${process.env.REACT_APP_SPRINGB_ADDRESS}`;
@@ -107,7 +106,10 @@ export async function checkAll() {
 
 export function login() {
   if (GoogleAuth) {
-    return GoogleAuth.signIn()
+    let options = new window.gapi.auth2.SigninOptionsBuilder();
+    options.setPrompt('select_account');
+    
+    return GoogleAuth.signIn(options)
       .then(res => {
         return res;
       })
