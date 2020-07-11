@@ -8,8 +8,6 @@ export async function getActivitiesShelfs(shelfs) {
     const shPromises = sh.fewSubs.map(sub => youtubeApi._getActivities(sub.channelId) );
     allShelfsPromises.push(shPromises);
   });
-  console.log( "allShelfsPromises")
-  console.log( allShelfsPromises)
   return Promise.all(allShelfsPromises.map(shProm => Promise.all(shProm))); // https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
 }
 
@@ -48,7 +46,7 @@ export async function getAllSubs() {
   return allSubs;
 }
 
-export function removeNonVideosMicro(act) {
+export function getResultMicro(act) {
   if (act.status < 200 || act.status > 299) {
     return;
   }
@@ -60,7 +58,7 @@ export function removeNonVideosMicro(act) {
 }
 
 // TODO Remove the double loop, use filter
-export function removeNonVideos(eachShelfsActs) {
+export function getResult(eachShelfsActs) {
   const filteredShelfs = [];
   eachShelfsActs.forEach(shelf => {
     const fShelf = [];
