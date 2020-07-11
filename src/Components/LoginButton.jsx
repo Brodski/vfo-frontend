@@ -13,7 +13,7 @@ import Logo from '../Images/MainLogo-inv.jsx'
 
 const LoginButton = () => {
 
-  const { isLogged2 } = useContext(IsLoggedContext);
+  const { isLogged } = useContext(IsLoggedContext);
 
   const Login = () => {
 
@@ -22,7 +22,7 @@ const LoginButton = () => {
         id="Modal-0"
         trigger={( 
           <Button className="side-nav" modal="close" node="button" waves="green">
-            {isLogged2 ? "Logout" : "Login"}
+            {isLogged ? "Logout" : "Login"}
           </Button> 
            )}
       >
@@ -47,18 +47,18 @@ const LoginButton = () => {
     return (
       <Button 
         node="button"
-        onClick={() => { isLogged2 ? GApiAuth.logout() : GApiAuth.login() }}
+        onClick={() => { isLogged ? GApiAuth.logout() : GApiAuth.login() }}
         className="side-nav"
       >
         <Icon className="logo-nav" path={mdiGoogle} size={1} />
-        {isLogged2 ? "Logout" : "Login"}
+        {isLogged ? "Logout" : "Login"}
       </Button>
     )
   }
     
   return (
     <Fragment>
-      {isLogged2 ? <Logout /> : <Login />}
+      {isLogged ? <Logout /> : <Login />}
     </Fragment>
   )
 }

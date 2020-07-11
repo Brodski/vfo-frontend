@@ -23,7 +23,7 @@ import * as GApiAuth from '../HttpRequests/GApiAuth'
 const SettingsNEW = () => {
   const { user, setUser } = useContext(UserContext);
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
-  const { isInitFinished2 } = useContext(IsInitFinishedContext);
+  const { isInitFinished } = useContext(IsInitFinishedContext);
 
   const [shouldRedirect, setShouldRedirect] = useState(false)
 
@@ -32,55 +32,11 @@ const SettingsNEW = () => {
   }, []);
 
   async function initThis() {
-    const GoogleAuth = await GApiAuth.initGoogleAPI()
+    await GApiAuth.initGoogleAPI()
     if (GApiAuth.isHeSignedIn()) {
-        console.log("YES IS INIT FISNIEHD")
-        console.log("YES IS INIT FISNIEHD")
-        console.log("YES IS INIT FISNIEHD")
-        console.log("YES IS INIT FISNIEHD")
-        console.log("YES IS INIT FISNIEHD")
-        console.log("YES IS INIT FISNIEHD")
-        console.log("YES IS INIT FISNIEHD")
-        console.log("YES IS INIT FISNIEHD")
         await Common.betterLogin(setUser, setUserSettings, true)
     }
-    else {
-        console.log("NJOPE NOT FINSIEHSD INTIE")
-        console.log("NJOPE NOT FINSIEHSD INTIE")
-        console.log("NJOPE NOT FINSIEHSD INTIE")
-    }
-    //   
     setUserSettings(user)
-
-    // if (isInitFinished2) {
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    //   console.log("YES IS INIT FISNIEHD")
-    // await Common.loginAndSet(setUser, setUserSettings, true) 
-    // }
-    // else {
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    //   console.log("NJOPE NOT FINSIEHSD INTIE")
-    // }
   }
 
   function setAndManageData(auxNewCustomShelfs) {
@@ -118,7 +74,7 @@ const SettingsNEW = () => {
   }
 
   const LoadShelfs = () => {    
-    if (isInitFinished2) {
+    if (isInitFinished) {
       return (<AllShelfs save={save} />)
     }
     return (<LoadingMain />)
@@ -136,7 +92,7 @@ const SettingsNEW = () => {
   const HowTo2 = () => {
     return (
       <div className="center-align cara2">
-        {isInitFinished2 ? <TheCarousel /> : null}
+        {isInitFinished ? <TheCarousel /> : null}
       </div>
     );
   }
@@ -146,11 +102,11 @@ const SettingsNEW = () => {
       <div className="container">
         <div>
           <div className="set-top-tophalf ">
-            {isInitFinished2 ? <GreetingsMsg isSettingsPage={true} /> : null}
-            {isInitFinished2 ? <Organize /> : null}
+            {isInitFinished ? <GreetingsMsg isSettingsPage={true} /> : null}
+            {isInitFinished ? <Organize /> : null}
           </div>
           <div>
-            {isInitFinished2 ? <HowTo2 /> : null}
+            {isInitFinished ? <HowTo2 /> : null}
           </div>
           <div className='div-aux' />
         </div>
@@ -159,7 +115,7 @@ const SettingsNEW = () => {
           : <LoadShelfs />}
         <div className='div-aux about-div-padding' />
       </div>
-      {isInitFinished2 ? <Footer /> : null}
+      {isInitFinished ? <Footer /> : null}
     </Fragment>
   );
 }

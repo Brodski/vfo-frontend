@@ -27,8 +27,8 @@ function App() {
 
   const [user, setUser] = useState(Common.getMockUser())
   const [userSettings, setUserSettings] = useState(Common.getMockUser())
-  const [isLogged2, setIsLogged2] = useState(false)
-  const [isInitFinished2, setIsInitFinished2] = useState(false)
+  const [isLogged, setIsLogged] = useState(false)
+  const [isInitFinished, setIsInitFinished] = useState(false)
 
   async function initGApi() {
 
@@ -37,8 +37,8 @@ function App() {
       await Common.betterLogin(setUser, setUserSettings)
     }
     
-    setIsInitFinished2(true)
-    setIsLogged2(GApiAuth.isHeSignedIn())
+    setIsInitFinished(true)
+    setIsLogged(GApiAuth.isHeSignedIn())
 
     // solution(?) to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
     // while (GoogleAuth == null) {
@@ -49,7 +49,7 @@ function App() {
 
     // Sign-in listeners: https://developers.google.com/identity/sign-in/web/listeners
     GoogleAuth.isSignedIn.listen(function (val) {
-      setIsLogged2(GApiAuth.isHeSignedIn())
+      setIsLogged(GApiAuth.isHeSignedIn())
       window.location.reload(true);
     });
   }
@@ -75,8 +75,8 @@ function App() {
       <Switch>
         <UserContext.Provider value={{ user, setUser }}>
           <UserSettingsContext.Provider value={{ userSettings, setUserSettings }}>
-            <IsLoggedContext.Provider value={{ isLogged2, setIsLogged2 }}>
-              <IsInitFinishedContext.Provider value={{ isInitFinished2, setIsInitFinished2 }}>
+            <IsLoggedContext.Provider value={{ isLogged, setIsLogged }}>
+              <IsInitFinishedContext.Provider value={{ isInitFinished, setIsInitFinished }}>
                 <Nav key="Nav" />
                 <Route path="/" exact component={Youtube} />
                 <Route path="/about" component={About} />

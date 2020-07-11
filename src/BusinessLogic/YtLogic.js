@@ -1,14 +1,15 @@
 import * as moment from "moment";
 import * as youtubeApi from "../HttpRequests/YoutubeApi";
 
+
 export async function getActivitiesShelfs(shelfs) {
   const allShelfsPromises = [];
   shelfs.forEach(sh => {
-    const shPromises = sh.fewSubs.map(sub =>
-      youtubeApi._getActivities(sub.channelId)
-    );
+    const shPromises = sh.fewSubs.map(sub => youtubeApi._getActivities(sub.channelId) );
     allShelfsPromises.push(shPromises);
   });
+  console.log( "allShelfsPromises")
+  console.log( allShelfsPromises)
   return Promise.all(allShelfsPromises.map(shProm => Promise.all(shProm))); // https://stackoverflow.com/questions/36094865/how-to-do-promise-all-for-array-of-array-of-promises
 }
 
@@ -22,29 +23,27 @@ export async function getAllSubs() {
   // yt api can only get 50 subs per request
   while (response.result.nextPageToken) {
     response = await youtubeApi._getThisUsersSubs(response.result.nextPageToken);
-    allSubs = !allSubs
-      ? response.result.items
-      : allSubs.concat(response.result.items);
+    allSubs = !allSubs ? response.result.items : allSubs.concat(response.result.items);
   }
   
-  allSubs.sort( (a,b)  => (a.snippet.title > b.snippet.title) ? 1 : -1 )
-  let i = 1;
-  while ( i < allSubs.length ) {
-    console.log(i, allSubs[i].snippet.title)
-    if (allSubs[i].snippet.title === allSubs[i-1].snippet.title) {
-      console.log("         Removing ", allSubs[i-1].snippet.title)
-      allSubs.splice(i-1, 1)
-      continue
-    }
-    i = i + 1
-  }
-   i = 0
-  console.log("====================================")
-  console.log("====================================")
-  allSubs.forEach( x => { 
-    console.log(i, x.snippet.title )
-    i = i + 1
-  })
+  // allSubs.sort( (a,b)  => (a.snippet.title > b.snippet.title) ? 1 : -1 )
+  // let i = 1;
+  // while ( i < allSubs.length ) {
+    // console.log(i, allSubs[i].snippet.title)
+    // if (allSubs[i].snippet.title === allSubs[i-1].snippet.title) {
+      // console.log("         Removing ", allSubs[i-1].snippet.title)
+    //   allSubs.splice(i-1, 1)
+    //   continue
+    // }
+    // i = i + 1
+  // }
+  //  i = 0
+  // console.log("====================================")
+  // console.log("====================================")
+  // allSubs.forEach( x => { 
+  //   console.log(i, x.snippet.title )
+  //   i = i + 1
+  // })
   
   return allSubs;
 }
@@ -112,9 +111,7 @@ export async function fetchVideos2(multiArrayOfIds) {
 }
 
 export async function fetchVideos(shelfsVidIds) {
-  const vidIdShelfPromise = shelfsVidIds.map(sh => {
-    return youtubeApi.getSomeVideos(sh);
-  });
+  const vidIdShelfPromise = shelfsVidIds.map(sh => { return youtubeApi.getSomeVideos(sh); });
   return Promise.all(vidIdShelfPromise);
 }
 

@@ -1,3 +1,4 @@
+import moment from 'moment'
 // Had to get out of Dep. cycle,
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -21,12 +22,14 @@ export async function check() {
 }
 
 export async function _getActivities(channel) {
+  let afterDate = moment().subtract(2, 'month')
   await check();
   return window.gapi.client.youtube.activities.list({
     part: "snippet,contentDetails",
     channelId: channel,
-    maxResults: 15,
-    // maxResults: 35,
+    // maxResults: 15,
+    maxResults: 25,
+    publishedAfter: afterDate.format('YYYY-MM-DDThh:mm:ss.sZ'),
     fields: "nextPageToken, items(contentDetails/*, snippet/*)"
   });
 }

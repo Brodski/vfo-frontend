@@ -17,7 +17,7 @@ const GreetingsMsg = (props) => {
   };
 
   const { isSettingsPage } = props
-  const { isLogged2, setIsLogged2 } = useContext(IsLoggedContext);
+  const { isLogged, setIsLogged } = useContext(IsLoggedContext);
   const { user, setUser } = useContext(UserContext);
 
   const GetStarted = () => {
@@ -66,7 +66,7 @@ const GreetingsMsg = (props) => {
 
   return (
     <Fragment>
-      {isLogged2 === true && !user.isDemo ? <LoggedIn /> : <LoggedOut />}
+      {isLogged === true && !user.isDemo ? <LoggedIn /> : <LoggedOut />}
     </Fragment>
   )
 }

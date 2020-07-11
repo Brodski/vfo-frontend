@@ -5,7 +5,7 @@ import { IsLoggedContext } from '../Contexts/UserContext.js';
 import GoogleIconColor from '../Images/GoogleIconColor'
 
 const LoginModal = () => {
-  // const { isLogged2 } = useContext(IsLoggedContext);
+  // const { isLogged } = useContext(IsLoggedContext);
 
   return (
     <Modal

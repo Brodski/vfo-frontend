@@ -25,7 +25,7 @@ const ButtonsAuthDebug = (props) => {
       <button type='button' onClick={() => { console.log('numVids'); console.log(props.data.numVids) }}>  c.log numVids     </button>
       <button type='button' onClick={() => { console.log('finalShelfs'); console.log(props.data.finalShelfs) }}>  c.log finalShelfs </button>
       <button type='button' onClick={() => { console.log('user'); console.log(props.data.user) }}>  c.log User        </button>
-      <button type='button' onClick={() => { console.log('isLogged2'); console.log(props.data.isLogged2) }}>  c.log isLogged2   </button>
+      <button type='button' onClick={() => { console.log('isLogged'); console.log(props.data.isLogged) }}>  c.log isLogged   </button>
       <button type='button' onClick={() => { console.log('pageLength'); console.log(props.data.pageLength) }}>  c.log pageLength  </button>
       <div />
       <button type='button' onClick={() => { console.log('doLoginToBackend'); props.data.doLoginToBackend(); }}> doLoginToBackend </button>

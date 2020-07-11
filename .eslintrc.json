@@ -61,7 +61,7 @@
         //"no-underscore-dangle": ["error",  { "allow": ["_fetchActivities" ] }],
         "no-underscore-dangle": "off",
 
-
+        "no-else-return": "off",
         "no-unused-expressions": "off",
         "no-use-before-define": "off",
         "consistent-return": "off",

@@ -14,7 +14,7 @@ const Nav = () => {
   const { user, setUser } = useContext(UserContext);
   const { setUserSettings } = useContext(UserSettingsContext);
   const [isInitFinished, setIsInitFinished] = useState(false)
-  const { isLogged2 } = useContext(IsLoggedContext);
+  const { isLogged } = useContext(IsLoggedContext);
 
   async function checkIfInitFinished() {
     
@@ -60,8 +60,8 @@ const Nav = () => {
       }}
       trigger={<a href=""> <ProfileImg /> </a>}
     >
-      {/* {isLogged2 ? <LoggedInDropdown /> : <LoggedOutDropdown />} */}
-      {isLogged2 ? <LoggedInDropdown /> : null }
+      {/* {isLogged ? <LoggedInDropdown /> : <LoggedOutDropdown />} */}
+      {isLogged ? <LoggedInDropdown /> : null }
     </Dropdown>
   )
 
@@ -93,7 +93,7 @@ const Nav = () => {
       <li> <Link to='/about'>     <Icon> info </Icon> About </Link> </li>
       <Divider />
       <li> <Link to='/privacy'>            <Icon> security </Icon> Privacy Policy </Link> </li> 
-      {isLogged2 ? <li> <Link to='/delete'> <Icon> https </Icon> Your Data </Link> </li> : null}
+      {isLogged ? <li> <Link to='/delete'> <Icon> https </Icon> Your Data </Link> </li> : null}
       
       <li>
         {isInitFinished ? <LoginButton /> : null}

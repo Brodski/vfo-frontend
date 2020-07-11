@@ -11,7 +11,7 @@ function Delete() {
   const [youSure, setYouSure] = useState(false)
   const [isProcessing, setProcessing] = useState(false)
   const { user } = useContext(UserContext);
-  const { isLogged2 } = useContext(IsLoggedContext);
+  const { isLogged } = useContext(IsLoggedContext);
 
   async function deleteProfile() {
     setProcessing(true)
@@ -52,9 +52,7 @@ function Delete() {
     <Fragment>
       <div className="container">
         <h1>Your Data</h1>
-        { isLogged2
-        ? <DeleteSteps />
-        : <h5> You need to be logged in </h5> }
+        { isLogged ? <DeleteSteps /> : <h5> You need to be logged in </h5> }
         <div className="about-div-padding" />
       </div>
       <Footer />
