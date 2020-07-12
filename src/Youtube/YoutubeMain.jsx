@@ -31,8 +31,8 @@ function Youtube() {
 
   // const pageGrowth = 4;
   const pageGrowth = 2;
-  const initialnumShelfsLoaded = 1;
-  // const initialnumShelfsLoaded = 3;
+  const initialNumShelfsLoaded = 1;
+  // const initialNumShelfsLoaded = 3;
 
   // Arbitrary number (max 50) (see youtube's Video api)
   const fetchThisManyVideosPerShelf = 50;
@@ -42,7 +42,7 @@ function Youtube() {
   const { isInitFinished, setIsInitFinished } = useContext(IsInitFinishedContext);
 
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
-  const [numShelfsLoaded, setNumShelfsLoaded] = useState(initialnumShelfsLoaded);
+  const [numShelfsLoaded, setNumShelfsLoaded] = useState(initialNumShelfsLoaded);
   const [numVids, setNumVids] = useState([new VidCounter()]) 
   const [isMoreShelfs, setIsMoreShelfs] = useState(false);
   
@@ -70,8 +70,10 @@ function Youtube() {
   function logDebug(){
       console.log("USER")
       console.log(user)
-      console.log("isFirstRun")
-      console.log(isFirstRun)
+      console.log("numVids")
+      console.log(numVids)
+      console.log("finalShelfs")
+      console.log(finalShelfs)
   }
 
   let isEndReached = ( () => {
@@ -124,18 +126,40 @@ function Youtube() {
     
   }
 
+
   function injectData(shelfstuff) {
-    const injectShelfTitle = user.customShelfs.slice(prevPageLength, getPageLength).map((sh, idx) => {
-    // const injectShelfTitle = user.customShelfs.slice(prevPage, calcShelfSlice()).map((sh, idx) => {
-      return { "videos": shelfstuff[idx], "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
+    console.log('--------------------')
+    console.log('--------------------')
+    console.log('--------------------')
+    console.log('--------------------')
+    console.log('shelfstuff')
+    console.log(shelfstuff)
+    console.log("user.customShelfs.slice(prevPageLength, getPageLength)")
+    console.log(user.customShelfs.slice(prevPageLength, getPageLength))
+    console.log("prevPageLength, getPageLength")
+    console.log(prevPageLength, getPageLength)
+    // let injectShelfTitle = null
+    let injectShelfTitle = user.customShelfs.slice(prevPageLength, getPageLength).map((sh, idx) => {
+      console.log(idx, '  ++ ++ ++ ++ ++ ++')
+      console.log(idx, '  ++ ++ ++ ++ ++ ++')
+      console.log("shelfstuff[idx]")
+      console.log(shelfstuff[idx])
+      let vids = shelfstuff[idx] ?  shelfstuff[idx] : []
+      // return { "videos": shelfstuff[idx], "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
+      return { "videos": vids, "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
     })
-    if (!injectShelfTitle[0].videos[0]) {
+    console.log("injectShelfTitle")
+    console.log("injectShelfTitle")
+    console.log("injectShelfTitle")
+    console.log(injectShelfTitle)
+    if ( !injectShelfTitle[0].videos[0]) {
+      console.log("SOMETHIGN IS GOING ON HERE!!!!!!!!!!")
+      console.log("SOMETHIGN IS GOING ON HERE!!!!!!!!!!")
       injectShelfTitle[0].videos[0] = new VideoResponse()
       injectShelfTitle[0].videos[0].id = ''
     }
     return { shelfs: injectShelfTitle }
   }
-  
   async function _fetchActivities() {
     
     if (!isSubscribed) { return }
@@ -151,32 +175,92 @@ function Youtube() {
     return shelfsActs
   }
 
-  // async function _fetchVideos(shelfsActs) {
+  async function _fetchVideos2(shelfsActs) {
     
-  //   if (!isSubscribed) { return }
-  //   // let shActs = shelfsActs
-  //   let count = 0
-  //   let promises = []
-  //   while ( count < shelfsActs.length) {
-  //     let subArr = shelfsActs.slice(count, count + 50)
-  //     let vidIds = subArr.map(sh => ytLogic.extractIds(sh))
-  //     // promises.push( ytLogic.fetchVideos(vidIds) )
-  //     promises.push( youtubeApi.getSomeVideos(vidIds) )
-  //     count = count + 50
-  //   }
-  //   let allVids = await Promise.all(promises)
+    if (!isSubscribed) { return }
+    console.log("_fetchVideos2")
+    console.log("shelfsActs new dilio")
+    console.log(shelfsActs)
 
-  //   // shActs = shActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
-  //   // let shelfsVidIds = await shActs.map(sh => ytLogic.extractIds(sh))
-  //   // let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
+    let allShelfs = []
+    shelfsActs.forEach( async sh => {
+      let count = 0
+      console.log("sh.length")
+      console.log(sh.length)
+      console.log(sh.length)
+      if (sh.length == 0 ){
+        console.log("WOAH ------------------------")
+        return // b/c forEach
+      }
+      let eachShelf = []
 
-  //   allVids = allVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
-  //   allVids = allVids.map(shelf => ytLogic.sortByDate(shelf))
-  //   console.log(allVids)
+      while ( count < sh.length) {
+        console.log("count")
+        console.log(count)
+        let subArr = sh.slice(count, count + 50)
+        console.log("subArr")
+        console.log(subArr)
+        let vidIds = ytLogic.extractIds(subArr)
+        // let vidIds = subArr.map(act => ytLogic.extractIds(act))
+        // promises.push( ytLogic.fetchVideos(vidIds) )
+        console.log("vidIds")
+        console.log(vidIds)
+        eachShelf.push( youtubeApi.getSomeVideos(vidIds) )
+        count = count + 50
+      }
+      if (eachShelf.length > 0) {
+        allShelfs.push(eachShelf)
+      } else {
+        console.log("WOAH -??????????????????")
+      }
+    })
+    console.log("allShelfs")
+    console.log(allShelfs)
+    let x = allShelfs.map( yy => Promise.all(yy))
+    let shelfsVids = await Promise.all(x)
+
+    console.log("shelfsVids")
+    console.log(shelfsVids)
+    let vidsOnEachShelf = []
+    shelfsVids.forEach( sh => {
+      console.log("sh")
+      console.log(sh)
+      let vids = []
+      sh.forEach( responseOfMax50 => {
+        let resp = responseOfMax50.result.items
+        vids = vids.concat(resp)
+      } )
+      console.log("vids")
+      console.log(vids)
+      vidsOnEachShelf.push(vids)
+    })
     
-  //   return allVids
-  // }
-  // }
+    console.log("vidsOnEachShelf")
+    console.log("vidsOnEachShelf")
+    console.log(vidsOnEachShelf)
+
+    // let actuallAllVidsPerShelf = []
+    // shelfsVids.forEach ( shxx => {
+    //   let shx = shxx
+    //   console.log("shx")
+    //   console.log(shx)
+    //   shx = shx.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
+    //   shx = shx.map(shelf => ytLogic.sortByDate(shelf))
+    //   console.log("cleaner")
+    //   console.log(shx)
+    //   actuallAllVidsPerShelf.push(shx)
+    // })
+    // console.log("actuallAllVidsPerShelf")
+    // console.log("actuallAllVidsPerShelf")
+    // console.log("actuallAllVidsPerShelf")
+    // console.log(actuallAllVidsPerShelf)
+    
+    
+    // return shelfsVids
+    return vidsOnEachShelf
+
+  }
+
   async function _fetchVideos(shelfsActs) {
     if (!isSubscribed) { return }
     console.log("BEFORE")
@@ -184,19 +268,15 @@ function Youtube() {
     console.log("BEFORE")
     console.log("shelfsActs")
     console.log(shelfsActs)
-    // let promises = []
-    // shelfsActs.forEach( activityOfAChannel => {
-    //   let x = actualFetchVideos(activityOfAChannel)
-    //   console.log(x)
-    //   promises.push(x)
-    // })
     
     let shActs = shelfsActs
     shActs = shActs.map(sh => sh.slice(0, fetchThisManyVideosPerShelf))
 
     let shelfsVidIds =  shActs.map(sh => ytLogic.extractIds(sh))
     let shelfVids = await ytLogic.fetchVideos(shelfsVidIds)
-
+    console.log("BEFORE FLTERE")
+    console.log(shelfVids)
+    
     shelfVids = shelfVids.filter(sh => sh.status > 199 || sh.status < 300).map(sh => sh.result.items)
     shelfVids = shelfVids.map(shelf => ytLogic.sortByDate(shelf))
 
@@ -225,7 +305,6 @@ function Youtube() {
       })
       eachShelf.push(activities)
     })
-    console.log(eachShelf)
     let x = eachShelf.map( act => Promise.all(act))
     return Promise.all(x)
   
@@ -240,31 +319,35 @@ function Youtube() {
     if (isSubscribed && isFirstRun) { putUnsortedShelfAtBottom() }
     setIsMoreShelfs(false)
     
+    console.log("prevPageLength, getPageLength!!!!!!")
+    console.log("prevPageLength, getPageLength!!!!!!")
+    console.log(prevPageLength, getPageLength)
+    console.log("user.customShelfs")
+    console.log(user.customShelfs)
     
     let nextShelfs = user.customShelfs.slice(prevPageLength, getPageLength)
-
-    console.log("GOING IN")
+    console.log("nextShelfs")
+    console.log(nextShelfs)
     shelfsActs = await getActivities2(nextShelfs)
      
-    console.log("THE COool acts")
+    console.log("shelfsActs")
     console.log(shelfsActs)
      
     shelfsActs = ytLogic.getResult(shelfsActs)
-    console.log("removed non vids")
-    console.log(shelfsActs)
     shelfsActs = shelfsActs.map(shelf => ytLogic.flattenShelf(shelf))
     shelfsActs = shelfsActs.map(shelf => ytLogic.sortByDate(shelf))
 
-    console.log("THE formated acts")
-    console.log(shelfsActs)
-
     // shelfsActs = await _fetchActivities()
-    shelfVids = await _fetchVideos(shelfsActs)
+    shelfVids = await _fetchVideos2(shelfsActs)
+    // shelfVids = await _fetchVideos(shelfsActs)
     iData = injectData(shelfVids)
-    ytLogic.beginFilter2(iData.shelfs)
+    console.log("shelfVids")
+    console.log("shelfVids")
+    console.log(shelfVids)
     console.log("iData")
     console.log("iData")
     console.log(iData)
+    ytLogic.beginFilter2(iData.shelfs)
 
     setFinalShelfAux(iData)
   }

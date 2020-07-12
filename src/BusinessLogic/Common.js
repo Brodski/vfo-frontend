@@ -65,8 +65,8 @@ export function checkForNewSubs(subsFromYt, subsFromBackend) {
 
 export async function processUserFromServer(res, doSync) {
   let u = new User();
-  let subzPromise = ytLogic.getAllSubs();
   if (res.data.customShelfs == null) {
+    let subzPromise = ytLogic.getAllSubs();
     // null implies new user
     u.initNewUser(await subzPromise, res.data);
     ServerEndpoints.saveUser(u);
@@ -76,11 +76,17 @@ export async function processUserFromServer(res, doSync) {
     u.pictureUrl = res.data.pictureUrl;
     u.username = res.data.username;
     u.isDemo = false;
-    console.log(doSync)
+    
     if (doSync){
+      console.log("WE ARE DOIGN THE SYNCE")
+      let subzPromise = await ytLogic.getAllSubs();
       // Below: Sync subs from the User's YT account and this app's database.
-      let newSubs = checkForNewSubs(await subzPromise, res.data);
-      let removedSubArr = checkForRemovedSubs(await subzPromise, res.data);
+      let newSubs = checkForNewSubs( subzPromise, res.data);
+      let removedSubArr = checkForRemovedSubs( subzPromise, res.data);
+      console.log("newSubs")
+      console.log(newSubs)
+      console.log("removedSubArr")
+      console.log(removedSubArr)
       u.addArrayOfSubs(newSubs);
       u.removeSubs(removedSubArr);
       if (removedSubArr[0] || newSubs[0]) {
@@ -92,14 +98,17 @@ export async function processUserFromServer(res, doSync) {
 }
 
 export async function loginAndSet(setUser, setUserSettings, doSync) {
-  console.log("doSync")
-  console.log(doSync)
+  
   let res = await ServerEndpoints.loginToBackend();
-  console.log("GOT RES")
-  console.log(res)
+  
   let u;
   if (res.status > 199 && res.status < 300) {
     u = await processUserFromServer(res, doSync);
+    console.log("LOGIN AND SER USER")
+    console.log("LOGIN AND SER USER")
+    console.log("LOGIN AND SER USER")
+    console.log("LOGIN AND SER USER")
+    console.log(u)
     //TODO could be better
     setUser(prev => {
       prev.customShelfs = u.customShelfs;

@@ -24,17 +24,17 @@ export async function getAllSubs() {
     allSubs = !allSubs ? response.result.items : allSubs.concat(response.result.items);
   }
   
-  // allSubs.sort( (a,b)  => (a.snippet.title > b.snippet.title) ? 1 : -1 )
-  // let i = 1;
-  // while ( i < allSubs.length ) {
-    // console.log(i, allSubs[i].snippet.title)
-    // if (allSubs[i].snippet.title === allSubs[i-1].snippet.title) {
-      // console.log("         Removing ", allSubs[i-1].snippet.title)
-    //   allSubs.splice(i-1, 1)
-    //   continue
-    // }
-    // i = i + 1
-  // }
+  allSubs.sort( (a,b)  => (a.snippet.title > b.snippet.title) ? 1 : -1 )
+  let i = 1;
+  while ( i < allSubs.length ) {
+    console.log(i, allSubs[i].snippet.title)
+    if (allSubs[i].snippet.title === allSubs[i-1].snippet.title) {
+      console.log("         Removing ", allSubs[i-1].snippet.title)
+      allSubs.splice(i-1, 1)
+      continue
+    }
+    i = i + 1
+  }
   //  i = 0
   // console.log("====================================")
   // console.log("====================================")

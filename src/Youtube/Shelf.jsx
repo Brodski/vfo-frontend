@@ -11,7 +11,7 @@ const Shelf = props => {
   const { shelfIdx, shelf } = props
   const renderMoreNum = 6
   let numVidzRendered = numVids[0] ? numVids[shelfIdx].numVids : 0
-  let isMoreVidsAvailable = () => shelf.videos.length < numVids[shelfIdx].numVids;
+  let isMoreVidsAvailable = (() => shelf.videos.length < numVids[shelfIdx].numVids)()
 
   Shelf.propTypes = {
     shelfIdx: PropTypes.number.isRequired,
@@ -45,7 +45,7 @@ const Shelf = props => {
         {videos}
       </ul>
       <div className="yt-loadmore-btn center-align">
-        {!isMoreVidsAvailable() ? (
+        {!isMoreVidsAvailable ? (
           <a
             onClick={loadMoreVids}
             className=" waves-effect waves-light btn"

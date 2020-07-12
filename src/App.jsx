@@ -41,11 +41,11 @@ function App() {
     setIsLogged(GApiAuth.isHeSignedIn())
 
     // solution(?) to the 2% crash chance where i get random thread bug saying GoogleAuth is null. I think the interpreter does not fully await for initGoogleAPI()???
-    // while (GoogleAuth == null) {
-    //   await Common.sleep(500)
-    //   initGApi()
-    //   return;
-    // }
+    while (GoogleAuth == null) {
+      await Common.sleep(500)
+      initGApi()
+      return;
+    }
 
     // Sign-in listeners: https://developers.google.com/identity/sign-in/web/listeners
     GoogleAuth.isSignedIn.listen(function (val) {
