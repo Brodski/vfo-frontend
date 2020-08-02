@@ -99,6 +99,7 @@ const SettingsNEW = () => {
       </div>
     )
   }
+
   
   const HowTo2 = () => {
     return (
@@ -113,17 +114,15 @@ const SettingsNEW = () => {
       <div className="container">
         <div>
           <div className="set-top-tophalf ">
-            {isInitFinished ? <GreetingsMsg isSettingsPage={true} /> : null}
             {isInitFinished ? <Organize /> : null}
+            {isInitFinished ? <GreetingsMsg isSettingsPage={true} /> : null}
           </div>
           <div>
             {isInitFinished ? <HowTo2 /> : null}
           </div>
           <div className='div-aux' />
         </div>
-        {shouldRedirect
-          ? <PostSave />
-          : <LoadShelfs />}
+        {shouldRedirect ? <PostSave /> : <LoadShelfs />}
         <div className='div-aux about-div-padding' />
       </div>
       {isInitFinished ? <Footer /> : null}

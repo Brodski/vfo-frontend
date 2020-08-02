@@ -13,7 +13,7 @@ import Order2 from '../Images/Tutorial/order1.png';
   const TheCarousel = () => {
     return (
       <Carousel
-        autoPlay={true}
+        autoPlay={false}
         dynamicHeight={true}
         infiniteLoop={true}
         interval={6000}

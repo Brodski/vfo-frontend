@@ -80,6 +80,11 @@ Certificates
     $ sudo openssl pkcs12 -export -in /etc/letsencrypt/live/customyoutube.com/fullchain.pem -inkey /etc/letsencrypt/live/customyoutube.com/privkey.pem -out keystore.p12 -name tomcat  -CAfile /etc/letsencrypt/live/customyoutube.com/chain.pem -caname root
     :)
 
+  Renew
+    $ ps aux | grep node
+    $ sudo kill -9 x
+    $ sudo certbot certonly -d videofeedorganizer.com
+    $ sudo nohup npm run deploy &
 
 NODEJS
   Commands that creates certificats https://certbot.eff.org/lets-encrypt/debianstretch-other , recommened by google https://domains.google/tld/security/
@@ -130,3 +135,8 @@ Start backend server
 (make sure file "application.properties" has "spring.profiles.active=prod")
 $ cd to backend
 $ sudo mvn package && sudo nohup java -jar target/restApi-0.0.1-SNAPSHOT.jar -Dprofiles.active=prod &
+
+
+
+-------------------- 
+$ npm install pm2@latest -g

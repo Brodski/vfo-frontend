@@ -17,7 +17,6 @@ const Nav = () => {
   const { isLogged } = useContext(IsLoggedContext);
 
   async function checkIfInitFinished() {
-    
     await Common.betterLogin(setUser, setUserSettings)
     setIsInitFinished(true)
   }
@@ -25,7 +24,6 @@ const Nav = () => {
   useEffect(() => {
     checkIfInitFinished()
   })
-
 
   const LoggedInDropdown = () => (
     <Fragment>
@@ -88,9 +86,9 @@ const Nav = () => {
           <div><span className="white-text email"> {user.username} </span></div>
         </div>
       </li>    
-      <li> <Link to='/'>          <Icon> home </Icon> Home </Link> </li>
+      <li> <Link to='/'>         <Icon> home </Icon> Home </Link> </li>
       <li> <Link to='/organize'> <Icon> layers </Icon> Organize </Link> </li>
-      <li> <Link to='/about'>     <Icon> info </Icon> About </Link> </li>
+      <li> <Link to='/about'>    <Icon> info </Icon> About </Link> </li>
       <Divider />
       <li> <Link to='/privacy'>            <Icon> security </Icon> Privacy Policy </Link> </li> 
       {isLogged ? <li> <Link to='/delete'> <Icon> https </Icon> Your Data </Link> </li> : null}
@@ -109,11 +107,10 @@ const Nav = () => {
       brand={<Link to="/" className="brand-logo brand-logo-aux"> <Logo /> </Link>}
       sidenav={<SideNavBar />}
     >
-      <Link to='/'>           <div className="nav-text"> Home  </div>        </Link>
+      <Link to='/'>           <div className="nav-text"> Home </div></Link>
       <Link to='/organize'>  <div className="nav-text"> Organize </div></Link>
       <Link to='/about'>     <div className="nav-text"> About </div></Link>
       {isInitFinished ? <LoginButton /> : null}
-      
       <UserDropdown />
     </Navbar>
   );

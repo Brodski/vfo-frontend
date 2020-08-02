@@ -8,6 +8,7 @@ import * as stLogic from '../BusinessLogic/SettingsLogic';
 import { UserSettingsContext } from '../Contexts/UserContext.js'
 import CustomShelf from '../Classes/CustomShelf'
 import ShelfSetting from './ShelfSetting.jsx';
+import HowTo from './HowTo.jsx';
 
 
 // SortedShelfs = the containers on the right
@@ -117,11 +118,21 @@ const AllShelfs = (props) => {
         <div className='div-aux' />
       </div>
     )
+  }  
+  
+  const SomeMsg = () => {
+    return (
+      <div className="valign-wrapper" >
+        {/* <h5 style={{display: "flex"}} > Click and drag items <HowTo /> </h5> */}
+        <h5 style={{display: "flex"}} > Click and drag items </h5>
+      </div>
+    )
   }
 
   return (
     <Fragment>
-      <div className="set-top-bothalf">
+      <div className="valign-wrapper set-top-bothalf">
+        {/* <SomeMsg /> */}
         <a className=" btn " onClick={save}>Save</a>
       </div>
       <div className="row ">

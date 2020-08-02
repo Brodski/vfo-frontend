@@ -24,10 +24,13 @@ import VidCounter from '../Classes/VidCounter'
 import VideoResponse from '../Classes/VideoResponse'
 
 
-let isFirstRun = true
-let isSubscribed = true
-let prevPageLength = 0
+// let isFirstRun = true
+// let isSubscribed = true
+// let prevPageLength = 0
 function Youtube() {
+  console.log("\n\n\nTOP OF YOYTUBE\n\n\n")
+  // console.log("prevPageLength")
+  // console.log(prevPageLength)
 
   // const pageGrowth = 4;
   const pageGrowth = 2;
@@ -41,6 +44,9 @@ function Youtube() {
   const { userSetings, setUserSettings } = useContext(UserSettingsContext);
   const { isInitFinished, setIsInitFinished } = useContext(IsInitFinishedContext);
 
+  const [isFirstRun, setIsFirstRun] = useState(true)
+  const [isSubscribed, setIsSubscribed] = useState(true)
+  const [prevPageLength, setPrevPageLength] = useState(0)
   const [finalShelfs, setFinalShelfs] = useState(new FinalShelfs())
   const [numShelfsLoaded, setNumShelfsLoaded] = useState(initialNumShelfsLoaded);
   const [numVids, setNumVids] = useState([new VidCounter()]) 
@@ -53,7 +59,8 @@ function Youtube() {
   async function initPage() {
     
     await Common.betterLogin(setUser, setUserSettings)
-    isFirstRun = false
+    // isFirstRun = false
+    setIsFirstRun(false)
     setNumVids(user.customShelfs.map(() => new VidCounter()))
     await fetchMoreVids()
   }
@@ -62,7 +69,8 @@ function Youtube() {
   useEffect(() => {
     initPage()
     return () => {
-      isSubscribed = false
+      // isSubscribed = false
+      setIsSubscribed(false)
     }
   }, [])
 
@@ -112,8 +120,15 @@ function Youtube() {
     })
 
     // setPrevPage(numShelfsLoaded)
-    prevPageLength = numShelfsLoaded
-    
+    console.log("\n\n\nSETTING")
+
+    console.log("BEFORE prevPageLength, numShelfsLoaded")
+    console.log(prevPageLength, numShelfsLoaded)
+    // prevPageLength = numShelfsLoaded
+    setPrevPageLength(numShelfsLoaded)
+    console.log("AFTER prevPageLength, numShelfsLoaded")
+    console.log(prevPageLength, numShelfsLoaded)
+
     if (numShelfsLoaded + pageGrowth > user.customShelfs.length) {
       setNumShelfsLoaded(user.customShelfs.length)
     } else {
@@ -138,6 +153,10 @@ function Youtube() {
     console.log(user.customShelfs.slice(prevPageLength, getPageLength))
     console.log("prevPageLength, getPageLength")
     console.log(prevPageLength, getPageLength)
+    console.log("user.customShelfs.length <= numShelfsLoaded ")
+    console.log(user.customShelfs.length <= numShelfsLoaded )
+    console.log("user.customShelfs.length, numShelfsLoaded")
+    console.log(user.customShelfs.length, numShelfsLoaded)
     // let injectShelfTitle = null
     let injectShelfTitle = user.customShelfs.slice(prevPageLength, getPageLength).map((sh, idx) => {
       console.log(idx, '  ++ ++ ++ ++ ++ ++')

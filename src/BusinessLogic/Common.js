@@ -307,6 +307,40 @@ export function getMockUser() {
   // uSubMusic4.filter.channelId = "UC4eYXhJI4-7wSWc8UNRwD4A";
   // uSubMusic4.filter.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
 
+  // ///////////////////////////////////////////////////////////
+  // //////////             Scince N stuff             /////////
+  // ///////////////////////////////////////////////////////////
+
+  let uSubSci = new Subscription();
+  uSubSci.channelName = "3Blue1Brown";
+  uSubSci.channelId = "UCYO_jab_esuFRV4b17AJtAw";
+  uSubSci.filter.channelId = "UCYO_jab_esuFRV4b17AJtAw";
+
+  let uSubSci2 = new Subscription();
+  uSubSci2.channelName = "Vsauce";
+  uSubSci2.channelId = "UC6nSFpj9HTCZ5t-N3Rm3-HA";
+  uSubSci2.filter.channelId = "UC6nSFpj9HTCZ5t-N3Rm3-HA";
+
+  let uSubSci3 = new Subscription();
+  uSubSci3.channelName = "PBS Space Time";
+  uSubSci3.channelId = "UC7_gcs09iThXybpVgjHZ_7g";
+  uSubSci3.filter.channelId = "UC7_gcs09iThXybpVgjHZ_7g";
+
+  let uSubSci4 = new Subscription();
+  uSubSci4.channelName = "PBS Eons";
+  uSubSci4.channelId = "UCzR-rom72PHN9Zg7RML9EbA";
+  uSubSci4.filter.channelId = "UCzR-rom72PHN9Zg7RML9EbA";
+
+  let uSubSci5 = new Subscription();
+  uSubSci5.channelName = "Two Minute Papers";
+  uSubSci5.channelId = "UCbfYPyITQ-7l4upoX8nvctg";
+  uSubSci5.filter.channelId = "UCbfYPyITQ-7l4upoX8nvctg";
+
+  let cShelfSci = new CustomShelf();
+  cShelfSci.title = "Science N Stuff";
+  cShelfSci.fewSubs.push(uSubSci, uSubSci2, uSubSci3, uSubSci4, uSubSci5);
+  cShelfSci.isSorted = true;
+  u.customShelfs.push(cShelfSci);
 
   // ///////////////////////////////////////////////////////////
   // //////////             KPOP              /////////////
@@ -398,41 +432,6 @@ export function getMockUser() {
   // cShelfNight.isSorted = true;
 
   // u.customShelfs.push(cShelfNight);
-
-  // ///////////////////////////////////////////////////////////
-  // //////////             Scince N stuff             /////////
-  // ///////////////////////////////////////////////////////////
-
-  let uSubSci = new Subscription();
-  uSubSci.channelName = "3Blue1Brown";
-  uSubSci.channelId = "UCYO_jab_esuFRV4b17AJtAw";
-  uSubSci.filter.channelId = "UCYO_jab_esuFRV4b17AJtAw";
-
-  let uSubSci2 = new Subscription();
-  uSubSci2.channelName = "Vsauce";
-  uSubSci2.channelId = "UC6nSFpj9HTCZ5t-N3Rm3-HA";
-  uSubSci2.filter.channelId = "UC6nSFpj9HTCZ5t-N3Rm3-HA";
-
-  let uSubSci3 = new Subscription();
-  uSubSci3.channelName = "PBS Space Time";
-  uSubSci3.channelId = "UC7_gcs09iThXybpVgjHZ_7g";
-  uSubSci3.filter.channelId = "UC7_gcs09iThXybpVgjHZ_7g";
-
-  let uSubSci4 = new Subscription();
-  uSubSci4.channelName = "PBS Eons";
-  uSubSci4.channelId = "UCzR-rom72PHN9Zg7RML9EbA";
-  uSubSci4.filter.channelId = "UCzR-rom72PHN9Zg7RML9EbA";
-
-  let uSubSci5 = new Subscription();
-  uSubSci5.channelName = "Two Minute Papers";
-  uSubSci5.channelId = "UCbfYPyITQ-7l4upoX8nvctg";
-  uSubSci5.filter.channelId = "UCbfYPyITQ-7l4upoX8nvctg";
-
-  let cShelfSci = new CustomShelf();
-  cShelfSci.title = "Science N Stuff";
-  cShelfSci.fewSubs.push(uSubSci, uSubSci2, uSubSci3, uSubSci4, uSubSci5);
-  cShelfSci.isSorted = true;
-  u.customShelfs.push(cShelfSci);
 
   // ///////////////////////////////////////////////////////////
   // //////////             Longer stuff              /////////////
