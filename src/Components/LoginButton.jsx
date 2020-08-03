@@ -13,6 +13,8 @@ import Logo from '../Images/MainLogo-inv.jsx'
 // import { googleBtn } from '../HttpRequests/YoutubeApi.js'
 import GoogleLogin from 'react-google-login';
 import GoogleIconColor from '../Images/GoogleIconColor.jsx';
+import GoogleNEWIcon from '../Images/GoogleIcon.svg'
+import DevWithYt from './DevWithYt.jsx';
 
 
 const LoginButton = () => {
@@ -20,7 +22,6 @@ const LoginButton = () => {
   const { isLogged } = useContext(IsLoggedContext);
 
   const Login = () => {
-    // googleBtn()
     return (
       <Modal 
         id="Modal-0"
@@ -30,17 +31,19 @@ const LoginButton = () => {
           </Button> 
            )}
       >
-        <div className="container center-align">
-          <Logo />
+        <div className=" center-align">
+          <div className="center-align modal-logo">
+            <Logo />
+          </div>
           <div className='div-aux' />
-          <h5 className="flow-text"> Login through your Youtube account to get started </h5>
+          <h5 className="flow-text"> Login through your Youtube account to begin. </h5>
+          <DevWithYt isLoginModal={true}/>
           <div class="my-signin2" />
-          <img className="dev-with-yt" src={DevWithYT} />
-          {/* <img className="dev-with-yt-main" src={DevWithYT} /> */}
+          {/* <img className="dev-with-yt" src={DevWithYT} /> */}
           <div className='div-aux' />
           <Logout />
           <div>
-            By continuing, you agree to Video Feed Organizer's 
+            By continuing you agree to Video Feed Organizer's 
             <Link to="/terms"> Terms of Service, </Link>
             <Link to="/privacy"> Privacy Policy </Link>
           </div>
@@ -51,12 +54,19 @@ const LoginButton = () => {
 
   const GoogleBtn = () =>  {
     return(
-    <div className="ggl-log-btn" >
-      <div className="ggl-log-icon-wrap">
-        <GoogleIconColor />
+      <div className="ggl-log-btn-wrap">
+      <div className=" ggl-log-btn" 
+        onClick={() => { isLogged ? GApiAuth.logout() : GApiAuth.login() }}
+        >
+        <div className="ggl-tile-wrap">
+          <div className="ggl-log-icon-wrap">
+            <img className="ggl-svg-icon " src={GoogleNEWIcon}/>
+          </div>
+        </div>
+        <div className="ggl-log-btn-text"> Sign in with Google</div>
+        {/* <img src="../Images/GoogleIcon.svg" /> */}
       </div>
-      <div className="ggl-log-btn-text"> Sign in with Google</div>
-    </div>
+      </div>
     )
   }
 
@@ -64,23 +74,16 @@ const LoginButton = () => {
 
     return (
       <Fragment>
-        {/* <GoogleBtn/> */}
-        <Button 
-          node="button"
-          onClick={() => { isLogged ? GApiAuth.logout() : GApiAuth.login() }}
-          className="side-nav"
-        >
-
-        <div className="ggl-log-btn" >
-          <div className="ggl-log-icon-wrap">
-            <GoogleIconColor />
-          </div>
-            {/* <Icon className="logo-nav" path={mdiGoogle} size={1} /> */}  
-          <div className="ggl-log-btn-text"> Sign in with Google</div>
-          {/* {isLogged ? "Logout" : "Login"} */}
-        </div>
-
-        </Button>
+        {isLogged 
+        ? <Button 
+            node="button"
+            onClick={() => { isLogged ? GApiAuth.logout() : GApiAuth.login() }}
+            className="side-nav"
+          >
+          {/* <Icon className="logo-nav" path={mdiGoogle} size={1} />   */}
+          {isLogged ? "Logout" : "Login"}
+          </Button>
+        : <GoogleBtn/>}
       </Fragment>
     )
   }
