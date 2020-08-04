@@ -43,7 +43,7 @@ const Video = (props) => {
   let title       = props.video.snippet.title
   let channelName = props.video.snippet.channelTitle
 
-  // The performance gained is negligible. Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
+  // Sorry eslint. https://github.com/airbnb/javascript#destructuring--object
   // Deconstruction too confusing
   // let { video: { snippet: { thumbnails: { medium: { url: thumbnail } } } } } = props // rename url to thumbnail
   // let { video: { id }} = props
@@ -71,7 +71,6 @@ const Video = (props) => {
             <div> {fromNowDate} • {viewCount} views </div>
           </div>
         </div>
-
       </li>
 
     );

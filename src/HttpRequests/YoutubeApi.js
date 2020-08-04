@@ -56,15 +56,3 @@ export async function getSomeVideos(vidIdList = [""]) {
       "items(id, kind, contentDetails/duration, snippet/publishedAt, snippet/channelId, snippet/title, snippet/description, snippet/thumbnails/*, snippet/channelTitle, statistics)"
   });
 }
-
-// export async function googleBtn() {
-//   window.gapi.signin2.render('my-signin2', {
-//     'scope': 'profile email',
-//     'width': 240,
-//     'height': 50,
-//     'longtitle': true,
-//     'theme': 'dark',
-//     'onsuccess': () => { console.log('success') },
-//     'onfailure': () => { console.log('fail') },
-//   });
-// }

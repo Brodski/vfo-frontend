@@ -101,7 +101,6 @@ const AllShelfs = (props) => {
   // UnsortedShelfs="Your Subscriptions" on the left
   const UnSortedShelfs = () => {
     let unSortedSh = prepTheYourSubscriptionsShelf()
-
     let unSortedshelfz = unSortedSh.map(sh => {
       let id = nextId('unsortShelf-')
       return (

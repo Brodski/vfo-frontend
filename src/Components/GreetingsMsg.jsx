@@ -34,22 +34,13 @@ const GreetingsMsg = (props) => {
   }
 
   const LoggedOut = () => {
-    // let extraClasses = isSettingsPage ? "left" : "center-align";
     let extraClasses = isSettingsPage ? "center-align" : "center-align";
-    console.log("isSettingsPage")
-    console.log("isSettingsPage")
-    console.log("isSettingsPage")
-    console.log("isSettingsPage")
-    console.log("isSettingsPage")
-    console.log(isSettingsPage)
     return (
       <div className={` demo-greeting-wrap ${extraClasses}`}>
         {!isSettingsPage ? <GetStarted /> : null }
         <div className="flow-text">
           Currently using a demo profile.
           {isSettingsPage 
-            // ? <div> <img className="dev-with-yt-demo-setting" src={DevWithYT} /> </div> 
-            // ? <div> <DevWithYt /> </div> 
             ? <div className='flow-text'> Log in to organize your Youtube subscriptions </div>
             : <div>
                 {/* <div className='flow-text'> Log in to organize your Youtube subscriptions </div>  */}
@@ -57,8 +48,6 @@ const GreetingsMsg = (props) => {
                 <DevWithYt />
               </div>
           }
-          {/* <br />
-          Log in with your Youtube account to organize your subscriptions */}
         </div>
         <div> This is a third party app not owned by Youtube </div>
         {!isSettingsPage ? <div className='div-aux' /> : null }

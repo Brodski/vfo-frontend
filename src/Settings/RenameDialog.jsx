@@ -4,7 +4,6 @@ import Modal from 'react-modal';
 import PropTypes from 'prop-types'
 
 import { UserSettingsContext } from '../Contexts/UserContext.js'
-// import Pic from '../Images/pen3.png'
 
 function RenameDialog(props) {
   
@@ -72,10 +71,6 @@ function RenameDialog(props) {
         className="Modal  card horizontal "
         overlayClassName="Overlay"
       >
-        {/* Image of pen */}
-        {/* <div className="card-image valign-wrapper hide-on-small-only">
-          <img className="rename-image2 " src={Pic} />
-        </div> */}
         <div className=" rename-content">
           <form onSubmit={save}>
             <div>
@@ -93,7 +88,6 @@ function RenameDialog(props) {
               </div>
               <div className="rename-mod-btn">
                 <a type="submit" onClick={save} className=" btn">Rename</a>
-                {/* <a onClick={save} className=" btn">Rename</a> */}
                 <a onClick={close} className=" btn">Close</a>
               </div>
             </div>

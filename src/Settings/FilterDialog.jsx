@@ -5,8 +5,6 @@ import PropTypes from 'prop-types';
 
 import { UserSettingsContext } from '../Contexts/UserContext.js'
 import Filter from '../Classes/Filter';
-// import Pic from '../Images/cogs2.png'
-
 
 function FilterDialog(props) {
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
@@ -117,7 +115,7 @@ function FilterDialog(props) {
         </a>
       </div>
       {/* Modal Content */}
-      {/* TODO No idea why submitting via Enter key is not working (form, input, ect) */}
+      {/* TODO Enter key is not working (form, input, ect) */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={close}
@@ -125,16 +123,11 @@ function FilterDialog(props) {
         className="Modal card horizontal "
         overlayClassName="Overlay"
       >
-        {/* Image of cogs */}
-        {/* <div className="card-image filter-image hide-on-small-only">
-          <img src={Pic} />
-        </div> */}
         <div className="  filt-content">
           <div>
             <h5 className="flow-text"> {channelName}</h5>
             <div className="divider" />
           </div>
-          {/* TODO Could be better */}
           <div>
             <div className="filt-drop-wrap">
               <div>Only show videos that are longer than: </div>
@@ -146,7 +139,7 @@ function FilterDialog(props) {
                 firstValue="0"
               />
             </div>
-            {/* {THREE} */}
+            
             <div className="filt-drop-wrap">
               <div>Only show videos that are shorter than: </div>
             </div>

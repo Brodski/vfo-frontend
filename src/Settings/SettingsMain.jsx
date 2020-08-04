@@ -33,25 +33,13 @@ const SettingsNEW = () => {
 
   async function initThis() {
     await GApiAuth.initGoogleAPI()
-    console.log("INTIT THIS")
-    console.log("INTIT THIS")
-    console.log("INTIT THIS")
-    console.log("INTIT THIS")
-    console.log("INTIT THIS")
-    console.log("INTIT THIS")
-    console.log("INTIT THIS")
-    console.log("INTIT THIS")
-    console.log("INTIT THIS")
-    console.log("INTIT THIS")
     if (GApiAuth.isHeSignedIn()) {
-      console.log("AND YESSSSSSS")
         await Common.betterLogin(setUser, setUserSettings, true)
     }
     setUserSettings(user)
   }
 
   function setAndManageData(auxNewCustomShelfs) {
-    //TODO looks a bit silly
     setUserSettings(prevUserSetting => {
       let newS = { ...prevUserSetting }
       newS.customShelfs = auxNewCustomShelfs

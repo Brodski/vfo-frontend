@@ -41,15 +41,6 @@ const Nav = () => {
     </Fragment>
   )
 
-  const LoggedOutDropdown = () => {
-    return (
-      <a onClick={() => { GApiAuth.login() }}> 
-        <Icon> person_outline </Icon>
-        Login
-      </a>    
-  )
-}
-
   const UserDropdown = () => (
     <Dropdown
       id="dropdownId"
@@ -58,7 +49,6 @@ const Nav = () => {
       }}
       trigger={<a href=""> <ProfileImg /> </a>}
     >
-      {/* {isLogged ? <LoggedInDropdown /> : <LoggedOutDropdown />} */}
       {isLogged ? <LoggedInDropdown /> : null }
     </Dropdown>
   )

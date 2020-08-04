@@ -150,24 +150,24 @@ export function getToken() {
 // /////////////////   helper stuff ///////////////////
 // ////////////////////////////////////////////////////////
 
-export function printInfo() {
-  console.log("print Info");
-  console.log("---------------------------------");
-  if (!GoogleAuth) {
-    console.log("GoogleAuth doesnt exist");
-    return;
-  }
-  let user = GoogleAuth.currentUser.get();
-  let profile = user.getBasicProfile();
-  console.log(`ID: ${profile.getId()}`);
-  console.log(`Full Name: ${profile.getName()}`);
-  console.log(`Given Name: ${profile.getGivenName()}`);
-  console.log(`Family Name: ${profile.getFamilyName()}`);
-  console.log(`Image URL: ${profile.getImageUrl()}`);
-  console.log(`Email: ${profile.getEmail()}`);
+// export function printInfo() {
+//   console.log("print Info");
+//   console.log("---------------------------------");
+//   if (!GoogleAuth) {
+//     console.log("GoogleAuth doesnt exist");
+//     return;
+//   }
+//   let user = GoogleAuth.currentUser.get();
+//   let profile = user.getBasicProfile();
+//   console.log(`ID: ${profile.getId()}`);
+//   console.log(`Full Name: ${profile.getName()}`);
+//   console.log(`Given Name: ${profile.getGivenName()}`);
+//   console.log(`Family Name: ${profile.getFamilyName()}`);
+//   console.log(`Image URL: ${profile.getImageUrl()}`);
+//   console.log(`Email: ${profile.getEmail()}`);
 
-  console.log(user.getBasicProfile());
-  console.log(user.getGrantedScopes());
-  console.log(user.getHostedDomain());
-  console.log(user.getId());
-}
+//   console.log(user.getBasicProfile());
+//   console.log(user.getGrantedScopes());
+//   console.log(user.getHostedDomain());
+//   console.log(user.getId());
+// }

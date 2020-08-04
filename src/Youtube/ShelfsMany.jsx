@@ -10,11 +10,6 @@ import Shelf from './Shelf'
 const ShelfsMany = props => {
 
   ShelfsMany.propTypes = {
-    // setNumVids: PropTypes.func.isRequired,
-    // numVids: PropTypes.oneOfType([
-    //   PropTypes.object,
-    //   PropTypes.arrayOf(PropTypes.object)
-    // ]).isRequired,
     shelfs: PropTypes.arrayOf(PropTypes.object).isRequired,
     hasMore: PropTypes.bool.isRequired,
   }
@@ -29,8 +24,6 @@ const ShelfsMany = props => {
           <div key={nextId('shelfid-')} className=" yt-shelf-outer-wrap ">
             <Shelf
               shelf={sh}
-              // numVids={numVids}
-              // setNumVids={setNumVids}
               shelfIdx={idx}
             />
             <div className='div-aux' />

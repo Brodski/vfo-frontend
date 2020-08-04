@@ -104,10 +104,7 @@ export async function loginAndSet(setUser, setUserSettings, doSync) {
   let u;
   if (res.status > 199 && res.status < 300) {
     u = await processUserFromServer(res, doSync);
-    console.log("LOGIN AND SER USER")
-    console.log("LOGIN AND SER USER")
-    console.log("LOGIN AND SER USER")
-    console.log("LOGIN AND SER USER")
+    console.log("LOGIN RECIEVED FROM BACKEND")
     console.log(u)
     //TODO could be better
     setUser(prev => {
@@ -195,9 +192,6 @@ export function getMockUser() {
   uSubM3.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
   uSubM3.filter.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
 
-  
-
-
   // let uSubM4 = new Subscription();
   // uSubM4.channelName = "Flashback FM";
   // uSubM4.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
@@ -216,7 +210,7 @@ export function getMockUser() {
   u.customShelfs.push(cShelfM);
   
   // ///////////////////////////////////////////////////////////
-  // //////////             Cool stuff             /////////////
+  // //////////             Cool Things             /////////////
   // ///////////////////////////////////////////////////////////
 
   let uSubStuff = new Subscription();
@@ -235,7 +229,7 @@ export function getMockUser() {
   uSubStuff3.filter.channelId = "UCRijo3ddMTht_IHyNSNXpNQ";
 
   let cShelfCool = new CustomShelf();
-  cShelfCool.title = "Cool stuff";
+  cShelfCool.title = "Cool Things";
   cShelfCool.fewSubs.push(uSubStuff, uSubStuff2, uSubStuff3);
   cShelfCool.isSorted = true;
   u.customShelfs.push(cShelfCool);
@@ -308,7 +302,7 @@ export function getMockUser() {
   // uSubMusic4.filter.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
 
   // ///////////////////////////////////////////////////////////
-  // //////////             Scince N stuff             /////////
+  // //////////             Scince rules             /////////
   // ///////////////////////////////////////////////////////////
 
   let uSubSci = new Subscription();
@@ -341,6 +335,42 @@ export function getMockUser() {
   cShelfSci.fewSubs.push(uSubSci, uSubSci2, uSubSci3, uSubSci4, uSubSci5);
   cShelfSci.isSorted = true;
   u.customShelfs.push(cShelfSci);
+
+  // ///////////////////////////////////////////////////////////
+  // //////////             new & politics             /////////////
+  // ///////////////////////////////////////////////////////////
+
+  // let sub1 = new Subscription()
+  // sub1.channelName = "The Hill"
+  // sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
+  // sub1.filter.minDuration = "1"
+  // sub1.filter.maxDuration = "0.5"
+  // sub1.filter.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA"
+
+  let sub1A = new Subscription();
+  sub1A.channelName = "NBC News";
+  sub1A.channelId = "UCeY0bbntWzzVIaj2z3QigXg";
+  sub1A.filter.minDuration = "10";
+  sub1A.filter.channelId = "UCeY0bbntWzzVIaj2z3QigXg";
+
+  let sub1B = new Subscription();
+  sub1B.channelName = "CNN";
+  sub1B.channelId = "UCupvZG-5ko_eiXAupbDfxWw";
+  sub1B.filter.minDuration = "2";
+  sub1B.filter.maxDuration = "8";
+  sub1B.filter.channelId = "UCupvZG-5ko_eiXAupbDfxWw";
+
+  let sub1C = new Subscription();
+  sub1C.channelName = "Fox News";
+  sub1C.channelId = "UCXIJgqnII2ZOINSWNOGFThA";
+  sub1C.filter.minDuration = "6";
+  sub1C.filter.channelId = "UCXIJgqnII2ZOINSWNOGFThA";
+
+  let cShelfNP = new CustomShelf();
+  cShelfNP.title = "News";
+  cShelfNP.fewSubs.push(sub1A, sub1B, sub1C);
+  cShelfNP.isSorted = true;
+  u.customShelfs.push(cShelfNP);
 
   // ///////////////////////////////////////////////////////////
   // //////////             KPOP              /////////////
@@ -434,7 +464,7 @@ export function getMockUser() {
   // u.customShelfs.push(cShelfNight);
 
   // ///////////////////////////////////////////////////////////
-  // //////////             Longer stuff              /////////////
+  // //////////          Talks, podcasts, lectures /////////////
   // ///////////////////////////////////////////////////////////
 
   let subTalk = new Subscription();
@@ -480,43 +510,7 @@ export function getMockUser() {
   u.customShelfs.push(cShelfTalk);
 
   // ///////////////////////////////////////////////////////////
-  // //////////             new & politics             /////////////
-  // ///////////////////////////////////////////////////////////
-
-  // let sub1 = new Subscription()
-  // sub1.channelName = "The Hill"
-  // sub1.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA";
-  // sub1.filter.minDuration = "1"
-  // sub1.filter.maxDuration = "0.5"
-  // sub1.filter.channelId = "UCPWXiRWZ29zrxPFIQT7eHSA"
-
-  let sub1A = new Subscription();
-  sub1A.channelName = "NBC News";
-  sub1A.channelId = "UCeY0bbntWzzVIaj2z3QigXg";
-  sub1A.filter.minDuration = "10";
-  sub1A.filter.channelId = "UCeY0bbntWzzVIaj2z3QigXg";
-
-  let sub1B = new Subscription();
-  sub1B.channelName = "CNN";
-  sub1B.channelId = "UCupvZG-5ko_eiXAupbDfxWw";
-  sub1B.filter.minDuration = "2";
-  sub1B.filter.maxDuration = "8";
-  sub1B.filter.channelId = "UCupvZG-5ko_eiXAupbDfxWw";
-
-  let sub1C = new Subscription();
-  sub1C.channelName = "Fox News";
-  sub1C.channelId = "UCXIJgqnII2ZOINSWNOGFThA";
-  sub1C.filter.minDuration = "6";
-  sub1C.filter.channelId = "UCXIJgqnII2ZOINSWNOGFThA";
-
-  let cShelfNP = new CustomShelf();
-  cShelfNP.title = "News";
-  cShelfNP.fewSubs.push(sub1A, sub1B, sub1C);
-  cShelfNP.isSorted = true;
-  u.customShelfs.push(cShelfNP);
-
-  // ///////////////////////////////////////////////////////////
-  // //////////             Hot Babes              /////////////
+  // //////////             idk              /////////////
   // ///////////////////////////////////////////////////////////
 
   // let subHot = new Subscription()
@@ -540,7 +534,7 @@ export function getMockUser() {
   // subHot4.filter.channelId = "UCJ7sCYUdt15io_cyUX8zsLA"
 
   // let cShelfHot = new CustomShelf()
-  // cShelfHot.title = "Hot Babes"
+  // cShelfHot.title = "idk"
   // cShelfHot.fewSubs.push(subHot, subHot2, subHot3, subHot4)
   // cShelfHot.isSorted = true;
   // u.customShelfs.push(cShelfHot)

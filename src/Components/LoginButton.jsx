@@ -8,11 +8,8 @@ import Icon from '@mdi/react'
 
 import * as GApiAuth from '../HttpRequests/GApiAuth';
 import { IsLoggedContext } from '../Contexts/UserContext.js';
-import DevWithYT from "../Images/DevWithYT-black.png"
+// import DevWithYT from "../Images/DevWithYT-black.png"
 import Logo from '../Images/MainLogo-inv.jsx'
-// import { googleBtn } from '../HttpRequests/YoutubeApi.js'
-import GoogleLogin from 'react-google-login';
-import GoogleIconColor from '../Images/GoogleIconColor.jsx';
 import GoogleNEWIcon from '../Images/GoogleIcon.svg'
 import DevWithYt from './DevWithYt.jsx';
 
@@ -64,7 +61,6 @@ const LoginButton = () => {
           </div>
         </div>
         <div className="ggl-log-btn-text"> Sign in with Google</div>
-        {/* <img src="../Images/GoogleIcon.svg" /> */}
       </div>
       </div>
     )

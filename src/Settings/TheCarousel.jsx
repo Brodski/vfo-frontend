@@ -27,7 +27,6 @@ import Order2 from '../Images/Tutorial/order1.png';
         </div>
         <div>
           <img className="cara-help" src={Drag2} />
-          {/* <p className="legend">Click & drag to order your subscriptions</p> */}
         </div>
         <div>
           <img className="cara-help" src={Filt6} />
