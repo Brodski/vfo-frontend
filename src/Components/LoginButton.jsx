@@ -35,7 +35,6 @@ const LoginButton = () => {
           <div className='div-aux' />
           <h5 className="flow-text"> Login through your Youtube account to begin. </h5>
           <DevWithYt isLoginModal={true}/>
-          <div class="my-signin2" />
           {/* <img className="dev-with-yt" src={DevWithYT} /> */}
           <div className='div-aux' />
           <Logout />

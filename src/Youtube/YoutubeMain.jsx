@@ -123,14 +123,14 @@ function Youtube() {
       let vids = shelfstuff[idx] ?  shelfstuff[idx] : []
       return { "videos": vids, "title": sh.title, "filters": sh.fewSubs.map(sub => sub.filter) }
     })
-    console.log("injectdata 1/2")
-    console.log(injectShelfTitle)
+    // console.log("injectdata 1/2")
+    // console.log(injectShelfTitle)
     if ( !injectShelfTitle[0].videos[0]) {
       injectShelfTitle[0].videos[0] = new VideoResponse()
       injectShelfTitle[0].videos[0].id = ''
     }
-    console.log("injectdata 2/2")
-    console.log( {shelfs: injectShelfTitle})
+    // console.log("injectdata 2/2")
+    // console.log( {shelfs: injectShelfTitle})
     return { shelfs: injectShelfTitle }
   }
   
@@ -142,7 +142,7 @@ function Youtube() {
     shelfsActs.forEach( async sh => {
       let count = 0
       if (sh.length == 0 ){
-        return // b/c forEach
+        return // "return" since forEach
       }
       let eachShelf = []
 
@@ -195,8 +195,8 @@ function Youtube() {
     if (isSubscribed && isFirstRun) { putUnsortedShelfAtBottom() }
     setIsMoreShelfs(false)
 
-    console.log("user.customShelfs")
-    console.log(user.customShelfs)
+    // console.log("user.customShelfs")
+    // console.log(user.customShelfs)
     
     let nextShelfs = user.customShelfs.slice(prevPageLength, getPageLength)
     shelfsActs = await getActivities2(nextShelfs)     
@@ -206,13 +206,13 @@ function Youtube() {
 
     shelfVids = await _fetchVideos2(shelfsActs)
 
-    console.log("\n\n\n\nshelfVids")
-    console.log(shelfVids)
+    // console.log("\n\n\n\nshelfVids")
+    // console.log(shelfVids)
 
     iData = injectData(shelfVids)
 
-    console.log("\n\n\n\niData")
-    console.log(iData)
+    // console.log("\n\n\n\niData")
+    // console.log(iData)
     ytLogic.beginFilter2(iData.shelfs)
 
     setFinalShelfAux(iData)
