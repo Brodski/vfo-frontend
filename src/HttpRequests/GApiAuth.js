@@ -32,7 +32,8 @@
 
 import { SECRET_KEYS } from "../api-key";
 
-const SCOPE = "https://www.googleapis.com/auth/youtube.readonly";
+// const SCOPE = "https://www.googleapis.com/auth/youtube.readonly";
+const SCOPE = "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/userinfo.profile";
 // const SPRING_BACKEND = `${process.env.REACT_APP_SPRINGB_ADDRESS}`;
 let GoogleAuth;
 

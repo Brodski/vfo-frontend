@@ -110,6 +110,9 @@ Copying java-keystore To Local
   $ sudo chmod 777 keystore.p12.new
   $ (on local) scp -i ..\restApi\moreKeyz brodski@35.223.37.170:/home/cbrodski/keystore.p12.new .
 
+
+$ cd src/main/resources/
+$ sudo openssl pkcs12 -export -in /etc/letsencrypt/live/videofeedorganizer.com/fullchain.pem -inkey /etc/letsencrypt/live/videofeedorganizer.com/privkey.pem -out keystore.p12 -name tomcat  -CAfile /etc/letsencrypt/live/videofeedorganizer.com/chain.pem -caname root
 -------------------------------------------------------------------
 
 Permissions

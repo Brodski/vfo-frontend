@@ -168,71 +168,41 @@ export function getMockUser() {
   u.pictureUrl = Pic;
   u.isDemo = true;
 
-  //  /////////////////////////////////////////////////////////////
-  //  ////////////             Movies & Stiff             /////////
-  //  /////////////////////////////////////////////////////////////
-  
-  let uSubM0 = new Subscription();
-  uSubM0.channelName = "Movieclips Trailers";
-  uSubM0.channelId = "UCi8e0iOVk1fEOogdfu4YgfA";
-  uSubM0.filter.channelId = "UCi8e0iOVk1fEOogdfu4YgfA";
-
-  let uSubM = new Subscription();
-  uSubM.channelName = "Vanity Fair";
-  uSubM.channelId = "UCIsbLox_y9dCIMLd8tdC6qg";
-  uSubM.filter.channelId = "UCIsbLox_y9dCIMLd8tdC6qg";
-
-  let uSubM2 = new Subscription();
-  uSubM2.channelName = "Chris Stuckmann";
-  uSubM2.channelId = "UCCqEeDAUf4Mg0GgEN658tkA";
-  uSubM2.filter.channelId = "UCCqEeDAUf4Mg0GgEN658tkA";
-
-  let uSubM3 = new Subscription();
-  uSubM3.channelName = "Jeremy Jahns";
-  uSubM3.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
-  uSubM3.filter.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
-
-  // let uSubM4 = new Subscription();
-  // uSubM4.channelName = "Flashback FM";
-  // uSubM4.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
-  // uSubM4.filter.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
-
-  let uSubM4b = new Subscription();
-  uSubM4b.channelName = "ONE Media";
-  uSubM4b.channelId = "UCzcRQ3vRNr6fJ1A9rqFn7QA";
-  uSubM4b.filter.channelId = "UCzcRQ3vRNr6fJ1A9rqFn7QA";
-
-
-  let cShelfM = new CustomShelf();
-  cShelfM.title = "Movies and stuff";
-  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3, uSubM0);
-  cShelfM.isSorted = true;
-  u.customShelfs.push(cShelfM);
-  
   // ///////////////////////////////////////////////////////////
-  // //////////             Cool Things             /////////////
+  // //////////             Scince rules             /////////
   // ///////////////////////////////////////////////////////////
 
-  let uSubStuff = new Subscription();
-  uSubStuff.channelName = "The Atlantic";
-  uSubStuff.channelId = "UCK0z0_5uL7mb9IjntOKi5XQ";
-  uSubStuff.filter.channelId = "UCK0z0_5uL7mb9IjntOKi5XQ";
+  let uSubSci = new Subscription();
+  uSubSci.channelName = "3Blue1Brown";
+  uSubSci.channelId = "UCYO_jab_esuFRV4b17AJtAw";
+  uSubSci.filter.channelId = "UCYO_jab_esuFRV4b17AJtAw";
 
-  let uSubStuff2 = new Subscription();
-  uSubStuff2.channelName = "Vox";
-  uSubStuff2.channelId = "UCLXo7UDZvByw2ixzpQCufnA";
-  uSubStuff2.filter.channelId = "UCLXo7UDZvByw2ixzpQCufnA";
+  let uSubSci2 = new Subscription();
+  uSubSci2.channelName = "Vsauce";
+  uSubSci2.channelId = "UC6nSFpj9HTCZ5t-N3Rm3-HA";
+  uSubSci2.filter.channelId = "UC6nSFpj9HTCZ5t-N3Rm3-HA";
 
-  let uSubStuff3 = new Subscription();
-  uSubStuff3.channelName = "Dude Perfect";
-  uSubStuff3.channelId = "UCRijo3ddMTht_IHyNSNXpNQ";
-  uSubStuff3.filter.channelId = "UCRijo3ddMTht_IHyNSNXpNQ";
+  let uSubSci3 = new Subscription();
+  uSubSci3.channelName = "PBS Space Time";
+  uSubSci3.channelId = "UC7_gcs09iThXybpVgjHZ_7g";
+  uSubSci3.filter.channelId = "UC7_gcs09iThXybpVgjHZ_7g";
 
-  let cShelfCool = new CustomShelf();
-  cShelfCool.title = "Cool Things";
-  cShelfCool.fewSubs.push(uSubStuff, uSubStuff2, uSubStuff3);
-  cShelfCool.isSorted = true;
-  u.customShelfs.push(cShelfCool);
+  let uSubSci4 = new Subscription();
+  uSubSci4.channelName = "PBS Eons";
+  uSubSci4.channelId = "UCzR-rom72PHN9Zg7RML9EbA";
+  uSubSci4.filter.channelId = "UCzR-rom72PHN9Zg7RML9EbA";
+
+  let uSubSci5 = new Subscription();
+  uSubSci5.channelName = "Two Minute Papers";
+  uSubSci5.channelId = "UCbfYPyITQ-7l4upoX8nvctg";
+  uSubSci5.filter.channelId = "UCbfYPyITQ-7l4upoX8nvctg";
+
+  let cShelfSci = new CustomShelf();
+  cShelfSci.title = "Science N Stuff";
+  cShelfSci.fewSubs.push(uSubSci, uSubSci2, uSubSci3, uSubSci4, uSubSci5);
+  cShelfSci.isSorted = true;
+  u.customShelfs.push(cShelfSci);
+
   
   // ///////////////////////////////////////////////////////////
   // //////////             Some Music              /////////////
@@ -301,41 +271,72 @@ export function getMockUser() {
   // uSubMusic4.filter.channelId = "UC4eYXhJI4-7wSWc8UNRwD4A";
   // uSubMusic4.filter.channelId = "UC2Qw1dzXDBAZPwS7zm37g8g";
 
+  //  /////////////////////////////////////////////////////////////
+  //  ////////////             Movies & Stiff             /////////
+  //  /////////////////////////////////////////////////////////////
+  
+  let uSubM0 = new Subscription();
+  uSubM0.channelName = "Movieclips Trailers";
+  uSubM0.channelId = "UCi8e0iOVk1fEOogdfu4YgfA";
+  uSubM0.filter.channelId = "UCi8e0iOVk1fEOogdfu4YgfA";
+
+  let uSubM = new Subscription();
+  uSubM.channelName = "Vanity Fair";
+  uSubM.channelId = "UCIsbLox_y9dCIMLd8tdC6qg";
+  uSubM.filter.channelId = "UCIsbLox_y9dCIMLd8tdC6qg";
+
+  let uSubM2 = new Subscription();
+  uSubM2.channelName = "Chris Stuckmann";
+  uSubM2.channelId = "UCCqEeDAUf4Mg0GgEN658tkA";
+  uSubM2.filter.channelId = "UCCqEeDAUf4Mg0GgEN658tkA";
+
+  let uSubM3 = new Subscription();
+  uSubM3.channelName = "Jeremy Jahns";
+  uSubM3.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
+  uSubM3.filter.channelId = "UC7v3-2K1N84V67IF-WTRG-Q";
+
+  // let uSubM4 = new Subscription();
+  // uSubM4.channelName = "Flashback FM";
+  // uSubM4.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
+  // uSubM4.filter.channelId = "UC-GAhNmY6bkuuRPUSaRI_oQ";
+
+  let uSubM4b = new Subscription();
+  uSubM4b.channelName = "ONE Media";
+  uSubM4b.channelId = "UCzcRQ3vRNr6fJ1A9rqFn7QA";
+  uSubM4b.filter.channelId = "UCzcRQ3vRNr6fJ1A9rqFn7QA";
+
+
+  let cShelfM = new CustomShelf();
+  cShelfM.title = "Movies and stuff";
+  cShelfM.fewSubs.push(uSubM, uSubM2, uSubM3, uSubM0);
+  cShelfM.isSorted = true;
+  u.customShelfs.push(cShelfM);
+  
+  
   // ///////////////////////////////////////////////////////////
-  // //////////             Scince rules             /////////
+  // //////////             Cool Things             /////////////
   // ///////////////////////////////////////////////////////////
 
-  let uSubSci = new Subscription();
-  uSubSci.channelName = "3Blue1Brown";
-  uSubSci.channelId = "UCYO_jab_esuFRV4b17AJtAw";
-  uSubSci.filter.channelId = "UCYO_jab_esuFRV4b17AJtAw";
+  let uSubStuff = new Subscription();
+  uSubStuff.channelName = "The Atlantic";
+  uSubStuff.channelId = "UCK0z0_5uL7mb9IjntOKi5XQ";
+  uSubStuff.filter.channelId = "UCK0z0_5uL7mb9IjntOKi5XQ";
 
-  let uSubSci2 = new Subscription();
-  uSubSci2.channelName = "Vsauce";
-  uSubSci2.channelId = "UC6nSFpj9HTCZ5t-N3Rm3-HA";
-  uSubSci2.filter.channelId = "UC6nSFpj9HTCZ5t-N3Rm3-HA";
+  let uSubStuff2 = new Subscription();
+  uSubStuff2.channelName = "Vox";
+  uSubStuff2.channelId = "UCLXo7UDZvByw2ixzpQCufnA";
+  uSubStuff2.filter.channelId = "UCLXo7UDZvByw2ixzpQCufnA";
 
-  let uSubSci3 = new Subscription();
-  uSubSci3.channelName = "PBS Space Time";
-  uSubSci3.channelId = "UC7_gcs09iThXybpVgjHZ_7g";
-  uSubSci3.filter.channelId = "UC7_gcs09iThXybpVgjHZ_7g";
+  let uSubStuff3 = new Subscription();
+  uSubStuff3.channelName = "Dude Perfect";
+  uSubStuff3.channelId = "UCRijo3ddMTht_IHyNSNXpNQ";
+  uSubStuff3.filter.channelId = "UCRijo3ddMTht_IHyNSNXpNQ";
 
-  let uSubSci4 = new Subscription();
-  uSubSci4.channelName = "PBS Eons";
-  uSubSci4.channelId = "UCzR-rom72PHN9Zg7RML9EbA";
-  uSubSci4.filter.channelId = "UCzR-rom72PHN9Zg7RML9EbA";
-
-  let uSubSci5 = new Subscription();
-  uSubSci5.channelName = "Two Minute Papers";
-  uSubSci5.channelId = "UCbfYPyITQ-7l4upoX8nvctg";
-  uSubSci5.filter.channelId = "UCbfYPyITQ-7l4upoX8nvctg";
-
-  let cShelfSci = new CustomShelf();
-  cShelfSci.title = "Science N Stuff";
-  cShelfSci.fewSubs.push(uSubSci, uSubSci2, uSubSci3, uSubSci4, uSubSci5);
-  cShelfSci.isSorted = true;
-  u.customShelfs.push(cShelfSci);
-
+  let cShelfCool = new CustomShelf();
+  cShelfCool.title = "Cool Things";
+  cShelfCool.fewSubs.push(uSubStuff, uSubStuff2, uSubStuff3);
+  cShelfCool.isSorted = true;
+  u.customShelfs.push(cShelfCool);
   // ///////////////////////////////////////////////////////////
   // //////////             new & politics             /////////////
   // ///////////////////////////////////////////////////////////
