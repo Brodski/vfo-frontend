@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 
 import Modal from 'react-modal';
 import PropTypes from 'prop-types'
@@ -10,6 +10,11 @@ function RenameDialog(props) {
   const { userSettings, setUserSettings } = useContext(UserSettingsContext);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [newName, setNewName] = useState()
+  
+  useEffect(() => {
+    Modal.setAppElement(`#${props.bindToId}`)
+    setNewName(props.shelfObj.title)
+  }, [])
 
   RenameDialog.propTypes = {
     bindToId: PropTypes.string.isRequired,
@@ -49,18 +54,12 @@ function RenameDialog(props) {
   function changeHandler(e) {
     setNewName(e.target.value)
   }
-
-  useEffect(() => {
-    Modal.setAppElement(`#${props.bindToId}`)
-    setNewName(props.shelfObj.title)
-  }, [])
-
   return (
     <div>
       <a>
         <i
           onClick={() => setIsOpen(true)}
-          className=" rename-icon material-icons"
+          className=" rename-icon material-icons hoverable"
         >edit 
         </i>
       </a>
@@ -83,6 +82,7 @@ function RenameDialog(props) {
                 <input
                   value={newName}
                   type="text"
+                  autoFocus
                   onChange={changeHandler}
                 />
               </div>

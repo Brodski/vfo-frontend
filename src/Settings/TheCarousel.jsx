@@ -13,7 +13,8 @@ import Order2 from '../Images/Tutorial/order1.png';
   const TheCarousel = () => {
     return (
       <Carousel
-        autoPlay={false}
+        autoPlay={ process.env.REACT_APP_ENV_NAME === 'development' ? false : true }
+        // autoPlay={false}
         dynamicHeight={true}
         infiniteLoop={true}
         interval={6000}
