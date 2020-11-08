@@ -28,3 +28,6 @@ src/api-key.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+renewed.txt
