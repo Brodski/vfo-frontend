@@ -46,17 +46,3 @@ if (process.env.NODE_APP_ENV === 'production') {
 } else {
   app.listen(80);
 }
-
-
-// -- Old redirect
-// console.log("In here")
-//     if (req.headers.host === "customyoutube.com"){
-//       console.log("Redirected")
-//       let urlParse = url.parse("https://" + req.headers.host + req.url);
-//       let redirected = "https://videofeedorganizer.com" + urlParse.path
-//       res.writeHead(301, { "Location": redirected });
-//       res.end();
-//     } 
-//     else {
-//       res.sendFile(path.join(__dirname, 'build', 'index.html'));
-//     }
