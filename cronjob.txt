@@ -1,0 +1,16 @@
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+# 
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+# echo "hello again" >> /tmp/testlol.txt
+0 0 1 */2 * echo `date`  >> /home/cbrodski/customyoutube-frontend/renewed.txt
+0 0 1 */2 * echo "certbot has been renewed" >> /home/cbrodski/customyoutube-frontend/renewed.txt
+
+#renwew tis shit
+0 0 1 */2 * certbot renew && sudo keytool -import -file /etc/letsencrypt/live/videofeedorganizer.com/cert.pem -keystore  /home/cbrodski/restApi/src/main/resources/keystore.p12   -storepass password -noprompt
+
+
+0 0 1 */2 * echo "mongo also updated at /home/cbrodski/restApi/src/main/resources/keystore.p12" >> /home/cbrodski/customyoutube-frontend/renewed.txt
