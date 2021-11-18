@@ -27,22 +27,23 @@ if (process.env.NODE_APP_ENV === 'production') {
   }
 
   https.createServer(credentials, app).listen(443)
-
-  // Redirect http to https
-  http.createServer(function (req, res) {
-    const redirectedPortNum = 443
-    let urlParse = url.parse("http://" + req.headers.host + req.url);
-    let redirected = "https://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
-    
-    // console.log("-------------------")
-    // console.log(new Date().toLocaleString() + ' - Redirected')
-    // console.log(redirected)
-
-    res.writeHead(301, { "Location": redirected });
-    res.end();
-  }).listen(80);
-
-// else Development
-} else {
   app.listen(80);
-}
+  
+  // Redirect http to https
+//   http.createServer(function (req, res) {
+//     const redirectedPortNum = 443
+//     let urlParse = url.parse("http://" + req.headers.host + req.url);
+//     let redirected = "https://" + urlParse.hostname + ":" + redirectedPortNum + urlParse.path
+    
+//     // console.log("-------------------")
+//     // console.log(new Date().toLocaleString() + ' - Redirected')
+//     // console.log(redirected)
+
+//     res.writeHead(301, { "Location": redirected });
+//     res.end();
+//   }).listen(80);
+
+// // else Development
+// } else {
+//   app.listen(80);
+// }

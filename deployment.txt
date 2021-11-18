@@ -51,6 +51,7 @@ $ sudo service mongod start
 
 
 - In the Cloud provier (AWS, GCP) need to open port 8080 to enable client to server communication
+- open port 8443 too
 - In springboot, need to config @CORS w/ domain of website  
 - In Google Console, go to the API & Services section then configure the Client info & OAuth2 with domain of website   
 
