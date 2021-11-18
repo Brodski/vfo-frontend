@@ -27,7 +27,6 @@ if (process.env.NODE_APP_ENV === 'production') {
   }
 
   https.createServer(credentials, app).listen(443)
-  app.listen(80);
   
   // Redirect http to https
 //   http.createServer(function (req, res) {
@@ -44,6 +43,6 @@ if (process.env.NODE_APP_ENV === 'production') {
 //   }).listen(80);
 
 // // else Development
-// } else {
-//   app.listen(80);
-// }
+} else {
+  app.listen(80);
+}
