@@ -9,6 +9,7 @@ DEPLOYMENT (Http server, mongoDB, and backend server)
 	
   Overview
   
+- install git  
 - git clone repos
 - install node
 - install mongodb
@@ -21,8 +22,6 @@ DEPLOYMENT (Debian 9)
 
   "Script"
   
-$ git clone https://github.com/Brodski/customyoutube-frontend.git
-$ git clone https://github.com/Brodski/customyoutube-backend.git
 
 $ sudo apt-get install default-jdk -y
 $ sudo apt-get install maven -y
@@ -32,42 +31,28 @@ $ sudo curl -sL https://deb.nodesource.com/setup_12.x | sudo bash -
 $ sudo apt-get install -y nodejs
 $ sudo apt-get install -y build-essential
 
+$ git clone https://github.com/Brodski/customyoutube-frontend.git
+$ git clone https://github.com/Brodski/customyoutube-backend.git
+
 (MongoDB instructions can be found on their website, but they are here below)
 
 $ wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
 $ echo "deb http://repo.mongodb.org/apt/debian stretch/mongodb-org/4.2 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
 $ sudo apt-get update
-$ sudo apt-get install -y mongodb-org
+   19 sudo apt remove --autoremove mongodb-org
+   20  sudo rm /etc/apt/sources.list.d/mongodb*.list
+   21  sudo apt update
+   22  sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 4B7C549A058F8B6B
+   23  echo "deb [arch=amd64] http://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
+   24  sudo apt update
+   25  sudo apt install mongodb-org
+   26  sudo service mongod start
 $ sudo service mongod start
 
 
 - In the Cloud provier (AWS, GCP) need to open port 8080 to enable client to server communication
 - In springboot, need to config @CORS w/ domain of website  
 - In Google Console, go to the API & Services section then configure the Client info & OAuth2 with domain of website   
-
-----------------------------------------------
-
-  Install docker jenkins
-sudo apt-get install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg2 \
-    software-properties-common
-
-$ sudo apt-get remove docker docker-engine docker.io containerd runc
-$curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-$sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/debian \
-   $(lsb_release -cs) \
-   stable"
-   
-$ sudo apt-get install docker-ce docker-ce-cli containerd.io -y
-$ sudo docker pull jenkins
-$ sudo docker run -p 8081:8080 -p 50000:50000 -d jenkins
-
-
-https://create-react-app.dev/docs/deployment/#other-solutions
 
 ----------------------------------------------------------
 Certificates
@@ -155,5 +140,8 @@ spingboot ssl:
   # !!! "Spring Boot supports PKCS12 extension." 
   # !!! " Using OpenSSL, we convert our certificate and private key to PKCS12."
 
+  - Old
   $ sudo openssl pkcs12 -export -in /etc/letsencrypt/live/videofeedorganizer.com/fullchain.pem -inkey /etc/letsencrypt/live/videofeedorganizer.com/privkey.pem -out /home/cbrodski/restApi/src/main/resources/keystore.p12 -name tomcat -CAfile /etc/letsencrypt/live/videofeedorganizer.com/chain.pem -passout pass:password
+  - NEW
+  $ sudo openssl pkcs12 -export -in /etc/letsencrypt/live/vfo.one/fullchain.pem -inkey  /etc/letsencrypt/live/vfo.one/privkey.pem -out /home/thebears1234321/customyoutube-backend/src/main/resources/keystore.p12  -name tomcat -CAfile /etc/letsencrypt/live/vfo.one/chain.pem -passout pass:password
 

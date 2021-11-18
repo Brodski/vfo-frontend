@@ -17,9 +17,9 @@ app.get('/*', function(req, res) {
 
 if (process.env.NODE_APP_ENV === 'production') {
   console.log('\nWE DOING IT -' + new Date().toLocaleString())
-  const privateKey = fs.readFileSync( '/etc/letsencrypt/live/videofeedorganizer.com/privkey.pem', 'utf8')
-  const certificate = fs.readFileSync( '/etc/letsencrypt/live/videofeedorganizer.com/cert.pem', 'utf8')
-  const ca = fs.readFileSync('/etc/letsencrypt/live/videofeedorganizer.com/chain.pem', 'utf8')
+  const privateKey = fs.readFileSync( '/etc/letsencrypt/live/vfo.one/privkey.pem', 'utf8')
+  const certificate = fs.readFileSync( '/etc/letsencrypt/live/vfo.one/cert.pem', 'utf8')
+  const ca = fs.readFileSync('/etc/letsencrypt/live/vfo.one/chain.pem', 'utf8')
   const credentials = {
     key: privateKey, 
     cert: certificate,
