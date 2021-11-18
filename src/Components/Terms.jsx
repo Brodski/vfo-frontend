@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 import React from 'react'
 
 const Terms = () => (

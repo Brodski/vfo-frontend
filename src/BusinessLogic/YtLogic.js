@@ -88,7 +88,6 @@ export async function fetchVideos2(multiArrayOfIds) {
   console.log('-----------------------------------')
   let allPromises = []
   // let vidPromise = null
-    // eslint-disable-next-line no-loop-func
   multiArrayOfIds.map( sh => {
     for ( let i = 0; i < sh.length ; i = i + 50) {
       let chunk = sh.slice(i, (i+50))

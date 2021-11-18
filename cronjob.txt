@@ -9,8 +9,11 @@
 0 0 1 */2 * echo `date`  >> /home/cbrodski/customyoutube-frontend/renewed.txt
 0 0 1 */2 * echo "certbot has been renewed" >> /home/cbrodski/customyoutube-frontend/renewed.txt
 
-#renwew this shit
-0 0 1 */2 * certbot renew && sudo keytool -import -file /etc/letsencrypt/live/videofeedorganizer.com/cert.pem -keystore  /home/cbrodski/restApi/src/main/resources/keystore.p12   -storepass password -noprompt
+#renwew tis shit
+# 0 0 1 */2 * certbot renew && sudo keytool -import -file /etc/letsencrypt/live/videofeedorganizer.com/cert.pem -keystore  /home/cbrodski/restApi/src/main/resources/keystore.p12   -storepass password -noprompt
+
 0 0 1 */2 * certbot renew && sudo openssl pkcs12 -export -in /etc/letsencrypt/live/videofeedorganizer.com/fullchain.pem -inkey /etc/letsencrypt/live/videofeedorganizer.com/privkey.pem -out /home/cbrodski/restApi/src/main/resources/keystore.p12 -name tomcat -CAfile /etc/letsencrypt/live/videofeedorganizer.com/chain.pem -passout pass:password
 
 0 0 1 */2 * echo "mongo also updated at /home/cbrodski/restApi/src/main/resources/keystore.p12" >> /home/cbrodski/customyoutube-frontend/renewed.txt
+0 0 * * 0 echo "ran sudo apt clean" >> /home/cbrodski/customyoutube-frontend/renewed.txt
+0 0 * * 0  sudo apt clean

@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 import React from 'react'
 
 // https://stackoverflow.com/questions/44643424/how-to-parse-html-to-react-component

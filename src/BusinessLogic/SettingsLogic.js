@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import CustomShelf from "../Classes/CustomShelf";
 
 function _findSubIndex(chName, userSettings) {
