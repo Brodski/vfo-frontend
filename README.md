@@ -1,4 +1,4 @@
-Project webpage: [videofeedorganizer.com](https://videofeedorganizer.com) (domain TBD)
+Project webpage: [vfo.one](https://vfo.one) (domain TBD)
 
 # About  
 

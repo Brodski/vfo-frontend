@@ -82,8 +82,8 @@ const htmlString =
         class="question">cbrodski@gmail.com</bdt>.
     </span></span></p>
 <p style="font-size: 15px;"><span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">When you visit
-      our <bdt class="block-component"></bdt>website <bdt class="question"><a href="https://videofeedorganizer.com"
-          target="_blank" data-custom-class="link">https://videofeedorganizer.com</a></bdt>,<bdt
+      our <bdt class="block-component"></bdt>website <bdt class="question"><a href="https://vfo.one"
+          target="_blank" data-custom-class="link">https://vfo.one</a></bdt>,<bdt
         class="statement-end-if-in-editor"></bdt>
       <bdt class="block-component"></bdt> and use our services, you trust us with your personal information. We take
       your privacy very seriously. In this <span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">
@@ -110,8 +110,8 @@ const htmlString =
         </span> </span>applies to all information collected through our <bdt class="block-component"></bdt>
       <bdt class="forloop-component"></bdt>
       <bdt class="question">website</bdt>
-      <bdt class="forloop-component"></bdt> (such as <bdt class="question"><a href="https://videofeedorganizer.com"
-          target="_blank" data-custom-class="link">https://videofeedorganizer.com</a></bdt>), <bdt
+      <bdt class="forloop-component"></bdt> (such as <bdt class="question"><a href="https://vfo.one"
+          target="_blank" data-custom-class="link">https://vfo.one</a></bdt>), <bdt
         class="statement-end-if-in-editor"></bdt>
       <bdt class="block-component"></bdt> and/or any related services, sales, marketing or events (we refer to them
       collectively in this <span style="color: rgb(89, 89, 89);"><span data-custom-class="body_text">
@@ -1397,8 +1397,8 @@ const htmlString =
                             right to request access to the personal information we collect from you, change that
                             information, or delete it in some circumstances. To request to review, update, or delete
                             your personal information, please <bdt class="block-component"></bdt>visit: <bdt
-                              class="question"><a href="https://videofeedorganizer.com/delete" target="_blank"
-                                data-custom-class="link">https://videofeedorganizer.com/delete</a></bdt>
+                              class="question"><a href="https://vfo.one/delete" target="_blank"
+                                data-custom-class="link">https://vfo.one/delete</a></bdt>
                             <bdt class="else-block"></bdt>. We will respond to your request within 30 days.
                           </span></div>
                         <style>
