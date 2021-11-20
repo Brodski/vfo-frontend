@@ -17,3 +17,16 @@
 0 0 1 */2 * echo "mongo also updated at /home/cbrodski/restApi/src/main/resources/keystore.p12" >> /home/cbrodski/customyoutube-frontend/renewed.txt
 0 0 * * 0 echo "ran sudo apt clean" >> /home/cbrodski/customyoutube-frontend/renewed.txt
 0 0 * * 0  sudo apt clean
+
+
+#############################
+# CP DOESNT WORK ON THG GOOGLE CLODU FOR SOEM REQASON
+# $ crontab -e
+# At 00:00 on every 7th day-of-week.
+# At 00:01 on every 7th day-of-week.
+0 0 * * */7   cp /home/thebears1234321/customyoutube-backend/nohup.out  /home/thebears1234321/customyoutube-backend/previous-nohup.out
+1 0 * * */7   cat /dev/null  >> sudo /home/thebears1234321/customyoutube-backend/nohup.out 
+
+ /usr/bin/sudo /usr/bin/cp 
+
+ usr/bin/sudo    /usr/bin/cp  /home/thebears1234321/customyoutube-backend/nohup.out  /home/thebears1234321/customyoutube-backend/previous-nohup.out
