@@ -1,32 +1,11 @@
-# For example, you can run a backup of all your user accounts
-# at 5 a.m every week with:
-# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
-# 
-# For more information see the manual pages of crontab(5) and cron(8)
-# 
-# m h  dom mon dow   command
-# echo "hello again" >> /tmp/testlol.txt
-0 0 1 */2 * echo `date`  >> /home/cbrodski/customyoutube-frontend/renewed.txt
-0 0 1 */2 * echo "certbot has been renewed" >> /home/cbrodski/customyoutube-frontend/renewed.txt
 
-#renwew tis shit
-# 0 0 1 */2 * certbot renew && sudo keytool -import -file /etc/letsencrypt/live/videofeedorganizer.com/cert.pem -keystore  /home/cbrodski/restApi/src/main/resources/keystore.p12   -storepass password -noprompt
+# */1 * * * * sudo echo "test 1" >> /home/cbrodski/hi.txt
+# Certificates
+0 0 1 */1 * certbot renew 
+0 1 1 */1 * sudo killall java
+0 1 1 */1 * sudo killall node
+2 1 1 */1 * sudo openssl pkcs12 -export -in /etc/letsencrypt/live/vfo.one/fullchain.pem -inkey  /etc/letsencrypt/live/vfo.one/privkey.pem -out /home/cbrodski/customyoutube-backend/src/main/resources/keystore.p12  -name tomcat -CAfile /etc/letsencrypt/live/vfo.one/chain.pem -passout pass:password
+2 1 1 */1 * sudo nohup npm run deploy &
+2 1 1 */1 * sudo mvn package && nohup nohup java -jar target/restApi-0.0.1-SNAPSHOT.jar -Dprofiles.active=prod  > /dev/null 2>&1 & 
 
-0 0 1 */2 * certbot renew && sudo openssl pkcs12 -export -in /etc/letsencrypt/live/videofeedorganizer.com/fullchain.pem -inkey /etc/letsencrypt/live/videofeedorganizer.com/privkey.pem -out /home/cbrodski/restApi/src/main/resources/keystore.p12 -name tomcat -CAfile /etc/letsencrypt/live/videofeedorganizer.com/chain.pem -passout pass:password
-
-0 0 1 */2 * echo "mongo also updated at /home/cbrodski/restApi/src/main/resources/keystore.p12" >> /home/cbrodski/customyoutube-frontend/renewed.txt
-0 0 * * 0 echo "ran sudo apt clean" >> /home/cbrodski/customyoutube-frontend/renewed.txt
-0 0 * * 0  sudo apt clean
-
-
-#############################
-# CP DOESNT WORK ON THG GOOGLE CLODU FOR SOEM REQASON
-# $ crontab -e
-# At 00:00 on every 7th day-of-week.
-# At 00:01 on every 7th day-of-week.
-0 0 * * */7   cp /home/thebears1234321/customyoutube-backend/nohup.out  /home/thebears1234321/customyoutube-backend/previous-nohup.out
-1 0 * * */7   cat /dev/null  >> sudo /home/thebears1234321/customyoutube-backend/nohup.out 
-
- /usr/bin/sudo /usr/bin/cp 
-
- usr/bin/sudo    /usr/bin/cp  /home/thebears1234321/customyoutube-backend/nohup.out  /home/thebears1234321/customyoutube-backend/previous-nohup.out
+# 1 0 * * */7   cat /dev/null  >> sudo /home/cbrodski/customyoutube-backend/nohup.out             

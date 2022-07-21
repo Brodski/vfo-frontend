@@ -143,8 +143,7 @@ spingboot ssl:
   # !!! " Using OpenSSL, we convert our certificate and private key to PKCS12."
 
 
-  - Old
-  $ sudo openssl pkcs12 -export -in /etc/letsencrypt/live/videofeedorganizer.com/fullchain.pem -inkey /etc/letsencrypt/live/videofeedorganizer.com/privkey.pem -out /home/cbrodski/restApi/src/main/resources/keystore.p12 -name tomcat -CAfile /etc/letsencrypt/live/videofeedorganizer.com/chain.pem -passout pass:password
   - NEW
   $ sudo openssl pkcs12 -export -in /etc/letsencrypt/live/vfo.one/fullchain.pem -inkey  /etc/letsencrypt/live/vfo.one/privkey.pem -out /home/thebears1234321/customyoutube-backend/src/main/resources/keystore.p12  -name tomcat -CAfile /etc/letsencrypt/live/vfo.one/chain.pem -passout pass:password
-
+  - NEWER 
+  $ sudo openssl pkcs12 -export -in /etc/letsencrypt/live/vfo.one/fullchain.pem -inkey  /etc/letsencrypt/live/vfo.one/privkey.pem -out /home/cbrodski/customyoutube-backend/src/main/resources/keystore.p12  -name tomcat -CAfile /etc/letsencrypt/live/vfo.one/chain.pem -passout pass:password

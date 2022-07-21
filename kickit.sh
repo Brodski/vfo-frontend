@@ -5,6 +5,7 @@
 # Prod
 $ sudo npm run build
 $ sudo nohup npm run deploy &
+$ sudo nohup npm run deploy > /dev/null 2>&1 & 
 
 # Dev
 $ npm run start
