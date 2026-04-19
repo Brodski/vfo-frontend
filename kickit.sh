@@ -3,7 +3,10 @@
 # using thebars oauth screen
 
 # Prod
+
 $ sudo npm run build
+###   OR   ###
+# sudo env GENERATE_SOURCEMAP=false NODE_OPTIONS="--max-old-space-size=4096" npm run build
 $ sudo nohup npm run deploy &
 $ sudo nohup npm run deploy > /dev/null 2>&1 & 
 
