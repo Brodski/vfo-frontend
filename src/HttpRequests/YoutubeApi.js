@@ -19,6 +19,11 @@ export async function check() {
     wait = wait * 2;
     await sleep(wait);
   }
+  // ✅ actually check if signed in
+  const authInstance = window.gapi.auth2.getAuthInstance();
+  if (!authInstance.isSignedIn.get()) {
+    await authInstance.signIn();
+  }
 }
 
 export async function _getActivities(channel) {
