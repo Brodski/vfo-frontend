@@ -60,14 +60,19 @@ async function waitForAuthLoad() {
 }
 
 async function _initClient() {
-  let discoveryUrl =
-    "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest";
-    return  window.gapi.client.init({
+  let discoveryUrl = "https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest";
+  await window.gapi.client.init({
     clientId: SECRET_KEYS.clientId,
     apiKey: SECRET_KEYS.apiKey,
     discoveryDocs: [discoveryUrl],
     scope: SCOPE
   });
+
+  // BOOOM ✅ sign in with the scopes defined above
+  const auth = window.gapi.auth2.getAuthInstance();
+  if (!auth.isSignedIn.get()) {
+    await auth.signIn({ scope: SCOPE });
+  }
 }
 
 export async function initGoogleAPI() {
